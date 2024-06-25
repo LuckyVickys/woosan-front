@@ -7,6 +7,9 @@ const Sidebar = ({ pageType }) => {
             <div className="catagory">
                 {pageType === 'board' && (
                     <>
+                        <div className="title">
+                            꿀팁
+                        </div>
                         <div className="board_boards">
                             <Link to={'/board/'}>전체</Link>
                         </div>
@@ -35,6 +38,9 @@ const Sidebar = ({ pageType }) => {
                 )}
                 {pageType === 'matching' && (
                     <>
+                        <div className="title">
+                            모임
+                        </div>
                         <div className="matching_matchings">
                             <Link to={'/matching/'}>전체</Link>
                         </div>
