@@ -1,11 +1,11 @@
 import BasicLayout from "../../layouts/BasicLayout";
 import Sidebar from "../../components/common/Sidebar";
 
-const UpdateInfoPage = () => {
+const ListPage = () => {
 
     return (
         <BasicLayout>
-            <Sidebar pageType="myPage" />
+            <Sidebar pageType="board" />
             <div className="contents">
                 콘텐츠 부분
             </div>
@@ -13,4 +13,4 @@ const UpdateInfoPage = () => {
     );
 }
 
-export default UpdateInfoPage;
+export default ListPage;
