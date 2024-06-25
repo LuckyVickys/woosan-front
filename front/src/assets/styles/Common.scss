@@ -1,0 +1,162 @@
+@import 'Font';
+
+$shadow: #E5E5E5;
+
+// header
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    height: auto;
+    margin-top: 30px;
+    padding: 20px 300px;
+    border-bottom: 2px solid $shadow; 
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    height: 27.5px;
+
+    .logoImage {
+        width: 80px;
+        height: 46px;
+        margin-right: 13px;
+    }
+    
+    .logoTitle {
+        font-size: 32px;
+        font-family: 'GodoB', sans-serif;
+        a {
+            color: #000;
+        }
+    }
+}
+
+.login{
+    display: flex;
+    align-items: center;
+
+    .loginButton{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 16px;
+        width: 75px;
+        height: auto;
+        padding: 10px 14px;
+        font-size: 14px;
+        color: white;
+        background: #00B207;
+        border-radius: 43px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+    }
+}
+
+// nav
+nav{
+    display: flex;
+    justify-content: left;
+    align-items: center; 
+    height: 23px;
+    padding: 20px 300px;
+
+    .catagory {
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+    
+        .board,
+        .matching,
+        .cs,
+        .myPage{
+            margin-right: 32px;
+            font-family: "Poppins", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            a {
+                color: #666;
+            }
+        }
+    }
+}
+
+// BasidLayout의 area
+.area{
+    display: flex;
+    height: 69vh;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+// BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
+.contents{
+    width: 100%;
+    border: 1px solid #000;
+}
+
+// sidebar
+aside{
+
+    .catagory {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-right: 20px;
+        width: 210px;
+        height: auto;
+        padding-left: 20px;
+        border: 3px solid #E6E6E6;
+        border-radius: 8px;
+    
+        .board,
+        .matching,
+        .cs,
+        .myPage{
+            margin-right: 32px;
+            font-family: "Poppins", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            a {
+                color: #666;
+            }
+        }
+    }
+}
+
+// footer
+footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 65px;
+    padding: 0 20px;
+    background: #333333;
+    position: fixed;
+    bottom: 0;
+    font-size: 10px;
+    color: white;
+    font-family: 'NanumGothic', sans-serif;
+}
+
+.site {
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.site img {
+    margin-right: 16px;
+}
+
+// Link 밑줄 제거, hover
+a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+}
