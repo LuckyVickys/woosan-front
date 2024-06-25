@@ -1,5 +1,5 @@
-import BasicLayout from "../../../layouts/BasicLayout";
-import Sidebar from "../../../components/common/Sidebar";
+import BasicLayout from "../../layouts/BasicLayout";
+import Sidebar from "../../components/common/Sidebar";
 
 const ListPage = () => {
 
