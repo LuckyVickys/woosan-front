@@ -9,7 +9,7 @@ const csRouter = ()=> {
     return [
         {
             path: "event",
-            element: <Suspense fallback={Loading}><Event/></Suspense>
+            element: <Suspense fallback={Loading}><Notices/></Suspense>
         }
     ]
 }
