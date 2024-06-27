@@ -1,16 +1,11 @@
-import BasicLayout from "../../layouts/BasicLayout";
-import Sidebar from "../../components/common/Sidebar";
 
-const UpdateInfoPage = () => {
+const MyMatchingPage = () => {
 
     return (
-        <BasicLayout>
-            <Sidebar pageType="myPage" />
-            <div className="contents">
-                콘텐츠 부분
-            </div>
-        </BasicLayout>
+        <div className="">
+            모임 조회
+        </div>
     );
 }
 
-export default UpdateInfoPage;
+export default MyMatchingPage;

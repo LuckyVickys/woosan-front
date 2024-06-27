@@ -7,85 +7,91 @@ const Sidebar = ({ pageType }) => {
             <div className="catagory">
                 {pageType === 'board' && (
                     <>
-                        <div className="title">
+                        <div className="catagory-title">
                             꿀팁
                         </div>
-                        <div className="board-boards">
+                        <div className="sub-category">
                             <Link to={'/board/'}>전체</Link>
                         </div>
-                        <div className="board-restaurants">
+                        <div className="sub-category">
                             <Link to={'/board/restaurants/'}>맛집</Link>
                         </div>
-                        <div className="board-clean">
+                        <div className="sub-category">
                             <Link to={'/board/clean/'}>청소</Link>
                         </div>
-                        <div className="board-recipe">
+                        <div className="sub-category">
                             <Link to={'/board/recipe/'}>요리</Link>
                         </div>
-                        <div className="board-wealth">
+                        <div className="sub-category">
                             <Link to={'/board/wealth/'}>재테크</Link>
                         </div>
-                        <div className="board-interior">
+                        <div className="sub-category">
                             <Link to={'/board/interior/'}>인테리어</Link>
                         </div>
-                        <div className="board-policy">
+                        <div className="sub-category">
                             <Link to={'/board/policy/'}>정책</Link>
                         </div>
-                        <div className="board-etc">
+                        <div className="sub-category">
                             <Link to={'/board/etc/'}>기타</Link>
                         </div>
                     </>
                 )}
                 {pageType === 'matching' && (
                     <>
-                        <div className="title">
+                        <div className="catagory-title">
                             모임
                         </div>
-                        <div className="matching-matchings">
+                        <div className="sub-category">
                             <Link to={'/matching/'}>전체</Link>
                         </div>
-                        <div className="matching-regularly">
+                        <div className="sub-category">
                             <Link to={'/matching/regularly/'}>정기 모임</Link>
                         </div>
-                        <div className="matching-temporary">
+                        <div className="sub-category">
                             <Link to={'/matching/temporary/'}>번개</Link>
                         </div>
-                        <div className="matching-self">
+                        <div className="sub-category">
                             <Link to={'/matching/self/'}>셀프 소개팅</Link>
                         </div>
                     </>
                 )}
                 {pageType === 'cs' && (
                     <>
-                        <div className="cs-notices">
+                        <div className="catagory-title">
+                            고객 지원
+                        </div>
+                        <div className="sub-category">
                             <Link to={'/cs/'}>공지사항</Link>
                         </div>
-                        <div className="cs-event">
+                        <div className="sub-category">
                             <Link to={'/cs/event/'}>이벤트</Link>
                         </div>
                      </>
                 )}
                 {pageType === 'myPage' && (
                     <>
-                        <div className="myPage-update">
+                        <div className="catagory-title">
+                            마이페이지
+                        </div>
+                        <div className="sub-category">
                             <Link to={'/myPage/'}>회원 정보 수정</Link>
                         </div>
-                        <div className="myPage-board">
+                        <div className="sub-category">
                             <Link to={'/myPage/board/'}>작성한 게시글 조회</Link>
                         </div>
-                        <div className="myPage-reply">
+                        <div className="sub-category">
                             <Link to={'/myPage/reply/'}>작성한 댓글 조회</Link>
                         </div>
-                        <div className="myPage-like">
+                        <div className="sub-category">
                             <Link to={'/myPage/like/'}>추천 게시글</Link>
                         </div>
-                        <div className="myPage-matching">
+                        <div className="sub-category">
                             <Link to={'/myPage/matching/'}>모임 조회</Link>
                         </div>
-                        <div className="myPage-msg">
+                        <div className="sub-category">
                             <Link to={'/myPage/msg/'}>쪽지함</Link>
                         </div>
-                        <div className="myPage-logout">
+                        <div className="sub-category">
                             <Link to={'/myPage/logout/'}>Log out</Link>
                         </div>
                     </>

@@ -12,7 +12,7 @@ const Nav = () => {
                     <Link to={'/matching/'}>모임</Link>
                 </div>
                 <div className="cs">
-                    <Link to={'/cs/'}>고객지원</Link>
+                    <Link to={'/cs/'}>고객 지원</Link>
                 </div>
                 <div className="myPage">
                     <Link to={'/myPage/'}>마이페이지</Link>
