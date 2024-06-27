@@ -1,16 +1,11 @@
-import BasicLayout from "../../layouts/BasicLayout";
-import Sidebar from "../../components/common/Sidebar";
 
-const UpdateInfoPage = () => {
+const LikePage = () => {
 
     return (
-        <BasicLayout>
-            <Sidebar pageType="myPage" />
-            <div className="contents">
-                콘텐츠 부분
-            </div>
-        </BasicLayout>
+        <div className="">
+            추천 게시글
+        </div>
     );
 }
 
-export default UpdateInfoPage;
+export default LikePage;

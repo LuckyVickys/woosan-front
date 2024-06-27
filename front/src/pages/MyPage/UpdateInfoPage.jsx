@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import BasicLayout from "../../layouts/BasicLayout";
 import Sidebar from "../../components/common/Sidebar";
@@ -40,7 +40,7 @@ const UpdateInfoPage = () => {
             <Sidebar pageType="myPage" />
             <div className="contents">
                 <ListTitle main="마이페이지" sub={sub}/>
-                콘텐츠 부분
+                <Outlet />
             </div>
         </BasicLayout>
     );

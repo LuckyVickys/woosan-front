@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import BasicLayout from "../../layouts/BasicLayout";
 import Sidebar from "../../components/common/Sidebar";
-import ListTitle from "../../components/board/list/ListTitle";
+import ListTitle from "../../components/common/ListTitle";
 
 const ListPage = () => {
 
@@ -17,7 +17,7 @@ const ListPage = () => {
             sub = "전체";
             info="혼자서는 싫고 여럿이서 모이고 싶을 때, 확인해보세요!"
             break;
-        case '/matching/regulary/':
+        case '/matching/regularly/':
             sub = "정기 모임";
             info="매달, 매주, 매일 함께 모이면 즐거움이 2배!"
             break;

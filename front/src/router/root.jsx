@@ -4,7 +4,8 @@ import matchingRouter from "./matchingRouter"
 import csRouter from "./csRouter"
 import myPageRouter from "./myPageRouter";
 
-const {createBrowserRouter} = require("react-router-dom");
+import {createBrowserRouter} from "react-router-dom";
+// const {createBrowserRouter} = require("react-router-dom");
 
 const Loading = <div>Loading....</div>
 
