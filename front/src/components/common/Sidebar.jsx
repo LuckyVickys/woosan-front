@@ -44,8 +44,8 @@ const Sidebar = ({ pageType }) => {
                         <div className="matching-matchings">
                             <Link to={'/matching/'}>전체</Link>
                         </div>
-                        <div className="matching-regulary">
-                            <Link to={'/matching/regulary/'}>정기 모임</Link>
+                        <div className="matching-regularly">
+                            <Link to={'/matching/regularly/'}>정기 모임</Link>
                         </div>
                         <div className="matching-temporary">
                             <Link to={'/matching/temporary/'}>번개</Link>
