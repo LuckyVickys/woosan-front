@@ -10,7 +10,7 @@ const Loading = <div>Loading....</div>
 
 const Main = lazy(() => import("../pages/main/MainPage"))
 const Board = lazy(() => import("../pages/board/ListPage"))
-const Matching = lazy(() => import("../pages/matchting/ListPage"))
+const Matching = lazy(() => import("../pages/matching/ListPage"))
 const CS = lazy(() => import("../pages/cs/notices/ListPage"))
 const MyPage = lazy(() => import("../pages/myPage/UpdateInfoPage"))
 // const AdminMyPage = lazy(() => import("../pages/adminMyPage/ReportList"))

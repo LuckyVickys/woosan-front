@@ -2,12 +2,12 @@ import { Suspense, lazy } from "react";
 
 const Loading = <div>Loading....</div>
 
-const ListPage = lazy(() => import("../pages/matchting/ListPage"))
+const ListPage = lazy(() => import("../pages/matching/ListPage"))
 
 const matchingRouter = ()=> {
     return [
         {
-            path: "regulary",
+            path: "regularly",
             element: <Suspense fallback={Loading}><ListPage/></Suspense>
         },
         {
