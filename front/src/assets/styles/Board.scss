@@ -8,8 +8,8 @@ $shadow: #E5E5E5;
     justify-content: space-between;
     align-items: center; 
     height: auto;
-        padding: 0 10px;
-        border-bottom: 2px solid $shadow; 
+    padding: 0 20px;
+    border-bottom: 2px solid $shadow; 
 
     .catagory-main-sub{
         display: flex;
@@ -30,5 +30,13 @@ $shadow: #E5E5E5;
             background: url('../image/category-arrow.svg') no-repeat;
             background-size: contain;
         }
+    }
+
+    .catagory-info {
+        font-size: 16px;
+        font-family: 'Pretendard-Regular', sans-serif;
+        font-weight: 300;
+        font-style: normal;
+        color: #00B207;
     }
 }

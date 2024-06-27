@@ -117,13 +117,13 @@ const EventPage = () => {
         setSelectedPoint(selectedProduct.additionalText);
 
         // 서버로 포인트 전송
-        axios.post('http://localhost:7777/api/roulette/updatePoints', { point: selectedProduct.additionalText })
-          .then(response => {
-            console.log('Point sent to server:', response.data);
-          })
-          .catch(error => {
-            console.error('Error sending point to server:', error);
-          });
+        // axios.post('http://localhost:7777/api/roulette/updatePoints', { point: selectedProduct.additionalText })
+        //   .then(response => {
+        //     console.log('Point sent to server:', response.data);
+        //   })
+        //   .catch(error => {
+        //     console.error('Error sending point to server:', error);
+        //   });
       }, 2000); // 회전 애니메이션 시간과 맞추기 위해 2초 후에 계산
     };
 

@@ -11,10 +11,9 @@ const ListTitle = ({ main, sub, info }) => {
             <div className="category-arrow"></div>
             {sub && <h1>{sub}</h1>}
           </div>
-          <div className='catagory-'>{info}</div>
+          <div className='catagory-info'>{info}</div>
         </div>
     );
 }
-
 
 export default ListTitle;
