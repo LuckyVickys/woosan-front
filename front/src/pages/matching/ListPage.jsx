@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import BasicLayout from "../../layouts/BasicLayout";
 import Sidebar from "../../components/common/Sidebar";
-import ListTitle from "../../components/common/ListTitle";
+import ListTitle from "../../components/board/list/ListTitle";
 
 const ListPage = () => {
 
