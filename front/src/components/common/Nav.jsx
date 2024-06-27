@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import '../../assets/styles/Common.scss';
 
 const Nav = () => {
@@ -6,16 +6,16 @@ const Nav = () => {
         <nav id='navbar' className="nav poppins-medium">
             <div className="catagory">
                 <div className="board">
-                    <Link to={'/board/'}>꿀팁</Link>
+                    <NavLink to={'/board/'} activeClassName="active">꿀팁</NavLink>
                 </div>
                 <div className="matching">
-                    <Link to={'/matching/'}>모임</Link>
+                    <NavLink to={'/matching/'} activeClassName="active">모임</NavLink>
                 </div>
                 <div className="cs">
-                    <Link to={'/cs/'}>고객 지원</Link>
+                    <NavLink to={'/cs/'} activeClassName="active">고객 지원</NavLink>
                 </div>
                 <div className="myPage">
-                    <Link to={'/myPage/'}>마이페이지</Link>
+                    <NavLink to={'/myPage/'} activeClassName="active">마이페이지</NavLink>
                 </div>
             </div>
         </nav>

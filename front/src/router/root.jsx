@@ -10,10 +10,10 @@ import {createBrowserRouter} from "react-router-dom";
 const Loading = <div>Loading....</div>
 
 const Main = lazy(() => import("../pages/main/MainPage"))
-const Board = lazy(() => import("../pages/board/ListPage"))
-const Matching = lazy(() => import("../pages/matching/ListPage"))
-const CS = lazy(() => import("../pages/cs/notices/ListPage"))
-const MyPage = lazy(() => import("../pages/myPage/UpdateInfoPage"))
+const Board = lazy(() => import("../pages/board/IndexPage"))
+const Matching = lazy(() => import("../pages/matching/IndexPage"))
+const CS = lazy(() => import("../pages/cs/IndexPage"))
+const MyPage = lazy(() => import("../pages/myPage/IndexPage"))
 // const AdminMyPage = lazy(() => import("../pages/adminMyPage/ReportList"))
 
 const root = createBrowserRouter([
