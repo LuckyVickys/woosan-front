@@ -2,8 +2,8 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom'; // 현재 경로 가져오기
 
 import BasicLayout from "../../layouts/BasicLayout";
-import Sidebar from "../../components/common/Sidebar";
-import ListTitle from "../../components/board/list/ListTitle";
+import SideBar from "../../components/common/SideBar";
+import PageTitle from "../../components/common/PageTitle";
 
 
 const IndexPage = () => {
@@ -38,9 +38,9 @@ const IndexPage = () => {
 
     return (
         <BasicLayout>
-            <Sidebar pageType="myPage" />
+            <SideBar pageType="myPage" />
             <div className="contents">
-                <ListTitle main="마이페이지" sub={sub}/>
+                <PageTitle main="마이페이지" sub={sub}/>
                 <Outlet />
             </div>
         </BasicLayout>
