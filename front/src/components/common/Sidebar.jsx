@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import '../../assets/styles/Common.scss';
 
-const Sidebar = ({ pageType }) => {
+const SideBar = ({ pageType }) => {
     return (
         <aside id='sidebar' className="sidebar">
             <div className="catagory">
@@ -101,4 +101,4 @@ const Sidebar = ({ pageType }) => {
     )
 }
 
-export default Sidebar;
+export default SideBar;
