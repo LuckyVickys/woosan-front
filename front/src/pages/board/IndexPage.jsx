@@ -53,12 +53,15 @@ const IndexPage = () => {
             break;
     }
 
+    const categories = ['카테고리','맛집', '청소', '요리', '재테크', '인테리어', '정책', '기타'];
+    const filters = ['검색 필터', '제목', '작성자', '내용'];
+
     return (
         <BasicLayout>
             <SideBar pageType="board" />
             <div className="contents">
                 <PageTitle main="꿀팁" sub={sub} info={info}/>
-                <SearchBar />
+                <SearchBar categories={categories} filters={filters}/>
                 <Outlet />
             </div>
         </BasicLayout>

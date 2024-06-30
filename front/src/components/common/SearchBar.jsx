@@ -4,8 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../../assets/styles/Common.scss';
 
-const CatagoryDropdown = ({ onSelect }) => {
-  const categories = ['카테고리','맛집', '청소', '요리', '재테크', '인테리어', '정책', '기타'];
+const CatagoryDropdown = ({ categories, onSelect }) => {
 
   return (
     <ul className="dropdown-list">
@@ -16,8 +15,7 @@ const CatagoryDropdown = ({ onSelect }) => {
   );
 }
 
-const FilterDropdown = ({ onSelect }) => {
-  const filters = ['필터', '제목', '작성자', '내용'];
+const FilterDropdown = ({ filters, onSelect }) => {
 
   return (
     <ul className="dropdown-list">
@@ -28,7 +26,7 @@ const FilterDropdown = ({ onSelect }) => {
   );
 }
 
-const SearchBar = () => {
+const SearchBar = ({ categories, filters}) => {
   const location = useLocation();
 
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
@@ -84,13 +82,13 @@ const SearchBar = () => {
           <div className="catagory-dropdown" ref={categoryRef}>
             {selectedCategory ? `${selectedCategory}` : '카테고리'}
             <div className="dropdown" onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}></div>
-            {showCategoryDropdown && <CatagoryDropdown onSelect={handleCategorySelect} />}
+            {showCategoryDropdown && <CatagoryDropdown categories={categories} onSelect={handleCategorySelect} />}
             <div className='dropdown-arrow'></div>
           </div>
           <div className="filter-dropdown" ref={filterRef}>
-            {selectedFilter ? `${selectedFilter}` : '필터'}
+            {selectedFilter ? `${selectedFilter}` : '검색 필터'}
             <div className="dropdown" onClick={() => setShowFilterDropdown(!showFilterDropdown)}></div>
-            {showFilterDropdown && <FilterDropdown onSelect={handleFilterSelect} />}
+            {showFilterDropdown && <FilterDropdown filters={filters} onSelect={handleFilterSelect} />}
             <div className='dropdown-arrow'></div>
           </div>
           <form className="search-box" action="search" method="get">
