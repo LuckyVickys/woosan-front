@@ -1,15 +1,10 @@
+
 import {NavLink} from "react-router-dom";
 import '../../assets/styles/App.scss';
 
 import BasicLayout from "../../layouts/BasicLayout";
-
-const PopularPostList = () => {
-
-}
-
-const NoticeList = () => {
-
-}
+import LikeList from "../../components/main/LikeList";
+import NoticeList from "../../components/main/NoticeList";
 
 const NewMatchingList = () => {
 
@@ -29,7 +24,7 @@ const MainPage = () => {
                             <div className="header-title">인기글</div>
                             <NavLink to={'/board/'}>View All ➔</NavLink>    
                         </div>
-                        <PopularPostList />
+                        <LikeList />
                     </div>
                 </div>
                  <div className="main-info">
