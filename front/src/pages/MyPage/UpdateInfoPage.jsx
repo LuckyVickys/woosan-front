@@ -4,7 +4,7 @@ const UpdateInfoPage = () => {
 
     return (
         <div className="contents">
-            마이페이지
+            회원 정보 수정
         </div>
     );
 }

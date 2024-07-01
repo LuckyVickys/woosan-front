@@ -2,8 +2,9 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom'; // 현재 경로 가져오기
 
 import BasicLayout from "../../layouts/BasicLayout";
-import Sidebar from "../../components/common/Sidebar";
-import ListTitle from "../../components/board/list/ListTitle";
+import SideBar from "../../components/common/SideBar";
+import PageTitle from "../../components/common/PageTitle";
+import SearchBar from "../../components/common/SearchBar";
 
 
 const IndexPage = () => {
@@ -52,11 +53,15 @@ const IndexPage = () => {
             break;
     }
 
+    const categories = ['카테고리','맛집', '청소', '요리', '재테크', '인테리어', '정책', '기타'];
+    const filters = ['검색 필터', '제목', '작성자', '내용'];
+
     return (
         <BasicLayout>
-            <Sidebar pageType="board" />
+            <SideBar pageType="board" />
             <div className="contents">
-                <ListTitle main="꿀팁" sub={sub} info={info}/>
+                <PageTitle main="꿀팁" sub={sub} info={info}/>
+                <SearchBar categories={categories} filters={filters}/>
                 <Outlet />
             </div>
         </BasicLayout>

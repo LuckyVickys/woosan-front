@@ -103,13 +103,6 @@ nav{
     margin-right: 300px;
 }
 
-// BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
-.contents{
-    width: 100%;
-    background: #EDF2EE;
-    border-radius: 8px;
-}
-
 // sidebar
 aside{
     
@@ -160,6 +153,156 @@ aside{
     }
 }
 
+// BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
+.contents{
+    width: 100%;
+    // background: #EDF2EE;
+    border-radius: 8px;
+
+}
+
+// PageTitle
+.page-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    height: auto;
+    padding: 0 20px;
+    border-bottom: 2px solid $shadow; 
+
+    .catagory-main-sub{
+        display: flex;
+        justify-content: left;
+        align-items: center; 
+
+        h1{
+            font-size: 20px;
+            font-family: 'Pretendard-Regular', sans-serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        .category-arrow {
+            margin-left: 8px;
+            width: 15px;
+            height: 15px;
+            background: url('../image/category-arrow.svg') no-repeat;
+            background-size: contain;
+        }
+    }
+
+    .catagory-info {
+        font-size: 16px;
+        font-family: 'Pretendard-Regular', sans-serif;
+        font-weight: 300;
+        font-style: normal;
+        color: #00B207;
+    }
+}
+
+// searchbar
+.search-bar{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 15px;
+    font-size: 16px;
+    font-family: 'Pretendard-Regular', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+
+    .catagory-dropdown,
+    .filter-dropdown{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        border: 1px solid #E6E6E6;
+        border-radius: 8px;
+        padding: 8px;
+        width: 150px;
+        cursor: pointer;
+        
+        .dropdown-arrow{
+            margin-top: 5px;
+            width: 10px;
+            height: 10px;
+            transform: rotate(90deg);
+            background: url('../image/category-arrow.svg') no-repeat;
+            background-size: contain;
+            float: right;
+        }
+    }
+
+    .dropdown-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        border: 1px solid #E6E6E6;
+        border-radius: 8px;
+        background: #fff;
+        z-index: 10;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .dropdown-list li {
+        padding: 8px;
+        cursor: pointer;
+    }
+      
+    .dropdown-list li:hover {
+        background: #EDF2EE;
+    }
+
+    .search-box{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 24px;
+        color: #999999;
+        border: 1px solid #E6E6E6;
+        border-radius: 8px;
+        padding: 5.5px;
+
+        .search-input{
+            width: 100%;
+            border: none;
+            font-size: 16px;
+            font-family: 'Pretendard-Regular', sans-serif;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .search-button{
+            border: none;
+            width: 30px;
+            height: 30px;
+            background: url('../image/icon-search.svg') no-repeat;
+            background-size: contain;
+            cursor: pointer;
+        }
+    }
+
+    .write-button{
+        width: 130px;
+        height: 37px;
+        padding: 8px;
+        border: 2px solid #9BCC66;
+        border-radius: 43px;
+        background: #fff;
+        font-size: 14px;
+        font-family: 'Pretendard-Regular', sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        cursor: pointer;
+    }
+}
+
+
 // footer
 footer{
     display: flex;
@@ -174,16 +317,17 @@ footer{
     font-size: 10px;
     color: white;
     font-family: 'Pretendard-Regular', sans-serif;
-}
 
-.site {
-    justify-content: center;
-    align-items: center;
-    margin-right: 20px;
-}
-
-.site img {
-    margin-right: 16px;
+    .site {
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+    }
+    
+    .site img {
+        margin-right: 16px;
+    }
+    
 }
 
 // Link 밑줄 제거, hover
