@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import '../../assets/styles/Common.scss';
 
 const Sidebar = ({ pageType }) => {
@@ -11,28 +11,28 @@ const Sidebar = ({ pageType }) => {
                             꿀팁
                         </div>
                         <div className="sub-category">
-                            <Link to={'/board/'}>전체</Link>
+                            <NavLink to={'/board/total'} activeClassName="active">전체</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/board/restaurants/'}>맛집</Link>
+                            <NavLink to={'/board/restaurants/'} activeClassName="active">맛집</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/board/clean/'}>청소</Link>
+                            <NavLink to={'/board/clean/'} activeClassName="active">청소</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/board/recipe/'}>요리</Link>
+                            <NavLink to={'/board/recipe/'} activeClassName="active">요리</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/board/wealth/'}>재테크</Link>
+                            <NavLink to={'/board/wealth/'} activeClassName="active">재테크</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/board/interior/'}>인테리어</Link>
+                            <NavLink to={'/board/interior/'} activeClassName="active">인테리어</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/board/policy/'}>정책</Link>
+                            <NavLink to={'/board/policy/'} activeClassName="active">정책</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/board/etc/'}>기타</Link>
+                            <NavLink to={'/board/etc/'} activeClassName="active">기타</NavLink>
                         </div>
                     </>
                 )}
@@ -42,16 +42,16 @@ const Sidebar = ({ pageType }) => {
                             모임
                         </div>
                         <div className="sub-category">
-                            <Link to={'/matching/'}>전체</Link>
+                            <NavLink to={'/matching/total'} activeClassName="active">전체</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/matching/regularly/'}>정기 모임</Link>
+                            <NavLink to={'/matching/regularly/'} activeClassName="active">정기 모임</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/matching/temporary/'}>번개</Link>
+                            <NavLink to={'/matching/temporary/'} activeClassName="active">번개</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/matching/self/'}>셀프 소개팅</Link>
+                            <NavLink to={'/matching/self/'} activeClassName="active">셀프 소개팅</NavLink>
                         </div>
                     </>
                 )}
@@ -61,10 +61,10 @@ const Sidebar = ({ pageType }) => {
                             고객 지원
                         </div>
                         <div className="sub-category">
-                            <Link to={'/cs/'}>공지사항</Link>
+                            <NavLink to={'/cs/notices'} activeClassName="active">공지사항</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/cs/event/'}>이벤트</Link>
+                            <NavLink to={'/cs/event/'} activeClassName="active">이벤트</NavLink>
                         </div>
                      </>
                 )}
@@ -74,25 +74,25 @@ const Sidebar = ({ pageType }) => {
                             마이페이지
                         </div>
                         <div className="sub-category">
-                            <Link to={'/myPage/'}>회원 정보 수정</Link>
+                            <NavLink to={'/myPage/info'} activeClassName="active">회원 정보 수정</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/myPage/board/'}>작성한 게시글 조회</Link>
+                            <NavLink to={'/myPage/board/'} activeClassName="active">작성한 게시글 조회</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/myPage/reply/'}>작성한 댓글 조회</Link>
+                            <NavLink to={'/myPage/reply/'} activeClassName="active">작성한 댓글 조회</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/myPage/like/'}>추천 게시글</Link>
+                            <NavLink to={'/myPage/like/'} activeClassName="active">추천 게시글</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/myPage/matching/'}>모임 조회</Link>
+                            <NavLink to={'/myPage/matching/'} activeClassName="active">모임 조회</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/myPage/msg/'}>쪽지함</Link>
+                            <NavLink to={'/myPage/msg/'} activeClassName="active">쪽지함</NavLink>
                         </div>
                         <div className="sub-category">
-                            <Link to={'/myPage/logout/'}>Log out</Link>
+                            <NavLink to={'/myPage/logout/'}>Log out</NavLink>
                         </div>
                     </>
                 )}

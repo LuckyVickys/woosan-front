@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import { Navigate } from "react-router-dom";
 
 const Loading = <div>Loading....</div>
 
@@ -10,6 +11,14 @@ const MyMsgPage = lazy(()=> import("../pages/myPage/MyMsgPage"))
 
 const myPageRouter = ()=> {
     return [
+        {
+            path: "",
+            element: <Navigate replace to="/myPage/info"/>
+        },
+        {
+            path: "info",
+            element: <Suspense fallback={Loading}><MyBoardPage/></Suspense>
+        },
         {
             path: "board",
             element: <Suspense fallback={Loading}><MyBoardPage/></Suspense>

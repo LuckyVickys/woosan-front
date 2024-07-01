@@ -87,6 +87,10 @@ nav{
             a:hover {
                 color: #00B207;
             }
+
+            a.active {
+                color: #00B207;
+            }
         }
     }
 }
@@ -102,11 +106,13 @@ nav{
 // BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
 .contents{
     width: 100%;
-    border: 1px solid #000;
+    background: #EDF2EE;
+    border-radius: 8px;
 }
 
 // sidebar
 aside{
+    
 
     .catagory {
         display: flex;
@@ -120,17 +126,36 @@ aside{
         border: 1px solid #E6E6E6;
         border-radius: 8px;
 
-        .board,
-        .matching,
-        .cs,
-        .myPage{
+        .catagory-title{
             margin-right: 32px;
+            padding: 10px 0;
+            width: 100%;
+            font-family: 'Pretendard-Regular', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .sub-category {
+            margin-right: 32px;
+            padding-bottom: 8px;
+            width: 100%;
             font-family: 'Pretendard-Regular', sans-serif;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 400;
             a {
                 color: #666;
             }
+
+            a:hover {
+                color: #00B207;
+            }
+
+            a.active {
+                color: #000; 
+            }
+        }
+
+        .sub-category .active {
+            background: #EDF2EE;
         }
     }
 }
