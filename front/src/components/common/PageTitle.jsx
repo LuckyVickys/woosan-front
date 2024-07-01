@@ -1,6 +1,6 @@
 // BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역의 헤더
 import React from 'react';
-import '../../assets/styles/Common.scss';
+import '../../assets/styles/App.scss';
 
 
 const PageTitle = ({ main, sub, info }) => {
