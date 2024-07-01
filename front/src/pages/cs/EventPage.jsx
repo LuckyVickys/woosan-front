@@ -114,17 +114,22 @@ const EventPage = () => {
         // 선택된 포인트 계산 및 상태 저장
         const selectedIndex = (products.length - 1) - ran;
         const selectedProduct = products[selectedIndex];
+        const pointValue = parseInt(selectedProduct.additionalText.replace(/[^0-9]/g, '')); // 숫자만 추출하여 정수로 변환
         setSelectedPoint(selectedProduct.additionalText);
 
         // 서버로 포인트 전송
-        // axios.post('http://localhost:7777/api/roulette/updatePoints', { point: selectedProduct.additionalText })
-        //   .then(response => {
-        //     console.log('Point sent to server:', response.data);
-        //   })
-        //   .catch(error => {
-        //     console.error('Error sending point to server:', error);
-        //   });
-      }, 2000); // 회전 애니메이션 시간과 맞추기 위해 2초 후에 계산
+        axios.post('http://localhost:7777/api/roulette/updatePoints',
+          {
+            memberId: 1,
+            point: 50
+          })
+          .then(response => {
+            console.log('Point sent to server:', response.data);
+          })
+          .catch(error => {
+            console.error('Error sending point to server:', error);
+          });
+      });
     };
 
     return (
