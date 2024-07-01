@@ -1,5 +1,5 @@
 import {NavLink} from "react-router-dom";
-import '../../assets/styles/Common.scss';
+import '../../assets/styles/App.scss';
 
 const SideBar = ({ pageType }) => {
     return (

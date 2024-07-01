@@ -1,4 +1,4 @@
-import '../../assets/styles/Common.scss';
+import '../../assets/styles/App.scss';
 import figma from "../../assets/image/icon-figma.svg"; 
 import github from "../../assets/image/icon-github.svg"; 
 

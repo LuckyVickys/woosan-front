@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../../assets/styles/Common.scss';
+import '../../assets/styles/App.scss';
 
 const CatagoryDropdown = ({ categories, onSelect }) => {
 

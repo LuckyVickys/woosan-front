@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import logoImage from "../../assets/image/logo.svg"; // 이미지 파일 경로
-import '../../assets/styles/Common.scss';
+import '../../assets/styles/App.scss';
 
 const Header = () => {
     return (

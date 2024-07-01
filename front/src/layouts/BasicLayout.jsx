@@ -4,15 +4,11 @@ import Footer from "../components/common/Footer";
 
 const BasicLayout = ({children}) => {
     return (
-        <div>
-        <Header />
-        <Nav />
-
-        <div className="area">
-            {children}
-        </div>
-
-        <Footer />
+        <div className="wrapper">
+            <Header />
+            <Nav />
+            <div className="area">{children}</div>
+            <Footer />
         </div>
     );
 }

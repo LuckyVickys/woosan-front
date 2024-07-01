@@ -1,0 +1,47 @@
+@import 'Font';
+
+.main-contents{
+    width: 100%;
+    height: 100%;
+    background: #fff;
+}
+
+.banner{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 350px;
+
+    .main-banner{
+        width: 800px;
+        background: url('../image/main-banner.svg') no-repeat;
+        background-size: contain;
+    }
+    .popular-post{
+        margin-left: 20px;
+        width: 420px;
+        height: px;
+        background: #00B207;
+    }
+}
+
+.main-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+    height: 70px;
+    background: #E5E5E5;
+}
+
+.main-board-matching{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    width: 1320px;
+    height: 300px;
+    background: #E5E5E5;
+}
