@@ -6,22 +6,52 @@
     background: #fff;
 }
 
+.header{
+    font-family: 'Pretendard-Regular', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+}
+
 .banner{
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 350px;
 
     .main-banner{
-        width: 800px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
         background: url('../image/main-banner.svg') no-repeat;
         background-size: contain;
+        border-radius: 10px;
+
+        .banner-slider-left{
+            margin-left: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: url('../image/left-button.svg') no-repeat;
+            background-size: contain;
+            cursor: pointer;
+        }
+        .banner-slider-right{
+            margin-right: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: url('../image/right-button.svg') no-repeat;
+            background-size: contain;
+            cursor: pointer;
+        }
     }
     .popular-post{
         margin-left: 20px;
-        width: 420px;
-        height: px;
-        background: #00B207;
+        width: 655px;
+        height: 330px;
+        border-radius: 10px;
+        border-left: 2px solid #E5E5E5; 
+        border-bottom: 3px solid #E5E5E5; 
     }
 }
 
@@ -29,19 +59,115 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 15px;
     width: 100%;
     height: 70px;
-    background: #E5E5E5;
+    border-radius: 10px;
+    box-shadow: 6px 3px 10px 3px rgb(0, 0, 0, 0.1);
+    font-family: 'Pretendard-Regular', sans-serif;
+
+    .info{
+        display: flex;
+        align-items: center;
+        padding: 0px 40px;
+
+        .info-icon1{
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            background: url('../image/icon-lock.svg') no-repeat;
+            background-size: contain;
+        }
+
+        .info-icon2{
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            background: url('../image/icon-fire.svg') no-repeat;
+            background-size: contain;
+        }
+
+        .info-icon3{
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            background: url('../image/icon-lamp.svg') no-repeat;
+            background-size: contain;
+        }
+
+        .info-icon4{
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            background: url('../image/icon-lighting.svg') no-repeat;
+            background-size: contain;
+        }
+
+        .info-text{
+            h1{
+                margin-bottom: 0px;
+                font-size: 16px;
+                font-weight: 800;
+            }
+            p{
+                margin-top: 8px;
+                font-size: 14px;
+                font-weight: 400;
+            }
+        }
+    }
 }
 
-.main-board-matching{
+.main-notice-matching{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 15px;
     margin-bottom: 30px;
-    width: 1320px;
-    height: 300px;
-    background: #E5E5E5;
+    width: 100%;
+
+    .main-notice{    
+        width: 600px;
+        height: 250px;
+        border-radius: 10px;
+        border-left: 2px solid #E5E5E5; 
+        border-bottom: 3px solid #E5E5E5; 
+    }
+
+    .main-matching{
+        margin-left: 20px;
+        width: 100%;
+        height: 250px;
+        border-radius: 10px;
+        border-left: 2px solid #E5E5E5; 
+        border-bottom: 3px solid #E5E5E5; 
+
+        .header-title{
+            color: #EA4B48;
+        }
+    }
+}
+
+.popular-post-header,
+.main-notice-header,
+.main-matching-header{
+    display: flex;
+    padding: 15px;
+    justify-content: space-between;
+    font-family: 'Pretendard-Regular', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+
+    a{
+        color: #00B207;
+    }
+}
+
+// Link 밑줄 제거, hover
+a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
 }
