@@ -1,20 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
-import likeIcon from "../../assets/image/heart_yes.svg";
-import likeNoIcon from "../../assets/image/heart_no.svg";
-import replyArrow from "../../assets/image/reply_arrow.svg"; // Make sure to include the arrow image
 import ReadComponent from "../../components/board/ReadComponent";
 import CommentList from "../../components/board/CommentList";
 
 const ReadPage = () => {
-  const [replyForms, setReplyForms] = useState({});
-
-  const handleReplyClick = (commentId) => {
-    setReplyForms((prev) => ({
-      ...prev,
-      [commentId]: !prev[commentId],
-    }));
-  };
 
   return (
     //게시글 상세 조회 컴포넌트 여기부터
@@ -27,7 +16,7 @@ const ReadPage = () => {
         <button style={styles.nextButton}>다음 글</button>
       </div>
       <br />
-      <CommentList />
+      {/* <CommentList /> */}
     </div>
   );
 };
@@ -77,23 +66,3 @@ const styles = {
 };
 
 export default ReadPage;
-import React from 'react';
-import { useSearchParams } from 'react-router-dom';
-import ListComponent from '../../components/board/ListComponent';
-
-const ListPage = () => {
-    const [queryParams] = useSearchParams();
-
-    const page = queryParams.get('page') ? parseInt(queryParams.get('page')) : 1;
-    const size = queryParams.get('size') ? parseInt(queryParams.get('size')) : 10;
-
-    return (
-        <div className="contents">
-            <h2>리스트 컴포넌트 들어갈 자리</h2>
-            <p>{page} --- {size}</p>
-            <ListComponent />
-        </div>
-    );
-}
-
-export default ListPage;

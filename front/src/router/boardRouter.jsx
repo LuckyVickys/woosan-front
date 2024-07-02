@@ -4,10 +4,9 @@ const Loading = <div>Loading....</div>
 
 const ListPage = lazy(() => import("../pages/board/ListPage"))
 const ReadPage = lazy(() => import("../pages/board/ReadPage"))
-const ListPage = lazy(() => import("../pages/board/ListPage"));
 const AddPage = lazy(() => import("../pages/board/AddPage"));
 const ModifyPage = lazy(() => import("../pages/board/ModifyPage"));
-const ReadPage = lazy(() => import("../pages/board/ReadPage"));
+
 
 const boardRouter = () => {
     return [
@@ -41,14 +40,11 @@ const boardRouter = () => {
         },
         {
             path: "etc",
-            element: <Suspense fallback={Loading}><ListPage/></Suspense>
+            element: <Suspense fallback={Loading}><ListPage /></Suspense>
         },
+
+
         {
-            path: "read",
-            element: <Suspense fallback={Loading}><ReadPage/></Suspense>
-        }
-    ]
-}
             element: <Suspense fallback={Loading}><ListPage /></Suspense>
         },
         {
