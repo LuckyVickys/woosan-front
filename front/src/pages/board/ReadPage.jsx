@@ -16,7 +16,7 @@ const ReadPage = () => {
         <button style={styles.nextButton}>다음 글</button>
       </div>
       <br />
-      {/* <CommentList /> */}
+      <CommentList />
     </div>
   );
 };
