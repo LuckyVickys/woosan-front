@@ -35,7 +35,7 @@ const formatDate = (dateString) => {
 const ReadComponent = () => {
   const { id } = useParams();
   const [board, setBoard] = useState(initState);
-  const { moveToList, moveToModify, categoryName } = useCustomMove();
+  const { moveToRead, categoryName } = useCustomMove();
 
   useEffect(() => {
     getOne(id).then((data) => {
@@ -85,14 +85,6 @@ const ReadComponent = () => {
             <img key={index} src={url} alt={`image-${index}`} className="image" />
           ))}
         </div>
-      </div>
-      <div className="actions">
-        <button type="button" onClick={() => moveToList()}>
-          목록으로
-        </button>
-        <button type="button" onClick={() => moveToModify(board.id)}>
-          수정
-        </button>
       </div>
     </>
   );
