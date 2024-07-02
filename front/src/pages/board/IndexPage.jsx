@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom'; // 현재 경로 가져오기
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import BasicLayout from "../../layouts/BasicLayout";
 import SideBar from "../../components/common/SideBar";
@@ -76,8 +76,8 @@ const IndexPage = () => {
         <BasicLayout>
             <SideBar pageType="board" />
             <div className="contents">
-                <PageTitle main="꿀팁" sub={sub} info={info}/>
-                <SearchBar categories={categories} filters={filters}/>
+
+
                 {/* <button className='write-button'>
                     <NavLink to={'/board/read'} >게시글 읽기</NavLink>
                 </button> */}
