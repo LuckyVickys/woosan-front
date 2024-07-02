@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 const Loading = <div>Loading....</div>
 
 const ListPage = lazy(() => import("../pages/board/ListPage"))
+const ReadPage = lazy(() => import("../pages/board/ReadPage"))
 
 const boardRouter = ()=> {
     return [
@@ -42,6 +43,10 @@ const boardRouter = ()=> {
         {
             path: "etc",
             element: <Suspense fallback={Loading}><ListPage/></Suspense>
+        },
+        {
+            path: "read",
+            element: <Suspense fallback={Loading}><ReadPage/></Suspense>
         }
     ]
 }
