@@ -55,8 +55,8 @@ const IndexPage = () => {
     const categories = ['카테고리', '맛집', '청소', '요리', '재테크', '인테리어', '정책', '기타'];
     const filters = ['검색 필터', '제목', '작성자', '내용'];
 
-    const hideSearchBarPaths = ['/board/add', '/board/modify', '/board/:id'];
-    const hideSubAndInfoPaths = ['/board/add', '/board/modify', '/board/:id'];
+    const hideSearchBarPaths = ['/board/add', '/board/modify/:id', '/board/:id'];
+    const hideSubAndInfoPaths = ['/board/add', '/board/modify/:id', '/board/:id'];
 
     const shouldHideSearchBar = (pathname) => {
         return hideSearchBarPaths.some((path) => {
