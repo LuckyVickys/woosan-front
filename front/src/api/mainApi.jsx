@@ -13,18 +13,8 @@ export const getBest = async () => {
     return res.data;
 }
 
-// export const getLikeList = async (pageParam) => {
-//     const {page,size} =pageParam
-
-//     const res = await axios.get(`${prefix}/likeList`, {params: {page:page, size}})
-
-//     return res.data
-// }
-
-// export const getNoticelist = async (pageParam) => {
-//     const {page,size} =pageParam
-    
-//     const res = await axios.get(`${prefix}/noticelist`, {params: {page:page, size}})
-    
-//     return res.data
+// 모임 API 부분 주석 처리
+// export const getNewMatching = async () => {
+//     const res = await axios.get(`${host}/matching/`);
+//     return res.data;
 // }

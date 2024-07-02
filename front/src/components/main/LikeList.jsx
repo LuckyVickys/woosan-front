@@ -24,74 +24,11 @@ const LikeList = () => {
                         {likeItem.title}
                     </div>
                     <div className="likelist-like">
+                        <div className='likelist-like-icon'></div>
                         {likeItem.views}
                     </div>
                 </div>
             ))}
-            {/* <div className="likelist-post">
-                <div className="likelist-catagory">요리</div>
-                <div className="likelist-title">민물고기 뫼니에르 레시피</div>
-                <div className="likelist-like">
-                    <div className='likelist-like-icon'></div>
-                    <div className='likelist-like-count'>134</div>
-                </div>
-            </div>
-            <div className="likelist-post">
-                <div className="likelist-catagory">요리</div>
-                <div className="likelist-title">민물고기 뫼니에르 레시피</div>
-                <div className="likelist-like">
-                    <div className='likelist-like-icon'></div>
-                    <div className='likelist-like-count'>134</div>
-                </div>
-            </div>
-            <div className="likelist-post">
-                <div className="likelist-catagory">요리</div>
-                <div className="likelist-title">민물고기 뫼니에르 레시피</div>
-                <div className="likelist-like">
-                    <div className='likelist-like-icon'></div>
-                    <div className='likelist-like-count'>134</div>
-                </div>
-            </div>
-            <div className="likelist-post">
-                <div className="likelist-catagory">요리</div>
-                <div className="likelist-title">민물고기 뫼니에르 레시피</div>
-                <div className="likelist-like">
-                    <div className='likelist-like-icon'></div>
-                    <div className='likelist-like-count'>134</div>
-                </div>
-            </div>
-            <div className="likelist-post">
-                <div className="likelist-catagory">요리</div>
-                <div className="likelist-title">민물고기 뫼니에르 레시피</div>
-                <div className="likelist-like">
-                    <div className='likelist-like-icon'></div>
-                    <div className='likelist-like-count'>134</div>
-                </div>
-            </div>
-            <div className="likelist-post">
-                <div className="likelist-catagory">요리</div>
-                <div className="likelist-title">민물고기 뫼니에르 레시피</div>
-                <div className="likelist-like">
-                    <div className='likelist-like-icon'></div>
-                    <div className='likelist-like-count'>134</div>
-                </div>
-            </div>
-            <div className="likelist-post">
-                <div className="likelist-catagory">요리</div>
-                <div className="likelist-title">민물고기 뫼니에르 레시피</div>
-                <div className="likelist-like">
-                    <div className='likelist-like-icon'></div>
-                    <div className='likelist-like-count'>134</div>
-                </div>
-            </div>
-            <div className="likelist-post">
-                <div className="likelist-catagory">요리</div>
-                <div className="likelist-title">민물고기 뫼니에르 레시피</div>
-                <div className="likelist-like">
-                    <div className='likelist-like-icon'></div>
-                    <div className='likelist-like-count'>134</div>
-                </div>
-            </div> */}
         </div>
     );
 }
