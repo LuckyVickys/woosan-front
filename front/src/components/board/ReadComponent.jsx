@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import "../../assets/styles/App.scss";
 import { getOne } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove.jsx";
+import BoardDropDown from "./BoardDropDown.jsx";
 
 const initState = {
   id: 0,
@@ -37,6 +38,22 @@ const ReadComponent = () => {
   const [board, setBoard] = useState(initState);
   const { moveToRead, categoryName } = useCustomMove();
 
+  const [showBoardMenu, setShowBoardMenu] = useState(false);
+  const boardMenuRef = useRef(null);
+
+  const handleBoardMenuSelect = (boardMenu) => {
+    console.log("Selected Board Menu:", boardMenu);
+    setShowBoardMenu(false);
+  };
+
+  const handleClick = (event) => {
+    if (boardMenuRef.current && boardMenuRef.current.contains(event.target)) {
+      setShowBoardMenu(!showBoardMenu);
+    } else {
+      setShowBoardMenu(false);
+    }
+  };
+
   useEffect(() => {
     getOne(id).then((data) => {
       console.log(data);
@@ -44,13 +61,26 @@ const ReadComponent = () => {
     });
   }, [id]);
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
   if (!board.title) {
     return <div>로딩 중...</div>;
   }
 
   return (
     <>
-      <h1 className="post-title">{board.title}</h1>
+      <div className="post-title">
+        <h1 className="post-title-text">{board.title}</h1>
+        <div className="api-button">
+          <button className="papago-button"></button>
+          <button className="clova-button"></button>
+        </div>
+      </div>
       <div className="board-header">
         <div className="left">
           <img
@@ -72,7 +102,10 @@ const ReadComponent = () => {
             </span>{" "}
             {board.likesCount}
           </button>
-          <button className="menu-button">⋮</button>
+          <button className="menu-button" ref={boardMenuRef}>
+            ⋮
+            {showBoardMenu && <BoardDropDown onSelect={handleBoardMenuSelect} />}
+          </button>
         </div>
       </div>
       <p className="alert-message">
