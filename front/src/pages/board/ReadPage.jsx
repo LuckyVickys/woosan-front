@@ -10,14 +10,14 @@ const ReadPage = () => {
     <div style={styles.readPage}>
       <ReadComponent />
       <br />
-      <CommentList />
+      {/* <CommentList /> */}
 
-      <div style={styles.buttonArea}>
+      {/* <div style={styles.buttonArea}>
         <button style={styles.prevButton}>이전 글</button>
         <button style={styles.listButton}>목록으로</button>
         <button style={styles.nextButton}>다음 글</button>
       </div>
-      <br />
+      <br /> */}
       <CommentList />
     </div>
   );
