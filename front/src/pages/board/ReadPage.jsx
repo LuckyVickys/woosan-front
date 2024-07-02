@@ -9,6 +9,8 @@ const ReadPage = () => {
     //게시글 상세 조회 컴포넌트 여기부터
     <div style={styles.readPage}>
       <ReadComponent />
+      <br />
+      <CommentList />
 
       <div style={styles.buttonArea}>
         <button style={styles.prevButton}>이전 글</button>

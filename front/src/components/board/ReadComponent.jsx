@@ -28,14 +28,14 @@ const formatDate = (dateString) => {
   const hours = String(date.getHours()).padStart(2, '0');
   const minutes = String(date.getMinutes()).padStart(2, '0');
   const seconds = String(date.getSeconds()).padStart(2, '0');
-  
+
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
 const ReadComponent = () => {
   const { id } = useParams();
   const [board, setBoard] = useState(initState);
-  const { moveToList, moveToModify } = useCustomMove();
+  const { moveToList, moveToModify, categoryName } = useCustomMove();
 
   useEffect(() => {
     getOne(id).then((data) => {
@@ -85,6 +85,14 @@ const ReadComponent = () => {
             <img key={index} src={url} alt={`image-${index}`} className="image" />
           ))}
         </div>
+      </div>
+      <div className="actions">
+        <button type="button" onClick={() => moveToList()}>
+          목록으로
+        </button>
+        <button type="button" onClick={() => moveToModify(board.id)}>
+          수정
+        </button>
       </div>
     </>
   );
