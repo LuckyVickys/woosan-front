@@ -1,6 +1,17 @@
-// import axios from "axios"
-// export const API_SERVER_HOST = 'http://localhost:8080'
-// const prefix = `${API_SERVER_HOST}/api/main`
+import axios from "axios"
+import {API_SERVER_HOST} from "./boardApi.js";
+
+const host = `${API_SERVER_HOST}/api`
+
+export const getNotices = async () => {
+    const res = await axios.get(`${host}/board/notices`);
+    return res.data
+}
+
+export const getBest = async () => {
+    const res = await axios.get(`${host}/board/best`);
+    return res.data;
+}
 
 // export const getLikeList = async (pageParam) => {
 //     const {page,size} =pageParam

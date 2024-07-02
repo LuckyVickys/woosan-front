@@ -70,7 +70,7 @@ const ReadComponent = () => {
       <div className="post-content">
         <div>
           <div className="border-2 border-sky-200 mt-10 m-2 p-4">
-            <pre>{JSON.stringify(board, null, 2)}</pre>
+            <pre>{JSON.stringify(board, null, 2)}</pre>``
             <div className="flex justify-end p-4">
               <button type="button"
                 className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
