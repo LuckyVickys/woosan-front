@@ -1,23 +1,30 @@
 import React from 'react';
-// import { useEffect, useState } from 'react';
-// import { getNoticeList } from '../../api/mainApi';
+import { useEffect, useState } from 'react';
+import { getNotices } from '../../api/mainApi';
 
+const initState = {
+    noticelist: []
+}
 const NoticeList = () => {
 
-    // const initState = {
-    //     noticelist:[]
-    // }
-    // const [noticelistData, setNoticelistData] = useState([]);
+    const [notices, setNotices] = useState([]);
 
-    // useEffect(() => {
-    //     getNoticelist({ page: 0, size: 6 }).then(data => {
-    //         console.log(data)
-    //         setNoticelistData(data)
-    //     });
-    // }, []);
+    useEffect(() => {
+        getNotices().then(data => {
+            console.log(data)
+            setNotices(data)
+        });
+    }, []);
 
     return (
         <div className='noticelist'>
+            {notices.map(notice => (
+                <div key={notice.id} className="noticelist-post">
+                    <div className="noticelist-catagory">{notice.categoryName}</div>
+                    <div className="noticelist-title">{notice.title}</div>
+                    <div className="noticelist-date">{new Date(notice.regDate).toLocaleDateString()}</div>
+                </div>
+            ))}
             {/* {noticelistData.noticelist.map(noticelist =>
                 <div className="noticelist-post">
                     <div className="noticelist-catagory">
@@ -30,7 +37,7 @@ const NoticeList = () => {
                         {noticelist.like}
                     </div>
                 </div>
-            )} */}
+            )} 
             <div className="noticelist-post">
                 <div className="noticelist-catagory">공지</div>
                 <div className="noticelist-title">[게시판] 글 작성 시 안내사항</div>
@@ -60,7 +67,7 @@ const NoticeList = () => {
                 <div className="noticelist-catagory">공지</div>
                 <div className="noticelist-title">[게시판] 글 작성 시 안내사항</div>
                 <div className="noticelist-date">2024/6/24</div>
-            </div>
+            </div>*/}
         </div>
     );
 }

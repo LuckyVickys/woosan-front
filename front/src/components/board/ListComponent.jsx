@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // useNavigate 훅을 사용하여 페이지 이동
 import { getList } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import '../../assets/styles/board2.scss'; // Import the SCSS file
@@ -26,6 +27,7 @@ const initState = {
 const ListComponent = () => {
     const { page, size, categoryName, moveToList } = useCustomMove();
     const [serverData, setServerData] = useState(initState);
+    const navigate = useNavigate(); // useNavigate 훅 사용
 
     useEffect(() => {
         getList({ page, size, categoryName }).then(data => {
@@ -36,6 +38,10 @@ const ListComponent = () => {
 
     const handlePageChange = (newPage) => {
         moveToList({ page: newPage, size, categoryName });
+    };
+
+    const handleRowClick = (id) => {
+        navigate(`/board/${id}`); // 게시물의 세부 페이지로 이동
     };
 
     const { notice, popularList, boardPage } = serverData;
@@ -55,7 +61,7 @@ const ListComponent = () => {
                 </thead>
                 <tbody>
                     {notice && (
-                        <tr className="notice-row">
+                        <tr className="notice-row" onClick={() => handleRowClick(notice.id)}>
                             <td>공지</td>
                             <td>{notice.title}</td>
                             <td>{notice.nickname}</td>
@@ -65,7 +71,7 @@ const ListComponent = () => {
                         </tr>
                     )}
                     {popularList.map((item) => (
-                        <tr key={item.id} className="popular-row">
+                        <tr key={item.id} className="popular-row" onClick={() => handleRowClick(item.id)}>
                             <td>{item.categoryName}</td>
                             <td><span className="best-label">BEST</span> {item.title}</td>
                             <td>{item.nickname}</td>
@@ -75,7 +81,7 @@ const ListComponent = () => {
                         </tr>
                     ))}
                     {boardPage.dtoList.map((item) => (
-                        <tr key={item.id} className="board-row">
+                        <tr key={item.id} className="board-row" onClick={() => handleRowClick(item.id)}>
                             <td>{item.categoryName}</td>
                             <td>{item.title}</td>
                             <td>{item.nickname}</td>

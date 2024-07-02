@@ -1,37 +1,34 @@
 import React from 'react';
-// import { useEffect, useState } from 'react';
-// import { getLikeList } from '../../api/mainApi';
+import { useEffect, useState } from 'react';
+import { getBest } from '../../api/mainApi';
 
 const LikeList = () => {
 
-    // const initState = {
-    //     likeList:[]
-    // }
-    // const [likeListData, setLikeListData] = useState([]);
+    const [best, setBest] = useState([]);
 
-    // useEffect(() => {
-    //     getLikeList({ page: 0, size: 8 }).then(data => {
-    //         console.log(data)
-    //         setLikeListData(data)
-    //     });
-    // }, []);
+    useEffect(() => {
+        getBest().then(data => {
+            console.log(data)
+            setBest(data)
+        });
+    }, []);
 
     return (
         <div className='likelist'>
-            {/* {likeListData.likeList.map(likeList =>
-                <div className="likelist-post">
+            {best.map(likeItem => (
+                <div key={likeItem.id} className="likelist-post">
                     <div className="likelist-catagory">
-                        {likeList.catagory}
+                        {likeItem.categoryName}
                     </div>
                     <div className="likelist-title">
-                        {likeList.title}
+                        {likeItem.title}
                     </div>
                     <div className="likelist-like">
-                        {likeList.like}
+                        {likeItem.views}
                     </div>
                 </div>
-            )} */}
-            <div className="likelist-post">
+            ))}
+            {/* <div className="likelist-post">
                 <div className="likelist-catagory">요리</div>
                 <div className="likelist-title">민물고기 뫼니에르 레시피</div>
                 <div className="likelist-like">
@@ -94,7 +91,7 @@ const LikeList = () => {
                     <div className='likelist-like-icon'></div>
                     <div className='likelist-like-count'>134</div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
