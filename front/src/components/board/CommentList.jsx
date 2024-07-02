@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import replyArrow from "../../assets/image/reply_arrow.png";
 import '../../assets/styles/App.scss';
 import { getList } from "../../api/replyApi";
+import CommentDropDown from "./CommentDropDown";
 
 const initState = {
   "dtoList": [],
@@ -103,6 +104,29 @@ const CommentList = () => {
     ));
   };
 
+  const [showCommentMenu, setShowCommentMenu] = useState(false);
+  const commentMenuRef = useRef(null);
+
+  const handleCommentMenuSelect = (commentMenu) => {
+    console.log("Selected Comment Menu:", commentMenu);
+    setShowCommentMenu(false);
+  };
+
+  const handleClick = (event) => {
+    if (commentMenuRef.current && commentMenuRef.current.contains(event.target)) {
+      setShowCommentMenu(!showCommentMenu);
+    } else {
+      setShowCommentMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
   return (
     <>
       <h3 className="comment-header">댓글</h3>
@@ -128,7 +152,10 @@ const CommentList = () => {
                   </span>{" "}
                   {comment.likeCount}
                 </button>
-                <button className="menu-button">⋮</button>
+                <button className="menu-button" ref={commentMenuRef}>
+                  ⋮
+                  {showCommentMenu && <CommentDropDown onSelect={handleCommentMenuSelect} />}
+                </button>
               </div>
             </div>
             <p className="comment-text">{comment.content}</p>
