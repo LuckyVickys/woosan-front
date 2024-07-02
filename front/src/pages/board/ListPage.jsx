@@ -1,10 +1,11 @@
 import React from 'react';
+import ListComponent from '../../components/board/ListComponent';
 
 const ListPage = () => {
 
     return (
         <div className="contents">
-            콘텐츠 부분
+            <ListComponent />
         </div>
     );
 }

@@ -77,3 +77,23 @@ const styles = {
 };
 
 export default ReadPage;
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
+import ListComponent from '../../components/board/ListComponent';
+
+const ListPage = () => {
+    const [queryParams] = useSearchParams();
+
+    const page = queryParams.get('page') ? parseInt(queryParams.get('page')) : 1;
+    const size = queryParams.get('size') ? parseInt(queryParams.get('size')) : 10;
+
+    return (
+        <div className="contents">
+            <h2>리스트 컴포넌트 들어갈 자리</h2>
+            <p>{page} --- {size}</p>
+            <ListComponent />
+        </div>
+    );
+}
+
+export default ListPage;
