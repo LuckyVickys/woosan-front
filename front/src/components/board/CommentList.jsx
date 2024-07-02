@@ -20,7 +20,7 @@ const initState = {
   "nextPage": 0,
   "totalPage": 0,
   "current": 1
-}
+};
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -165,31 +165,33 @@ const CommentList = () => {
           </div>
         ))}
 
-        <div className="pagination">
-          <button 
-            className="page-button" 
-            onClick={() => handlePageChange(replies.pageRequestDTO.page - 1)}
-            disabled={!replies.prev}
-          >
-            {"<"}
-          </button>
-          {replies.pageNumList.map((page) => (
-            <button
-              key={page}
-              className={`page-button ${page === replies.pageRequestDTO.page ? 'active-page-button' : ''}`}
-              onClick={() => handlePageChange(page)}
+        {replies.dtoList.length > 0 && (
+          <div className="pagination">
+            <button 
+              className="page-button" 
+              onClick={() => handlePageChange(replies.pageRequestDTO.page - 1)}
+              disabled={!replies.prev}
             >
-              {page}
+              {"<"}
             </button>
-          ))}
-          <button 
-            className="page-button" 
-            onClick={() => handlePageChange(replies.pageRequestDTO.page + 1)}
-            disabled={!replies.next}
-          >
-            {">"}
-          </button>
-        </div>
+            {replies.pageNumList.map((page) => (
+              <button
+                key={page}
+                className={`page-button ${page === replies.pageRequestDTO.page ? 'active-page-button' : ''}`}
+                onClick={() => handlePageChange(page)}
+              >
+                {page}
+              </button>
+            ))}
+            <button 
+              className="page-button" 
+              onClick={() => handlePageChange(replies.pageRequestDTO.page + 1)}
+              disabled={!replies.next}
+            >
+              {">"}
+            </button>
+          </div>
+        )}
 
         <div className="comment-input">
           <img
