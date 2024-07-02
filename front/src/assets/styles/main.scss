@@ -48,25 +48,25 @@
     .popular-post{
         margin-left: 20px;
         width: 655px;
-        height: 330px;
+        height: 350px;
         border-radius: 10px;
         border-left: 2px solid #E5E5E5; 
         border-bottom: 3px solid #E5E5E5; 
 
         .likelist-post{
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 6px 15px;
+            padding: 4px 15px;
             font-family: 'Pretendard-Regular', sans-serif;
             font-size: 14px;
 
             .likelist-catagory{
+                margin-right: 10px;
                 color:#00B207;
                 font-weight: 800;
             }
             .likelist-title{
-                width: 75%;
+                margin-right: auto;
                 font-weight: 400;
             }
             .likelist-like{
@@ -158,7 +158,7 @@
 
     .main-notice{    
         width: 600px;
-        height: 250px;
+        height: 220px;
         border-radius: 10px;
         border-left: 2px solid #E5E5E5; 
         border-bottom: 3px solid #E5E5E5; 
@@ -176,8 +176,8 @@
                 font-weight: 800;
             }
             .noticelist-title{
-                width: 67.5%;
-                font-weight: 00;
+                width: 65%;
+                font-weight: 400;
             }
             .noticelist-like{
                 display: flex;
@@ -190,13 +190,134 @@
     .main-matching{
         margin-left: 20px;
         width: 100%;
-        height: 250px;
+        height: 220px;
         border-radius: 10px;
         border-left: 2px solid #E5E5E5; 
         border-bottom: 3px solid #E5E5E5; 
 
         .header-title{
             color: #EA4B48;
+        }
+
+        .newMatchingList{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 15px;
+            
+            .newMatchingList-post{
+                display: flex;
+                justify-content: space-between;
+    
+                .newMatchingList-img{
+                    align-items: center;
+                    margin-right: 15px;
+                    width: 150px;
+                    height: 150px;
+                    background: #E5E5E5;
+                    border-radius: 10px;
+                }
+                .newMatchingList-contents{
+                    width: 300px;
+                    font-family: 'Pretendard-Regular', sans-serif;
+
+                    .newMatchingList-catagory-tag,
+                    .newMatchingList-location,
+                    .newMatchingList-date,
+                    .newMatchingList-nickname,
+                    .newMatchingList-matching{
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 5px;
+                    }
+
+                    .newMatchingList-catagory-tag{
+                        color: #fff;
+                        font-size: 14px;
+                        font-weight: 400;
+
+                        .newMatchingList-regurlary,
+                        .newMatchingList-temporary,
+                        .newMatchingList-self,
+                        .newMatchingList-tag{
+                            display: flex;
+                            justify-content:center;
+                            align-items: center;
+                            padding: 0px 10px;
+                            height: 30px;
+                            border-radius: 5px;
+
+                        }
+                        .newMatchingList-regurlary{
+                            margin-right: 5px;
+                            background: #EA4B48;
+                        }
+
+                        .newMatchingList-temporary{
+                            margin-right: 5px;
+                            background: #FDCA00;
+                        }
+
+                        .newMatchingList-self{
+                            margin-right: 5px;
+                            background: #2388FF;
+                        }
+
+                        .newMatchingList-tag{
+                            background: #00B207;
+                        }
+                    }
+
+                    .newMatchingList-title{
+                        margin-bottom: 5px;
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+
+                    .newMatchingList-location-icon,
+                    .newMatchingList-date-icon,
+                    .newMatchingList-nickname-icon,
+                    .newMatchingList-matching-icon{
+                        margin-right: 5px;
+                        width: 20px;
+                        height: 20px;
+                    }
+                    .newMatchingList-location-icon{
+                        background: url('../image/icon-location.svg') no-repeat;
+                        background-size: contain;
+                    }
+                    .newMatchingList-date-icon{
+                        background: url('../image/icon-calendar.svg') no-repeat;
+                        background-size: contain;
+                    }
+                    .newMatchingList-nickname-icon{
+                        background: url('../image/icon-person.svg') no-repeat;
+                        background-size: contain;
+                    }
+                    .newMatchingList-matching-icon{
+                        background: url('../image/icon-matching.svg') no-repeat;
+                        background-size: contain;
+                    }
+
+                    .newMatchingList-location-text,
+                    .newMatchingList-date-text,
+                    .newMatchingList-nickname-text,
+                    .newMatchingList-matching-text{
+                        font-size: 14px;
+                        font-weight: 400;
+                    }
+                    .newMatchingList-nickname-matching{
+                        display: flex;
+                        justify-content:space-between;
+                        align-items: center;
+                    }
+                    .newMatchingList-matching-text{
+                        display: flex;
+                        justify-content:center;
+                        align-items: center;
+                    }
+                }
+            }
         }
     }
 }

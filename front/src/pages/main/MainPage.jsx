@@ -5,10 +5,7 @@ import '../../assets/styles/App.scss';
 import BasicLayout from "../../layouts/BasicLayout";
 import LikeList from "../../components/main/LikeList";
 import NoticeList from "../../components/main/NoticeList";
-
-const NewMatchingList = () => {
-
-}
+import NewMatchingList from "../../components/main/NewMatchingList"
 
 const MainPage = () => {
     return (
