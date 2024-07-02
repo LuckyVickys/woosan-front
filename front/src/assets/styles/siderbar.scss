@@ -1,0 +1,88 @@
+.sidebar {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 312px;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    .catagory {
+        width: 100%;
+        padding: 0px;
+        box-sizing: border-box;
+
+        .catagory-title {
+            font-size: 18px;
+            padding: 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .sub-category {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 15px 0px 15px 5px;
+            margin: 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+
+            &:hover {
+                background-color: #f0f0f0;
+            }
+
+            &.active,
+            &.active:hover {
+                background-color: #EDF2EE;
+                color: #00B207;
+
+                .icon {
+                    color: #00B207;
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    width: 3px;
+                    height: 55px;
+                    background-color: #20B526;
+                }
+            }
+
+            button {
+                background: none;
+                border: none;
+                font-size: 16px;
+                text-align: left;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                color: #666666;
+
+                &.active {
+                    font-weight: bold;
+                    color: #00B207;
+                }
+
+                &:focus {
+                    outline: none;
+                }
+
+                &:hover {
+                    color: #00B207;
+                }
+            }
+
+            .icon {
+                margin-right: 8px;
+                font-size: 18px;
+                color: #666666;
+
+                &.active {
+                    color: #00B207;
+                }
+            }
+        }
+    }
+}

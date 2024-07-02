@@ -4,7 +4,7 @@ import matchingRouter from "./matchingRouter"
 import csRouter from "./csRouter"
 import myPageRouter from "./myPageRouter";
 
-import {createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 // const {createBrowserRouter} = require("react-router-dom");
 
 const Loading = <div>Loading....</div>
@@ -18,27 +18,27 @@ const MyPage = lazy(() => import("../pages/myPage/IndexPage"))
 
 const root = createBrowserRouter([
     {
-        path: "", 
-        element: <Suspense fallback={Loading}><Main/></Suspense>
+        path: "",
+        element: <Suspense fallback={Loading}><Main /></Suspense>
     },
     {
         path: "board",
-        element: <Suspense fallback={Loading}><Board/></Suspense>,
+        element: <Suspense fallback={Loading}><Board /></Suspense>,
         children: boardRouter()
     },
     {
         path: "matching",
-        element: <Suspense fallback={Loading}><Matching/></Suspense>,
+        element: <Suspense fallback={Loading}><Matching /></Suspense>,
         children: matchingRouter()
     },
     {
         path: "cs",
-        element: <Suspense fallback={Loading}><CS/></Suspense>,
+        element: <Suspense fallback={Loading}><CS /></Suspense>,
         children: csRouter()
     },
     {
         path: "myPage",
-        element: <Suspense fallback={Loading}><MyPage/></Suspense>,
+        element: <Suspense fallback={Loading}><MyPage /></Suspense>,
         children: myPageRouter()
     },
     // {

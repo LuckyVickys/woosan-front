@@ -1,0 +1,147 @@
+.list-component {
+    padding: 20px;
+}
+
+.list-title {
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+    thead {
+        background-color: #EDF2EE;
+
+        th {
+            padding: 10px;
+            background-color: #EDF2EE;
+            border-bottom: 2px solid #d0d0d0;
+
+            &:nth-child(1) {
+                text-align: left;
+                /* 카테고리 - 왼쪽 정렬 */
+            }
+
+            &:nth-child(2) {
+                text-align: left;
+                /* 제목 - 왼쪽 정렬 */
+            }
+
+            &:nth-child(3) {
+                text-align: center;
+                /* 작성자 - 가운데 정렬 */
+            }
+
+            &:nth-child(4) {
+                text-align: center;
+                /* 작성 날짜 - 가운데 정렬 */
+            }
+
+            &:nth-child(5) {
+                text-align: right;
+                /* 조회수 - 오른쪽 정렬 */
+            }
+
+            &:nth-child(6) {
+                text-align: right;
+                /* 추천 - 오른쪽 정렬 */
+            }
+        }
+    }
+
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #e0e0e0;
+
+        &:nth-child(1) {
+            text-align: left;
+            /* 카테고리 - 왼쪽 정렬 */
+        }
+
+        &:nth-child(2) {
+            text-align: left;
+            /* 제목 - 왼쪽 정렬 */
+        }
+
+        &:nth-child(3) {
+            text-align: center;
+            /* 작성자 - 가운데 정렬 */
+        }
+
+        &:nth-child(4) {
+            text-align: center;
+            /* 작성 날짜 - 가운데 정렬 */
+        }
+
+        &:nth-child(5) {
+            text-align: right;
+            /* 조회수 - 오른쪽 정렬 */
+        }
+
+        &:nth-child(6) {
+            text-align: right;
+            /* 추천 - 오른쪽 정렬 */
+        }
+    }
+
+    .notice-row {
+        td {
+            color: #EA4B48;
+        }
+    }
+
+    .popular-row {
+        .best-label {
+            color: #00B207;
+            margin-right: 5px;
+        }
+    }
+
+    .board-row {}
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    .pagination-button {
+        margin: 0 5px;
+        padding: 10px;
+        background-color: #fff;
+        color: #666666;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: none;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+
+        &.active {
+            background-color: #00B207;
+            color: #ffffff;
+            border: none;
+        }
+
+        &:disabled {
+            background-color: #F2F2F2;
+            color: #B3B3B3;
+            cursor: not-allowed;
+        }
+    }
+
+    .pagination-button.prev,
+    .pagination-button.next {
+        background-color: #F2F2F2;
+    }
+}

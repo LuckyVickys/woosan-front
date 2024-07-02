@@ -63,4 +63,64 @@ const ReadComponent = () => {
   );
 };
 
+import { useEffect, useState } from "react";
+import { getOne } from "../../api/boardApi";
+import useCustomMove from "../../hooks/useCustomMove.jsx";
+
+const initState = {
+    id: 0,
+    writerId: 0,
+    nickname: '',
+    title: '',
+    content: '',
+    regDate: '',
+    views: 0,
+    likesCount: 0,
+    categoryName: '',
+    images: null,
+    filePathUrl: []
+};
+
+const ReadComponent = ({ id }) => {
+    const [board, setBoard] = useState(initState);
+    const { moveToList, moveToModify } = useCustomMove();
+
+    useEffect(() => {
+        getOne(id).then(data => {
+            console.log(data);
+            setBoard(data);
+        });
+    }, [id]);
+    if (!board) {
+        return <div>Loading...</div>;
+    }
+
+
+
+    return (
+        <div>
+            <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+                <pre>{JSON.stringify(board, null, 2)}</pre>
+                <div className="flex justify-end p-4">
+                    <button type="button"
+                        className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+                        onClick={() => moveToList()}
+                    >
+                        List
+                    </button>
+                    <button type="button"
+                        className="rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
+                        onClick={() => moveToModify(id)}
+                    >
+                        Modify
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    );
+}
+
+
+
 export default ReadComponent;
