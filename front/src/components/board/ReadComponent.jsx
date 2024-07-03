@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import "../../assets/styles/App.scss";
-import { getBoard, getOne, translate } from "../../api/boardApi";
+import { getBoard, translate } from "../../api/boardApi";
 import { toggleLike, getLikes } from "../../api/likesApi";
 import useCustomMove from "../../hooks/useCustomMove.jsx";
 import BoardDropDown from "./BoardDropDown.jsx";
@@ -33,16 +33,24 @@ const formatDate = (dateString) => {
   const minutes = String(date.getMinutes()).padStart(2, '0');
   const seconds = String(date.getSeconds()).padStart(2, '0');
 
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  return ${ year } -${ month } -${ day } ${ hours }:${ minutes }:${ seconds };
 };
 
 const ReadComponent = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const { serverData } = location.state || {}; // 기본값 설정
+
   const [board, setBoard] = useState(initState);
   const [liked, setLiked] = useState(false);
   const [showBoardMenu, setShowBoardMenu] = useState(false);
   const boardMenuRef = useRef(null);
+
+
+  console.log("serverData" + serverData)
+
   const { page, size, categoryName, moveToList } = useCustomMove();
+
 
   const handleLikeToggle = async () => {
     try {
@@ -125,24 +133,25 @@ const ReadComponent = () => {
         </div>
         <div className="right">
           <button
-            className={`like-button ${liked ? "liked" : "not-liked"}`}
-            onClick={handleLikeToggle}
+            className={like - button ${liked ? "liked" : "not-liked"}}
+          onClick={handleLikeToggle}
           >
-            <span role="img" aria-label="like">
-              <img
-                src={liked ? likeIcon : likeNoIcon}
-                className="likeIcon"
-                alt="likeIcon"
-              />
-            </span>{" "}
-            {board.likesCount}
-          </button>
-          <button className="menu-button" ref={boardMenuRef} onClick={handleBoardMenuSelect}>
-            ⋮
-            {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
-          </button>
-        </div>
+
+          <span role="img" aria-label="like">
+            <img
+              src={liked ? likeIcon : likeNoIcon}
+              className="likeIcon"
+              alt="likeIcon"
+            />
+          </span>{" "}
+          {board.likesCount}
+        </button>
+        <button className="menu-button" ref={boardMenuRef} onClick={handleBoardMenuSelect}>
+          ⋮
+          {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
+        </button>
       </div>
+    </div >
       <p className="alert-message">
         ※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수 있습니다.
       </p>
@@ -150,11 +159,11 @@ const ReadComponent = () => {
         {board.content}
         <div className="image-container">
           {board.filePathUrl.map((url, index) => (
-            <img key={index} src={url} alt={`image-${index}`} className="image" />
+            <img key={index} src={url} alt={image-${index}} className="image" />
           ))}
         </div>
       </div>
-      {/* <PageComponent /> */}
+      <PageComponent />
     </>
   );
 };
