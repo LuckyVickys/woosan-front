@@ -46,8 +46,6 @@ const ReadComponent = () => {
   const boardMenuRef = useRef(null);
 
 
-  console.log("serverData" + serverData)
-
   const { page, size, categoryName, moveToList } = useCustomMove();
 
 
