@@ -71,7 +71,7 @@ const SideBar = ({ pageType }) => {
                         </div>
                     </>
                 )}
-                 {pageType === 'matching' && (
+                {pageType === 'matching' && (
                     <>
                         <div className="category-title">모임</div>
                         <div className={`sub-category ${activeCategory === 'total' ? 'active' : ''}`}>
