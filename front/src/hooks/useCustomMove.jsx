@@ -49,7 +49,7 @@ const useCustomMove = () => {
 
     const moveToRead = (num) => {
         navigate({
-            pathname: `/board/read/${num}`,
+            pathname: `/board/${num}`,
             search: queryDefault
         });
     };

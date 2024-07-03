@@ -3,9 +3,12 @@ import { useParams } from "react-router-dom";
 import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import "../../assets/styles/App.scss";
-import { getOne, translate } from "../../api/boardApi";
+import { getBoard, getOne, translate } from "../../api/boardApi";
+import { toggleLike } from "../../api/likesApi";
 import useCustomMove from "../../hooks/useCustomMove.jsx";
 import BoardDropDown from "./BoardDropDown.jsx";
+import PageComponent from "../../components/board/PageComponent";
+import useCustomMove from "../../hooks/useCustomMove";
 
 const initState = {
   id: 0,
@@ -36,10 +39,10 @@ const formatDate = (dateString) => {
 const ReadComponent = () => {
   const { id } = useParams();
   const [board, setBoard] = useState(initState);
-  const { moveToRead, categoryName } = useCustomMove();
-
+  const [liked, setLiked] = useState(false);
   const [showBoardMenu, setShowBoardMenu] = useState(false);
   const boardMenuRef = useRef(null);
+  const { page, size, categoryName, moveToList } = useCustomMove();
 
   const handleBoardMenuSelect = useCallback((boardMenu) => {
     console.log("Selected Board Menu:", boardMenu);
@@ -54,10 +57,30 @@ const ReadComponent = () => {
     }
   }, [showBoardMenu]);
 
+
+  const handleLikeToggle = async () => {
+    try {
+      const toggleRequest = {
+        memberId: 1, // 예: 현재 로그인된 사용자의 ID
+        type: "게시물", // 예: 좋아요의 대상 타입
+        targetId: id, // 현재 게시물의 ID
+      };
+      await toggleLike(toggleRequest);
+      setLiked(!liked);
+      setBoard((prevBoard) => ({
+        ...prevBoard,
+        likesCount: liked ? prevBoard.likesCount - 1 : prevBoard.likesCount + 1,
+      }));
+    } catch (error) {
+      console.error("Failed to toggle like", error);
+    }
+  };
+
   useEffect(() => {
-    getOne(id).then((data) => {
+    getBoard(id).then((data) => {
       console.log(data);
       setBoard(data);
+      setLiked(data.liked); // 서버에서 사용자가 좋아요를 눌렀는지 여부를 받아와야 합니다.
     });
   }, [id]);
 
@@ -108,15 +131,22 @@ const ReadComponent = () => {
           </div>
         </div>
         <div className="right">
-          <button className="like-button">
+          <button
+            className={`like-button ${liked ? "liked" : "not-liked"}`}
+            onClick={handleLikeToggle}
+          >
             <span role="img" aria-label="like">
-              <img src={likeNoIcon} alt="likeIcon" />
+              <img
+                src={liked ? likeIcon : likeNoIcon}
+                className="likeIcon"
+                alt="likeIcon"
+              />
             </span>{" "}
             {board.likesCount}
           </button>
           <button className="menu-button" ref={boardMenuRef}>
             ⋮
-            {showBoardMenu && <BoardDropDown onSelect={handleBoardMenuSelect} />}
+            {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
           </button>
         </div>
       </div>
@@ -131,6 +161,7 @@ const ReadComponent = () => {
           ))}
         </div>
       </div>
+      {/* <PageComponent /> */}
     </>
   );
 };
