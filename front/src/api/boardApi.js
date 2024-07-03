@@ -74,3 +74,16 @@ export const deleteBoard = async (id) => {
     }
 }
 
+
+
+export const translate = async (id, boardDTO) => {
+    try {
+        const response = await axios.post(`${prefix}/${id}/translate`, boardDTO);
+        return response.data;
+    } catch (error) {
+        console.error('Error translating board:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
+
+
