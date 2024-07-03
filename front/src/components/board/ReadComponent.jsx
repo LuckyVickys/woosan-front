@@ -4,10 +4,11 @@ import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import "../../assets/styles/App.scss";
 import { getBoard, getOne, translate } from "../../api/boardApi";
-import { toggleLike } from "../../api/likesApi";
+import { toggleLike, getLikes } from "../../api/likesApi";
 import useCustomMove from "../../hooks/useCustomMove.jsx";
 import BoardDropDown from "./BoardDropDown.jsx";
 import PageComponent from "../../components/board/PageComponent";
+
 
 const initState = {
   id: 0,
@@ -43,20 +44,6 @@ const ReadComponent = () => {
   const boardMenuRef = useRef(null);
   const { page, size, categoryName, moveToList } = useCustomMove();
 
-  const handleBoardMenuSelect = useCallback((boardMenu) => {
-    console.log("Selected Board Menu:", boardMenu);
-    setShowBoardMenu(false);
-  }, []);
-
-  const handleClick = useCallback((event) => {
-    if (boardMenuRef.current && boardMenuRef.current.contains(event.target)) {
-      setShowBoardMenu(!showBoardMenu);
-    } else {
-      setShowBoardMenu(false);
-    }
-  }, [showBoardMenu]);
-
-
   const handleLikeToggle = async () => {
     try {
       const toggleRequest = {
@@ -65,7 +52,7 @@ const ReadComponent = () => {
         targetId: id, // 현재 게시물의 ID
       };
       await toggleLike(toggleRequest);
-      setLiked(!liked);
+      setLiked((prevLiked) => !prevLiked);
       setBoard((prevBoard) => ({
         ...prevBoard,
         likesCount: liked ? prevBoard.likesCount - 1 : prevBoard.likesCount + 1,
@@ -79,16 +66,18 @@ const ReadComponent = () => {
     getBoard(id).then((data) => {
       console.log(data);
       setBoard(data);
-      setLiked(data.liked); // 서버에서 사용자가 좋아요를 눌렀는지 여부를 받아와야 합니다.
+    });
+
+    const toggleRequest = {
+      memberId: 1,
+      type: "게시물",
+      targetId: id
+    }
+
+    getLikes(toggleRequest).then((likeStatus) => {
+      setLiked(likeStatus);
     });
   }, [id]);
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClick);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-    };
-  }, [handleClick]);
 
   const handlePapagoTranslate = async () => {
     try {
@@ -102,6 +91,11 @@ const ReadComponent = () => {
       console.error("번역 중 오류 발생:", error);
     }
   };
+
+  const handleBoardMenuSelect = () => {
+    setShowBoardMenu(!showBoardMenu);
+  };
+
   if (!board.title) {
     return <div>로딩 중...</div>;
   }
@@ -143,7 +137,7 @@ const ReadComponent = () => {
             </span>{" "}
             {board.likesCount}
           </button>
-          <button className="menu-button" ref={boardMenuRef}>
+          <button className="menu-button" ref={boardMenuRef} onClick={handleBoardMenuSelect}>
             ⋮
             {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
           </button>

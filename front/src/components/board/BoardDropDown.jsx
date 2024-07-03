@@ -5,7 +5,7 @@ const BoardDropDown = ({ id, onSelect }) => {
     const navigate = useNavigate();
 
     const handleModifyButtonClick = () => {
-        navigate(`/board/modify/${id}`); // 올바른 id를 포함한 경로로 이동
+        navigate(`/board/modify/${id}`);
     };
 
     return (
