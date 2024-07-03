@@ -8,7 +8,6 @@ import { toggleLike } from "../../api/likesApi";
 import useCustomMove from "../../hooks/useCustomMove.jsx";
 import BoardDropDown from "./BoardDropDown.jsx";
 import PageComponent from "../../components/board/PageComponent";
-import useCustomMove from "../../hooks/useCustomMove";
 
 const initState = {
   id: 0,
