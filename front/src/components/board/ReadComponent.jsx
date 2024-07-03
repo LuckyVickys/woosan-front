@@ -9,6 +9,7 @@ import useCustomMove from "../../hooks/useCustomMove.jsx";
 import BoardDropDown from "./BoardDropDown.jsx";
 import PageComponent from "../../components/board/PageComponent";
 
+
 const initState = {
   id: 0,
   writerId: 0,
@@ -45,7 +46,11 @@ const ReadComponent = () => {
   const [showBoardMenu, setShowBoardMenu] = useState(false);
   const boardMenuRef = useRef(null);
 
+
   console.log("serverData" + serverData)
+
+  const { page, size, categoryName, moveToList } = useCustomMove();
+
 
   const handleLikeToggle = async () => {
     try {
@@ -131,6 +136,7 @@ const ReadComponent = () => {
             className={like - button ${liked ? "liked" : "not-liked"}}
           onClick={handleLikeToggle}
           >
+
           <span role="img" aria-label="like">
             <img
               src={liked ? likeIcon : likeNoIcon}
