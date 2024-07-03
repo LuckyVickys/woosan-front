@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import "../../assets/styles/App.scss";
-import { getBoard, getOne, translate } from "../../api/boardApi";
-import { toggleLike } from "../../api/likesApi";
+import { getBoard, translate } from "../../api/boardApi";
+import { toggleLike, getLikes } from "../../api/likesApi";
 import useCustomMove from "../../hooks/useCustomMove.jsx";
 import BoardDropDown from "./BoardDropDown.jsx";
 import PageComponent from "../../components/board/PageComponent";
@@ -32,30 +32,20 @@ const formatDate = (dateString) => {
   const minutes = String(date.getMinutes()).padStart(2, '0');
   const seconds = String(date.getSeconds()).padStart(2, '0');
 
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  return ${ year } -${ month } -${ day } ${ hours }:${ minutes }:${ seconds };
 };
 
 const ReadComponent = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const { serverData } = location.state || {}; // 기본값 설정
+
   const [board, setBoard] = useState(initState);
   const [liked, setLiked] = useState(false);
   const [showBoardMenu, setShowBoardMenu] = useState(false);
   const boardMenuRef = useRef(null);
-  const { page, size, categoryName, moveToList } = useCustomMove();
 
-  const handleBoardMenuSelect = useCallback((boardMenu) => {
-    console.log("Selected Board Menu:", boardMenu);
-    setShowBoardMenu(false);
-  }, []);
-
-  const handleClick = useCallback((event) => {
-    if (boardMenuRef.current && boardMenuRef.current.contains(event.target)) {
-      setShowBoardMenu(!showBoardMenu);
-    } else {
-      setShowBoardMenu(false);
-    }
-  }, [showBoardMenu]);
-
+  console.log("serverData" + serverData)
 
   const handleLikeToggle = async () => {
     try {
@@ -65,7 +55,7 @@ const ReadComponent = () => {
         targetId: id, // 현재 게시물의 ID
       };
       await toggleLike(toggleRequest);
-      setLiked(!liked);
+      setLiked((prevLiked) => !prevLiked);
       setBoard((prevBoard) => ({
         ...prevBoard,
         likesCount: liked ? prevBoard.likesCount - 1 : prevBoard.likesCount + 1,
@@ -79,16 +69,18 @@ const ReadComponent = () => {
     getBoard(id).then((data) => {
       console.log(data);
       setBoard(data);
-      setLiked(data.liked); // 서버에서 사용자가 좋아요를 눌렀는지 여부를 받아와야 합니다.
+    });
+
+    const toggleRequest = {
+      memberId: 1,
+      type: "게시물",
+      targetId: id
+    }
+
+    getLikes(toggleRequest).then((likeStatus) => {
+      setLiked(likeStatus);
     });
   }, [id]);
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClick);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-    };
-  }, [handleClick]);
 
   const handlePapagoTranslate = async () => {
     try {
@@ -102,6 +94,11 @@ const ReadComponent = () => {
       console.error("번역 중 오류 발생:", error);
     }
   };
+
+  const handleBoardMenuSelect = () => {
+    setShowBoardMenu(!showBoardMenu);
+  };
+
   if (!board.title) {
     return <div>로딩 중...</div>;
   }
@@ -131,24 +128,24 @@ const ReadComponent = () => {
         </div>
         <div className="right">
           <button
-            className={`like-button ${liked ? "liked" : "not-liked"}`}
-            onClick={handleLikeToggle}
+            className={like - button ${liked ? "liked" : "not-liked"}}
+          onClick={handleLikeToggle}
           >
-            <span role="img" aria-label="like">
-              <img
-                src={liked ? likeIcon : likeNoIcon}
-                className="likeIcon"
-                alt="likeIcon"
-              />
-            </span>{" "}
-            {board.likesCount}
-          </button>
-          <button className="menu-button" ref={boardMenuRef}>
-            ⋮
-            {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
-          </button>
-        </div>
+          <span role="img" aria-label="like">
+            <img
+              src={liked ? likeIcon : likeNoIcon}
+              className="likeIcon"
+              alt="likeIcon"
+            />
+          </span>{" "}
+          {board.likesCount}
+        </button>
+        <button className="menu-button" ref={boardMenuRef} onClick={handleBoardMenuSelect}>
+          ⋮
+          {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
+        </button>
       </div>
+    </div >
       <p className="alert-message">
         ※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수 있습니다.
       </p>
@@ -156,11 +153,11 @@ const ReadComponent = () => {
         {board.content}
         <div className="image-container">
           {board.filePathUrl.map((url, index) => (
-            <img key={index} src={url} alt={`image-${index}`} className="image" />
+            <img key={index} src={url} alt={image-${index}} className="image" />
           ))}
         </div>
       </div>
-      {/* <PageComponent /> */}
+      <PageComponent />
     </>
   );
 };

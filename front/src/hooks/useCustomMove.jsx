@@ -47,10 +47,11 @@ const useCustomMove = () => {
         });
     };
 
-    const moveToRead = (num) => {
+    const moveToRead = (num, serverData) => {
         navigate({
             pathname: `/board/${num}`,
-            search: queryDefault
+            search: queryDefault,
+            state: { serverData }
         });
     };
 

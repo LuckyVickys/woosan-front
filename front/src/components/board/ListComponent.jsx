@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 훅을 사용하여 페이지 이동
+import { useNavigate } from "react-router-dom";
 import { getList } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import '../../assets/styles/board2.scss';
 import ListPageComponent from "./ListPageComponent";
+import ReadComponent from "./ReadComponent";
 
 const initState = {
     boardPage: {
@@ -26,11 +27,9 @@ const initState = {
 };
 
 const ListComponent = () => {
-    const { page, size, categoryName, moveToList } = useCustomMove();
+    const { page, size, categoryName, moveToList, moveToRead } = useCustomMove();
 
     const [serverData, setServerData] = useState(initState);
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         getList({ page, size, categoryName }).then(data => {
@@ -42,7 +41,8 @@ const ListComponent = () => {
     }, [page, size, categoryName]);
 
     const handleRowClick = (id) => {
-        navigate(`/board/${id}`); // 게시물의 세부 페이지로 이동
+        moveToRead(id, serverData)
+        console.log("HandleRowClick:", serverData);
     };
 
     const { notice, popularList, boardPage } = serverData;
@@ -93,7 +93,7 @@ const ListComponent = () => {
                     ))}
                 </tbody>
             </table>
-            <ListPageComponent serverData={boardPage} movePage={moveToList} />
+            <ListPageComponent serverData={serverData} movePage={moveToList} />
         </div>
     );
 };
