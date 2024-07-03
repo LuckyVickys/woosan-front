@@ -91,7 +91,10 @@ const CommentList = () => {
               </span>{" "}
               {reply.likeCount}
             </button>
-            <button className="menu-button">⋮</button>
+            <button className="menu-button" ref={commentMenuRef} onClick={() => handleDropDownClick(reply.id)}>
+                ⋮
+                {openCommentDropDown[reply.id] && <CommentDropDown onSelect={handleDropDownMenu} replyId={reply.id} />}
+            </button>
           </div>
         </div>
         <p className="reply-text">{reply.content}</p>
@@ -104,19 +107,60 @@ const CommentList = () => {
     ));
   };
 
-  const [showCommentMenu, setShowCommentMenu] = useState(false);
+  const [openCommentDropDown, setOpenCommentDropDown] = useState({});
   const commentMenuRef = useRef(null);
 
-  const handleCommentMenuSelect = (commentMenu) => {
-    console.log("Selected Comment Menu:", commentMenu);
-    setShowCommentMenu(false);
+  const handleDropDownMenu = (menu, commentId, replyId) => {
+    console.log("Selected Comment Menu:", menu);
+
+    if (commentId) {
+      console.log("Selected commentId:", commentId);
+
+      switch (menu) {
+        case "report":
+            alert(commentId, "신고 처리 완료");
+            break;
+        case "msg":
+            alert(commentId,"쪽지 전송 완료");
+            break;
+        case "delete":
+            alert(commentId,"삭제 완료");
+            break;
+        default:
+            break;
+      }
+    } else {
+        console.log("Selected replyId:", replyId);
+
+        switch (menu) {
+          case "report":
+              alert(replyId, "신고 처리 완료");
+              break;
+          case "msg":
+              alert(replyId, "쪽지 전송 완료");
+              break;
+          case "delete":
+              alert(replyId, "삭제 완료");
+              break;
+          default:
+              break;
+        }
+    }
+  };
+
+  const handleDropDownClick = (commentId, replyId) => {
+    setOpenCommentDropDown((prev) => ({
+      ...prev,
+      [commentId]: !prev[commentId],
+      [replyId]: !prev[replyId],
+    }));
   };
 
   const handleClick = (event) => {
     if (commentMenuRef.current && commentMenuRef.current.contains(event.target)) {
-      setShowCommentMenu(!showCommentMenu);
+      return;
     } else {
-      setShowCommentMenu(false);
+      setOpenCommentDropDown(false);
     }
   };
 
@@ -152,9 +196,9 @@ const CommentList = () => {
                   </span>{" "}
                   {comment.likeCount}
                 </button>
-                <button className="menu-button" ref={commentMenuRef}>
+                <button className="menu-button" ref={commentMenuRef} onClick={() => handleDropDownClick(comment.id)}>
                   ⋮
-                  {showCommentMenu && <CommentDropDown onSelect={handleCommentMenuSelect} />}
+                  {openCommentDropDown[comment.id] && <CommentDropDown onSelect={handleDropDownMenu} commentId={comment.id} />}
                 </button>
               </div>
             </div>
