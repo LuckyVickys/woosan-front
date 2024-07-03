@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import "../../assets/styles/App.scss";
-import { getOne } from "../../api/boardApi";
+import { getOne, translate } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove.jsx";
 import BoardDropDown from "./BoardDropDown.jsx";
 
@@ -41,18 +41,18 @@ const ReadComponent = () => {
   const [showBoardMenu, setShowBoardMenu] = useState(false);
   const boardMenuRef = useRef(null);
 
-  const handleBoardMenuSelect = (boardMenu) => {
+  const handleBoardMenuSelect = useCallback((boardMenu) => {
     console.log("Selected Board Menu:", boardMenu);
     setShowBoardMenu(false);
-  };
+  }, []);
 
-  const handleClick = (event) => {
+  const handleClick = useCallback((event) => {
     if (boardMenuRef.current && boardMenuRef.current.contains(event.target)) {
       setShowBoardMenu(!showBoardMenu);
     } else {
       setShowBoardMenu(false);
     }
-  };
+  }, [showBoardMenu]);
 
   useEffect(() => {
     getOne(id).then((data) => {
@@ -66,8 +66,20 @@ const ReadComponent = () => {
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, []);
+  }, [handleClick]);
 
+  const handlePapagoTranslate = async () => {
+    try {
+      const translated = await translate(id, { title: board.title, content: board.content });
+      setBoard((prevBoard) => ({
+        ...prevBoard,
+        title: translated.title,
+        content: translated.content,
+      }));
+    } catch (error) {
+      console.error("번역 중 오류 발생:", error);
+    }
+  };
   if (!board.title) {
     return <div>로딩 중...</div>;
   }
@@ -77,7 +89,7 @@ const ReadComponent = () => {
       <div className="post-title">
         <h1 className="post-title-text">{board.title}</h1>
         <div className="api-button">
-          <button className="papago-button"></button>
+          <button className="papago-button" onClick={handlePapagoTranslate}></button>
           <button className="clova-button"></button>
         </div>
       </div>
