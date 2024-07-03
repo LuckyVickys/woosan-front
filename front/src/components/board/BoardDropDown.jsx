@@ -1,6 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const BoardDropDown = (onSelect) => {
+const BoardDropDown = ({ id, onSelect }) => {
+    const navigate = useNavigate();
+
+    const handleModifyButtonClick = () => {
+        navigate(`/board/modify/${id}`); // 올바른 id를 포함한 경로로 이동
+    };
 
     return (
         <div className="board-dropdown-wrapper">
@@ -15,11 +21,11 @@ const BoardDropDown = (onSelect) => {
                 </div>
                 <div className='board-dropdown'>
                     <div className='board-modify-icon'></div>
-                    <div className='board-modify-text'>수정하기</div>
+                    <div className='board-modify-text' onClick={handleModifyButtonClick}>수정하기</div>
                 </div>
             </div>
         </div>
-      );
+    );
 }
 
 export default BoardDropDown;

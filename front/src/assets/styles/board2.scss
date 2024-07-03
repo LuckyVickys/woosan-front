@@ -119,6 +119,13 @@
     justify-content: center;
     margin-top: 20px;
 
+    .pagination-button.prev,
+    .pagination-button.next {
+        background-color: #FFFFFF;
+        border: 1px solid #E6E6E6;
+
+    }
+
     .pagination-button {
         margin: 0 5px;
         padding: 10px;
@@ -150,8 +157,225 @@
         }
     }
 
-    .pagination-button.prev,
-    .pagination-button.next {
-        background-color: #F2F2F2;
+
+}
+
+
+.add-component,
+.modify-component {
+    background: #FFFFFF;
+    /* Add background color */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 10px 0px 20px;
+    gap: 10px;
+    width: 990px;
+    height: auto;
+
+    .title-bar {
+        width: 960px;
+        height: 60px;
+        background-color: #E2E5E2;
+        display: flex;
+        align-items: center;
+
+        .title-bar-line {
+            width: 3px;
+            height: 60px;
+            background-color: #20B526;
+            margin-right: 10px;
+        }
+
+        .title-bar-text {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .form {
+        margin-top: 20px;
+        width: 960px;
+
+        .form-group {
+            margin-bottom: 20px;
+
+            label {
+                display: block;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+
+            .dropdown {
+                position: relative;
+                width: 235px;
+                height: 50px;
+
+                .dropdown-button {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    text-align: left;
+                    background-color: #fff;
+                    cursor: pointer;
+                }
+
+                .dropdown-list {
+                    position: absolute;
+                    width: 100%;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    background-color: white;
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    z-index: 10;
+                    max-height: 200px;
+                    overflow-y: auto;
+
+                    li {
+                        padding: 10px;
+
+                        &:hover {
+                            background-color: #f0f0f0;
+                        }
+                    }
+                }
+            }
+
+            input[type="text"] {
+                width: 935px;
+                height: 30px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+
+            textarea {
+                width: 935px;
+                height: 240px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+
+            input[type="file"] {
+                width: calc(235px);
+                height: calc(32px);
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+                display: inline-block;
+            }
+
+            .file-list {
+                margin-top: 10px;
+
+                .file-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 5px 0;
+
+                    span {
+                        flex-grow: 1;
+                    }
+
+                    button {
+                        margin-left: 10px;
+                        padding: 5px 10px;
+                        border: 2px solid #EA4B48;
+                        background-color: white;
+                        color: #EA4B48;
+                        font-weight: bold;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+
+            button {
+                width: 100px;
+                padding: 10px;
+                border: none;
+                border-radius: 4px;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+
+                &.save-button {
+                    background-color: #2388FF;
+                    margin-right: 10px;
+                }
+
+                &.remove-button {
+                    background-color: #EA4B48;
+                    margin-right: 10px;
+                }
+
+                &.cancel-button {
+                    background-color: #9BCC66;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+.movePostButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+        border: 2px solid #2a9d47; // 테두리 색상
+        background-color: white;
+        color: #2a9d47; // 글자 색상
+        border-radius: 50px; // 둥근 모서리
+        padding: 10px 20px; // 패딩
+        font-size: 16px; // 글자 크기
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        position: relative; // 아이콘 위치를 위한 상대적 위치
+
+        &.prevPostButton {
+            margin-right: 10px; // 이전 글 버튼 간격
+        }
+
+        &.listButton {
+            background-color: #2a9d47; // 목록으로 버튼 배경색
+            color: white; // 목록으로 버튼 글자 색상
+            margin: 0 10px; // 양쪽 간격
+        }
+
+        &.nextPostButton {
+            margin-left: 10px; // 다음 글 버튼 간격
+        }
+
+        &:hover {
+            background-color: #2a9d47; // 호버 시 배경색
+            color: white; // 호버 시 글자 색상
+        }
+
+        .icon {
+            font-size: 18px; // 아이콘 크기
+            color: #2a9d47; // 아이콘 색상
+            margin: 0 5px; // 아이콘과 텍스트 간격
+        }
     }
 }

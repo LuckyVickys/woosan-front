@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useNavigate 훅을 사용하여 페이지 이동
 import { getList } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove";
-import '../../assets/styles/board2.scss'; // Import the SCSS file
+import '../../assets/styles/board2.scss';
+import ListPageComponent from "./ListPageComponent";
 
 const initState = {
     boardPage: {
@@ -26,19 +27,19 @@ const initState = {
 
 const ListComponent = () => {
     const { page, size, categoryName, moveToList } = useCustomMove();
+
     const [serverData, setServerData] = useState(initState);
-    const navigate = useNavigate(); // useNavigate 훅 사용
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getList({ page, size, categoryName }).then(data => {
             console.log("Fetched data:", data);
             setServerData(data);
+        }).catch(err => {
+            console.error("Failed to fetch data:", err);
         });
     }, [page, size, categoryName]);
-
-    const handlePageChange = (newPage) => {
-        moveToList({ page: newPage, size, categoryName });
-    };
 
     const handleRowClick = (id) => {
         navigate(`/board/${id}`); // 게시물의 세부 페이지로 이동
@@ -60,7 +61,7 @@ const ListComponent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {notice && (
+                    {notice && notice.id && (
                         <tr className="notice-row" onClick={() => handleRowClick(notice.id)}>
                             <td>공지</td>
                             <td>{notice.title}</td>
@@ -70,7 +71,7 @@ const ListComponent = () => {
                             <td>{notice.likesCount}</td>
                         </tr>
                     )}
-                    {popularList.map((item) => (
+                    {popularList && popularList.map((item) => (
                         <tr key={item.id} className="popular-row" onClick={() => handleRowClick(item.id)}>
                             <td>{item.categoryName}</td>
                             <td><span className="best-label">BEST</span> {item.title}</td>
@@ -80,7 +81,7 @@ const ListComponent = () => {
                             <td>{item.likesCount}</td>
                         </tr>
                     ))}
-                    {boardPage.dtoList.map((item) => (
+                    {boardPage.dtoList && boardPage.dtoList.map((item) => (
                         <tr key={item.id} className="board-row" onClick={() => handleRowClick(item.id)}>
                             <td>{item.categoryName}</td>
                             <td>{item.title}</td>
@@ -92,31 +93,7 @@ const ListComponent = () => {
                     ))}
                 </tbody>
             </table>
-            <div className="pagination">
-                <button
-                    onClick={() => handlePageChange(page - 1)}
-                    disabled={!boardPage.prev}
-                    className="pagination-button prev"
-                >
-                    &lt;
-                </button>
-                {boardPage.pageNumList.map((pageNum) => (
-                    <button
-                        key={pageNum}
-                        onClick={() => handlePageChange(pageNum)}
-                        className={`pagination-button ${pageNum === page ? 'active' : ''}`}
-                    >
-                        {pageNum}
-                    </button>
-                ))}
-                <button
-                    onClick={() => handlePageChange(page + 1)}
-                    disabled={!boardPage.next}
-                    className="pagination-button next"
-                >
-                    &gt;
-                </button>
-            </div>
+            <ListPageComponent serverData={boardPage} movePage={moveToList} />
         </div>
     );
 };
