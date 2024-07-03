@@ -12,3 +12,13 @@ export const toggleLike = async (toogleRequest) => {
         throw error;
     }
 }
+
+export const getLikes = async (toogleRequest) => {
+    try {
+        const res = await axios.post(`${host}/status`, toogleRequest);
+        return res.data;
+    } catch (error) {
+        console.error('Error fetching like status:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
