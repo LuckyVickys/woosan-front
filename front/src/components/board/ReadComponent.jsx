@@ -33,9 +33,8 @@ const formatDate = (dateString) => {
   const minutes = String(date.getMinutes()).padStart(2, '0');
   const seconds = String(date.getSeconds()).padStart(2, '0');
 
-  return ${ year } -${ month } -${ day } ${ hours }:${ minutes }:${ seconds };
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
-
 const ReadComponent = () => {
   const { id } = useParams();
   const location = useLocation();
@@ -133,25 +132,25 @@ const ReadComponent = () => {
         </div>
         <div className="right">
           <button
-            className={like - button ${liked ? "liked" : "not-liked"}}
-          onClick={handleLikeToggle}
+            className={`like-button ${liked ? "liked" : "not-liked"}`}
+            onClick={handleLikeToggle}
           >
 
-          <span role="img" aria-label="like">
-            <img
-              src={liked ? likeIcon : likeNoIcon}
-              className="likeIcon"
-              alt="likeIcon"
-            />
-          </span>{" "}
-          {board.likesCount}
-        </button>
-        <button className="menu-button" ref={boardMenuRef} onClick={handleBoardMenuSelect}>
-          ⋮
-          {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
-        </button>
-      </div>
-    </div >
+            <span role="img" aria-label="like">
+              <img
+                src={liked ? likeIcon : likeNoIcon}
+                className="likeIcon"
+                alt="likeIcon"
+              />
+            </span>{" "}
+            {board.likesCount}
+          </button>
+          <button className="menu-button" ref={boardMenuRef} onClick={handleBoardMenuSelect}>
+            ⋮
+            {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
+          </button>
+        </div>
+      </div >
       <p className="alert-message">
         ※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수 있습니다.
       </p>
@@ -159,7 +158,7 @@ const ReadComponent = () => {
         {board.content}
         <div className="image-container">
           {board.filePathUrl.map((url, index) => (
-            <img key={index} src={url} alt={image-${index}} className="image" />
+            <img key={index} src={url} alt={`image-${index}`} className="image" />
           ))}
         </div>
       </div>
