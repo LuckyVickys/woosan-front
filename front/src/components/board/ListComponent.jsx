@@ -64,7 +64,7 @@ const ListComponent = () => {
                     {notice && notice.id && (
                         <tr className="notice-row" onClick={() => handleRowClick(notice.id)}>
                             <td>공지</td>
-                            <td>{notice.title}</td>
+                            <td>{notice.title}<span className="replyCount">({notice.replyCount})</span></td>
                             <td>{notice.nickname}</td>
                             <td>{notice.regDate}</td>
                             <td>{notice.views}</td>
@@ -74,7 +74,7 @@ const ListComponent = () => {
                     {popularList && popularList.map((item) => (
                         <tr key={item.id} className="popular-row" onClick={() => handleRowClick(item.id)}>
                             <td>{item.categoryName}</td>
-                            <td><span className="best-label">BEST</span> {item.title}</td>
+                            <td><span className="best-label">BEST</span> {item.title}<span className="replyCount">({item.replyCount})</span></td>
                             <td>{item.nickname}</td>
                             <td>{item.regDate}</td>
                             <td>{item.views}</td>
@@ -84,7 +84,7 @@ const ListComponent = () => {
                     {boardPage.dtoList && boardPage.dtoList.map((item) => (
                         <tr key={item.id} className="board-row" onClick={() => handleRowClick(item.id)}>
                             <td>{item.categoryName}</td>
-                            <td>{item.title}</td>
+                            <td>{item.title}<span className="replyCount">({item.replyCount})</span></td>
                             <td>{item.nickname}</td>
                             <td>{item.regDate}</td>
                             <td>{item.views}</td>
@@ -93,7 +93,7 @@ const ListComponent = () => {
                     ))}
                 </tbody>
             </table>
-            <ListPageComponent serverData={serverData} movePage={moveToList} />
+            <ListPageComponent serverData={boardPage} movePage={moveToList} />
         </div>
     );
 };
