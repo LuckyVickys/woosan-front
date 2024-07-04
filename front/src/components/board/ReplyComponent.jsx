@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import replyArrow from "../../assets/image/reply_arrow.png";
 import '../../assets/styles/App.scss';
-import { getList } from "../../api/replyApi";
-import CommentDropDown from "./CommentDropDown";
-import { formatDate } from "../../util/DateUtil.jsx";
+import { getList, addReply } from "../../api/replyApi";
+import ReplyDropDown from "./element/ReplyDropDown.jsx"
+import { formatRelativeTime } from "../../util/DateUtil.jsx";
 import ListPageComponent from "../../components/board/element/ListPageComponent";
 import LikeButton from "../../components/common/LikeButton"; // LikeButton 컴포넌트 import
 
@@ -28,8 +28,9 @@ const ReplyComponent = () => {
   const { id } = useParams();
   const [replyForms, setReplyForms] = useState({});
   const [replies, setReplies] = useState(initState);
-  const [openReplyDropDown, setOpenReplyDropDown] = useState({});
-  const replyMenuRef = useRef(null);
+  const [openReplyDropDown, setOpenReplyDropDown] = useState(null); // Keep track of open dropdown
+  const [replyContent, setReplyContent] = useState(""); // State for new reply content
+  const [childReplyContent, setChildReplyContent] = useState({}); // State for new child reply content
 
   useEffect(() => {
     const getReplies = async (page = 1) => {
@@ -63,10 +64,7 @@ const ReplyComponent = () => {
   };
 
   const handleDropDownClick = (id) => {
-    setOpenReplyDropDown((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setOpenReplyDropDown(prev => (prev === id ? null : id)); // Toggle dropdown
   };
 
   const handleDropDownMenu = (menu, id) => {
@@ -74,7 +72,56 @@ const ReplyComponent = () => {
     // 추가 기능 구현
   };
 
-  const renderReply = (reply) => {
+  const handleDeleteSuccess = (replyId) => {
+    setReplies((prevReplies) => ({
+      ...prevReplies,
+      dtoList: prevReplies.dtoList.filter(reply => reply.replyId !== replyId)
+    }));
+  };
+
+  const handleReplyContentChange = (e) => {
+    setReplyContent(e.target.value);
+  };
+
+  const handleChildReplyContentChange = (replyId, e) => {
+    setChildReplyContent((prev) => ({
+      ...prev,
+      [replyId]: e.target.value
+    }));
+  };
+
+  const handleReplySubmit = async () => {
+    try {
+      await addReply({
+        writerId: 2,
+        content: replyContent,
+        parentId: null,
+        boardId: id,
+      });
+      setReplyContent(""); // Input 비우기
+      handlePageChange({ page: replies.pageRequestDTO.page }); // 댓글 새로고침
+    } catch (error) {
+      console.error("Error adding reply:", error);
+    }
+  };
+
+  const handleChildReplySubmit = async (replyId) => {
+    console.log(replyId, childReplyContent[replyId],)
+    try {
+      await addReply({
+        writerId: 2,
+        content: childReplyContent[replyId],
+        parentId: replyId,
+        boardId: id,
+      });
+      setChildReplyContent((prev) => ({ ...prev, [replyId]: "" })); // Input 비우기
+      handlePageChange({ page: replies.pageRequestDTO.page }); // 댓글 새로고침
+    } catch (error) {
+      console.error("Error adding child reply:", error);
+    }
+  };
+
+  const renderReply = (reply, isChild = false) => {
     return (
       <div key={reply.id} className="reply">
         <div className="reply-header">
@@ -85,8 +132,7 @@ const ReplyComponent = () => {
               className="reply-profile-image"
             />
             <p className="reply-author">{reply.nickname}</p>
-            {reply.best && <span className="best-tag">BEST</span>}
-            <p className="reply-date">{formatDate(reply.regDate)}</p>
+            <p className="reply-date">{formatRelativeTime(reply.regDate)}</p>
           </div>
           <div className="reply-right">
             <LikeButton
@@ -95,19 +141,25 @@ const ReplyComponent = () => {
               targetId={reply.id}
               initialLikesCount={reply.likesCount}
             />
-            <button className="menu-button" ref={replyMenuRef} onClick={() => handleDropDownClick(reply.id)}>
+            <button className="menu-button" onClick={() => handleDropDownClick(reply.id)}>
               ⋮
-              {openReplyDropDown[reply.id] && <CommentDropDown onSelect={handleDropDownMenu} replyId={reply.id} />}
+              {openReplyDropDown === reply.id && (
+                <div>
+                  <ReplyDropDown onSelect={handleDropDownMenu} replyId={reply.id} onDeleteSuccess={handleDeleteSuccess} />
+                </div>
+              )}
             </button>
           </div>
         </div>
         <p className="reply-text">{reply.content}</p>
-        <button
-          className="reply-button"
-          onClick={() => handleReplyClick(reply.id)}
-        >
-          대댓글 달기
-        </button>
+        {!isChild && (
+          <button
+            className="reply-button"
+            onClick={() => handleReplyClick(reply.id)}
+          >
+            답글
+          </button>
+        )}
 
         {replyForms[reply.id] && (
           <div className="reply-form-container">
@@ -122,14 +174,16 @@ const ReplyComponent = () => {
                 type="text"
                 placeholder="댓글을 또 다른 나입니다. 바르고 고운말로 작성해주세요"
                 className="reply-input-field"
+                value={childReplyContent[reply.id] || ""}
+                onChange={(e) => handleChildReplyContentChange(reply.id, e)}
               />
-              <button className="submit-button">대댓글 작성</button>
+              <button className="submit-button" onClick={() => handleChildReplySubmit(reply.id)}>대댓글 작성</button>
             </div>
           </div>
         )}
         {reply.children && reply.children.length > 0 && (
           <div className="replies">
-            {reply.children.map((child) => renderReply(child))}
+            {reply.children.map((child) => renderReply(child, true))}
           </div>
         )}
       </div>
@@ -156,8 +210,10 @@ const ReplyComponent = () => {
             type="text"
             placeholder="댓글을 또 다른 나입니다. 바르고 고운말로 작성해주세요"
             className="full-width-reply-input-field"
+            value={replyContent}
+            onChange={handleReplyContentChange}
           />
-          <button className="submit-button">댓글 작성</button>
+          <button className="submit-button" onClick={handleReplySubmit}>댓글 작성</button>
         </div>
       </div>
     </>
