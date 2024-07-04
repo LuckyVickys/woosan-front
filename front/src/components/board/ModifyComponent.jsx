@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { modifyBoard, getOne } from "../../api/boardApi";
-import "../../assets/styles/App.scss";
+import { modifyBoard, getOne, deleteBoard } from "../../api/boardApi";
+import "../../assets/styles/App.scss"; // SCSS 파일 가져오기
 import { useParams, useNavigate } from "react-router-dom";
 import useCustomMove from "../../hooks/useCustomMove";
 
@@ -101,8 +101,14 @@ const ModifyComponent = () => {
         }
     };
 
-    const handleCancel = () => {
-        navigate(-1); // 이전 페이지로 이동
+    const handleRemove = async () => {
+        try {
+            await deleteBoard(id);
+            console.log("successfully deleted");
+            moveToList();
+        } catch (error) {
+            console.error("failed to delete", error);
+        }
     };
 
     return (
@@ -169,7 +175,7 @@ const ModifyComponent = () => {
                 <div className="form-buttons">
                     <button className="cancel-button" onClick={() => moveToList()}>목록으로</button>
                     <button className="save-button" onClick={handleSave}>완료</button>
-                    <button className="remove-button" onClick={handleCancel}>취소</button>
+                    <button className="remove-button" onClick={handleRemove}>삭제</button>
                 </div>
             </div>
         </div>
