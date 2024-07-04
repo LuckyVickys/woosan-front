@@ -7,28 +7,33 @@
     box-sizing: border-box;
 
     .catagory {
+        // padding-left: 20px;
         width: 100%;
-        padding: 0px;
         box-sizing: border-box;
         border: 1px solid #E6E6E6;
         border-radius: 8px;
 
-        .catagory-title {
-            font-size: 18px;
-            padding: 15px;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .catagory-title{
+            margin-right: 32px;
+            padding: 20px 20px;
+            width: 100%;
+            font-family: 'Pretendard-Regular', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
         }
 
         .sub-category {
             position: relative;
             display: flex;
             align-items: center;
-            padding: 15px 0px 15px 5px;
+            padding: 15px 0px 15px 20px;
             margin: 0;
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Pretendard-Regular', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
 
             &:hover {
                 background-color: #f0f0f0;
