@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../../assets/styles/App.scss";
 import { getBoard, translate } from "../../api/boardApi";
-import useCustomMove from "../../hooks/useCustomMove.jsx";
 import BoardDropDown from "../../components/board/element/BoardDropDown.jsx";
 import PageComponent from "../../components/board/element/PageComponent.jsx";
 import { formatDate } from "../../util/DateUtil.jsx";
@@ -24,14 +23,10 @@ const initState = {
 
 const ReadComponent = () => {
   const { id } = useParams();
-  const location = useLocation();
-  const { serverData } = location.state || {}; // 기본값 설정
 
   const [board, setBoard] = useState(initState);
   const [showBoardMenu, setShowBoardMenu] = useState(false);
   const boardMenuRef = useRef(null);
-
-  const { page, size, categoryName, moveToList } = useCustomMove();
 
   useEffect(() => {
     getBoard(id).then((data) => {

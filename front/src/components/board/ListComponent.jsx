@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { getList } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import '../../assets/styles/board2.scss';
 import ListPageComponent from "../../components/board/element/ListPageComponent";
-import ReadComponent from "../../components/board/ReadComponent";
-import { formatDateMin } from "../../util/DateUtil";
 import TableRowComponent from "../board/element/TableLowComponent";
 
 const initState = {
@@ -46,6 +43,8 @@ const ListComponent = () => {
         moveToRead(id, serverData)
         console.log("HandleRowClick:", serverData);
     };
+
+
 
     const { notice, popularList, boardPage } = serverData;
 
