@@ -1,6 +1,6 @@
 import React from "react";
 import ReadComponent from "../../components/board/ReadComponent";
-import CommentList from "../../components/board/CommentList";
+import ReplyComponent from "../../components/board/ReplyComponent";
 
 import "../../assets/styles/App.scss";
 import useCustomMove from "../../hooks/useCustomMove";
@@ -14,7 +14,7 @@ const ReadPage = () => {
     <div className="readPage">
       <ReadComponent />
       <br />
-      <CommentList />
+      <ReplyComponent />
     </div>
   );
 };

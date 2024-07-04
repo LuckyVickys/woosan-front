@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-import ReportModal from './ReportModal';
-import MsgModal from './MsgModal';
+import ReportModal from '../../components/board/element/ReportModal';
+import MsgModal from '../../components/board/element/MsgModal';
 import Swal from 'sweetalert2';
 
-const CommentDropDown = ({onSelect, commentId, replyId}) => {
+const CommentDropDown = ({ onSelect, commentId, replyId }) => {
     const [openReportModal, setOpenReportModal] = useState(false);
     const [openMsgModal, setOpenMsgModal] = useState(false);
 
-    const handleReportButtonClick = () => {
+    const handleReport = () => {
         if (commentId) {
             console.log("Send Report commentId:", commentId);
             onSelect("report", commentId);
@@ -19,7 +19,7 @@ const CommentDropDown = ({onSelect, commentId, replyId}) => {
         setOpenReportModal(true);
     };
 
-    const handleMsgButtonClick = () => {
+    const handleMsg = () => {
         if (commentId) {
             console.log("Send Msg commentId:", commentId);
             onSelect("msg", commentId);
@@ -30,7 +30,7 @@ const CommentDropDown = ({onSelect, commentId, replyId}) => {
         setOpenMsgModal(true);
     };
 
-    const handleDeleteButtonClick = () => {
+    const handleDelete = () => {
         if (commentId) {
             console.log("Deleted commentId:", commentId);
             onSelect("delete", commentId);
@@ -43,13 +43,13 @@ const CommentDropDown = ({onSelect, commentId, replyId}) => {
                 cancelButtonColor: '#d33',
                 confirmButtonText: '삭제',
                 cancelButtonText: '취소'
-              }).then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
-                  // 삭제 기능
-                  Swal.fire('삭제 완료', `${commentId}가 삭제되었습니다.`, 'success');
-                  console.log("Finished commentId:", commentId);
+                    // 삭제 기능
+                    Swal.fire('삭제 완료', `${commentId}가 삭제되었습니다.`, 'success');
+                    console.log("Finished commentId:", commentId);
                 }
-              });
+            });
         } else if (replyId) {
             console.log("Deleted replyId:", replyId);
             onSelect("delete", replyId);
@@ -62,13 +62,13 @@ const CommentDropDown = ({onSelect, commentId, replyId}) => {
                 cancelButtonColor: '#d33',
                 confirmButtonText: '삭제',
                 cancelButtonText: '취소'
-              }).then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
-                  // 삭제 기능
-                  Swal.fire('삭제 완료', `${replyId}가 삭제되었습니다.`, 'success');
-                  console.log("Finished replyId:", replyId);
+                    // 삭제 기능
+                    Swal.fire('삭제 완료', `${replyId}가 삭제되었습니다.`, 'success');
+                    console.log("Finished replyId:", replyId);
                 }
-              });
+            });
         }
     };
 
@@ -76,15 +76,15 @@ const CommentDropDown = ({onSelect, commentId, replyId}) => {
         <>
             <div className="comment-dropdown-wrapper">
                 <div className="comment-dropdown-list">
-                    <div className='comment-dropdown' onClick={handleReportButtonClick}>
+                    <div className='comment-dropdown' onClick={handleReport}>
                         <div className='comment-report-icon'></div>
                         <div className='comment-report-text'>신고하기</div>
                     </div>
-                    <div className='comment-dropdown' onClick={handleMsgButtonClick}>
+                    <div className='comment-dropdown' onClick={handleMsg}>
                         <div className='comment-msg-icon'></div>
                         <div className='comment-msg-text'>쪽지 전송</div>
                     </div>
-                    <div className='comment-dropdown' onClick={handleDeleteButtonClick}>
+                    <div className='comment-dropdown' onClick={handleDelete}>
                         <div className='comment-delete-icon'></div>
                         <div className='comment-delete-text'>삭제하기</div>
                     </div>
@@ -97,7 +97,7 @@ const CommentDropDown = ({onSelect, commentId, replyId}) => {
                 <MsgModal onClose={() => setOpenMsgModal(false)} />
             )}
         </>
-      );
+    );
 };
 
 export default CommentDropDown;

@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { getList } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import '../../assets/styles/board2.scss';
-import ListPageComponent from "./ListPageComponent";
-import ReadComponent from "./ReadComponent";
+import ListPageComponent from "../../components/board/element/ListPageComponent";
+import ReadComponent from "../../components/board/ReadComponent";
+import { formatDateMin } from "../../util/DateUtil";
+import TableRowComponent from "../board/element/TableLowComponent";
 
 const initState = {
     boardPage: {
@@ -62,34 +64,13 @@ const ListComponent = () => {
                 </thead>
                 <tbody>
                     {notice && notice.id && (
-                        <tr className="notice-row" onClick={() => handleRowClick(notice.id)}>
-                            <td>공지</td>
-                            <td>{notice.title}<span className="replyCount">({notice.replyCount})</span></td>
-                            <td>{notice.nickname}</td>
-                            <td>{notice.regDate}</td>
-                            <td>{notice.views}</td>
-                            <td>{notice.likesCount}</td>
-                        </tr>
+                        <TableRowComponent item={notice} onClick={handleRowClick} isNotice={true} />
                     )}
                     {popularList && popularList.map((item) => (
-                        <tr key={item.id} className="popular-row" onClick={() => handleRowClick(item.id)}>
-                            <td>{item.categoryName}</td>
-                            <td><span className="best-label">BEST</span> {item.title}<span className="replyCount">({item.replyCount})</span></td>
-                            <td>{item.nickname}</td>
-                            <td>{item.regDate}</td>
-                            <td>{item.views}</td>
-                            <td>{item.likesCount}</td>
-                        </tr>
+                        <TableRowComponent key={item.id} item={item} onClick={handleRowClick} isPopular={true} />
                     ))}
                     {boardPage.dtoList && boardPage.dtoList.map((item) => (
-                        <tr key={item.id} className="board-row" onClick={() => handleRowClick(item.id)}>
-                            <td>{item.categoryName}</td>
-                            <td>{item.title}<span className="replyCount">({item.replyCount})</span></td>
-                            <td>{item.nickname}</td>
-                            <td>{item.regDate}</td>
-                            <td>{item.views}</td>
-                            <td>{item.likesCount}</td>
-                        </tr>
+                        <TableRowComponent key={item.id} item={item} onClick={handleRowClick} />
                     ))}
                 </tbody>
             </table>
@@ -97,5 +78,6 @@ const ListComponent = () => {
         </div>
     );
 };
+
 
 export default ListComponent;

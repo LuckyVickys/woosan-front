@@ -1,4 +1,4 @@
-import '../../assets/styles/board2.scss';
+import '../../../assets/styles/board2.scss';
 
 const ListPageComponent = ({ serverData, movePage }) => {
     if (!serverData || !serverData.pageNumList) {
