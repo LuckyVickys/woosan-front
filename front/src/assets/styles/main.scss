@@ -1,22 +1,13 @@
 @import 'Font';
-
 .main-contents{
     width: 100%;
     height: 100%;
     background: #fff;
 }
-
-.header{
-    font-family: 'Pretendard-Regular', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-}
-
 .banner{
     display: flex;
     justify-content: space-between;
     width: 100%;
-
     .main-banner{
         display: flex;
         justify-content: space-between;
@@ -25,7 +16,6 @@
         background: url('../image/main-banner.svg') no-repeat;
         background-size: contain;
         border-radius: 10px;
-
         .banner-slider-left{
             margin-left: 20px;
             width: 40px;
@@ -50,16 +40,14 @@
         width: 655px;
         height: 350px;
         border-radius: 10px;
-        border-left: 2px solid #E5E5E5; 
-        border-bottom: 3px solid #E5E5E5; 
-
+        border-left: 2px solid #E5E5E5;
+        border-bottom: 3px solid #E5E5E5;
         .likelist-post{
             display: flex;
             align-items: center;
             padding: 4px 15px;
             font-family: 'Pretendard-Regular', sans-serif;
             font-size: 14px;
-
             .likelist-catagory{
                 margin-right: 10px;
                 color:#00B207;
@@ -73,19 +61,17 @@
                 display: flex;
                 align-items: center;
                 font-weight: 400;
-
                 .likelist-like-icon{
                     margin-right: 5px;
                     width: 20px;
                     height: 20px;
                     background: url('../image/heart-icon.svg') no-repeat;
-                    background-size: contain; 
+                    background-size: contain;
                 }
             }
         }
     }
 }
-
 .main-info{
     display: flex;
     justify-content: space-between;
@@ -96,12 +82,10 @@
     border-radius: 10px;
     box-shadow: 6px 3px 10px 3px rgb(0, 0, 0, 0.1);
     font-family: 'Pretendard-Regular', sans-serif;
-
     .info{
         display: flex;
         align-items: center;
         padding: 0px 40px;
-
         .info-icon1{
             margin-right: 10px;
             width: 40px;
@@ -109,7 +93,6 @@
             background: url('../image/icon-lock.svg') no-repeat;
             background-size: contain;
         }
-
         .info-icon2{
             margin-right: 10px;
             width: 40px;
@@ -117,7 +100,6 @@
             background: url('../image/icon-fire.svg') no-repeat;
             background-size: contain;
         }
-
         .info-icon3{
             margin-right: 10px;
             width: 40px;
@@ -125,7 +107,6 @@
             background: url('../image/icon-lamp.svg') no-repeat;
             background-size: contain;
         }
-
         .info-icon4{
             margin-right: 10px;
             width: 40px;
@@ -133,7 +114,6 @@
             background: url('../image/icon-lighting.svg') no-repeat;
             background-size: contain;
         }
-
         .info-text{
             h1{
                 margin-bottom: 0px;
@@ -148,21 +128,18 @@
         }
     }
 }
-
 .main-notice-matching{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
     width: 100%;
-
-    .main-notice{    
+    .main-notice{
         width: 600px;
         height: 220px;
         border-radius: 10px;
-        border-left: 2px solid #E5E5E5; 
-        border-bottom: 3px solid #E5E5E5; 
-
+        border-left: 2px solid #E5E5E5;
+        border-bottom: 3px solid #E5E5E5;
         .noticelist-post{
             display: flex;
             justify-content: space-between;
@@ -170,7 +147,6 @@
             padding: 6px 15px;
             font-family: 'Pretendard-Regular', sans-serif;
             font-size: 14px;
-
             .noticelist-catagory{
                 color:#EA4B48;
                 font-weight: 800;
@@ -186,29 +162,24 @@
             }
         }
     }
-
     .main-matching{
         margin-left: 20px;
         width: 100%;
         height: 220px;
         border-radius: 10px;
-        border-left: 2px solid #E5E5E5; 
-        border-bottom: 3px solid #E5E5E5; 
-
+        border-left: 2px solid #E5E5E5;
+        border-bottom: 3px solid #E5E5E5;
         .header-title{
             color: #EA4B48;
         }
-
         .newMatchingList{
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0px 15px;
-            
             .newMatchingList-post{
                 display: flex;
                 justify-content: space-between;
-    
                 .newMatchingList-img{
                     align-items: center;
                     margin-right: 15px;
@@ -220,7 +191,6 @@
                 .newMatchingList-contents{
                     width: 300px;
                     font-family: 'Pretendard-Regular', sans-serif;
-
                     .newMatchingList-catagory-tag,
                     .newMatchingList-location,
                     .newMatchingList-date,
@@ -230,12 +200,10 @@
                         align-items: center;
                         margin-bottom: 5px;
                     }
-
                     .newMatchingList-catagory-tag{
                         color: #fff;
                         font-size: 14px;
                         font-weight: 400;
-
                         .newMatchingList-regurlary,
                         .newMatchingList-temporary,
                         .newMatchingList-self,
@@ -246,34 +214,28 @@
                             padding: 0px 10px;
                             height: 30px;
                             border-radius: 5px;
-
                         }
                         .newMatchingList-regurlary{
                             margin-right: 5px;
                             background: #EA4B48;
                         }
-
                         .newMatchingList-temporary{
                             margin-right: 5px;
                             background: #FDCA00;
                         }
-
                         .newMatchingList-self{
                             margin-right: 5px;
                             background: #2388FF;
                         }
-
                         .newMatchingList-tag{
                             background: #00B207;
                         }
                     }
-
                     .newMatchingList-title{
                         margin-bottom: 5px;
                         font-size: 16px;
                         font-weight: 600;
                     }
-
                     .newMatchingList-location-icon,
                     .newMatchingList-date-icon,
                     .newMatchingList-nickname-icon,
@@ -298,7 +260,6 @@
                         background: url('../image/icon-matching.svg') no-repeat;
                         background-size: contain;
                     }
-
                     .newMatchingList-location-text,
                     .newMatchingList-date-text,
                     .newMatchingList-nickname-text,
@@ -321,7 +282,6 @@
         }
     }
 }
-
 .popular-post-header,
 .main-notice-header,
 .main-matching-header{
@@ -331,16 +291,13 @@
     font-family: 'Pretendard-Regular', sans-serif;
     font-size: 20px;
     font-weight: 600;
-
     a{
         color: #00B207;
     }
 }
-
 // Link 밑줄 제거, hover
 a {
     text-decoration: none;
-
     &:hover {
       text-decoration: none;
     }

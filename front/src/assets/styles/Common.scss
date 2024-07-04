@@ -1,39 +1,32 @@
 $shadow: #E5E5E5;
-
 body {
     margin: 0;
     width: 100%;
     height: 100%;
 }
-
 // BasicLayout의 전체 영역(header. nav, area, footer)
 .wrapper {
     width: 100%;
     height: 100vh;
 }
-
 // header
 header{
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     height: auto;
-    // margin-top: 20px;
-    padding: 20px 550px;
-    border-bottom: 2px solid $shadow; 
+    padding: 20px;
+    border-bottom: 2px solid $shadow;
 }
-
 .logo{
     display: flex;
     align-items: center;
     height: 27.5px;
-
     .logoImage {
         width: 80px;
         height: 46px;
         margin-right: 13px;
     }
-    
     .logoTitle {
         font-size: 32px;
         font-family: 'GodoB', sans-serif;
@@ -42,15 +35,12 @@ header{
         }
     }
 }
-
 .login{
     display: flex;
     align-items: center;
-
     .loginBar{
-        color: $shadow; 
+        color: $shadow;
     }
-
     .loginButton{
         display: flex;
         justify-content: center;
@@ -67,20 +57,17 @@ header{
         font-weight: 800;
     }
 }
-
 // nav
 nav{
     display: flex;
     justify-content: left;
-    align-items: center; 
+    align-items: center;
     height: 23px;
-    padding: 20px 550px;
-
+    padding: 20px 0px;
     .catagory {
         display: flex;
-        justify-content: space-between; 
+        justify-content: space-between;
         align-items: center;
-    
         .board,
         .matching,
         .cs,
@@ -93,101 +80,49 @@ nav{
                 color: #666;
                 transition: color 0.3s ease;
             }
-    
             a:hover {
                 color: #00B207;
             }
-
             a.active {
                 color: #00B207;
             }
         }
     }
 }
-
 // BasidLayout의 area
 .area{
     display: flex;
-    height: 69vh;
-    margin-left: 550px;
-    margin-right: 550px;
-}
-
-// sidebar
-aside{
-    
-
-    .catagory {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        margin-right: 20px;
-        width: 210px;
-        height: auto;
-        padding-left: 20px;
-        border: 1px solid #E6E6E6;
-        border-radius: 8px;
-
-        .catagory-title{
-            margin-right: 32px;
-            padding: 10px 0;
-            width: 100%;
-            font-family: 'Pretendard-Regular', sans-serif;
-            font-size: 20px;
-            font-weight: 600;
-        }
-        .sub-category {
-            margin-right: 32px;
-            padding-bottom: 8px;
-            width: 100%;
-            font-family: 'Pretendard-Regular', sans-serif;
-            font-size: 16px;
-            font-weight: 400;
-            a {
-                color: #666;
-            }
-
-            a.active {
-                color: #000; 
-            }
-        }
-
-        .sub-category .active {
-            background: #EDF2EE;
-        }
-    }
+    align-items: left;
+    min-height: calc(100vh - 60px);
+    padding-bottom: 60px;
 }
 
 // BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
 .contents{
-    width: 100%;
-    // background: #EDF2EE;
-    border-radius: 8px;
-
+    flex: 1;
+    display: flex;
+    // width: 100%;
+    // height: 100%;
+    flex-direction: column;
 }
-
 // PageTitle
 .page-title{
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     height: auto;
     padding: 0 20px;
-    border-bottom: 2px solid $shadow; 
-
+    border-bottom: 2px solid $shadow;
     .catagory-main-sub{
         display: flex;
         justify-content: left;
-        align-items: center; 
-
+        align-items: center;
         h1{
             font-size: 20px;
             font-family: 'Pretendard-Regular', sans-serif;
             font-weight: 700;
             font-style: normal;
         }
-
         .category-arrow {
             margin-left: 8px;
             width: 15px;
@@ -196,7 +131,6 @@ aside{
             background-size: contain;
         }
     }
-
     .catagory-info {
         font-size: 16px;
         font-family: 'Pretendard-Regular', sans-serif;
@@ -205,7 +139,6 @@ aside{
         color: #00B207;
     }
 }
-
 // searchbar
 .search-bar{
     display: flex;
@@ -216,7 +149,6 @@ aside{
     font-family: 'Pretendard-Regular', sans-serif;
     font-weight: 300;
     font-style: normal;
-
     .catagory-dropdown,
     .filter-dropdown{
         display: flex;
@@ -228,7 +160,6 @@ aside{
         padding: 8px;
         width: 150px;
         cursor: pointer;
-        
         .dropdown-arrow{
             margin-top: 5px;
             width: 10px;
@@ -239,7 +170,6 @@ aside{
             float: right;
         }
     }
-
     .dropdown-list {
         position: absolute;
         top: 100%;
@@ -253,16 +183,13 @@ aside{
         padding: 0;
         margin: 0;
     }
-
     .dropdown-list li {
         padding: 8px;
         cursor: pointer;
     }
-      
     .dropdown-list li:hover {
         background: #EDF2EE;
     }
-
     .search-box{
         display: flex;
         justify-content: space-between;
@@ -273,7 +200,6 @@ aside{
         border: 1px solid #E6E6E6;
         border-radius: 8px;
         padding: 5.5px;
-
         .search-input{
             width: 100%;
             border: none;
@@ -282,7 +208,6 @@ aside{
             font-weight: 300;
             font-style: normal;
         }
-
         .search-button{
             border: none;
             width: 30px;
@@ -292,7 +217,6 @@ aside{
             cursor: pointer;
         }
     }
-
     .write-button{
         width: 130px;
         height: 37px;
@@ -307,39 +231,31 @@ aside{
         cursor: pointer;
     }
 }
-
-
 // footer
 footer{
+    position : relative;
+    transform : translateY(-100%);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
     height: 60px;
     padding: 0 20px;
     background: #333333;
-    position: fixed;
-    bottom: 0;
     font-size: 10px;
     color: white;
     font-family: 'Pretendard-Regular', sans-serif;
-
     .site {
         justify-content: center;
         align-items: center;
         margin-right: 20px;
     }
-    
     .site img {
         margin-right: 16px;
     }
-    
 }
-
 // Link 밑줄 제거, hover
 a {
     text-decoration: none;
-
     &:hover {
       text-decoration: none;
     }
