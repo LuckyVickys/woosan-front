@@ -1,21 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MatchingItem from './MatchingItem';
 import styles from '../../assets/styles/matching/MatchingList.module.scss';
 
-const MatchingList = ({ regularly, temporary, self, onItemClick }) => {
-    const allItems = [
-        ...regularly.slice(0, 2),
-        ...temporary.slice(0, 2),
-        ...self.slice(0, 2),
-    ];
-
+const MatchingList = ({ items, onItemClick }) => {
     return (
         <div className={styles.grid}>
-            {allItems.map((item, index) => (
-                <MatchingItem key={index} {...item} onClick={onItemClick} />
+            {items.map(item => (
+                <MatchingItem key={item.id} {...item} onClick={() => onItemClick(item.id)} />
             ))}
         </div>
     );
+};
+
+MatchingList.propTypes = {
+    items: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onItemClick: PropTypes.func.isRequired,
 };
 
 export default MatchingList;

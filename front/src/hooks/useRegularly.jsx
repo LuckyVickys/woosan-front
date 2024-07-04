@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getRegularly } from '../api/matchingApi';
+import { getRegularly } from '../api/matchingBoardApi';
 
 /**
  * 정기 모임 데이터를 가져오는 커스텀 훅

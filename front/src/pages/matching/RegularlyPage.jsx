@@ -1,6 +1,6 @@
 import React from "react";
-import useRegularly from "../hooks/useRegularly";
-import styles from "./RegularlyPage.module.scss";
+import useRegularly from "../../hooks/useRegularly";
+import styles from "../../assets/styles/matching/RegularlyPage.module.scss";
 
 const RegularlyPage = () => {
     const { regularly, loading, error } = useRegularly();

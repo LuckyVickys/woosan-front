@@ -1,0 +1,36 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pageNumber,
+.pageControl {
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pageNumber:hover,
+.pageControl:hover {
+    background-color: #f0f0f0;
+}
+
+.active {
+    font-weight: bold;
+    background-color: #00B207;
+    color: white;
+}
+
+.disabled {
+    pointer-events: none;
+    color: #ccc;
+}

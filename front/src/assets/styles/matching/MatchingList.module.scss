@@ -1,5 +1,6 @@
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr); // 가로 2개
+    grid-template-rows: repeat(3, auto); // 세로 3개
     gap: 10px;
 }

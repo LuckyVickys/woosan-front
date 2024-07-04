@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../assets/styles/matching/MatchingItem.module.scss';
 
+
 const MatchingItem = ({
     id, memberId, matchingType, title, content, placeName, locationX, locationY, address, meetDate, tag, headCount,
     location, introduce, mbti, gender, age, height, onClick
@@ -23,30 +24,29 @@ const MatchingItem = ({
     }
 
     return (
-    
-            <div className={styles.matchingItemCard} onClick={() => onClick(id)}>
-                <div className={styles.matchingItemHeader}>
-                    <span className={`${styles.tag} ${styles[typeLabel]}`}>{typeLabel}</span>
-                    <span className={styles.title}>{title}</span>
-                </div>
-                <div className={styles.matchingItemBody}>
-                    {matchingType !== 3 && <div className={styles.tag}>{tag}</div>}
-                    <div className={styles.placeName}>장소: {placeName}</div>
-                    <div className={styles.datetime}>날짜: {new Date(meetDate).toLocaleDateString()}</div>
-                    <div className={styles.memberId}>주최자: {memberId}</div>
-                    {matchingType !== 3 ? (
-                        <div className={styles.headCount}>모집 인원: {headCount}</div>
-                    ) : (
-                        <>
-                            <div className={styles.gender}>성별: {gender}</div>
-                            <div className={styles.age}>나이: {age}세</div>
-                            <div className={styles.mbti}>MBTI: {mbti}</div>
-                        </>
-                    )}
-                </div>
+        <div className={styles.matchingItemCard} onClick={() => onClick(id)}>
+            <div className={styles.matchingItemHeader}>
+                <span className={`${styles.tag} ${styles[typeLabel]}`}>{typeLabel}</span>
+                <span className={styles.title}>{title}</span>
             </div>
-        );
-    }
+            <div className={styles.matchingItemBody}>
+                {matchingType !== 3 && <div className={styles.tag}>{tag}</div>}
+                <div className={styles.placeName}>장소: {placeName}</div>
+                <div className={styles.datetime}>날짜: {new Date(meetDate).toLocaleDateString()}</div>
+                <div className={styles.memberId}>주최자: {memberId}</div>
+                {matchingType !== 3 ? (
+                    <div className={styles.headCount}>모집 인원: {headCount}</div>
+                ) : (
+                    <>
+                        <div className={styles.gender}>성별: {gender}</div>
+                        <div className={styles.age}>나이: {age}세</div>
+                        <div className={styles.mbti}>MBTI: {mbti}</div>
+                    </>
+                )}
+            </div>
+        </div>
+    );
+}
 
     MatchingItem.propTypes = {
         id: PropTypes.number.isRequired,
