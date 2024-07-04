@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-
 import '../../assets/styles/App.scss';
+import SignUpModal from './SignUpModal';
+import PwFineModal from './PWFineModal';
 
 const LoginModal = () =>{
 
@@ -8,6 +9,10 @@ const LoginModal = () =>{
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  const [isClosing, setIsClosing] = useState(false);
+  const [openSignUp, setOpenSignUp] = useState(false);
+  const [openPWFine, setOpenPWFine] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -28,42 +33,58 @@ const LoginModal = () =>{
     }
 
     if (valid) {
-      // Handle login
+      setIsClosing(true);
     }
   };
 
+  const openSignUpModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setOpenSignUp(true);
+    }, 200);
+  };
+
+  const openPWFineModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setOpenPWFine(true);
+    }, 200);
+  };
+
   return (
-    <div className='login-modal-background'>
-      <div className='login-modal' >
+    <div className={`modal-background ${isClosing ? 'closing' : ''}`}>
+      <div className={`login-modal ${isClosing ? 'closing' : ''}`}>
         <h2>로그인</h2>
-        <form onSubmit={handleLogin} className='login-form' >
-          <div className='login-input'>
-            <input className='id-input'
+        <form onSubmit={handleLogin} className='form-box' >
+          <div className='input-box'>
+            <input className='email-input'
               type="email"
               placeholder="이메일"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {emailError && <p className='login-error'>{emailError}</p>}
+            {emailError && <p className='input-error'>{emailError}</p>}
           </div>
-          <div className='login-input'>
+          <div className='input-box'>
             <input className='pw-input'
               type="password"
               placeholder="비밀번호"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {passwordError && <p className='login-error'>{passwordError}</p>}
+            {passwordError && <p className='input-error'>{passwordError}</p>}
           </div>
-          <div className='keepLoggedIn-forgotPW'>
-            <div className='keepLoggedIn-checkbox'>
-              <input className='login-checkbox' type="checkbox" id="keepLoggedIn"/>
-              <div className="keepLoggedIn">로그인 상태 유지</div>
+          <div className='add-fucntion'>
+            <div className='agree-checkbox'>
+              <input className='checkbox' type="checkbox" id="keepLoggedIn"/>
+              <div className="checkbox-text">로그인 상태 유지</div>
             </div>
-            <div><a href="#" className='forgotPW'> 비밀번호 찾기</a>
+            <div><a className='forgotPW' onClick={openPWFineModal}>비밀번호 찾기</a>
             </div>
           </div>
-          <button className='login-Button' type="submit">로그인</button>
+          <button className='login-button' type="submit">
+            로그인
+          </button>
         </form>
         <p className='socialLogin-text'>
           SNS계정으로 간편 로그인/회원가입
@@ -73,8 +94,10 @@ const LoginModal = () =>{
           <div className='naver-Icon'></div>
           <div className='google-Icon'></div>
         </div>
-        <p className='signup-text'>아직 회원이 아니신가요? <a href="#" className='signup-link'> 회원가입 하기</a></p>
+        <p className='signup-text'>아직 회원이 아니신가요? <a className='signup-link' onClick={openSignUpModal}> 회원가입 하기</a></p>
       </div>
+      {openSignUp && <SignUpModal />}
+      {openPWFine && <PwFineModal />}
     </div>
   );
 };

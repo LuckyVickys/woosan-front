@@ -1,11 +1,15 @@
-.login-modal-background{
+.modal-background{
     position: fixed;
     top:0; left: 0; bottom: 0; right: 0;
     background: rgba(0, 0, 0, 0.3);
     z-index: 100;
 }
 
-.login-modal {
+.login-modal,
+.signup-modal,
+.pwfind-modal {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 1;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -28,49 +32,59 @@
     font-weight: 800;
   }
 
-  .login-form {
+  .form-box {
     display: flex;
     flex-direction: column;
     width: 100%;
 
-    .login-input {
-      margin-bottom: 15px;
+    .input-box {
+      margin-bottom: 10px;
 
-      .id-input,
-      .pw-input {
+      .input-info{
+        font-size: 12px;
+        font-weight: 800;
+        text-align: left;
+        margin: 5px 0;
+      }
+
+      .email-input,
+      .pw-input,
+      .nickname-input,
+      .pw-check-input,
+      .emailPassword-input {
         width: 100%;
-        padding: 15px;
+        padding: 10px;
         box-sizing: border-box;
         border: 1px solid #E6E6E6;
         border-radius: 6px;
         font-size: 14px;
         font-weight: 400;
       }
-      .login-error {
+      .input-error {
         color: #EA4B48;
         font-size: 12px;
         font-weight: 400;
         text-align: left;
-        margin-top: 5px;
+        margin: 5px 0;
       }
     }
 
-    .keepLoggedIn-forgotPW {
+    .add-fucntion {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin: 20px 0;
       font-size: 12px;
       font-weight: 400;
 
-      .keepLoggedIn-checkbox{
+      .agree-checkbox{
         display: flex;
         justify-content: center;
 
-        .login-checkbox {
+        .checkbox {
           margin-right: 5px;
         }
-        .keepLoggedIn{
+        .checkbox-text{
           display: flex;
           justify-content: center;
           align-items: center;
@@ -80,10 +94,13 @@
         color: #666666;
         text-decoration: none;
         font-size: 12px;
+        cursor: pointer;
       }
     }
 
-    .login-Button {
+    .login-button,
+    .signup-button,
+    .pwchange-button {
       margin-bottom: 10px;
       padding: 10px;
       height: 45px;
@@ -106,6 +123,7 @@
     display: flex;
     justify-content: center;
     margin: 10px 0;
+    cursor: pointer;
 
     .kakao-Icon,
     .naver-Icon,
@@ -126,5 +144,11 @@
   .signup-link {
     color: #9BCC66;
     text-decoration: none;
+    cursor: pointer;
+  }
+
+  &.closing {
+    opacity: 0;
+    transform: translate(-50%, -50%);
   }
 }
