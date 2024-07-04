@@ -1,0 +1,61 @@
+.matchingItemCard {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    cursor: pointer;
+}
+
+.matchingItemHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.tag {
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #eee;
+}
+
+.title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.details {
+    margin-top: 10px;
+}
+
+.placeName,
+.datetime,
+.memberId,
+.headCount,
+.tags,
+.location,
+.introduce,
+.mbti,
+.gender,
+.age,
+.height,
+.host {
+    margin: 5px 0;
+}
+
+/* 각 유형에 대한 배경 색상 */
+.정기모임 {
+    background-color: #ffcc00;
+}
+
+.번개 {
+    background-color: #ff5733;
+}
+
+.셀프소개팅 {
+    background-color: #33c3ff;
+}

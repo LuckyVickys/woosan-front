@@ -74,9 +74,9 @@ const SideBar = ({ pageType }) => {
                 {pageType === 'matching' && (
                     <>
                         <div className="category-title">모임</div>
-                        <div className={`sub-category ${activeCategory === 'total' ? 'active' : ''}`}>
-                            <NavLink to={'/matching/total'} className={activeCategory === 'total' ? 'active' : ''} onClick={() => setActiveCategory('total')}>
-                                <FaTh className={`icon ${activeCategory === 'total' ? 'active' : ''}`} />전체
+                        <div className={`sub-category ${activeCategory === '' ? 'active' : ''}`}>
+                            <NavLink to={'/matching'} className={activeCategory === '' ? 'active' : ''} onClick={() => setActiveCategory('')}>
+                                <FaTh className={`icon ${activeCategory === '' ? 'active' : ''}`} />전체
                             </NavLink>
                         </div>
                         <div className={`sub-category ${activeCategory === 'regularly' ? 'active' : ''}`}>
