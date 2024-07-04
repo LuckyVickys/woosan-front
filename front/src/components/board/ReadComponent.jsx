@@ -1,14 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import likeNoIcon from "../../assets/image/heart_no.svg";
-import likeIcon from "../../assets/image/heart_yes.svg";
 import "../../assets/styles/App.scss";
 import { getBoard, translate } from "../../api/boardApi";
-import { toggleLike, getLikes } from "../../api/likesApi";
 import useCustomMove from "../../hooks/useCustomMove.jsx";
-import BoardDropDown from "./BoardDropDown.jsx";
-import PageComponent from "../../components/board/PageComponent";
-
+import BoardDropDown from "../../components/board/element/BoardDropDown.jsx";
+import PageComponent from "../../components/board/element/PageComponent.jsx";
+import { formatDate } from "../../util/DateUtil.jsx";
+import LikeButton from "../../components/common/LikeButton";
 
 const initState = {
   id: 0,
@@ -24,63 +22,21 @@ const initState = {
   filePathUrl: [],
 };
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const seconds = String(date.getSeconds()).padStart(2, '0');
-
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-};
 const ReadComponent = () => {
   const { id } = useParams();
   const location = useLocation();
   const { serverData } = location.state || {}; // 기본값 설정
 
   const [board, setBoard] = useState(initState);
-  const [liked, setLiked] = useState(false);
   const [showBoardMenu, setShowBoardMenu] = useState(false);
   const boardMenuRef = useRef(null);
 
-
   const { page, size, categoryName, moveToList } = useCustomMove();
-
-
-  const handleLikeToggle = async () => {
-    try {
-      const toggleRequest = {
-        memberId: 1, // 예: 현재 로그인된 사용자의 ID
-        type: "게시물", // 예: 좋아요의 대상 타입
-        targetId: id, // 현재 게시물의 ID
-      };
-      await toggleLike(toggleRequest);
-      setLiked((prevLiked) => !prevLiked);
-      setBoard((prevBoard) => ({
-        ...prevBoard,
-        likesCount: liked ? prevBoard.likesCount - 1 : prevBoard.likesCount + 1,
-      }));
-    } catch (error) {
-      console.error("Failed to toggle like", error);
-    }
-  };
 
   useEffect(() => {
     getBoard(id).then((data) => {
       console.log(data);
       setBoard(data);
-    });
-
-    const toggleRequest = {
-      memberId: 1,
-      type: "게시물",
-      targetId: id
-    }
-
-    getLikes(toggleRequest).then((likeStatus) => {
-      setLiked(likeStatus);
     });
   }, [id]);
 
@@ -129,20 +85,12 @@ const ReadComponent = () => {
           </div>
         </div>
         <div className="right">
-          <button
-            className={`like-button ${liked ? "liked" : "not-liked"}`}
-            onClick={handleLikeToggle}
-          >
-
-            <span role="img" aria-label="like">
-              <img
-                src={liked ? likeIcon : likeNoIcon}
-                className="likeIcon"
-                alt="likeIcon"
-              />
-            </span>{" "}
-            {board.likesCount}
-          </button>
+          <LikeButton
+            memberId={1}
+            type="게시물"
+            targetId={id}
+            initialLikesCount={board.likesCount}
+          />
           <button className="menu-button" ref={boardMenuRef} onClick={handleBoardMenuSelect}>
             ⋮
             {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}

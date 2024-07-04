@@ -1,7 +1,7 @@
 import React from "react";
-import "../../assets/styles/App.scss";
+import "../../../assets/styles/App.scss";
 import { useParams } from "react-router-dom";
-import useCustomMove from "../../hooks/useCustomMove.jsx";
+import useCustomMove from "../../../hooks/useCustomMove";
 
 const PageComponent = ({ serverData }) => {
     const { id } = useParams();
