@@ -1,4 +1,4 @@
-.comment-section {
+.reply-section {
   width: 935px;
   margin-top: 10px;
   border: 1px solid #e5e5e5;
@@ -6,48 +6,48 @@
   padding: 25px;
 }
 
-.comment {
+.reply {
   border-bottom: 1px solid #e5e5e5;
   padding-bottom: 10px;
   margin-bottom: 10px;
 }
 
-.comment-header {
+.reply-header {
   display: flex;
   justify-content: space-between;
   margin-left: 20px;
 }
 
-.comment-left {
+.reply-left {
   display: flex;
   align-items: center;
 }
 
-.comment-right {
+.reply-right {
   display: flex;
   align-items: center;
 }
 
-.comment-profile-image {
+.reply-profile-image {
   width: 30px;
   height: 30px;
   border-radius: 50%;
   margin-right: 10px;
 }
 
-.comment-author {
+.reply-author {
   font-size: 1em;
   font-weight: bold;
   margin: 0 0 5px 0;
 }
 
-.comment-text {
+.reply-text {
   padding-left: 40px;
   font-size: 1em;
   margin: 0 0 5px 0;
 }
 
-.comment-date {
+.reply-date {
   font-size: 0.8em;
   color: #888;
   margin-left: 10px;
@@ -65,7 +65,6 @@
 
 .reply {
   margin-left: 60px;
-  /* Increased margin to shift replies to the right */
   border-bottom: 1px solid #e5e5e5;
   padding-bottom: 10px;
   margin-bottom: 10px;
@@ -124,7 +123,6 @@
   margin-right: 10px;
   font-size: 18px;
   transition: background-color 0.3s, color 0.3s;
-  /* 스타일 변경에 트랜지션 추가 */
 
   .likeIcon {
     margin-right: 7px;
@@ -152,7 +150,6 @@
   padding-left: 40px;
   margin-top: 10px;
   margin-left: 60px;
-  /* Match margin to the reply shift */
 }
 
 .reply-arrow {
@@ -167,7 +164,7 @@
   width: 100%;
 }
 
-.comment-input-field {
+.reply-input-field {
   flex: 1;
   padding: 10px;
   font-size: 1em;
@@ -176,7 +173,7 @@
   margin-right: 10px;
 }
 
-.full-width-comment-input-field {
+.full-width-reply-input-field {
   flex: 1;
   padding: 10px;
   font-size: 1em;
@@ -227,7 +224,7 @@
   border: 1px solid #00b207;
 }
 
-.comment-input {
+.reply-input {
   display: flex;
   align-items: center;
   width: 100%;
@@ -236,6 +233,5 @@
 
 .replies {
   padding-left: 15px;
-  /* Added padding-left for replies */
   margin: 15px;
 }
