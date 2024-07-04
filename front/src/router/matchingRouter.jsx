@@ -9,10 +9,6 @@ const matchingRouter = ()=> {
     return [
         {
             path: "",
-            element: <Navigate replace to="/matching/total"/>
-        },
-        {
-            path: "total",
             element: <Suspense fallback={Loading}><ListPage/></Suspense>
         },
         {

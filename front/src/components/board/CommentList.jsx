@@ -6,6 +6,9 @@ import replyArrow from "../../assets/image/reply_arrow.png";
 import '../../assets/styles/App.scss';
 import { getList } from "../../api/replyApi";
 import CommentDropDown from "./CommentDropDown";
+// import ReportModal from './ReportModal';
+// import MsgModal from "./MsgModal";
+// import Swal from 'sweetalert2';
 
 const initState = {
   "dtoList": [],
@@ -40,6 +43,12 @@ const CommentList = () => {
   const [replyForms, setReplyForms] = useState({});
   const [replies, setReplies] = useState(initState);
 
+  const [openCommentDropDown, setOpenCommentDropDown] = useState({});
+  const commentMenuRef = useRef(null);
+
+  // const [openReportModal, setOpenReportModal] = useState(false);
+  // const [openMsgModal, setOpenMsgModal] = useState(false);
+
   useEffect(() => {
     const getReplies = async (page = 1) => {
       try {
@@ -69,6 +78,82 @@ const CommentList = () => {
       ...prev,
       [commentId]: !prev[commentId],
     }));
+  };
+
+  const handleDropDownClick = (id) => {
+    setOpenCommentDropDown((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const handleDropDownMenu = (menu, id) => {
+    const commentId = replies.dtoList.find(comment => comment.id === id)?.id;
+    const replyId = replies.dtoList.find(comment => comment.children?.some(reply => reply.id === id))?.id;
+  
+    if (commentId) {
+      console.log("Selected commentId:", commentId);
+      console.log("Selected Comment Menu:", menu);
+  
+      // switch (menu) {
+      //   case "report":
+      //     setOpenReportModal(true);
+      //     break;
+      //   case "msg":
+      //     setOpenMsgModal(true);
+      //     break;
+      //   case "delete":
+      //     Swal.fire({
+      //       title: '게시글 삭제',
+      //       text: `${commentId}를 삭제하시겠습니까?`,
+      //       icon: 'warning',
+      //       showCancelButton: true,
+      //       confirmButtonColor: '#3085d6',
+      //       cancelButtonColor: '#d33',
+      //       confirmButtonText: '삭제',
+      //       cancelButtonText: '취소'
+      //     }).then((result) => {
+      //       if (result.isConfirmed) {
+      //         // 삭제 기능
+      //         Swal.fire('삭제 완료', `${commentId}가 삭제되었습니다.`, 'success');
+      //       }
+      //     });
+      //     break;
+      //   default:
+      //     break;
+      // }
+    } else if (replyId) {
+      console.log("Selected replyId:", replyId);
+      console.log("Selected Reply Menu:", menu);
+  
+      // switch (menu) {
+      //   case "report":
+      //     setOpenReportModal(true);
+      //     break;
+      //   case "msg":
+      //     setOpenMsgModal(true);
+      //     break;
+      //   case "delete":
+      //     Swal.fire({
+      //       title: '글 삭제',
+      //       text: `${replyId}를 삭제하시겠습니까?`,
+      //       icon: 'warning',
+      //       showCancelButton: true,
+      //       confirmButtonColor: '#3085d6',
+      //       cancelButtonColor: '#d33',
+      //       confirmButtonText: '삭제',
+      //       cancelButtonText: '취소'
+      //     }).then((result) => {
+      //       if (result.isConfirmed) {
+      //         // 삭제 기능
+      //         Swal.fire('삭제 완료', `${replyId}가 삭제되었습니다.`, 'success');
+      //       }
+      //     });
+      //     break;
+      //   default:
+      //     break;
+      // }
+    }
   };
 
   const renderReplies = (children) => {
@@ -106,70 +191,6 @@ const CommentList = () => {
       </div>
     ));
   };
-
-  const [openCommentDropDown, setOpenCommentDropDown] = useState({});
-  const commentMenuRef = useRef(null);
-
-  const handleDropDownMenu = (menu, commentId, replyId) => {
-    console.log("Selected Comment Menu:", menu);
-
-    if (commentId) {
-      console.log("Selected commentId:", commentId);
-
-      switch (menu) {
-        case "report":
-            alert(commentId, "신고 처리 완료");
-            break;
-        case "msg":
-            alert(commentId,"쪽지 전송 완료");
-            break;
-        case "delete":
-            alert(commentId,"삭제 완료");
-            break;
-        default:
-            break;
-      }
-    } else {
-        console.log("Selected replyId:", replyId);
-
-        switch (menu) {
-          case "report":
-              alert(replyId, "신고 처리 완료");
-              break;
-          case "msg":
-              alert(replyId, "쪽지 전송 완료");
-              break;
-          case "delete":
-              alert(replyId, "삭제 완료");
-              break;
-          default:
-              break;
-        }
-    }
-  };
-
-  const handleDropDownClick = (commentId, replyId) => {
-    setOpenCommentDropDown((prev) => ({
-      ...prev,
-      [commentId]: !prev[commentId],
-      [replyId]: !prev[replyId],
-    }));
-  };
-
-  const handleClick = (event) => {
-    if (commentMenuRef.current && commentMenuRef.current.contains(event.target)) {
-      return;
-    } else {
-      setOpenCommentDropDown(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClick);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-    };
-  }, []);
 
   return (
     <>
@@ -235,7 +256,12 @@ const CommentList = () => {
             )}
           </div>
         ))}
-
+        {/* {openReportModal && (
+        <ReportModal onClose={() => setOpenMsgModal(false)} />
+        )}
+        {openMsgModal && (
+        <MsgModal onClose={() => setOpenMsgModal(false)} />
+        )} */}
         {replies.dtoList.length > 0 && (
           <div className="pagination">
             <button 
