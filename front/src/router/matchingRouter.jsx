@@ -1,27 +1,31 @@
 import { Suspense, lazy } from "react";
-import { Navigate } from "react-router-dom";
+
+
 
 const Loading = <div>Loading....</div>
 
-const ListPage = lazy(() => import("../pages/matching/ListPage"))
+const MatchingPage = lazy(() => import("../pages/matching/MatchingPage"));
+const RegularlyPage = lazy(() => import("../pages/matching/RegularlyPage"));
+const TemporaryPage = lazy(() => import("../pages/matching/TemporaryPage"));
+const SelfPage = lazy(() => import("../pages/matching/SelfPage"));
 
 const matchingRouter = ()=> {
     return [
         {
             path: "",
-            element: <Suspense fallback={Loading}><ListPage/></Suspense>
+            element: <Suspense fallback={Loading}><MatchingPage/></Suspense>
         },
         {
             path: "regularly",
-            element: <Suspense fallback={Loading}><ListPage/></Suspense>
+            element: <Suspense fallback={Loading}><RegularlyPage/></Suspense>
         },
         {
             path: "temporary",
-            element: <Suspense fallback={Loading}><ListPage/></Suspense>
+            element: <Suspense fallback={Loading}><TemporaryPage/></Suspense>
         },
         {
             path: "self",
-            element: <Suspense fallback={Loading}><ListPage/></Suspense>
+            element: <Suspense fallback={Loading}><SelfPage/></Suspense>
         }
     ]
 }
