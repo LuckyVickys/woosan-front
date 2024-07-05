@@ -38,14 +38,21 @@ header{
 .login{
     display: flex;
     align-items: center;
+
+    .messageIcon{
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        display: none;
+    }
     .loginBar{
+        margin: 0px 20px;
         color: $shadow;
     }
     .loginButton{
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 16px;
         width: 75px;
         height: auto;
         padding: 10px 14px;
@@ -55,6 +62,35 @@ header{
         border-radius: 43px;
         font-family: 'Pretendard-Regular', sans-serif;
         font-weight: 800;
+    }
+    .profile-box{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: none;
+
+        .user-level-nickname{
+            margin-right: 10px;
+            font-family: 'Pretendard-Regular', sans-serif;
+
+            .user-level{
+                color: #9BCC66;
+                font-size: 14px;
+                font-weight: 400;
+            }
+            .user-nickname{
+                font-size: 16px;
+                font-weight: 800;
+            }
+        }
+        .user-profile{
+            width: 45px;
+            height: 45px;
+            background: url('../image/clova.png') no-repeat;
+            background-size: contain;
+            border-radius: 50%;
+            cursor: pointer;
+        }
     }
 }
 // nav
