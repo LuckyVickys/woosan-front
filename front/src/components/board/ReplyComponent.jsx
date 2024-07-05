@@ -31,7 +31,7 @@ const ReplyComponent = () => {
   const [openReplyDropDown, setOpenReplyDropDown] = useState(null);
   const [replyContent, setReplyContent] = useState("");
   const [childReplyContent, setChildReplyContent] = useState({});
-  const dropDownRef = useRef(null);
+  const dropDownRefs = useRef([]);
 
   useEffect(() => {
     const getReplies = async (page = 1) => {
@@ -110,7 +110,6 @@ const ReplyComponent = () => {
   };
 
   const handleChildReplySubmit = async (replyId) => {
-    console.log(replyId, childReplyContent[replyId],)
     try {
       const newChildReply = await addReply({
         writerId: 2,
@@ -131,9 +130,10 @@ const ReplyComponent = () => {
       console.error("Error adding child reply:", error);
     }
   };
+
   const renderReply = (reply, isChild = false) => {
     return (
-      <div key={reply.id} className="reply">
+      <div key={reply.id} className="reply" ref={el => (dropDownRefs.current[reply.id] = el)}>
         <div className="reply-header">
           <div className="reply-left">
             <img
@@ -151,7 +151,7 @@ const ReplyComponent = () => {
               targetId={reply.id}
               initialLikesCount={reply.likesCount}
             />
-            <button className="menu-button" onClick={() => handleDropDownClick(reply.id)} ref={dropDownRef}>
+            <button className="menu-button" onClick={() => handleDropDownClick(reply.id)}>
               ⋮
               {openReplyDropDown === reply.id && (
                 <div>
@@ -202,7 +202,7 @@ const ReplyComponent = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+      if (openReplyDropDown && dropDownRefs.current[openReplyDropDown] && !dropDownRefs.current[openReplyDropDown].contains(event.target)) {
         setOpenReplyDropDown(null);
       }
     };
@@ -211,7 +211,7 @@ const ReplyComponent = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [openReplyDropDown]);
 
   return (
     <>
