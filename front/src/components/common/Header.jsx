@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
-import logoImage from "../../assets/image/logo.svg"; // 이미지 파일 경로
+import React, { useState, useEffect, useRef } from "react";
+import {Link} from "react-router-dom";
+import logoImage from "../../assets/image/logo.svg";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
+import LoginModal from "../member/LoginModal";
 import '../../assets/styles/App.scss';
 
 const Header = () => {
+    const [openLogin, setOpenLogin] = useState(false);
+
     return (
         <header className="header">
             <div className="logo">
@@ -17,10 +21,18 @@ const Header = () => {
             <div className="login">
                 <MdOutlineLocalPostOffice className="messageIcon" />
                 <div className="loginBar"> | </div>
-                <Link to={'/login'} className="loginButton" >
+                <div className="loginButton" id="loginButton" onClick={() => setOpenLogin(true)}>
                     로그인
-                </Link>
+                </div>
+                <div className="profile-box" id="loginProfile">
+                    <div className='user-level-nickname'>
+                        <div className='user-level'>dmdkrdmr</div>
+                        <div className='user-nickname'>dfdfdf</div>
+                    </div>
+                    <div className='user-profile'></div>
+                </div>
             </div>
+            {openLogin && <LoginModal/>}
         </header>
     )
 }
