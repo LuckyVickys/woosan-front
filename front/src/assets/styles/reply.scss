@@ -55,7 +55,6 @@
 
 .reply-button {
   float: right;
-  margin-right: 40px;
   padding-left: 40px;
   background-color: transparent;
   border: none;
@@ -118,7 +117,7 @@
   background-color: transparent;
   width: 70px;
   height: 30px;
-  border: 1.5px solid #EA4B48;
+  border: none;
   color: #1A1A1A;
   border-radius: 43px;
   cursor: pointer;
@@ -127,16 +126,21 @@
   transition: background-color 0.3s, color 0.3s;
 
   .likeIcon {
-    margin-right: 7px;
+    margin-right: 15px;
   }
 
-  &.liked {
-    border-color: #EA4B48;
-  }
+  // &.liked {
+  //   // border-color: #EA4B48;
+  // }
 
-  &.not-liked {
-    border-color: #B0B0B0;
-  }
+  // &.not-liked {
+  //   // border-color: #B0B0B0;
+  // }
+}
+
+.replyIcon {
+  color: #B0B0B0;
+  margin-right: 5px;
 }
 
 .menu-button {

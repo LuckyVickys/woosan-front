@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import replyArrow from "../../assets/image/reply_arrow.png";
 import '../../assets/styles/App.scss';
 import { getList, addReply } from "../../api/replyApi";
-import ReplyDropDown from "./element/ReplyDropDown.jsx"
+import ReplyDropDown from "./element/ReplyDropDown.jsx";
 import { formatRelativeTime } from "../../util/DateUtil.jsx";
 import ListPageComponent from "../../components/board/element/ListPageComponent";
-import LikeButton from "../../components/common/LikeButton"; // LikeButton 컴포넌트 import
+import LikeButton from "../../components/common/LikeButton";
 
 const initState = {
   "dtoList": [],
@@ -28,9 +28,10 @@ const ReplyComponent = () => {
   const { id } = useParams();
   const [replyForms, setReplyForms] = useState({});
   const [replies, setReplies] = useState(initState);
-  const [openReplyDropDown, setOpenReplyDropDown] = useState(null); // Keep track of open dropdown
-  const [replyContent, setReplyContent] = useState(""); // State for new reply content
-  const [childReplyContent, setChildReplyContent] = useState({}); // State for new child reply content
+  const [openReplyDropDown, setOpenReplyDropDown] = useState(null);
+  const [replyContent, setReplyContent] = useState("");
+  const [childReplyContent, setChildReplyContent] = useState({});
+  const dropDownRef = useRef(null);
 
   useEffect(() => {
     const getReplies = async (page = 1) => {
@@ -64,7 +65,7 @@ const ReplyComponent = () => {
   };
 
   const handleDropDownClick = (id) => {
-    setOpenReplyDropDown(prev => (prev === id ? null : id)); // Toggle dropdown
+    setOpenReplyDropDown(prev => (prev === id ? null : id));
   };
 
   const handleDropDownMenu = (menu, id) => {
@@ -92,14 +93,17 @@ const ReplyComponent = () => {
 
   const handleReplySubmit = async () => {
     try {
-      await addReply({
+      const newReply = await addReply({
         writerId: 2,
         content: replyContent,
         parentId: null,
         boardId: id,
       });
       setReplyContent(""); // Input 비우기
-      handlePageChange({ page: replies.pageRequestDTO.page }); // 댓글 새로고침
+      setReplies((prevReplies) => ({
+        ...prevReplies,
+        dtoList: [newReply, ...prevReplies.dtoList]
+      }));
     } catch (error) {
       console.error("Error adding reply:", error);
     }
@@ -108,19 +112,25 @@ const ReplyComponent = () => {
   const handleChildReplySubmit = async (replyId) => {
     console.log(replyId, childReplyContent[replyId],)
     try {
-      await addReply({
+      const newChildReply = await addReply({
         writerId: 2,
         content: childReplyContent[replyId],
         parentId: replyId,
         boardId: id,
       });
       setChildReplyContent((prev) => ({ ...prev, [replyId]: "" })); // Input 비우기
-      handlePageChange({ page: replies.pageRequestDTO.page }); // 댓글 새로고침
+      setReplies((prevReplies) => ({
+        ...prevReplies,
+        dtoList: prevReplies.dtoList.map(reply =>
+          reply.id === replyId
+            ? { ...reply, children: [newChildReply, ...(reply.children || [])] }
+            : reply
+        )
+      }));
     } catch (error) {
       console.error("Error adding child reply:", error);
     }
   };
-
   const renderReply = (reply, isChild = false) => {
     return (
       <div key={reply.id} className="reply">
@@ -141,7 +151,7 @@ const ReplyComponent = () => {
               targetId={reply.id}
               initialLikesCount={reply.likesCount}
             />
-            <button className="menu-button" onClick={() => handleDropDownClick(reply.id)}>
+            <button className="menu-button" onClick={() => handleDropDownClick(reply.id)} ref={dropDownRef}>
               ⋮
               {openReplyDropDown === reply.id && (
                 <div>
@@ -151,15 +161,15 @@ const ReplyComponent = () => {
             </button>
           </div>
         </div>
-        <p className="reply-text">{reply.content}</p>
-        {!isChild && (
+        <p className="reply-text">{reply.content} {!isChild && (
           <button
             className="reply-button"
             onClick={() => handleReplyClick(reply.id)}
           >
             답글
           </button>
-        )}
+        )}</p>
+
 
         {replyForms[reply.id] && (
           <div className="reply-form-container">
@@ -189,6 +199,19 @@ const ReplyComponent = () => {
       </div>
     );
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+        setOpenReplyDropDown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
