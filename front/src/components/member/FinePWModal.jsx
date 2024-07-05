@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import LoginModal from './LoginModal';
 import '../../assets/styles/App.scss';
 
-const PwFineModal = () => {
+const FinePWModal = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [emailPassword, setEmailPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -11,6 +12,8 @@ const PwFineModal = () => {
   const [emailPasswordError, setEmailPasswordError] = useState('');
   const [newPasswordError, setNewPasswordError] = useState('');
   const [pwCheckError, setPwCheckError] = useState('');
+
+  const [openLogin, setOpenLogin] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -51,9 +54,17 @@ const PwFineModal = () => {
     }
   };
 
+  const openLoginModal = () => {
+    setTimeout(() => {
+      onClose(false);
+      setOpenLogin(true);
+    }, 200);
+  };
+
     return (
-        // <div className='modal-background'>
-          <div className='pwfind-modal' >
+      <>
+        {/* <div className='modal-background'> */}
+          <div className='pwfind-modal'  onClick={(e) => e.stopPropagation()}>
             <h2>비밀번호 찾기</h2>
             <form onSubmit={handleLogin} className='form-box' >
               <div className='input-box'>
@@ -98,10 +109,12 @@ const PwFineModal = () => {
               </div>
               <button className='pwchange-button' type="submit">비밀번호 변경하기</button>
             </form>
-            <p className='signup-text'>이미 계정이 있으신가요? <a className='signup-link'>로그인</a></p>
+            <p className='signup-text'>이미 계정이 있으신가요? <a className='signup-link' onClick={openLoginModal}>로그인</a></p>
           </div>
-        // </div>
+          {openLogin && <LoginModal />}
+        {/* </div> */}
+      </>
       );
     };
 
-export default PwFineModal;
+export default FinePWModal;

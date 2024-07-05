@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../assets/styles/App.scss';
 import SignUpModal from './SignUpModal';
-import PwFineModal from './PWFineModal';
+import FinePWModal from './FinePWModal';
 
-const LoginModal = () =>{
+const LoginModal = ({ onClose }) =>{
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +12,16 @@ const LoginModal = () =>{
 
   const [isClosing, setIsClosing] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
-  const [openPWFine, setOpenPWFine] = useState(false);
+  const [openFinePW, setOpenFinePW] = useState(false);
+
+  useEffect(() => {
+    if (isClosing) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 200); 
+      return () => clearTimeout(timer); 
+    }
+  }, [isClosing, onClose]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -33,27 +42,33 @@ const LoginModal = () =>{
     }
 
     if (valid) {
-      setIsClosing(true);
+      onClose();
     }
   };
 
   const openSignUpModal = () => {
-    setIsClosing(true);
+    // setIsClosing(true);
     setTimeout(() => {
       setOpenSignUp(true);
     }, 200);
   };
 
-  const openPWFineModal = () => {
-    setIsClosing(true);
+  const openFinePWModal = () => {
+    // setIsClosing(true);
     setTimeout(() => {
-      setOpenPWFine(true);
+      setOpenFinePW(true);
     }, 200);
   };
 
+  // const closeModal = (e) => {
+  //   if (e.target.classList.contains('modal-background')) {
+  //     setIsClosing(true);
+  //   }
+  // };
+
   return (
-    <div className={`modal-background ${isClosing ? 'closing' : ''}`}>
-      <div className={`login-modal ${isClosing ? 'closing' : ''}`}>
+    <div className='modal-background' onClick={onClose}>
+      <div className='login-modal' onClick={(e) => e.stopPropagation()}> {/*이벤트 버블링 방지*/}
         <h2>로그인</h2>
         <form onSubmit={handleLogin} className='form-box' >
           <div className='input-box'>
@@ -79,7 +94,7 @@ const LoginModal = () =>{
               <input className='checkbox' type="checkbox" id="keepLoggedIn"/>
               <div className="checkbox-text">로그인 상태 유지</div>
             </div>
-            <div><a className='forgotPW' onClick={openPWFineModal}>비밀번호 찾기</a>
+            <div><a className='forgotPW' onClick={openFinePWModal}>비밀번호 찾기</a>
             </div>
           </div>
           <button className='login-button' type="submit">
@@ -97,7 +112,7 @@ const LoginModal = () =>{
         <p className='signup-text'>아직 회원이 아니신가요? <a className='signup-link' onClick={openSignUpModal}> 회원가입 하기</a></p>
       </div>
       {openSignUp && <SignUpModal />}
-      {openPWFine && <PwFineModal />}
+      {openFinePW && <FinePWModal />}
     </div>
   );
 };

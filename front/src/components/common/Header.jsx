@@ -7,6 +7,11 @@ import '../../assets/styles/App.scss';
 
 const Header = () => {
     const [openLogin, setOpenLogin] = useState(false);
+    const [openSignUp, setOpenSignUp] = useState(false);
+    const [openFindPW, setOpenFindPW] = useState(false);
+    const closeLoginModal = () => {
+        setOpenLogin(false);
+    };
 
     return (
         <header className="header">
@@ -32,7 +37,7 @@ const Header = () => {
                     <div className='user-profile'></div>
                 </div>
             </div>
-            {openLogin && <LoginModal/>}
+            {openLogin && <LoginModal onClose={closeLoginModal} />}
         </header>
     )
 }

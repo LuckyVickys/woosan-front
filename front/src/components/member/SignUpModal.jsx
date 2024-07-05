@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import LoginModal from './LoginModal';
 import '../../assets/styles/App.scss';
 
-const SignUpModal = () =>{
+const SignUpModal = ({ onClose }) =>{
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [pwCheck, setPwCheck] = useState('');
+
   const [emailError, setEmailError] = useState('');
   const [nicknameError, setNicknameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [pwCheckError, setPwCheckError] = useState('');
+  const [signedUp, setSignedUp] = useState(false);
 
-  const handleLogin = (e) => {
+  const [isClosing, setIsClosing] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
+
+  useEffect(() => {
+    if (isClosing) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 200); 
+      return () => clearTimeout(timer); 
+    }
+  }, [isClosing, onClose]);
+
+  const handleSignUp = (e) => {
     e.preventDefault();
     let valid = true;
     
@@ -48,15 +63,23 @@ const SignUpModal = () =>{
     }
 
     if (valid) {
-      // Handle login
+      setSignedUp(true);
     }
   };
 
+  const openLoginModal = () => {
+    onClose();
+    setTimeout(() => {
+      setOpenLogin(true);
+    }, 200);
+  };
+
     return (
-        // <div className='modal-background'>
-          <div className='signup-modal' >
+      <>
+        {/* <div className='modal-background'> */}
+          <div className='signup-modal'  onClick={(e) => e.stopPropagation()}>
             <h2>회원가입</h2>
-            <form onSubmit={handleLogin} className='form-box' >
+            <form onSubmit={handleSignUp} className='form-box' >
               <div className='input-box'>
                 <p className='input-info'>이메일</p>
                 <input className='email-input'
@@ -105,9 +128,11 @@ const SignUpModal = () =>{
               </div>
               <button className='signup-button' type="submit">회원가입</button>
             </form>
-            <p className='signup-text'>이미 계정이 있으신가요? <a className='signup-link'>로그인</a></p>
+            <p className='signup-text'>이미 계정이 있으신가요? <a className='signup-link' onClick={openLoginModal}>로그인</a></p>
           </div>
-        // </div>
+          {openLogin && <LoginModal />}
+        {/* </div> */}
+        </>
       );
     };
 
