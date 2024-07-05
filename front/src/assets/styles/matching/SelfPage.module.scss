@@ -1,0 +1,105 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.matchingList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.matchingItem {
+    position: relative;
+    width: 220px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.matchingItem:hover {
+    transform: translateY(-5px);
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.heartButton, .xButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+}
+
+.heartButton:hover {
+    transform: scale(1.2);
+    color: #ff6b6b;
+}
+
+.xButton:hover {
+    transform: scale(1.2);
+    color: #d32f2f;
+}
+
+.newMatchingButton {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-bottom: 20px;
+}
+
+.newMatchingButton:hover {
+    background-color: #ff4b4b;
+    transform: translateY(-3px);
+}
+
+.newMatchingButton:active {
+    background-color: #e03e3e;
+    transform: translateY(1px);
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.headerButton {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: transform 0.3s;
+}
+
+.headerButton:hover {
+    transform: translateY(-3px);
+    color: #ff6b6b;
+}
+
+.heartItem, .cancelButton, .acceptButton, .rejectButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.cancelButton:hover, .acceptButton:hover, .rejectButton:hover {
+    transform: scale(1.2);
+}
