@@ -1,27 +1,27 @@
-import React from "react";
-import useRegularly from "../../hooks/useRegularly";
-import styles from "../../assets/styles/matching/RegularlyPage.module.scss";
+import React from 'react';
+import useRegularly from '../../hooks/useRegularly';
+import MatchingPageTemplate from './MatchingPageTemplate';
+import MatchingList from '../../components/matching/MatchingList';
 
 const RegularlyPage = () => {
     const { regularly, loading, error } = useRegularly();
 
     if (loading) {
-        return <div className={styles.loading}>Loading...</div>;
+        console.log('로딩 중...');
+        return <div>Loading...</div>;
     }
 
     if (error) {
-        return <div className={styles.error}> 정기 모임을 가져오는 중 오류 발생: {error}</div>;
+        console.error('데이터를 가져오는 중 오류 발생:', error);
+        return <div>데이터를 가져오는 중 오류 발생</div>;
     }
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>정기 모임 리스트</h1>
-            <ul className={styles.list}>
-                {regularly.map(match => (
-                    <li key={match.id} className={styles.listItem}>{match.name}</li>
-                ))}
-            </ul>
-        </div>
+        <MatchingPageTemplate
+            items={regularly}
+            ListComponent={MatchingList}
+            gridColumns={2}
+        />
     );
 };
 

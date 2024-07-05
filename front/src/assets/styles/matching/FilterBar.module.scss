@@ -1,0 +1,24 @@
+.filterBar {
+    display: flex;
+    justify-content: space-between; /* 간격을 좁게 하기 위해 space-around에서 space-between으로 변경 */
+    margin-bottom: 20px;
+}
+
+.filterButton {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 15px; /* 패딩을 줄여 버튼 간격을 좁게 함 */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    &.active {
+        background-color: #00B207;
+        color: #fff;
+    }
+
+    &:hover {
+        background-color: #00B207;
+        color: #fff;
+    }
+}

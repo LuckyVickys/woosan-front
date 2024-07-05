@@ -93,7 +93,7 @@ const MatchingPage = () => {
     return (
         <div className={styles.container}>
             {paginatedItems.length > 0 ? (
-                <MatchingList items={paginatedItems} onItemClick={handleItemClick} />
+                <MatchingList items={paginatedItems} onItemClick={handleItemClick} gridColumns={2} />
             ) : (
                 <div className={styles.noItems}>아직 생성된 모임이 없습니다</div>
             )}
