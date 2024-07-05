@@ -13,7 +13,6 @@ const SelfPage = ({ userGender }) => {
     const [dismissedIds, setDismissedIds] = useState([]);
     const [view, setView] = useState('default'); // 'default', 'sentHearts', 'receivedHearts'
 
-    // 셀프 소개팅 데이터를 필터링하여 표시할 항목을 설정
     useEffect(() => {
         if (self) {
             const filteredItems = self.filter(item => item.gender !== userGender && !dismissedIds.includes(item.id));
@@ -21,7 +20,6 @@ const SelfPage = ({ userGender }) => {
         }
     }, [self, userGender, dismissedIds]);
 
-    // 하트 버튼 클릭 시 호출되는 함수
     const handleHeartClick = (id) => {
         const updatedItems = displayedItems.filter(item => item.id !== id);
         setDisplayedItems(updatedItems);
@@ -29,14 +27,12 @@ const SelfPage = ({ userGender }) => {
         // 매칭 요청 처리 로직 추가
     };
 
-    // X 버튼 클릭 시 호출되는 함수
     const handleXClick = (id) => {
         const updatedItems = displayedItems.filter(item => item.id !== id);
         setDisplayedItems(updatedItems);
         setDismissedIds([...dismissedIds, id]);
     };
 
-    // 새로운 매칭 버튼 클릭 시 호출되는 함수
     const handleNewMatchingClick = () => {
         const newItems = self.filter(item => item.gender !== userGender && !displayedItems.includes(item) && !dismissedIds.includes(item.id)).slice(0, 3);
         setDisplayedItems(newItems);

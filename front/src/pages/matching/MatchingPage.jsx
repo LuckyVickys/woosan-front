@@ -5,6 +5,7 @@ import useSelf from '../../hooks/useSelf';
 import MatchingList from '../../components/matching/MatchingList';
 import MatchingModal from '../../components/matching/MatchingModal';
 import Pagination from '../../components/matching/Pagination';
+import { useNavigate } from 'react-router-dom';
 import styles from '../../assets/styles/matching/MatchingPage.module.scss';
 
 const MatchingPage = () => {
@@ -14,6 +15,7 @@ const MatchingPage = () => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
+    const navigate = useNavigate();
 
     /**
      * 정기모임, 번개, 셀프 소개팅 데이터를 병합하여 페이지별로 나누는 함수
@@ -78,6 +80,11 @@ const MatchingPage = () => {
         }
     };
 
+    // 모임 만들기 버튼 클릭 시 호출되는 함수
+    const handleCreateButtonClick = () => {
+        navigate('/matching/CreateMatching');
+    };
+
     // 로딩 중일 때 표시할 내용
     if (loadingRegularly || loadingTemporary || loadingSelf) {
         console.log("로딩 중...");
@@ -92,6 +99,9 @@ const MatchingPage = () => {
 
     return (
         <div className={styles.container}>
+            <div className={styles.header}>
+                <button className={styles.createButton} onClick={handleCreateButtonClick}>모임 만들기</button>
+            </div>
             {paginatedItems.length > 0 ? (
                 <MatchingList items={paginatedItems} onItemClick={handleItemClick} gridColumns={2} />
             ) : (
