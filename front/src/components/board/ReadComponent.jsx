@@ -6,6 +6,7 @@ import BoardDropDown from "../../components/board/element/BoardDropDown.jsx";
 import PageComponent from "../../components/board/element/PageComponent.jsx";
 import { formatDate } from "../../util/DateUtil.jsx";
 import LikeButton from "../../components/common/LikeButton";
+import { FaComment } from "react-icons/fa";
 
 const initState = {
   id: 0,
@@ -48,9 +49,23 @@ const ReadComponent = () => {
     }
   };
 
+
   const handleBoardMenuSelect = () => {
     setShowBoardMenu(!showBoardMenu);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (boardMenuRef.current && !boardMenuRef.current.contains(event.target)) {
+        setShowBoardMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (!board.title) {
     return <div>로딩 중...</div>;
@@ -74,19 +89,20 @@ const ReadComponent = () => {
           />
           <div className="author-info">
             <p className="post-author">
-              <strong>작성자 :</strong> {board.nickname} | &nbsp; 조회수{" "}
+              {board.nickname} | &nbsp; 조회수{" "}
               {board.views} | 댓글 5 | {formatDate(board.regDate)}
             </p>
           </div>
         </div>
         <div className="right">
-          <LikeButton
+          <LikeButton className="likeIcon"
             memberId={1}
             type="게시물"
             targetId={id}
             initialLikesCount={board.likesCount}
           />
-          <button className="menu-button" ref={boardMenuRef} onClick={handleBoardMenuSelect}>
+          <FaComment className="replyIcon" /> {board.replyCount}
+          <button className="menu-button" onClick={handleBoardMenuSelect} ref={boardMenuRef}>
             ⋮
             {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
           </button>

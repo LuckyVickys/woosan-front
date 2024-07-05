@@ -1,5 +1,6 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import logoImage from "../../assets/image/logo.svg"; // 이미지 파일 경로
+import { MdOutlineLocalPostOffice } from "react-icons/md";
 import '../../assets/styles/App.scss';
 
 const Header = () => {
@@ -10,10 +11,11 @@ const Header = () => {
                     <Link to={'/'}><img src={logoImage} alt="Logo" /></Link>
                 </div>
                 <div className="logoTitle">
-                        <Link to={'/'}>우리는 함께 산다</Link>
+                    <Link to={'/'}>우리는 함께 산다</Link>
                 </div>
             </div>
             <div className="login">
+                <MdOutlineLocalPostOffice className="messageIcon" />
                 <div className="loginBar"> | </div>
                 <Link to={'/login'} className="loginButton" >
                     로그인
