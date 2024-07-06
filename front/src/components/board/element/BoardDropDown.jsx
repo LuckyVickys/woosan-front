@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MsgModal from "./MsgModal";
+// import MsgModal from "./MsgModal";
 
-const BoardDropDown = ({ id, onSelect }) => {
+const BoardDropDown = ({ id, onSelect, openMsg }) => {
     const navigate = useNavigate();
 
-    const [openMsgModal, setOpenMsgModal] = useState(false);
+    // const [openMsgModal, setOpenMsgModal] = useState(false);
 
     const handleModifyButtonClick = () => {
         navigate(`/board/modify/${id}`);
     };
 
-    const openMsg = () => {
-        setOpenMsgModal(true);
+    const handleOpenMsg = () => {
+        openMsg();
     };
 
     return (
@@ -25,7 +25,7 @@ const BoardDropDown = ({ id, onSelect }) => {
                     </div>
                     <div className='board-dropdown'>
                         <div className='board-msg-icon'></div>
-                        <div className='board-msg-text' onClick={openMsg}>쪽지 전송</div>
+                        <div className='board-msg-text' onClick={handleOpenMsg}>쪽지 전송</div>
                     </div>
                     <div className='board-dropdown'>
                         <div className='board-modify-icon'></div>
@@ -33,7 +33,7 @@ const BoardDropDown = ({ id, onSelect }) => {
                     </div>
                 </div>
             </div>
-            {openMsg && <MsgModal/>}
+            {/* {openMsgModal && <MsgModal/>} */}
         </>
     );
 }
