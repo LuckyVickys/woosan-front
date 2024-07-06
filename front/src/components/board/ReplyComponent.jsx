@@ -146,6 +146,7 @@ const ReplyComponent = () => {
           </div>
           <div className="reply-right">
             <LikeButton
+              className="like-button"
               memberId={1}
               type="댓글"
               targetId={reply.id}
@@ -166,7 +167,7 @@ const ReplyComponent = () => {
             className="reply-button"
             onClick={() => handleReplyClick(reply.id)}
           >
-            답글
+            대댓글 달기
           </button>
         )}</p>
 

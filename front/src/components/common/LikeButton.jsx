@@ -45,7 +45,7 @@ const LikeButton = ({ memberId, type, targetId, initialLikesCount }) => {
     return (
         <button className={`like-button ${liked ? "liked" : "not-liked"}`} onClick={handleLikeToggle}>
             <span role="img" aria-label="like">
-                <img src={liked ? likeIcon : likeNoIcon} alt="likeIcon" />
+                <img src={liked ? likeIcon : likeNoIcon} alt="likeIcon" className="likeIcon" />
             </span>{" "}
             {likesCount}
         </button>

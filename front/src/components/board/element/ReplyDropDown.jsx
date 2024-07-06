@@ -27,8 +27,8 @@ const ReplyDropDown = ({ onSelect, replyId, onDeleteSuccess }) => {
         console.log("Deleted id:", replyId);
         onSelect("delete", replyId);
         Swal.fire({
-            title: '게시글 삭제',
-            text: `${replyId}를 삭제하시겠습니까?`,
+            title: '댓글을 삭제하시겠습니까?',
+            text: `${replyId}를 삭제하시면 복구하실 수 없습니다.`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
