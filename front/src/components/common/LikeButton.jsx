@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import { toggleLike, getLikes } from "../../api/likesApi";
+import '../../assets/styles/App.scss';
 
 const LikeButton = ({ memberId, type, targetId, initialLikesCount }) => {
     const [liked, setLiked] = useState(false);
@@ -45,7 +46,7 @@ const LikeButton = ({ memberId, type, targetId, initialLikesCount }) => {
     return (
         <button className={`like-button ${liked ? "liked" : "not-liked"}`} onClick={handleLikeToggle}>
             <span role="img" aria-label="like">
-                <img src={liked ? likeIcon : likeNoIcon} alt="likeIcon" className="likeIcon" />
+                <img src={liked ? likeIcon : likeNoIcon} alt="likeIcon" className="likeIcon"/>
             </span>{" "}
             {likesCount}
         </button>
