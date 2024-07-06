@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "../../assets/styles/App.scss";
 import { getBoard, translate } from "../../api/boardApi";
+import { summary } from "../../api/summaryApi";
 import BoardDropDown from "../../components/board/element/BoardDropDown.jsx";
 import PageComponent from "../../components/board/element/PageComponent.jsx";
 import { formatDate } from "../../util/DateUtil.jsx";
@@ -26,6 +27,7 @@ const ReadComponent = () => {
   const { id } = useParams();
 
   const [board, setBoard] = useState(initState);
+  const [summarizedBoard, setSummarizedBoard] = useState(null);
   const [showBoardMenu, setShowBoardMenu] = useState(false);
   const boardMenuRef = useRef(null);
 
@@ -46,6 +48,16 @@ const ReadComponent = () => {
       }));
     } catch (error) {
       console.error("번역 중 오류 발생:", error);
+    }
+  };
+
+  const handleClovaSummary = async () => {
+    try {
+      const summarized = await summary(id, { content: board.content });
+      console.log("요약 중: ", summarized);
+      setSummarizedBoard({ content: summarized});
+    } catch (error) {
+      console.error("요약 중 오류 발생:", error);
     }
   };
 
@@ -77,7 +89,7 @@ const ReadComponent = () => {
         <h1 className="post-title-text">{board.title}</h1>
         <div className="api-button">
           <button className="papago-button" onClick={handlePapagoTranslate}></button>
-          <button className="clova-button"></button>
+          <button className="clova-button" onClick={handleClovaSummary}></button>
         </div>
       </div>
       <div className="board-header">
@@ -113,6 +125,12 @@ const ReadComponent = () => {
       </p>
       <div className="post-content">
         {board.content}
+        {summarizedBoard && (
+          <div className="summary-content">
+            <div> 요약 완료 </div>
+            {summarizedBoard.content}
+          </div>
+        )}
         <div className="image-container">
           {board.filePathUrl.map((url, index) => (
             <img key={index} src={url} alt={`image-${index}`} className="image" />
