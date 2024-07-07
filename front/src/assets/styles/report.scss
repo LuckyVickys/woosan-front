@@ -1,0 +1,35 @@
+input[type="file"] {
+    width: calc(235px);
+    height: calc(32px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.file-list {
+    margin-top: 10px;
+
+    .file-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+
+        span {
+            flex-grow: 1;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: 2px solid #EA4B48;
+            background-color: white;
+            color: #EA4B48;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    }
+}
