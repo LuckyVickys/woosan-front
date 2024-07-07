@@ -1,10 +1,12 @@
 import React from 'react';
 
+import ListComponent from "../../../components/cs/NoticeListComponent";
+
 const ListPage = () => {
 
     return (
         <div className="contents">
-            공지사항
+            <ListComponent />
         </div>
     );
 }

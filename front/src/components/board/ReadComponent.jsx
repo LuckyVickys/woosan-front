@@ -115,7 +115,7 @@ const ReadComponent = () => {
           <div className="author-info">
             <p className="post-author">
               {board.nickname} | &nbsp; 조회수{" "}
-              {board.views} | 댓글 5 | {formatDate(board.regDate)}
+              {board.views} | 댓글 {board.replyCount} | {formatDate(board.regDate)}
             </p>
           </div>
         </div>
