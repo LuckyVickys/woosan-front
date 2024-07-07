@@ -147,7 +147,6 @@ const ReplyComponent = () => {
 
   const renderReply = (reply, isChild = false) => {
     return (
-      <>
         <div key={reply.id} className="reply" ref={el => (dropDownRefs.current[reply.id] = el)}>
           <div className="reply-header">
             <div className="reply-left">
@@ -212,10 +211,8 @@ const ReplyComponent = () => {
               {reply.children.map((child) => renderReply(child, true))}
             </div>
           )}
+          {openMsgModal && <MsgModal senderId={userId} receiver={reply.writerId} nickname={reply.nickname} onClose={closeMsg}/> }
         </div>
-        {openMsgModal && <MsgModal senderId={userId} receiver={reply.writerId} nickname={reply.nickname} onClose={closeMsg}/> }
-      </>
-      
     );
   };
 
