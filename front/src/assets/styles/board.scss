@@ -96,10 +96,14 @@ $font-family: 'Pretendard-Regular', sans-serif;
       align-items: center;
       padding: 5px 10px;
       background-color: transparent;
-      border: 1px solid $secondary-color;
-      border-radius: 5px;
+      // border: 1px solid $secondary-color;
+      // border-radius: 5px;
       cursor: pointer;
       margin-right: 10px;
+
+      .likeIcon {
+        margin-right: 10px;
+      }
       font-size: 16px;
       font-family: $font-family;
     }
@@ -249,16 +253,5 @@ $font-family: 'Pretendard-Regular', sans-serif;
         background: url("../image/icon-delete.svg");
       }
     }
-  }
-}
-
-span{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .likeIcon {
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
   }
 }
