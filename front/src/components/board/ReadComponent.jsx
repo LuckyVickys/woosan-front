@@ -35,14 +35,18 @@ const ReadComponent = () => {
 
   useEffect(() => {
     getBoard(id).then((data) => {
-      console.log(data);
-      setBoard(data);
+      // 줄바꿈을 <br> 태그로 변환
+      const contentWithLineBreaks = data.content.replace(/\r\n|\n/g, "<br>");
+      setBoard({ ...data, content: contentWithLineBreaks });
     });
   }, [id]);
 
   const handlePapagoTranslate = async () => {
     try {
-      const translated = await translate(id, { title: board.title, content: board.content });
+      const translated = await translate(id, {
+        title: board.title,
+        content: board.content,
+      });
       setBoard((prevBoard) => ({
         ...prevBoard,
         title: translated.title,
@@ -55,14 +59,16 @@ const ReadComponent = () => {
 
   const handleClovaSummary = async () => {
     try {
-      const summarized = await summary(id, { title: board.title, content: board.content });
+      const summarized = await summary(id, {
+        title: board.title,
+        content: board.content,
+      });
       console.log("요약 중: ", summarized);
-      setSummarizedBoard({ content: summarized});
+      setSummarizedBoard({ content: summarized });
     } catch (error) {
       console.error("요약 중 오류 발생:", error);
     }
   };
-
 
   const handleBoardMenuSelect = () => {
     setShowBoardMenu(!showBoardMenu);
@@ -81,7 +87,10 @@ const ReadComponent = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (boardMenuRef.current && !boardMenuRef.current.contains(event.target)) {
+      if (
+        boardMenuRef.current &&
+        !boardMenuRef.current.contains(event.target)
+      ) {
         setShowBoardMenu(false);
       }
     };
@@ -101,8 +110,14 @@ const ReadComponent = () => {
       <div className="post-title">
         <h1 className="post-title-text">{board.title}</h1>
         <div className="api-button">
-          <button className="papago-button" onClick={handlePapagoTranslate}></button>
-          <button className="clova-button" onClick={handleClovaSummary}></button>
+          <button
+            className="papago-button"
+            onClick={handlePapagoTranslate}
+          ></button>
+          <button
+            className="clova-button"
+            onClick={handleClovaSummary}
+          ></button>
         </div>
       </div>
       <div className="board-header">
@@ -114,13 +129,13 @@ const ReadComponent = () => {
           />
           <div className="author-info">
             <p className="post-author">
-              {board.nickname} | &nbsp; 조회수{" "}
-              {board.views} | 댓글 5 | {formatDate(board.regDate)}
+              {board.nickname} | &nbsp; 조회수 {board.views} | 댓글 5 |{" "}
+              {formatDate(board.regDate)}
             </p>
           </div>
         </div>
         <div className="right">
-          <LikeButton 
+          <LikeButton
             className="like-button"
             memberId={1}
             type="게시물"
@@ -128,33 +143,55 @@ const ReadComponent = () => {
             initialLikesCount={board.likesCount}
           />
           <FaComment className="replyIcon" /> {board.replyCount}
-          <button className="menu-button" onClick={handleBoardMenuSelect} ref={boardMenuRef}>
+          <button
+            className="menu-button"
+            onClick={handleBoardMenuSelect}
+            ref={boardMenuRef}
+          >
             ⋮
-            {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} openMsg={openMsg} />}
+            {showBoardMenu && (
+              <BoardDropDown
+                id={id}
+                onSelect={handleBoardMenuSelect}
+                openMsg={openMsg}
+              />
+            )}
           </button>
         </div>
-      </div >
+      </div>
       <p className="alert-message">
-        ※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수 있습니다.
+        ※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수
+        있습니다.
       </p>
       <div className="post-content">
-        {board.content}
-        <br/>
-        <br/>
+        <div dangerouslySetInnerHTML={{ __html: board.content }}></div>
+        <br />
+        <br />
         {summarizedBoard && (
-          <div className="summary-content"  id="result">
+          <div className="summary-content" id="result">
             <div className="summary-state">요약 완료</div>
             {summarizedBoard.content}
           </div>
         )}
         <div className="image-container">
           {board.filePathUrl.map((url, index) => (
-            <img key={index} src={url} alt={`image-${index}`} className="image" />
+            <img
+              key={index}
+              src={url}
+              alt={`image-${index}`}
+              className="image"
+            />
           ))}
         </div>
       </div>
       <PageComponent />
-      {openMsgModal && <MsgModal writerId={board.writerId} nickname={board.nickname} onClose={closeMsg}/> }
+      {openMsgModal && (
+        <MsgModal
+          writerId={board.writerId}
+          nickname={board.nickname}
+          onClose={closeMsg}
+        />
+      )}
     </>
   );
 };
