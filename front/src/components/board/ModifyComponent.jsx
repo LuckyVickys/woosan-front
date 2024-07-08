@@ -29,6 +29,10 @@ const ModifyComponent = () => {
     const [files, setFiles] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
 
+    const [errorCategory, setErrorCategory] = useState("");
+    const [errorTitle, setErrorTitle] = useState("");
+    const [errorContent, setErrorContent] = useState("");
+
     const { moveToList } = useCustomMove(); // useCustomMove 훅 사용
 
     useEffect(() => {
@@ -50,6 +54,7 @@ const ModifyComponent = () => {
     const handleCategorySelect = (category) => {
         setSelectedCategory(category);
         setShowDropdown(false);
+        setErrorCategory("");
     };
 
     const handleFileChange = (event) => {
@@ -64,6 +69,22 @@ const ModifyComponent = () => {
     };
 
     const handleSave = async () => {
+        let hasError = false;
+        if (selectedCategory === "선택") {
+            setErrorCategory("카테고리를 선택해주세요.");
+            hasError = true;
+        }
+        if (!title.trim()) {
+            setErrorTitle("제목을 입력해주세요.");
+            hasError = true;
+        }
+        if (!content.trim()) {
+            setErrorContent("내용을 입력해주세요.");
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         const formData = new FormData();
         formData.append('id', id);
         formData.append('categoryName', selectedCategory);
@@ -114,6 +135,7 @@ const ModifyComponent = () => {
                             </ul>
                         )}
                     </div>
+                    {errorCategory && <div className="error-message">{errorCategory}</div>}
                 </div>
                 <div className="form-group">
                     <label>제목</label>
@@ -121,16 +143,24 @@ const ModifyComponent = () => {
                         type="text"
                         placeholder="제목을 입력해주세요."
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={(e) => {
+                            setTitle(e.target.value);
+                            setErrorTitle("");
+                        }}
                     />
+                    {errorTitle && <div className="error-message">{errorTitle}</div>}
                 </div>
                 <div className="form-group">
                     <label>내용</label>
                     <textarea
                         placeholder="내용을 입력해주세요."
                         value={content}
-                        onChange={(e) => setContent(e.target.value)}
+                        onChange={(e) => {
+                            setContent(e.target.value);
+                            setErrorContent("");
+                        }}
                     ></textarea>
+                    {errorContent && <div className="error-message">{errorContent}</div>}
                 </div>
                 <div className="form-group">
                     <label>첨부파일</label>
