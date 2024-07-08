@@ -87,14 +87,14 @@ const ReportModal = ({ type, targetId, reportId, reportedId, reportednickname, o
                 </div>
                 <div className='msg-modal-body'>
                     신고 유형
-                    <div className='input receiver-input  E6E6E6'>{type}</div>
+                    <div className='input receiver-input'>{type}</div>
                     내용
                     <textarea 
-                        className='input message-input E6E6E6' 
+                        className='input message-input' 
                         type="text" 
                         placeholder="내용을 입력해주세요."
                         value={report.complaintReason} 
-                        onChange={(e) => setReport({ ...report, report: e.target.value })} />
+                        onChange={(e) => setReport({ ...report, complaintReason: e.target.value })} />
                     첨부파일
                     <input
                         type="file"
