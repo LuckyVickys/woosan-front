@@ -7,7 +7,7 @@ import "../../../assets/styles/App.scss";
 const initState = {
     type: "",
     targetId: "",
-    reportedId: "",
+    reportId: "",
     complaintReason: "",
     reportedId: "",
     files: []
@@ -18,6 +18,7 @@ const ReportModal = ({ type, targetId, reportId, reportedId, reportednickname, o
     const [files, setFiles] = useState([]);
     const uploadRef = useRef();
     const [isClosing, setIsClosing] = useState(false);
+    const [selectedType, setSelectedType] = useState(null);
     
     useEffect(() => {
         if (isClosing) {
@@ -26,7 +27,24 @@ const ReportModal = ({ type, targetId, reportId, reportedId, reportednickname, o
           }, 200); 
           return () => clearTimeout(timer); 
         }
-      }, [isClosing, onClose]);
+    }, [isClosing, onClose]);
+
+    useEffect(() => {
+        handleSelectType();
+    }, []);
+
+    const handleSelectType = () => {
+        let selectedType = "";
+
+        if (type === "board") {
+            selectedType = "게시글";
+        } else if (type === "reply") {
+            selectedType = "댓글";
+        }
+
+        setSelectedType(selectedType); // selectType을 설정
+        return selectedType; // 선택된 타입을 반환
+    };
 
     const handleFileChange = (e) => {
         setFiles(e.target.files);
@@ -80,23 +98,24 @@ const ReportModal = ({ type, targetId, reportId, reportedId, reportednickname, o
 
     return (
         <div className='modal-background' onClick={onClose}>
-            <div className='msg-modal' onClick={(e) => e.stopPropagation()}>
-                <div className='msg-modal-header'>
-                    <div className='msg-modal-title'>신고</div>
+            <div className='report-modal' onClick={(e) => e.stopPropagation()}>
+                <div className='report-modal-header'>
+                    <div className='report-modal-title'>신고</div>
                     <TiDelete className='delete-icon' onClick={onClose}/>
                 </div>
-                <div className='msg-modal-body'>
+                <div className='report-modal-body'>
                     신고 유형
-                    <div className='input receiver-input'>{type}</div>
+                    <div className='input type-input' onSelect={handleSelectType}>{selectedType}</div>
                     내용
                     <textarea 
-                        className='input message-input' 
+                        className='input report-input' 
                         type="text" 
                         placeholder="내용을 입력해주세요."
                         value={report.complaintReason} 
                         onChange={(e) => setReport({ ...report, complaintReason: e.target.value })} />
                     첨부파일
                     <input
+                        className='report-file' 
                         type="file"
                         ref={uploadRef}
                         multiple
