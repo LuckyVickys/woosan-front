@@ -47,24 +47,28 @@ const LoginModal = ({ onClose }) =>{
   };
 
   const openSignUpModal = () => {
-    // setIsClosing(true);
     setTimeout(() => {
       setOpenSignUp(true);
     }, 200);
   };
 
+  const closeSignUpModal = () => {
+    setTimeout(() => {
+      setOpenSignUp(false);
+    }, 200);
+  };
+
   const openFinePWModal = () => {
-    // setIsClosing(true);
     setTimeout(() => {
       setOpenFinePW(true);
     }, 200);
   };
 
-  // const closeModal = (e) => {
-  //   if (e.target.classList.contains('modal-background')) {
-  //     setIsClosing(true);
-  //   }
-  // };
+  const closeFinePWModal = () => {
+    setTimeout(() => {
+      setOpenFinePW(false);
+    }, 200);
+  };
 
   return (
     <div className='modal-background' onClick={onClose}>
@@ -109,10 +113,10 @@ const LoginModal = ({ onClose }) =>{
           <div className='naver-Icon'></div>
           <div className='google-Icon'></div>
         </div>
-        <p className='signup-text'>아직 회원이 아니신가요? <a className='signup-link' onClick={openSignUpModal}> 회원가입 하기</a></p>
+        <p className='signup-text'>아직 회원이 아니신가요? <a className='signup-link' onClick={openSignUpModal} > 회원가입 하기</a></p>
       </div>
-      {openSignUp && <SignUpModal />}
-      {openFinePW && <FinePWModal />}
+      {openSignUp && <SignUpModal onClose={closeSignUpModal}/>}
+      {openFinePW && <FinePWModal onClose={closeFinePWModal}/>}
     </div>
   );
 };

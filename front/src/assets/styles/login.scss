@@ -68,6 +68,35 @@ h2{
       text-align: left;
       margin: 5px 0;
     }
+
+    .input-button {
+      display: flex;
+      align-items: center;
+
+      .email-input,
+      .nickname-input {
+        flex: 1;
+        outline: none;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #e6e6e6;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 400;
+      }
+
+      .check-button {
+        margin-left: 10px;
+        padding: 10px 5px;
+        background: #9bcc66;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 10px;
+        font-weight: 400;
+        cursor: pointer;
+      }
+    }
   }
 
   .add-fucntion {

@@ -77,27 +77,33 @@ const SignUpModal = ({ onClose }) =>{
     return (
       <>
         {/* <div className='modal-background'> */}
-          <div className='signup-modal'  onClick={(e) => e.stopPropagation()}>
+          <div className='signup-modal'  onClick={(e) => {e.stopPropagation(); onClose();}}>
             <h2>회원가입</h2>
             <form onSubmit={handleSignUp} className='form-box' >
               <div className='input-box'>
                 <p className='input-info'>이메일</p>
-                <input className='email-input'
-                  type="email"
-                  placeholder="이메일을 입력해주세요."
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <div className='input-button'>
+                  <input className='email-input'
+                    type="email"
+                    placeholder="이메일을 입력해주세요."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <button type="button" className='check-button'>중복체크</button>
+                </div>
                 {emailError && <p className='input-error'>{emailError}</p>}
               </div>
               <div className='input-box'>
                 <p className='input-info'>닉네임</p>
-                <input className='nickname-input'
-                  type="nickname"
-                  placeholder="초성, 특수문자 제외 1~8자"
-                  value={nickname}
-                  onChange={(e) => setNickname(e.target.value)}
-                />
+                <div className='input-button'>
+                  <input className='nickname-input'
+                    type="nickname"
+                    placeholder="초성, 특수문자 제외 1~8자"
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                  />
+                  <button type="button" className='check-button'>중복체크</button>
+                </div>
                 {setNicknameError && <p className='input-error'>{nicknameError}</p>}
               </div>
               <div className='input-box'>
