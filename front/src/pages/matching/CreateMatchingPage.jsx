@@ -9,7 +9,7 @@ const CreateMatching = () => {
 
     const handleSubmit = async (data) => {
         try {
-            data.memberId = 999; // 임시로 memberId를 999로 하드코딩
+            data.memberId = 40; // 임시로 memberId를 999로 하드코딩
             console.log('제출된 데이터:', data); // 디버깅을 위한 콘솔 로그
             let response;
             if (matchingType === 1) {
