@@ -11,7 +11,7 @@ import KakaoRedirectPage from "../pages/social/KakaoRedirectPage";
 const Loading = <div>Loading....</div>
 
 const Main = lazy(() => import("../pages/main/MainPage"))
-const KakaRedirect = lazy(() => import("../pages/social/KakaoRedirectPage"))
+const KakaoRedirect = lazy(() => import("../pages/social/KakaoRedirectPage"))
 const Board = lazy(() => import("../pages/board/IndexPage"))
 const Matching = lazy(() => import("../pages/matching/IndexPage"))
 const CS = lazy(() => import("../pages/cs/IndexPage"))
@@ -26,7 +26,7 @@ const root = createBrowserRouter([
     },
     {
         path: "kakao",
-        element: <Suspense fallback={Loading}><KakaoRedirectPage/></Suspense>
+        element: <Suspense fallback={Loading}><KakaoRedirect/></Suspense>
     },
     {
         path: "board",
