@@ -1,9 +1,13 @@
+@import 'Font';
+
+$font-family: 'Pretendard-Regular', sans-serif;
+
 .reply-section {
-  width: 935px;
-  margin-top: 10px;
+  margin: 10px;
   border: 1px solid #e5e5e5;
   border-radius: 10px;
   padding: 25px;
+  font-family: $font-family;
 }
 
 .reply {
@@ -64,13 +68,6 @@
   text-decoration: underline;
 }
 
-.reply {
-  margin-left: 60px;
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-}
-
 .reply-header {
   display: flex;
   justify-content: space-between;
@@ -111,32 +108,48 @@
 }
 
 .like-button {
+  transition: background-color 0.3s, color 0.3s;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
   background-color: transparent;
-  width: 70px;
-  height: 30px;
-  border: none;
-  color: #1A1A1A;
-  border-radius: 43px;
+  border: 1px solid #E5E5E5;
+  border-radius: 5px;
   cursor: pointer;
   margin-right: 10px;
-  font-size: 18px;
-  transition: background-color 0.3s, color 0.3s;
-
-  .likeIcon {
-    margin-right: 15px;
-  }
-
-  // &.liked {
-  //   // border-color: #EA4B48;
-  // }
-
-  // &.not-liked {
-  //   // border-color: #B0B0B0;
-  // }
+  font-size: 16px;
+  font-family: $font-family;
 }
+
+// .like-button {
+//   transition: background-color 0.3s, color 0.3s;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background-color: transparent;
+//   width: 70px;
+//   height: 30px;
+//   border: none;
+//   color: #1A1A1A;
+//   border-radius: 43px;
+//   cursor: pointer;
+//   margin-right: 10px;
+//   font-size: 18px;
+//   transition: background-color 0.3s, color 0.3s;
+
+//   .likeIcon {
+//     margin-right: 15px;
+//   }
+
+//   // &.liked {
+//   //   // border-color: #EA4B48;
+//   // }
+
+//   // &.not-liked {
+//   //   // border-color: #B0B0B0;
+//   // }
+// }
 
 .replyIcon {
   color: #B0B0B0;
@@ -187,6 +200,7 @@
   border-radius: 20px;
   margin-right: 10px;
   width: 100%;
+  font-family: $font-family;
 }
 
 .submit-button {
@@ -195,6 +209,7 @@
   color: #fff;
   border-radius: 20px;
   padding: 10px 20px;
+  font-family: $font-family;
   cursor: pointer;
 }
 
@@ -240,4 +255,10 @@
 .replies {
   padding-left: 15px;
   margin: 15px;
+}
+
+.likeIcon {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
 }

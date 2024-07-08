@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getList } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove";
-import '../../assets/styles/board2.scss';
 import ListPageComponent from "../../components/board/element/ListPageComponent";
 import TableRowComponent from "../board/element/TableLowComponent";
+import "../../assets/styles/App.scss";
 
 const initState = {
     boardPage: {

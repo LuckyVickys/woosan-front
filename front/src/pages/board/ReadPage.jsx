@@ -13,7 +13,6 @@ const ReadPage = () => {
     // 게시글 상세 조회 컴포넌트 여기부터
     <div className="readPage">
       <ReadComponent />
-      <br />
       <ReplyComponent />
     </div>
   );
