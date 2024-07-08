@@ -8,6 +8,7 @@ import PageComponent from "../../components/board/element/PageComponent.jsx";
 import { formatDate } from "../../util/DateUtil.jsx";
 import LikeButton from "../../components/common/LikeButton";
 import { FaComment } from "react-icons/fa";
+import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
 
 const initState = {
@@ -32,8 +33,10 @@ const ReadComponent = () => {
   const [board, setBoard] = useState(initState);
   const [summarizedBoard, setSummarizedBoard] = useState(null);
   const [showBoardMenu, setShowBoardMenu] = useState(false);
+  const [openReportModal, setOpenReportModal] = useState(false);
   const [openMsgModal, setOpenMsgModal] = useState(false);
   const boardMenuRef = useRef(null);
+  const type="board";
 
   useEffect(() => {
     getBoard(id).then((data) => {
@@ -70,12 +73,26 @@ const ReadComponent = () => {
     setShowBoardMenu(!showBoardMenu);
   };
 
+  const openReport = () => {
+    setOpenReportModal(true);
+    setOpenMsgModal(false);
+    setShowBoardMenu(false);
+  };
+
+  const closeReport = () => {
+    setOpenReportModal(false);
+    setOpenMsgModal(false);
+    setShowBoardMenu(false);
+  };
+
   const openMsg = () => {
+    setOpenReportModal(false);
     setOpenMsgModal(true);
     setShowBoardMenu(false);
   };
 
   const closeMsg = () => {
+    setOpenReportModal(false);
     setOpenMsgModal(false);
     setShowBoardMenu(false);
   };
@@ -131,7 +148,7 @@ const ReadComponent = () => {
           <FaComment className="replyIcon" /> {board.replyCount}
           <button className="menu-button" onClick={handleBoardMenuSelect} ref={boardMenuRef}>
             ⋮
-            {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} openMsg={openMsg} />}
+            {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} openReport={openReport} openMsg={openMsg} />}
           </button>
         </div>
       </div >
@@ -156,6 +173,7 @@ const ReadComponent = () => {
       </div>
       <PageComponent />
       {openMsgModal && <MsgModal senderId={userId} receiver={board.writerId} nickname={board.nickname} onClose={closeMsg}/> }
+      {openReportModal && <ReportModal type={type} targetId={board.id} reportId={userId} reportedId={board.writerId} reportednickname={board.nickname} onClose={closeReport}/> }
     </>
   );
 };

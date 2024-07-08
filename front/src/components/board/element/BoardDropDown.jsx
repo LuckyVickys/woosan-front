@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 
-const BoardDropDown = ({ id, onSelect, openMsg }) => {
+const BoardDropDown = ({ id, onSelect, openReport, openMsg }) => {
     const navigate = useNavigate();
 
     const handleModifyButtonClick = () => {
         navigate(`/board/modify/${id}`);
+    };
+
+    const handleOpenReport = () => {
+        openReport();
     };
 
     const handleOpenMsg = () => {
@@ -19,7 +23,7 @@ const BoardDropDown = ({ id, onSelect, openMsg }) => {
                 <div className="board-dropdown-list">
                     <div className='board-dropdown'>
                         <div className='board-report-icon'></div>
-                        <div className='board-report-text'>신고하기</div>
+                        <div className='board-report-text'onClick={handleOpenReport}>신고하기</div>
                     </div>
                     <div className='board-dropdown'>
                     <MdOutlineLocalPostOffice className='board-msg-icon'/>
