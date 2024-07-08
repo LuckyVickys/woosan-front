@@ -64,7 +64,7 @@ const FinePWModal = ({ onClose }) => {
     return (
       <>
         {/* <div className='modal-background'> */}
-          <div className='pwfind-modal'  onClick={(e) => e.stopPropagation()}>
+          <div className='pwfind-modal'  onClick={(e) => {e.stopPropagation(); onClose();}}>
             <h2>비밀번호 찾기</h2>
             <form onSubmit={handleLogin} className='form-box' >
               <div className='input-box'>
