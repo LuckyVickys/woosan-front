@@ -8,6 +8,7 @@ import { formatRelativeTime } from "../../util/DateUtil.jsx";
 import ListPageComponent from "../../components/board/element/ListPageComponent";
 import LikeButton from "../../components/common/LikeButton";
 import MsgModal from "../../components/board/element/MsgModal";
+import defaultProfile from "../../assets/image/profile.png";
 
 const initState = {
   "dtoList": [],
@@ -146,12 +147,17 @@ const ReplyComponent = () => {
   };
 
   const renderReply = (reply, isChild = false) => {
+    const profileSrc =
+    reply.writerProfile && reply.writerProfile.length > 0
+      ? reply.writerProfile
+      : defaultProfile;
+      
     return (
         <div key={reply.id} className="reply" ref={el => (dropDownRefs.current[reply.id] = el)}>
           <div className="reply-header">
             <div className="reply-left">
               <img
-                src="https://kr.object.ncloudstorage.com/woosan/board/f18d0019-b9a0-41de-8b6e-5c0f814c4899_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-05-29%20163620.png"
+              src={profileSrc}
                 alt="프로필"
                 className="reply-profile-image"
               />
@@ -241,7 +247,7 @@ const ReplyComponent = () => {
 
         <div className="reply-input">
           <img
-            src="https://kr.object.ncloudstorage.com/woosan/board/f18d0019-b9a0-41de-8b6e-5c0f814c4899_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-05-29%20163620.png"
+            src={defaultProfile}
             alt="프로필"
             className="reply-profile-image"
           />
