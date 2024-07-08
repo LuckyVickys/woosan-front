@@ -121,7 +121,7 @@ const ReadComponent = () => {
     board.writerProfile && board.writerProfile.length > 0
       ? board.writerProfile
       : defaultProfile;
-      
+
   return (
     <>
       <div className="post-title">
@@ -136,7 +136,7 @@ const ReadComponent = () => {
           <div className="author-info">
             <p className="post-author">
               <img src={profileSrc} alt="프로필" className="profile-image" />
-              {board.nickname} | &nbsp; 조회수 {board.views} | 댓글 5 | {formatDate(board.regDate)}
+              {board.nickname} | &nbsp; 조회수 {board.views} | 댓글 {board.replyCount} | {formatDate(board.regDate)}
             </p>
           </div>
         </div>
@@ -165,7 +165,7 @@ const ReadComponent = () => {
         {summarizedBoard && (
           <div className="summary-content" id="result">
             <div className="summary-state">요약 완료</div>
-            {summarizedBoard.content}
+            <div dangerouslySetInnerHTML={{ __html: summarizedBoard.content }}></div>
           </div>
         )}
         <div className="image-container">
