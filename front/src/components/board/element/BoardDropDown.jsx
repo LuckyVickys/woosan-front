@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import MsgModal from "./MsgModal";
+import { MdOutlineLocalPostOffice } from "react-icons/md";
 
 const BoardDropDown = ({ id, onSelect, openMsg }) => {
     const navigate = useNavigate();
-
-    // const [openMsgModal, setOpenMsgModal] = useState(false);
 
     const handleModifyButtonClick = () => {
         navigate(`/board/modify/${id}`);
@@ -24,7 +22,7 @@ const BoardDropDown = ({ id, onSelect, openMsg }) => {
                         <div className='board-report-text'>신고하기</div>
                     </div>
                     <div className='board-dropdown'>
-                        <div className='board-msg-icon'></div>
+                    <MdOutlineLocalPostOffice className='board-msg-icon'/>
                         <div className='board-msg-text' onClick={handleOpenMsg}>쪽지 전송</div>
                     </div>
                     <div className='board-dropdown'>

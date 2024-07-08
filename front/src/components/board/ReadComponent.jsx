@@ -25,6 +25,8 @@ const initState = {
 };
 
 const ReadComponent = () => {
+  const [userId, setUserId] = useState(3); // 로그인한 사용자 id(임시)
+
   const { id } = useParams();
 
   const [board, setBoard] = useState(initState);
@@ -74,7 +76,6 @@ const ReadComponent = () => {
   };
 
   const closeMsg = () => {
-    console.log("Closing MsgModal~");
     setOpenMsgModal(false);
     setShowBoardMenu(false);
   };
@@ -154,7 +155,7 @@ const ReadComponent = () => {
         </div>
       </div>
       <PageComponent />
-      {openMsgModal && <MsgModal writerId={board.writerId} nickname={board.nickname} onClose={closeMsg}/> }
+      {openMsgModal && <MsgModal senderId={userId} receiver={board.writerId} nickname={board.nickname} onClose={closeMsg}/> }
     </>
   );
 };
