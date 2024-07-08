@@ -110,46 +110,31 @@ $font-family: 'Pretendard-Regular', sans-serif;
 .like-button {
   transition: background-color 0.3s, color 0.3s;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 5px 10px;
+  justify-content: center;
   background-color: transparent;
-  border: 1px solid #E5E5E5;
-  border-radius: 5px;
+  width: 70px;
+  height: 30px;
+  border: none;
+  color: #1A1A1A;
+  border-radius: 43px;
   cursor: pointer;
   margin-right: 10px;
-  font-size: 16px;
-  font-family: $font-family;
+  font-size: 18px;
+  transition: background-color 0.3s, color 0.3s;
+
+  .likeIcon {
+    margin-right: 10px;
+  }
+
+  // &.liked {
+  //   // border-color: #EA4B48;
+  // }
+
+  // &.not-liked {
+  //   // border-color: #B0B0B0;
+  // }
 }
-
-// .like-button {
-//   transition: background-color 0.3s, color 0.3s;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   background-color: transparent;
-//   width: 70px;
-//   height: 30px;
-//   border: none;
-//   color: #1A1A1A;
-//   border-radius: 43px;
-//   cursor: pointer;
-//   margin-right: 10px;
-//   font-size: 18px;
-//   transition: background-color 0.3s, color 0.3s;
-
-//   .likeIcon {
-//     margin-right: 15px;
-//   }
-
-//   // &.liked {
-//   //   // border-color: #EA4B48;
-//   // }
-
-//   // &.not-liked {
-//   //   // border-color: #B0B0B0;
-//   // }
-// }
 
 .replyIcon {
   color: #B0B0B0;
@@ -255,10 +240,4 @@ $font-family: 'Pretendard-Regular', sans-serif;
 .replies {
   padding-left: 15px;
   margin: 15px;
-}
-
-.likeIcon {
-  width: 15px;
-  height: 15px;
-  margin-right: 10px;
 }
