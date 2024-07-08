@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FormField from './FormField';
 import LocationField from './LocationField';
 import FileUpload from './FileUpload';
 import styles from '../../assets/styles/matching/MatchingForm.module.scss';
 
 const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
+    const navigate = useNavigate();
+
     const [title, setTitle] = useState(initialValues.title || '');
     const [content, setContent] = useState(initialValues.content || '');
     const [placeName, setPlaceName] = useState(initialValues.placeName || '');
@@ -14,7 +17,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
     const [meetDate, setMeetDate] = useState(initialValues.meetDate || '');
     const [tag, setTag] = useState(initialValues.tag || '');
     const [headCount, setHeadCount] = useState(initialValues.headCount || '');
-    const [files, setFiles] = useState(initialValues.files || '');
+    const [files, setFiles] = useState(initialValues.files || []);
 
     // 셀프 소개팅에 필요한 상태들
     const [location, setLocation] = useState(initialValues.location || '');
@@ -24,7 +27,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
     const [age, setAge] = useState(initialValues.age || '');
     const [height, setHeight] = useState(initialValues.height || '');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = {
             title,
@@ -49,7 +52,12 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
             formData.height = height;
         }
 
-        onSubmit(formData);
+        console.log('폼 데이터 제출 중:', formData); // 디버깅을 위한 콘솔 로그
+        await onSubmit(formData);
+    };
+
+    const handleCancel = () => {
+        navigate(-1);
     };
 
     return (
@@ -73,7 +81,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
                 </>
             )}
             <button type="submit" className={styles.submitButton}>저장</button>
-            <button type="button" className={styles.cancelButton}>취소</button>
+            <button type="button" className={styles.cancelButton} onClick={handleCancel}>취소</button>
         </form>
     );
 };

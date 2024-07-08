@@ -30,7 +30,7 @@ const matchingRouter = ()=> {
         },
         {
             path: "createMatching",
-            element: <Suspense fallback={Loading}><CreateMatchingPage/></Suspense> // 추가된 부분
+            element: <Suspense fallback={Loading}><CreateMatchingPage/></Suspense>
         }
     ]
 }
