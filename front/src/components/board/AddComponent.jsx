@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { addBoard } from "../../api/boardApi"; // API 모듈에서 호출
 import { useNavigate } from "react-router-dom";
+import "../../assets/styles/App.scss";
+import { validateBoardInputs } from "../../util/validationUtil";
 
 const categories = ["선택", "맛집", "청소", "요리", "재테크", "인테리어", "정책", "기타"];
 
@@ -16,7 +18,7 @@ const AddComponent = () => {
     const [board, setBoard] = useState({ ...initState });
     const [showDropdown, setShowDropdown] = useState(false); // 드롭다운 상태 관리
     const [files, setFiles] = useState([]); // 파일 상태 관리
-    const [error, setError] = useState(""); // 오류 메시지 상태 관리
+    const [errors, setErrors] = useState({}); // 오류 메시지 상태 관리
     const uploadRef = useRef();
     const navigate = useNavigate();
 
@@ -26,6 +28,9 @@ const AddComponent = () => {
             ...prevBoard,
             [name]: value,
         }));
+
+        // 입력값 변경 시 해당 오류 메시지 초기화
+        setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
     };
 
     const handleCategorySelect = (categoryName) => {
@@ -34,7 +39,7 @@ const AddComponent = () => {
             categoryName: categoryName,
         }));
         setShowDropdown(false); // 카테고리를 선택한 후 드롭다운 닫기
-        setError(""); // 카테고리 선택 시 오류 메시지 초기화
+        setErrors((prevErrors) => ({ ...prevErrors, categoryName: "" })); // 카테고리 선택 시 오류 메시지 초기화
     };
 
     const handleFileChange = (e) => {
@@ -42,10 +47,12 @@ const AddComponent = () => {
     };
 
     const handleClickAdd = async (e) => {
-        if (board.categoryName === "선택") {
-            setError("카테고리를 선택해주세요.");
+        const validationErrors = validateBoardInputs(board);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
             return;
         }
+
         const formData = new FormData();
         formData.append('writerId', board.writerId);
         formData.append('categoryName', board.categoryName);
@@ -90,7 +97,7 @@ const AddComponent = () => {
                             </ul>
                         )}
                     </div>
-                    {error && <div className="error-message">{error}</div>}
+                    {errors.categoryName && <div className="error-message">{errors.categoryName}</div>}
                 </div>
                 <div className="form-group">
                     <label>제목</label>
@@ -100,7 +107,9 @@ const AddComponent = () => {
                         placeholder="제목을 입력해주세요."
                         value={board.title}
                         onChange={handleChangeBoard}
+                        maxLength={40}
                     />
+                    {errors.title && <div className="error-message">{errors.title}</div>}
                 </div>
                 <div className="form-group">
                     <label>내용</label>
@@ -109,7 +118,9 @@ const AddComponent = () => {
                         placeholder="내용을 입력해주세요."
                         value={board.content}
                         onChange={handleChangeBoard}
+                        maxLength={1960}
                     ></textarea>
+                    {errors.content && <div className="error-message">{errors.content}</div>}
                 </div>
                 <div className="form-group">
                     <label>첨부파일</label>

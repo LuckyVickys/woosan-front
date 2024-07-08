@@ -313,6 +313,13 @@ $font-family: 'Pretendard-Regular', sans-serif;
             }
         }
 
+        .error-message {
+            color: #EA4B48; // 오류 메시지의 색상을 설정
+            margin-top: 5px;
+            font-size: 0.875rem;
+        }
+
+
         .form-buttons {
             display: flex;
             justify-content: flex-end;
