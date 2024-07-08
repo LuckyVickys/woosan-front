@@ -6,6 +6,7 @@ const ListPage = lazy(() => import("../pages/board/ListPage"))
 const ReadPage = lazy(() => import("../pages/board/ReadPage"))
 const AddPage = lazy(() => import("../pages/board/AddPage"));
 const ModifyPage = lazy(() => import("../pages/board/ModifyPage"));
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage")); // 추가
 
 
 const boardRouter = () => {
@@ -59,6 +60,10 @@ const boardRouter = () => {
             path: ":id",
             element: <Suspense fallback={Loading}><ReadPage /></Suspense>
         },
+        {
+            path: "*", // catch-all route
+            element: <Suspense fallback={Loading}><NotFoundPage /></Suspense>
+        }
     ];
 };
 

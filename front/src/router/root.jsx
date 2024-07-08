@@ -15,6 +15,7 @@ const Matching = lazy(() => import("../pages/matching/IndexPage"))
 const CS = lazy(() => import("../pages/cs/IndexPage"))
 const MyPage = lazy(() => import("../pages/myPage/IndexPage"))
 // const AdminMyPage = lazy(() => import("../pages/adminMyPage/ReportList"))
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage")); // 추가
 
 const root = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const root = createBrowserRouter([
     //     path: "adminMyPage",
     //     element: <Suspense fallback={Loading}><AdminMyPage/></Suspense>
     // }
+    {
+        path: "*", // catch-all route
+        element: <Suspense fallback={Loading}><NotFoundPage /></Suspense>
+    }
 ])
 
 export default root;
