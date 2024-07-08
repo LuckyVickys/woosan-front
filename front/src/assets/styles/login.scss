@@ -156,9 +156,9 @@ h2{
   margin: 10px 0;
   cursor: pointer;
 
-  .kakao-Icon,
-  .naver-Icon,
-  .google-Icon{
+  .kakao-icon,
+  .naver-icon,
+  .google-icon{
     margin: 0 5px;
     width: 50px;
     height: 50px;
@@ -167,9 +167,9 @@ h2{
     cursor: pointer;
   }
 
-  .kakao-Icon{background: #9BCC66;}
-  .naver-Icon{background: #EA4B48}
-  .google-Icon{background: #666666;}
+  .kakao-icon{background: url(../image/kakao.svg);}
+  .naver-icon{background: url(../image/naver.svg);}
+  .google-icon{background: url(../image/google.svg);}
 }
 
 .signup-link {
