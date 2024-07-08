@@ -4,22 +4,29 @@ import { Navigate } from "react-router-dom";
 const Loading = <div>Loading....</div>
 
 const Notices = lazy(() => import("../pages/cs/notices/ListPage"))
+const ReadPage = lazy(() => import("../pages/cs/notices/ReadPage"))
 const Event = lazy(() => import("../pages/cs/EventPage"))
 
-const csRouter = ()=> {
+const csRouter = () => {
     return [
         {
             path: "",
-            element: <Navigate replace to="/cs/notices"/>
+            element: <Navigate replace to="/cs/notices" />
         },
         {
             path: "notices",
-            element: <Suspense fallback={Loading}><Notices/></Suspense>
+            element: <Suspense fallback={Loading}><Notices /></Suspense>
         },
         {
             path: "event",
-            element: <Suspense fallback={Loading}><Event/></Suspense>
-        }
+            element: <Suspense fallback={Loading}><Event /></Suspense>
+        },
+
+
+        {
+            path: "notices/:id",
+            element: <Suspense fallback={Loading}><ReadPage /></Suspense>
+        },
     ]
 }
 

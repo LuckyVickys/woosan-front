@@ -16,6 +16,7 @@ const AddComponent = () => {
     const [board, setBoard] = useState({ ...initState });
     const [showDropdown, setShowDropdown] = useState(false); // 드롭다운 상태 관리
     const [files, setFiles] = useState([]); // 파일 상태 관리
+    const [error, setError] = useState(""); // 오류 메시지 상태 관리
     const uploadRef = useRef();
     const navigate = useNavigate();
 
@@ -33,6 +34,7 @@ const AddComponent = () => {
             categoryName: categoryName,
         }));
         setShowDropdown(false); // 카테고리를 선택한 후 드롭다운 닫기
+        setError(""); // 카테고리 선택 시 오류 메시지 초기화
     };
 
     const handleFileChange = (e) => {
@@ -40,6 +42,10 @@ const AddComponent = () => {
     };
 
     const handleClickAdd = async (e) => {
+        if (board.categoryName === "선택") {
+            setError("카테고리를 선택해주세요.");
+            return;
+        }
         const formData = new FormData();
         formData.append('writerId', board.writerId);
         formData.append('categoryName', board.categoryName);
@@ -84,6 +90,7 @@ const AddComponent = () => {
                             </ul>
                         )}
                     </div>
+                    {error && <div className="error-message">{error}</div>}
                 </div>
                 <div className="form-group">
                     <label>제목</label>
