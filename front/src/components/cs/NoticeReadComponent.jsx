@@ -7,6 +7,7 @@ import PageComponent from "../../components/board/element/PageComponent.jsx";
 import { formatDate } from "../../util/DateUtil.jsx";
 import LikeButton from "../../components/common/LikeButton";
 import { FaComment } from "react-icons/fa";
+import defaultProfile from "../../assets/image/profile.png";
 
 const initState = {
     id: 0,
@@ -24,6 +25,7 @@ const initState = {
 };
 
 const NoticeReadComponent = ({ moveToList }) => {
+    const [userId, setUserId] = useState(3); // 로그인한 사용자 id(임시)
     const { id } = useParams();
 
     const [notice, setNotice] = useState(initState);
@@ -72,6 +74,11 @@ const NoticeReadComponent = ({ moveToList }) => {
     if (!notice.title) {
         return <div>로딩 중...</div>;
     }
+    const profileSrc =
+        notice.writerProfile && notice.writerProfile.length > 0
+            ? notice.writerProfile
+            : defaultProfile;
+
 
     return (
         <>
@@ -84,11 +91,7 @@ const NoticeReadComponent = ({ moveToList }) => {
             </div>
             <div className="board-header">
                 <div className="left">
-                    <img
-                        src="https://kr.object.ncloudstorage.com/woosan/board/83435d0d-3965-4448-9a76-272efc3b370e_karina.png"
-                        alt="프로필"
-                        className="profile-image"
-                    />
+                    <img src={profileSrc} alt="프로필" className="profile-image" />
                     <div className="author-info">
                         <p className="post-author">
                             {notice.nickname} | &nbsp; 조회수{" "}
