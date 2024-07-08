@@ -10,6 +10,7 @@ import LikeButton from "../../components/common/LikeButton";
 import { FaComment } from "react-icons/fa";
 import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
+import { convertLineBreaks } from "../../util/convertUtil";  // 추가된 부분
 
 const initState = {
   id: 0,
@@ -40,8 +41,8 @@ const ReadComponent = () => {
 
   useEffect(() => {
     getBoard(id).then((data) => {
-      console.log(data);
-      setBoard(data);
+      const contentWithLineBreaks = convertLineBreaks(data.content); // 수정된 부분
+      setBoard({ ...data, content: contentWithLineBreaks });
     });
   }, [id]);
 
@@ -51,7 +52,7 @@ const ReadComponent = () => {
       setBoard((prevBoard) => ({
         ...prevBoard,
         title: translated.title,
-        content: translated.content,
+        content: convertLineBreaks(translated.content), // 수정된 부분
       }));
     } catch (error) {
       console.error("번역 중 오류 발생:", error);
@@ -62,12 +63,11 @@ const ReadComponent = () => {
     try {
       const summarized = await summary(id, { title: board.title, content: board.content });
       console.log("요약 중: ", summarized);
-      setSummarizedBoard({ content: summarized});
+      setSummarizedBoard({ content: summarized });
     } catch (error) {
       console.error("요약 중 오류 발생:", error);
     }
   };
-
 
   const handleBoardMenuSelect = () => {
     setShowBoardMenu(!showBoardMenu);
@@ -132,13 +132,14 @@ const ReadComponent = () => {
           />
           <div className="author-info">
             <p className="post-author">
-              {board.nickname} | &nbsp; 조회수{" "}
-              {board.views} | 댓글 {board.replyCount} | {formatDate(board.regDate)}
+
+              {board.nickname} | &nbsp; 조회수 {board.views} | 댓글 5 | {formatDate(board.regDate)}
+
             </p>
           </div>
         </div>
         <div className="right">
-          <LikeButton 
+          <LikeButton
             className="like-button"
             memberId={1}
             type="게시물"
@@ -151,16 +152,16 @@ const ReadComponent = () => {
             {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} openReport={openReport} openMsg={openMsg} />}
           </button>
         </div>
-      </div >
+      </div>
       <p className="alert-message">
         ※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수 있습니다.
       </p>
       <div className="post-content">
-        {board.content}
-        <br/>
-        <br/>
+        <div dangerouslySetInnerHTML={{ __html: board.content }}></div>
+        <br />
+        <br />
         {summarizedBoard && (
-          <div className="summary-content"  id="result">
+          <div className="summary-content" id="result">
             <div className="summary-state">요약 완료</div>
             {summarizedBoard.content}
           </div>
@@ -172,6 +173,7 @@ const ReadComponent = () => {
         </div>
       </div>
       <PageComponent />
+
       {openMsgModal && <MsgModal senderId={userId} receiver={board.writerId} nickname={board.nickname} onClose={closeMsg}/> }
       {openReportModal && <ReportModal type={type} targetId={board.id} reportId={userId} reportedId={board.writerId} reportednickname={board.nickname} onClose={closeReport}/> }
     </>
