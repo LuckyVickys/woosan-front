@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getNoticeList } from "../../api/csApi"; // 공지사항 API로 변경
+import { getNoticeList } from "../../api/csApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import '../../assets/styles/board2.scss';
 import ListPageComponent from "../../components/board/element/ListPageComponent";
-import TableRowComponent from "../board/element/TableLowComponent";
+import TableRowComponent from "../../components/board/element/TableLowComponent";
+
 
 const initState = {
     dtoList: [],
@@ -29,7 +30,10 @@ const NoticeListComponent = () => {
     useEffect(() => {
         getNoticeList({ page, size }).then(data => {
             console.log("Fetched data:", data);
-            setNoticePage(data); // 서버에서 받은 데이터를 설정
+            setNoticePage(prevState => ({
+                ...prevState,
+                dtoList: data, // 서버에서 받은 데이터를 dtoList에 설정
+            }));
         }).catch(err => {
             console.error("Failed to fetch data:", err);
         });
@@ -39,7 +43,6 @@ const NoticeListComponent = () => {
         moveToRead(id, noticePage);
         console.log("HandleRowClick:", noticePage);
     };
-
     return (
         <div className="list-component">
             <table className="list-table">
@@ -55,7 +58,7 @@ const NoticeListComponent = () => {
                 </thead>
                 <tbody>
                     {noticePage.dtoList && noticePage.dtoList.map((item) => (
-                        <TableRowComponent key={item.id} item={item} onClick={() => handleRowClick(item.id)} />
+                        <TableRowComponent key={item.id} item={item} onClick={(handleRowClick)} />
                     ))}
                 </tbody>
             </table>
