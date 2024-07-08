@@ -13,7 +13,28 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
     return (
         <div className={styles.itemsGrid} style={{ gridTemplateColumns: `repeat(${gridColumns}, 1fr)` }}>
             {items.map(item => (
-                <MatchingItem key={item.id} {...item} onClick={() => onItemClick(item.id)} />
+                <MatchingItem 
+                    key={item.id} 
+                    id={item.id}
+                    memberId={String(item.memberId)} // memberId를 문자열로 변환
+                    matchingType={item.matchingType}
+                    title={item.title}
+                    content={item.content}
+                    placeName={item.placeName}
+                    locationX={item.locationX}
+                    locationY={item.locationY}
+                    address={item.address}
+                    meetDate={item.meetDate}
+                    tag={item.tag}
+                    headCount={item.headCount}
+                    location={item.location}
+                    introduce={item.introduce}
+                    mbti={item.mbti}
+                    gender={item.gender}
+                    age={item.age}
+                    height={item.height}
+                    onClick={onItemClick} // 적절한 클릭 핸들러 함수 추가
+                />
             ))}
         </div>
     );

@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../assets/styles/matching/MatchingItem.module.scss';
 
-
 const MatchingItem = ({
     id, memberId, matchingType, title, content, placeName, locationX, locationY, address, meetDate, tag, headCount,
     location, introduce, mbti, gender, age, height, onClick
 }) => {
-
     const typeLabel = getTypeLabel(matchingType);
     
     function getTypeLabel(type) {
@@ -48,18 +46,26 @@ const MatchingItem = ({
     );
 }
 
-    MatchingItem.propTypes = {
-        id: PropTypes.number.isRequired,
-        memberId: PropTypes.string.isRequired,
-        matchingType: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-        placeName: PropTypes.string.isRequired,
-        meetDate: PropTypes.string.isRequired,
-        tag: PropTypes.string,
-        headCount: PropTypes.string,
-        mbti: PropTypes.string,
-        gender: PropTypes.string,
-        age: PropTypes.number,
-        onClick: PropTypes.func.isRequired,
-    };
+MatchingItem.propTypes = {
+    id: PropTypes.number.isRequired,
+    memberId: PropTypes.string.isRequired,
+    matchingType: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    placeName: PropTypes.string.isRequired,
+    locationX: PropTypes.number.isRequired,
+    locationY: PropTypes.number.isRequired,
+    address: PropTypes.string.isRequired,
+    meetDate: PropTypes.string.isRequired,
+    tag: PropTypes.string,
+    headCount: PropTypes.number.isRequired,
+    location: PropTypes.string,
+    introduce: PropTypes.string,
+    mbti: PropTypes.string,
+    gender: PropTypes.string,
+    age: PropTypes.number,
+    height: PropTypes.number,
+    onClick: PropTypes.func.isRequired,
+};
+
 export default MatchingItem;

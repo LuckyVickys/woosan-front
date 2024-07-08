@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import MatchingModal from '../../components/matching/MatchingModal';
 import FilterBar from '../../components/matching/FilterBar';
 import styles from '../../assets/styles/matching/MatchingPageTemplate.module.scss';
+import { throttle } from 'lodash';
 
 /**
  * 매칭 페이지 템플릿 컴포넌트
@@ -30,17 +31,23 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
         return items.filter(item => categories[category].some(tag => item.tag.includes(tag)));
     }, [categories]);
 
+    const getSortedItems = (items) => {
+        return [...items].sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
+    };
+
     useEffect(() => {
-        const filteredItems = filterItemsByCategory(activeCategory, items);
+        const sortedItems = getSortedItems(items);
+        const filteredItems = filterItemsByCategory(activeCategory, sortedItems);
         setDisplayedItems(filteredItems.slice(0, itemsPerPage * page));
     }, [items, activeCategory, page, filterItemsByCategory]);
 
     useEffect(() => {
-        const handleScroll = () => {
+        const handleScroll = throttle(() => {
             if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 50) {
                 setPage(prevPage => prevPage + 1);
             }
-        };
+        }, 200);
+
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -59,7 +66,8 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
     const handleCategoryChange = (category) => {
         setActiveCategory(category);
         setPage(1);
-        setDisplayedItems(filterItemsByCategory(category, items).slice(0, itemsPerPage));
+        const sortedItems = getSortedItems(items);
+        setDisplayedItems(filterItemsByCategory(category, sortedItems).slice(0, itemsPerPage));
         console.log(`카테고리 변경됨: ${category}`);
     };
 
