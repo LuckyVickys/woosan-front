@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { modifyBoard, getOne, deleteBoard } from "../../api/boardApi";
-import "../../assets/styles/App.scss"; // SCSS 파일 가져오기
+import "../../assets/styles/App.scss";
 import { useParams, useNavigate } from "react-router-dom";
-import useCustomMove from "../../hooks/useCustomMove"; // 경로에 맞게 수정
-import { validateBoardInputs } from "../../util/validationUtil"; // 유효성 검사 함수 가져오기
+import useCustomMove from "../../hooks/useCustomMove";
+import { validateBoardInputs } from "../../util/validationUtil";
 
 const categories = ["선택", "맛집", "청소", "요리", "재테크", "인테리어", "정책", "기타"];
 const initState = {
@@ -27,7 +27,7 @@ const ModifyComponent = () => {
     const [files, setFiles] = useState([]); // 파일 상태 관리
     const [errors, setErrors] = useState({}); // 오류 메시지 상태 관리
     const navigate = useNavigate();
-    const { moveToList } = useCustomMove(); // useCustomMove 훅 사용
+    const { moveToList } = useCustomMove();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -69,7 +69,8 @@ const ModifyComponent = () => {
     };
 
     const handleFileChange = (e) => {
-        setFiles(e.target.files);
+        const selectedFiles = Array.from(e.target.files);
+        setFiles([...files, ...selectedFiles]);
     };
 
     const handleFileRemove = (index) => {
@@ -90,9 +91,15 @@ const ModifyComponent = () => {
         formData.append('categoryName', board.categoryName);
         formData.append('title', board.title);
         formData.append('content', board.content);
+        formData.append('writerId', 1);
 
         for (let i = 0; i < files.length; i++) {
-            formData.append('images', files[i]);
+            // 파일이 이미 업로드된 URL인지 확인하여 적절히 처리
+            if (typeof files[i] === "string") {
+                formData.append('filePathUrl', files[i]);
+            } else {
+                formData.append('images', files[i]);
+            }
         }
 
         try {
