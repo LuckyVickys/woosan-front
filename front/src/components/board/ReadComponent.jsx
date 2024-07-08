@@ -11,11 +11,13 @@ import { FaComment } from "react-icons/fa";
 import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
 import { convertLineBreaks } from "../../util/convertUtil";  // 추가된 부분
+import defaultProfile from "../../assets/image/profile.png";
 
 const initState = {
   id: 0,
   writerId: 0,
   nickname: "",
+  writerProfile: "",
   title: "",
   content: "",
   regDate: "",
@@ -37,10 +39,11 @@ const ReadComponent = () => {
   const [openReportModal, setOpenReportModal] = useState(false);
   const [openMsgModal, setOpenMsgModal] = useState(false);
   const boardMenuRef = useRef(null);
-  const type="board";
+  const type = "board";
 
   useEffect(() => {
     getBoard(id).then((data) => {
+      console.log("Received board data:", data); // Log the received data
       const contentWithLineBreaks = convertLineBreaks(data.content); // 수정된 부분
       setBoard({ ...data, content: contentWithLineBreaks });
     });
@@ -114,6 +117,11 @@ const ReadComponent = () => {
     return <div>로딩 중...</div>;
   }
 
+  const profileSrc =
+    board.writerProfile && board.writerProfile.length > 0
+      ? board.writerProfile
+      : defaultProfile;
+      
   return (
     <>
       <div className="post-title">
@@ -125,16 +133,10 @@ const ReadComponent = () => {
       </div>
       <div className="board-header">
         <div className="left">
-          <img
-            src="https://kr.object.ncloudstorage.com/woosan/board/83435d0d-3965-4448-9a76-272efc3b370e_karina.png"
-            alt="프로필"
-            className="profile-image"
-          />
           <div className="author-info">
             <p className="post-author">
-
+              <img src={profileSrc} alt="프로필" className="profile-image" />
               {board.nickname} | &nbsp; 조회수 {board.views} | 댓글 5 | {formatDate(board.regDate)}
-
             </p>
           </div>
         </div>
@@ -174,8 +176,8 @@ const ReadComponent = () => {
       </div>
       <PageComponent />
 
-      {openMsgModal && <MsgModal senderId={userId} receiver={board.writerId} nickname={board.nickname} onClose={closeMsg}/> }
-      {openReportModal && <ReportModal type={type} targetId={board.id} reportId={userId} reportedId={board.writerId} reportednickname={board.nickname} onClose={closeReport}/> }
+      {openMsgModal && <MsgModal senderId={userId} receiver={board.writerId} nickname={board.nickname} onClose={closeMsg} />}
+      {openReportModal && <ReportModal type={type} targetId={board.id} reportId={userId} reportedId={board.writerId} reportednickname={board.nickname} onClose={closeReport} />}
     </>
   );
 };
