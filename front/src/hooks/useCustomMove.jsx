@@ -8,7 +8,7 @@ const getNum = (param, defaultValue) => {
     return parseInt(param);
 };
 
-const useCustomMove = () => {
+const useCustomMove = (defaultPath = "/board") => {
     const navigate = useNavigate();
     const [refresh, setRefresh] = useState(false);
     const [queryParams] = useSearchParams();
@@ -32,8 +32,10 @@ const useCustomMove = () => {
             queryStr = queryDefault;
         }
 
+        console.log(`Navigating to ${defaultPath} with query: ${queryStr}`);
+
         navigate({
-            pathname: "/board",
+            pathname: defaultPath,
             search: queryStr
         });
 
@@ -41,15 +43,17 @@ const useCustomMove = () => {
     };
 
     const moveToModify = (num) => {
+        console.log(`Navigating to ${defaultPath}/modify/${num}`);
         navigate({
-            pathname: `/board/modify/${num}`,
+            pathname: `${defaultPath}/modify/${num}`,
             search: queryDefault
         });
     };
 
     const moveToRead = (num, serverData) => {
+        console.log(`Navigating to ${defaultPath}/${num}`);
         navigate({
-            pathname: `/board/${num}`,
+            pathname: `${defaultPath}/${num}`,
             search: queryDefault,
             state: { serverData }
         });

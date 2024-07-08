@@ -2,7 +2,7 @@
     font-family: 'Pretendard-Regular', sans-serif;
 }
 
-.msg-modal {
+.report-modal {
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     border-radius: 10px;
     background-color: white;
@@ -16,7 +16,7 @@
     flex-direction: column;
 }
 
-.msg-modal-header {
+.report-modal-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -25,8 +25,8 @@
     height: 50px;
 }
 
-.msg-modal-title {
-    color: #00B207;
+.report-modal-title {
+    color: #EA4B48;
     font-weight: 900;
     font-size: 20px;
 }
@@ -38,7 +38,7 @@
     cursor: pointer;
 }
 
-.msg-modal-body {
+.report-modal-body {
     font-size: 14px;
     display: flex;
     flex-direction: column;
@@ -56,12 +56,12 @@
     outline: none;
     font-family: 'Pretendard-Regular', sans-serif;
 
-    &.receiver-input {
+    &.type-input {
         width: 230px;
         margin-bottom: 20px;
     }
     
-    &.message-input {
+    &.report-input {
         width: 820px;
         height: 210px;
         resize: none;
@@ -95,6 +95,42 @@
         &.cancel-button {
             background-color: #EA4B48;
             margin-right: 10px;
+        }
+    }
+}
+
+input[type="file"] {
+    width: calc(235px);
+    height: calc(32px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.file-list {
+    margin-top: 10px;
+
+    .file-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+
+        span {
+            flex-grow: 1;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: 2px solid #EA4B48;
+            background-color: white;
+            color: #EA4B48;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
         }
     }
 }

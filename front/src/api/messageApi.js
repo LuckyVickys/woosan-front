@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_SERVER_HOST = "http://localhost:7777";
+export const API_SERVER_HOST = "http://localhost:80";
 
 const prefix = `${API_SERVER_HOST}/api/message`;
 

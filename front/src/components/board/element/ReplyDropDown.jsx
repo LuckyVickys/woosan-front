@@ -3,9 +3,10 @@ import ReportModal from './ReportModal';
 import MsgModal from './MsgModal';
 import Swal from 'sweetalert2';
 import { deleteReply } from "../../../api/replyApi"; // Import deleteReply function
+import { MdOutlineLocalPostOffice } from "react-icons/md";
 import '../../../assets/styles/App.scss';
 
-const ReplyDropDown = ({ onSelect, replyId, onDeleteSuccess }) => {
+const ReplyDropDown = ({ onSelect, replyId, openMsg, onDeleteSuccess }) => {
     const [openReportModal, setOpenReportModal] = useState(false);
     const [openMsgModal, setOpenMsgModal] = useState(false);
 
@@ -17,10 +18,7 @@ const ReplyDropDown = ({ onSelect, replyId, onDeleteSuccess }) => {
     };
 
     const handleMsg = () => {
-        const id = replyId;
-        console.log("Send Msg id:", id);
-        onSelect("msg", id);
-        setOpenMsgModal(true);
+        openMsg();
     };
 
     const handleDelete = () => {
@@ -60,7 +58,7 @@ const ReplyDropDown = ({ onSelect, replyId, onDeleteSuccess }) => {
                         <div className='comment-report-text'>신고하기</div>
                     </div>
                     <div className='comment-dropdown' onClick={handleMsg}>
-                        <div className='comment-msg-icon'></div>
+                    <MdOutlineLocalPostOffice className='comment-msg-icon'/>
                         <div className='comment-msg-text'>쪽지 전송</div>
                     </div>
                     <div className='comment-dropdown' onClick={handleDelete}>
@@ -72,9 +70,9 @@ const ReplyDropDown = ({ onSelect, replyId, onDeleteSuccess }) => {
             {openReportModal && (
                 <ReportModal onClose={() => setOpenReportModal(false)} />
             )}
-            {openMsgModal && (
+            {/* {openMsgModal && (
                 <MsgModal onClose={() => setOpenMsgModal(false)} />
-            )}
+            )} */}
         </>
     );
 };
