@@ -175,9 +175,8 @@ const ReadComponent = () => {
         </div>
       </div>
       <PageComponent />
-
       {openMsgModal && <MsgModal senderId={userId} receiver={board.writerId} nickname={board.nickname} onClose={closeMsg} />}
-      {openReportModal && <ReportModal type={type} targetId={board.id} reportId={userId} reportedId={board.writerId} reportednickname={board.nickname} onClose={closeReport} />}
+      {openReportModal && <ReportModal type={type} targetId={board.id} reporterId={userId} onClose={closeReport} />}
     </>
   );
 };

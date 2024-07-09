@@ -12,6 +12,7 @@ const Loading = <div>Loading....</div>
 
 const Main = lazy(() => import("../pages/main/MainPage"))
 const KakaoRedirect = lazy(() => import("../pages/social/KakaoRedirectPage"))
+
 const Board = lazy(() => import("../pages/board/IndexPage"))
 const Matching = lazy(() => import("../pages/matching/IndexPage"))
 const CS = lazy(() => import("../pages/cs/IndexPage"))

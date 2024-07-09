@@ -6,15 +6,16 @@ import { deleteReply } from "../../../api/replyApi"; // Import deleteReply funct
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 import '../../../assets/styles/App.scss';
 
-const ReplyDropDown = ({ onSelect, replyId, openMsg, onDeleteSuccess }) => {
+const ReplyDropDown = ({ onSelect, replyId, openReport, openMsg, onDeleteSuccess }) => {
     const [openReportModal, setOpenReportModal] = useState(false);
     const [openMsgModal, setOpenMsgModal] = useState(false);
 
     const handleReport = () => {
-        const id = replyId;
-        console.log("Send Report id:", id);
-        onSelect("report", id);
-        setOpenReportModal(true);
+        // const id = replyId;
+        // console.log("Send Report id:", id);
+        // onSelect("report", id);
+        // setOpenReportModal(true);
+        openReport();
     };
 
     const handleMsg = () => {

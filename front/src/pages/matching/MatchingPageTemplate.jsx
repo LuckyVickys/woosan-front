@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MatchingModal from '../../components/matching/MatchingModal';
 import FilterBar from '../../components/matching/FilterBar';
 import styles from '../../assets/styles/matching/MatchingPageTemplate.module.scss';
-import { throttle } from 'lodash';
+import { throttle } from 'lodash-es';
 
 /**
  * 매칭 페이지 템플릿 컴포넌트
