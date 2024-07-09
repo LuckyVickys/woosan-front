@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { loginPostAsync, logout } from "../slices/loginSlice";
 import { useState, useEffect } from "react";
+import Swal from 'sweetalert2';
 
 const useCustomLogin = () => {
     
@@ -48,6 +49,35 @@ const useCustomLogin = () => {
     const moveToLoginReturn = () => {   // 로그인 모달 컴포넌트
         openLoginModal();
     }
+
+    // 예외처리 - 수정 필요
+    // const exceptionHandler = (ex) => {
+
+    //     console.log("Exception--------------------");
+    //     console.log(ex);
+
+    //     const errorMsg = ex.response.data.error;
+    //     const errorStr = createSearchParams({error: errorMsg}).toString();
+
+    //     // 로그인해야 하는 경우
+    //     if(errorMsg === '') {
+    //         Swal.fire({
+    //             icon: 'warning',
+    //             title: '로그인',
+    //             text: '로그인이 필요한 서비스입니다.',
+    //         })
+    //     } else {
+    //         Swal.fire({
+    //             icon: 'warning',
+    //             title: '레벨업 필요',
+    //             text: '레벨2 이상인 회원만 열람할 수 있습니다.',
+    //         }).then((result) => {
+    //             if(result.isConfirmed) {
+    //                 navigate({pathname: '/', search: errorStr});
+    //             }
+    //         });
+    //     }
+    // }
 
     return {loginState, isLogin, doLogin, doLogout, moveToPath, openLoginModal, closeLoginModal, isLoginModalOpen, moveToLoginReturn};
 }
