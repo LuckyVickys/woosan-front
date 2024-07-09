@@ -234,7 +234,7 @@ const ReplyComponent = () => {
               {reply.children.map((child) => renderReply(child, true))}
             </div>
           )}
-          {openMsgModal && <MsgModal senderId={userId} receiver={reply.writerId} nickname={reply.nickname} onClose={closeMsg}/> }
+          {openMsgModal && <MsgModal senderId={userId} receiver={reply.nickname} onClose={closeMsg}/> }
           {openReportModal && <ReportModal type={type} targetId={reply.id} reporterId={userId} onClose={closeReport} />}
         </div>
     );
