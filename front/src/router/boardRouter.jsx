@@ -1,3 +1,4 @@
+
 import { Suspense, lazy } from "react";
 
 const Loading = <div>Loading....</div>
@@ -6,11 +7,15 @@ const ListPage = lazy(() => import("../pages/board/ListPage"))
 const ReadPage = lazy(() => import("../pages/board/ReadPage"))
 const AddPage = lazy(() => import("../pages/board/AddPage"));
 const ModifyPage = lazy(() => import("../pages/board/ModifyPage"));
-const NotFoundPage = lazy(() => import("../pages/NotFoundPage")); // 추가
+const SearchListPage = lazy(() => import("../pages/board/SearchListPage"));
 
 
 const boardRouter = () => {
     return [
+        {
+            path: "search",
+            element: <Suspense fallback={Loading}><SearchListPage /></Suspense>
+        },
         {
             path: "",
             element: <Suspense fallback={Loading}><ListPage /></Suspense>
@@ -43,11 +48,6 @@ const boardRouter = () => {
             path: "etc",
             element: <Suspense fallback={Loading}><ListPage /></Suspense>
         },
-
-
-        {
-            element: <Suspense fallback={Loading}><ListPage /></Suspense>
-        },
         {
             path: "add",
             element: <Suspense fallback={Loading}><AddPage /></Suspense>
@@ -60,10 +60,6 @@ const boardRouter = () => {
             path: ":id",
             element: <Suspense fallback={Loading}><ReadPage /></Suspense>
         },
-        {
-            path: "*", // catch-all route
-            element: <Suspense fallback={Loading}><NotFoundPage /></Suspense>
-        }
     ];
 };
 
