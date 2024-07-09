@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loginPostAsync, logout } from "../slices/loginSlice";
+import { useState, useEffect } from "react";
 
 const useCustomLogin = () => {
     
@@ -8,6 +9,7 @@ const useCustomLogin = () => {
     const dispatch = useDispatch();
     const loginState = useSelector(state => state.loginSlice);  // 로그인 상태
     const isLogin = loginState.email ? true : false;            // 로그인 여부
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     const doLogin = async (loginParam) => {    // 로그인 함수
         const action = await dispatch(loginPostAsync(loginParam));
@@ -22,13 +24,32 @@ const useCustomLogin = () => {
         navigate({pathname: path}, {replace: true});
     }
 
-    const moveToLogin = () => { // 로그인 페이지로 이동(이 아니라 모달을 띄워야 해서 pathname 수정 필요)
-        navigate({pathname: ''}, {replace: true});
+    const openLoginModal = () => {
+        setIsLoginModalOpen(true);
     }
 
-    const moveToLoginReturn = () => {   // 로그인 페이지로 이동 컴포넌트(수정 필요)
-        return <Navigate replace to = "" />
+    const closeLoginModal = () => {
+        setIsLoginModalOpen(false);
     }
 
-    return {loginState, isLogin, doLogin, doLogout, moveToPath, moveToLogin, moveToLoginReturn}
+    useEffect(() => {
+        // LoginModal이 열릴 때 body 스크롤 방지
+        if (isLoginModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset';
+        }
+    }, [isLoginModalOpen]);
+
+    const moveToLoginReturn = () => {   // 로그인 모달 컴포넌트
+        openLoginModal();
+    }
+
+    return {loginState, isLogin, doLogin, doLogout, moveToPath, openLoginModal, closeLoginModal, isLoginModalOpen, moveToLoginReturn};
 }
+
+export default useCustomLogin;

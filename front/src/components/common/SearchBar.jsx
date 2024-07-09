@@ -3,6 +3,8 @@ import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../assets/styles/App.scss';
+// import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
+// import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
 
 const CatagoryDropdown = ({ categories, onSelect }) => {
 
@@ -38,6 +40,9 @@ const SearchBar = ({ categories, filters }) => {
 
   const categoryRef = useRef(null);
   const filterRef = useRef(null);
+      
+  // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+  // const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -79,10 +84,18 @@ const SearchBar = ({ categories, filters }) => {
   }, [location.pathname]);
 
   const handleWriteButtonClick = () => {
-    navigate('/board/add'); // AddPage 경로로 이동
+
+    // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+    // if(!isLogin) {
+    //     return moveToLoginReturn();
+    // } else {
+      navigate('/board/add'); // AddPage 경로로 이동
+    // }
+
   };
 
   return (
+    <>
     <div className="search-bar">
       <div className="catagory-dropdown" ref={categoryRef}>
         {selectedCategory ? `${selectedCategory}` : '카테고리'}
@@ -102,6 +115,8 @@ const SearchBar = ({ categories, filters }) => {
       </form>
       <button className='write-button' onClick={handleWriteButtonClick}>글 쓰기</button>
     </div>
+    {/* {isLoginModalOpen && <LoginModal onClose={closeLoginModal}/>} // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게 */}
+    </>
   );
 }
 

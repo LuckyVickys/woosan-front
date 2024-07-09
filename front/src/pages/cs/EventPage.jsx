@@ -4,8 +4,13 @@ import { useRef, useEffect, useState } from 'react';
 import coinImage from '../../assets/image/coin3.png';
 import polygonImage from '../../assets/image/Polygon 2.png';
 import axios from 'axios';
+// import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
+// import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
 
 const EventPage = () => {
+
+  // 혜리 추가 - 로그인 하지 않았을 때 룰렛 돌리지 못하게
+  // const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
   const location = useLocation();
 
@@ -100,6 +105,12 @@ const EventPage = () => {
     };
 
     const rotate = () => {
+
+    // 혜리 추가 - 로그인 하지 않았을 때 룰렛 돌리지 못하게
+    // if(!isLogin) {
+    //     return moveToLoginReturn();
+    // }
+
       const $c = canvasRef.current;
       $c.style.transform = `initial`;
       $c.style.transition = `initial`;
@@ -162,9 +173,12 @@ const EventPage = () => {
   };
 
   return (
+    <>
     <div className="content">
       <CanvasComponent />
     </div>
+      {/* {isLoginModalOpen && <LoginModal onClose={closeLoginModal}/>} // 혜리 추가 */}
+    </>
   );
 }
 
