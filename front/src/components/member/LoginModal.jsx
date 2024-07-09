@@ -118,7 +118,7 @@ const LoginModal = ({ onClose }) =>{
             <div><a className='forgotPW' onClick={openFinePWModal}>비밀번호 찾기</a>
             </div>
           </div>
-          <button className='login-button' type="submit">
+          <button className='login-button' type="submit" onClick={handleLogin}>
             로그인
           </button>
         </form>
