@@ -1,8 +1,10 @@
-import React from "react";
-import { useState, useRef, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import "../../assets/styles/App.scss";
+import React from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import '../../assets/styles/App.scss';
 import { autocomplete } from "../../api/boardApi"; // 추가한 API 함수 가져오기
+// import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
+// import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
 
 const AutocompleteDropdown = ({ suggestions, onSelect }) => (
   <ul className="dropdown-list">
@@ -12,12 +14,10 @@ const AutocompleteDropdown = ({ suggestions, onSelect }) => (
   </ul>
 );
 
-const CategoryDropdown = ({ categories, onSelect }) => (
+const CatagoryDropdown = ({ categories, onSelect }) => (
   <ul className="dropdown-list">
     {categories.map((category, index) => (
-      <li key={index} onClick={() => onSelect(category)}>
-        {category}
-      </li>
+      <li key={index} onClick={() => onSelect(category.value)}>{category.label}</li>
     ))}
   </ul>
 );
@@ -25,9 +25,7 @@ const CategoryDropdown = ({ categories, onSelect }) => (
 const FilterDropdown = ({ filters, onSelect }) => (
   <ul className="dropdown-list">
     {filters.map((filter, index) => (
-      <li key={index} onClick={() => onSelect(filter)}>
-        {filter}
-      </li>
+      <li key={index} onClick={() => onSelect(filter.value)}>{filter.label}</li>
     ))}
   </ul>
 );
@@ -40,12 +38,15 @@ const SearchBar = ({ categories, filters }) => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState("");
-  const [keyword, setKeyword] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('');
+  const [keyword, setKeyword] = useState('');
 
   const categoryRef = useRef(null);
   const filterRef = useRef(null);
+
+  // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+  // const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -72,22 +73,32 @@ const SearchBar = ({ categories, filters }) => {
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClick);
+    document.addEventListener('mousedown', handleClick);
     return () => {
-      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener('mousedown', handleClick);
     };
   }, []);
 
   useEffect(() => {
-    setSelectedCategory("");
-    setSelectedFilter("");
+    setSelectedCategory('');
+    setSelectedFilter('');
     setShowCategoryDropdown(false);
     setShowFilterDropdown(false);
     setAutocompleteSuggestions([]);
   }, [location.pathname]);
 
+  const handleSearch = (event) => {
+    event.preventDefault();
+    navigate(`/board/search?category=${selectedCategory}&filter=${selectedFilter}&keyword=${keyword}`);
+  };
+
   const handleWriteButtonClick = () => {
-    navigate("/board/add"); // AddPage 경로로 이동
+    // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+    // if(!isLogin) {
+    //     return moveToLoginReturn();
+    // } else {
+    navigate('/board/add'); // AddPage 경로로 이동
+    // }
   };
 
   const handleInputChange = async (event) => {
@@ -117,31 +128,18 @@ const SearchBar = ({ categories, filters }) => {
     <>
       <div className="search-bar">
         <div className="catagory-dropdown" ref={categoryRef}>
-          {selectedCategory ? `${selectedCategory}` : "카테고리"}
-          <div
-            className="dropdown"
-            onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-          ></div>
-          {showCategoryDropdown && (
-            <CategoryDropdown
-              categories={categories}
-              onSelect={handleCategorySelect}
-            />
-          )}
-          <div className="dropdown-arrow"></div>
+          {selectedCategory ? categories.find(c => c.value === selectedCategory).label : '카테고리'}
+          <div className="dropdown" onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}></div>
+          {showCategoryDropdown && <CatagoryDropdown categories={categories} onSelect={handleCategorySelect} />}
+          <div className='dropdown-arrow'></div>
         </div>
         <div className="filter-dropdown" ref={filterRef}>
-          {selectedFilter ? `${selectedFilter}` : "검색 필터"}
-          <div
-            className="dropdown"
-            onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-          ></div>
-          {showFilterDropdown && (
-            <FilterDropdown filters={filters} onSelect={handleFilterSelect} />
-          )}
-          <div className="dropdown-arrow"></div>
+          {selectedFilter ? filters.find(f => f.value === selectedFilter).label : '검색 필터'}
+          <div className="dropdown" onClick={() => setShowFilterDropdown(!showFilterDropdown)}></div>
+          {showFilterDropdown && <FilterDropdown filters={filters} onSelect={handleFilterSelect} />}
+          <div className='dropdown-arrow'></div>
         </div>
-        <form className="search-box" action="search" method="get">
+        <form className="search-box" onSubmit={handleSearch}>
           <input
             className="search-input"
             type="text"
@@ -151,7 +149,7 @@ const SearchBar = ({ categories, filters }) => {
             onChange={handleInputChange}
             autoComplete="off"
           />
-          <button className="search-button"></button>
+          <button className="search-button" type="submit"></button>
           {autocompleteSuggestions.length > 0 && (
             <AutocompleteDropdown
               suggestions={autocompleteSuggestions}
@@ -159,12 +157,11 @@ const SearchBar = ({ categories, filters }) => {
             />
           )}
         </form>
-        <button className="write-button" onClick={handleWriteButtonClick}>
-          글 쓰기
-        </button>
+        <button className='write-button' onClick={handleWriteButtonClick}>글 쓰기</button>
       </div>
+      {/* {isLoginModalOpen && <LoginModal onClose={closeLoginModal}/>} // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게 */}
     </>
   );
-};
+}
 
 export default SearchBar;

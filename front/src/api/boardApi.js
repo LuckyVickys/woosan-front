@@ -100,3 +100,15 @@ export const autocomplete = async (keyword, searchType) => {
       throw error;
     }
   };
+
+export const searchBoard = async (category, filter, keyword) => {
+    try {
+        const params = { category, filter, keyword };
+        const res = await axios.get(`${prefix}/search`, { params });
+        return res.data;
+    } catch (error) {
+        console.error('Error searching board:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+

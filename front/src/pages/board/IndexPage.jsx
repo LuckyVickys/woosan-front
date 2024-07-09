@@ -1,19 +1,23 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom'; // 현재 경로 가져오기
 import BasicLayout from "../../layouts/BasicLayout";
 import SideBar from "../../components/common/SideBar";
 import PageTitle from "../../components/common/PageTitle";
 import SearchBar from "../../components/common/SearchBar";
+
 const IndexPage = () => {
     const location = useLocation();
     const [categoryName, setCategoryName] = useState('');
     const searchParams = new URLSearchParams(location.search);
+
     useEffect(() => {
         const categoryNameParam = searchParams.get('categoryName') || '';
         setCategoryName(categoryNameParam);
     }, [location.search]);
+
     let sub = "";
     let info = "";
+
     switch (categoryName) {
         case '맛집':
             sub = "맛집";
@@ -48,22 +52,45 @@ const IndexPage = () => {
             info = "자취 고수들의 공유마당을 둘러보고 꿀팁을 얻어가세요!";
             break;
     }
-    const categories = ['카테고리', '맛집', '청소', '요리', '재테크', '인테리어', '정책', '기타'];
-    const filters = ['검색 필터', '제목', '작성자', '내용'];
+
+    const categories = [
+        { label: '전체', value: '' },
+        { label: '맛집', value: '맛집' },
+        { label: '청소', value: '청소' },
+        { label: '요리', value: '요리' },
+        { label: '재테크', value: '재테크' },
+        { label: '인테리어', value: '인테리어' },
+        { label: '정책', value: '정책' },
+        { label: '기타', value: '기타' }
+    ];
+
+    const filters = [
+        { label: '제목', value: 'title' },
+        { label: '내용', value: 'content' },
+        { label: '작성자', value: 'writer' },
+        { label: '제목 + 내용', value: 'titleOrContent' },
+        { label: '제목 + 작성자', value: 'titleOrWriter' },
+        { label: '내용 + 작성자', value: 'contentOrWriter' },
+        { label: '제목 + 내용 + 작성자', value: 'titleOrContentOrWriter' }
+    ];
+
     const hideSearchBarPaths = ['/board/add', '/board/modify/:id', '/board/:id'];
     const hideSubAndInfoPaths = ['/board/add', '/board/modify/:id', '/board/:id'];
+
     const shouldHideSearchBar = (pathname) => {
         return hideSearchBarPaths.some((path) => {
             const regex = new RegExp(`^${path.replace(/:\w+/g, '\\w+')}$`);
             return regex.test(pathname);
         });
     };
+
     const shouldHideSubAndInfo = (pathname) => {
         return hideSubAndInfoPaths.some((path) => {
             const regex = new RegExp(`^${path.replace(/:\w+/g, '\\w+')}$`);
             return regex.test(pathname);
         });
     };
+
     return (
         <BasicLayout>
             <SideBar pageType="board" />
@@ -79,4 +106,5 @@ const IndexPage = () => {
         </BasicLayout>
     );
 }
+
 export default IndexPage;

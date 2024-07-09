@@ -1,8 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loginPost } from "../api/memberApi";
+import { getCookie, removeCookie, setCookie } from "../util/cookieUtil";
 
 const initState = {
     email:''
+}
+
+const loadMemberCookie = () => {
+    
+    const userInfo = getCookie("member");
+
+    // 닉네임 처리
+    if(userInfo && userInfo.nickname) {
+        userInfo.nickname = decodeURIComponent(userInfo.nickname);
+    }
+
+    return userInfo;
 }
 
 export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => {
@@ -11,21 +24,30 @@ export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => {
 
 const loginSlice = createSlice({
     name: 'LoginSlice',
-    initialState: initState,
+    initialState: loadMemberCookie() || initState,  // 쿠키가 없다면 초기값 사용
     reducers: {
         login: (state, action) => {
             console.log("login.....");
-            const data = action.payload;
-            return {email: data.email}
+            const payload = action.payload;
+            setCookie("member", JSON.stringify(payload), 1);    // 1일
+            return payload;
         },
         logout: (state, action) => {
-            console.log("logout.....")
-            return {...initState}
+            console.log("logout.....");
+            removeCookie("member");
+            return {...initState};
         }
     },
     extraReducers: (builder) => {
         builder.addCase(loginPostAsync.fulfilled, (state, action) => {
             console.log("fulfilled");
+            const payload = action.payload;
+
+            // 정상적인 로그인 시에만 저장
+            if(!payload.error) {
+                setCookie("member", JSON.stringify(payload), 1); // 1일
+            }
+            return payload;
         })
         .addCase(loginPostAsync.pending, (state, action) => {
             console.log("pending");
