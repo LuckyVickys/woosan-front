@@ -86,4 +86,12 @@ export const translate = async (id, boardDTO) => {
     }
 };
 
-
+export const autocomplete = async (category, keyword) => {
+    try {
+        const response = await axios.get(`${prefix}/autocomplete`, { params: { category, keyword } });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching autocomplete data:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+};

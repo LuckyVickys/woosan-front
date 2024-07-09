@@ -268,6 +268,7 @@ nav {
         border: 1px solid #E6E6E6;
         border-radius: 8px;
         padding: 5.5px;
+        position: relative;
 
         .search-input {
             width: 100%;
@@ -286,6 +287,29 @@ nav {
             background-size: contain;
             cursor: pointer;
         }
+
+        .dropdown-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 1px solid #E6E6E6;
+            border-radius: 8px;
+            background: #fff;
+            z-index: 10;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                padding: 8px;
+                cursor: pointer;
+            }
+
+            li:hover {
+                background: #EDF2EE;
+            }
+        }
     }
 
     .write-button {
@@ -302,6 +326,8 @@ nav {
         cursor: pointer;
     }
 }
+
+
 
 // footer
 footer {
