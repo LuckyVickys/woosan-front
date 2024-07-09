@@ -5,11 +5,13 @@ import csRouter from "./csRouter"
 import myPageRouter from "./myPageRouter";
 
 import { createBrowserRouter } from "react-router-dom";
+import KakaoRedirectPage from "../pages/social/KakaoRedirectPage";
 // const {createBrowserRouter} = require("react-router-dom");
 
 const Loading = <div>Loading....</div>
 
 const Main = lazy(() => import("../pages/main/MainPage"))
+const KakaRedirect = lazy(() => import("../pages/social/KakaoRedirectPage"))
 const Board = lazy(() => import("../pages/board/IndexPage"))
 const Matching = lazy(() => import("../pages/matching/IndexPage"))
 const CS = lazy(() => import("../pages/cs/IndexPage"))
@@ -21,6 +23,10 @@ const root = createBrowserRouter([
     {
         path: "",
         element: <Suspense fallback={Loading}><Main /></Suspense>
+    },
+    {
+        path: "kakao",
+        element: <Suspense fallback={Loading}><KakaoRedirectPage/></Suspense>
     },
     {
         path: "board",

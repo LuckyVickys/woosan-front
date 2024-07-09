@@ -15,7 +15,6 @@ export const getNoticeList = async (pageParam) => {
     }
 }
 
-
 export const getNotice = async (id) => {
     console.log("Fetching data for ID:", id);
     try {

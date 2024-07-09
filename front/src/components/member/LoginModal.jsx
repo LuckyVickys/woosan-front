@@ -1,9 +1,13 @@
+import { Link } from 'react-router-dom';
+import { getKakaoLoginLink } from '../../api/kakaoApi';
 import React, { useState, useEffect } from 'react';
 import '../../assets/styles/App.scss';
 import SignUpModal from './SignUpModal';
 import FinePWModal from './FinePWModal';
 
 const LoginModal = ({ onClose }) =>{
+
+  const link = getKakaoLoginLink();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -109,9 +113,9 @@ const LoginModal = ({ onClose }) =>{
           SNS계정으로 간편 로그인/회원가입
         </p>
         <div className='socialLogin-button'>
-          <div className='kakao-Icon'></div>
-          <div className='naver-Icon'></div>
-          <div className='google-Icon'></div>
+          <Link to={link}><div className='kakao-icon'></div></Link>
+          <div className='naver-icon'></div>
+          <div className='google-icon'></div>
         </div>
         <p className='signup-text'>아직 회원이 아니신가요? <a className='signup-link' onClick={openSignUpModal} > 회원가입 하기</a></p>
       </div>
