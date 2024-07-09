@@ -94,10 +94,10 @@ const SearchBar = ({ categories, filters }) => {
     const value = event.target.value;
     setKeyword(value);
 
-    if (value && selectedCategory) {
+    if (value && selectedCategory && selectedFilter) {
       try {
-        console.log(`Requesting autocomplete for category: ${selectedCategory}, keyword: ${value}`);
-        const data = await autocomplete(selectedCategory, value);
+        console.log(`Requesting autocomplete for keyword: ${value}, category: ${selectedCategory}, searchType: ${selectedFilter}`);
+        const data = await autocomplete(value, selectedFilter, selectedCategory);
         console.log("Autocomplete response:", data);
         setAutocompleteSuggestions(data.slice(0, 5));
       } catch (error) {
@@ -163,7 +163,6 @@ const SearchBar = ({ categories, filters }) => {
           글 쓰기
         </button>
       </div>
-      {/* {isLoginModalOpen && <LoginModal onClose={closeLoginModal}/>} // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게 */}
     </>
   );
 };
