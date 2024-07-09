@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 const Header = () => {
 
     const loginState = useSelector(state => state.loginSlice);
+    console.log(loginState.email)
 
     const [openLogin, setOpenLogin] = useState(false);
     const [openSignUp, setOpenSignUp] = useState(false);

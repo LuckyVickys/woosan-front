@@ -5,6 +5,9 @@ import '../../assets/styles/App.scss';
 import SignUpModal from './SignUpModal';
 import FinePWModal from './FinePWModal';
 import { useDispatch } from 'react-redux';
+import useCustomLogin from "../../hooks/useCustomLogin";
+import { login } from "../../slices/loginSlice";
+import Swal from 'sweetalert2';
 
 const initState = {
   email:'',
@@ -15,8 +18,6 @@ const LoginModal = ({ onClose }) =>{
 
   const link = getKakaoLoginLink();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
@@ -25,39 +26,61 @@ const LoginModal = ({ onClose }) =>{
   const [openFinePW, setOpenFinePW] = useState(false);
 
   // 헤리 추가
-  // const dispatch = useDispatch();
-  // const [loginParam, setLoginParam] = useState({...initState});
+  const dispatch = useDispatch();
+  const [loginParam, setLoginParam] = useState({...initState});
+  const { doLogin, isLogin } = useCustomLogin();
 
   useEffect(() => {
+
     if (isClosing) {
       const timer = setTimeout(() => {
         onClose();
       }, 200); 
       return () => clearTimeout(timer); 
     }
+
   }, [isClosing, onClose]);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginParam((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  const validateForm = () => {
+    console.log("Email :", loginParam.email);
+    console.log("Password :", loginParam.password);
+
     let valid = true;
-    
-    if (!email) {
-      setEmailError('존재하지 않는 이메일입니다.');
-      valid = false;
-    } else {
-      setEmailError('');
-    }
 
-    if (!password) {
-      setPasswordError('비밀번호가 일치하지 않습니다.');
+    if (loginParam.email.trim() === '') {
+      setEmailError('이메일을 입력하세요.');
       valid = false;
-    } else {
-      setPasswordError('');
-    }
+    } 
 
-    if (valid) {
-      // dispatch(login(loginParam));   // 혜리 추가
-      onClose();
+    if (loginParam.password.trim() === '') {
+      setPasswordError('비밀번호를 입력하세요.');
+      valid = false;
+    } 
+
+    return valid;
+  }
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+
+      try {
+        const data = await doLogin(loginParam);
+        if (data) {
+          dispatch(login(data));
+          console.log(data);
+          onClose();
+        } else {
+          Swal.fire('로그인 실패', '아이디와 비밀번호를 확인해주세요.', 'error');
+        }
+      } catch (error) {
+        Swal.fire('로그인 실패', '서버 오류가 발생했습니다.', 'error');
+      }
     }
   };
 
@@ -89,24 +112,24 @@ const LoginModal = ({ onClose }) =>{
     <div className='modal-background' onClick={onClose}>
       <div className='login-modal' onClick={(e) => e.stopPropagation()}> {/*이벤트 버블링 방지*/}
         <h2>로그인</h2>
-        <form onSubmit={handleLogin} className='form-box' >
+        <div className='form-box' >
           <div className='input-box'>
             <input className='email-input'
+              name="email"
               type="email"
               placeholder="이메일"
-              value={email}
-              // valid={loginParam.email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={loginParam.email}
+              onChange={handleChange}
             />
             {emailError && <p className='input-error'>{emailError}</p>}
           </div>
           <div className='input-box'>
             <input className='pw-input'
+              name="password"
               type="password"
               placeholder="비밀번호"
-              value={password}
-              // valid={loginParam.password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={loginParam.password}
+              onChange={handleChange}
             />
             {passwordError && <p className='input-error'>{passwordError}</p>}
           </div>
@@ -118,10 +141,10 @@ const LoginModal = ({ onClose }) =>{
             <div><a className='forgotPW' onClick={openFinePWModal}>비밀번호 찾기</a>
             </div>
           </div>
-          <button className='login-button' type="submit" onClick={handleLogin}>
+          <button className='login-button' onClick={handleLogin}>
             로그인
           </button>
-        </form>
+        </div>
         <p className='socialLogin-text'>
           SNS계정으로 간편 로그인/회원가입
         </p>
