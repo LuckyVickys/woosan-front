@@ -7,6 +7,7 @@ import ReplyDropDown from "./element/ReplyDropDown.jsx";
 import { formatRelativeTime } from "../../util/DateUtil.jsx";
 import ListPageComponent from "../../components/board/element/ListPageComponent";
 import LikeButton from "../../components/common/LikeButton";
+import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
 import defaultProfile from "../../assets/image/profile.png";
 
@@ -35,8 +36,10 @@ const ReplyComponent = () => {
   const [openReplyDropDown, setOpenReplyDropDown] = useState(null);
   const [replyContent, setReplyContent] = useState("");
   const [childReplyContent, setChildReplyContent] = useState({});
+  const [openReportModal, setOpenReportModal] = useState(false);
   const [openMsgModal, setOpenMsgModal] = useState(false);
   const dropDownRefs = useRef([]);
+  const type = "reply";
 
   useEffect(() => {
     const getReplies = async (page = 1) => {
@@ -78,12 +81,26 @@ const ReplyComponent = () => {
     // 추가 기능 구현
   };
 
+  const openReport = () => {
+    setOpenReportModal(true);
+    setOpenMsgModal(false);
+    setOpenReplyDropDown(false);
+  };
+
+  const closeReport = () => {
+    setOpenReportModal(false);
+    setOpenMsgModal(false);
+    setOpenReplyDropDown(false);
+  };
+
   const openMsg = () => {
+    setOpenReportModal(false);
     setOpenMsgModal(true);
     setOpenReplyDropDown(false);
   };
 
   const closeMsg = () => {
+    setOpenReportModal(false);
     setOpenMsgModal(false);
     setOpenReplyDropDown(false);
   };
@@ -176,7 +193,7 @@ const ReplyComponent = () => {
                 ⋮
                 {openReplyDropDown === reply.id && (
                   <div>
-                    <ReplyDropDown onSelect={handleDropDownMenu} replyId={reply.id} openMsg={openMsg} onDeleteSuccess={handleDeleteSuccess} />
+                    <ReplyDropDown onSelect={handleDropDownMenu} replyId={reply.id} openReport={openReport} openMsg={openMsg} onDeleteSuccess={handleDeleteSuccess} />
                   </div>
                 )}
               </button>
@@ -217,7 +234,8 @@ const ReplyComponent = () => {
               {reply.children.map((child) => renderReply(child, true))}
             </div>
           )}
-          {openMsgModal && <MsgModal senderId={userId} receiver={reply.nickname} onClose={closeMsg}/> }
+          {openMsgModal && <MsgModal senderId={userId} receiver={reply.writerId} nickname={reply.nickname} onClose={closeMsg}/> }
+          {openReportModal && <ReportModal type={type} targetId={reply.id} reporterId={userId} onClose={closeReport} />}
         </div>
     );
   };

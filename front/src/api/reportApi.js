@@ -9,7 +9,7 @@ export const addReport = async (formData) => {
         const res = await axios.post(`${prefix}/add`, formData, header);
         return res.data;
     } catch (error) {
-        console.error('Error adding board:', error.response ? error.response.data : error.message);
+        console.error('Error adding report:', error.response ? error.response.data : error.message);
         throw error;
     }
 }

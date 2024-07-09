@@ -7,18 +7,17 @@ import "../../../assets/styles/App.scss";
 const initState = {
     type: "",
     targetId: "",
-    reportId: "",
+    reporterId: "",
     complaintReason: "",
-    reportedId: "",
-    files: []
+    images: []
 };
 
-const ReportModal = ({ type, targetId, reportId, reportedId, reportednickname, onClose }) => {
+const ReportModal = ({ type, targetId, reporterId, onClose }) => {
     const [report, setReport] = useState({ ...initState });
-    const [files, setFiles] = useState([]);
+    const [images, setImages] = useState([]); // 파일 상태 관리
     const uploadRef = useRef();
     const [isClosing, setIsClosing] = useState(false);
-    const [selectedType, setSelectedType] = useState(null);
+    const [selectedType, setSelectedType] = useState(null); // 신고 유형
     
     useEffect(() => {
         if (isClosing) {
@@ -47,31 +46,30 @@ const ReportModal = ({ type, targetId, reportId, reportedId, reportednickname, o
     };
 
     const handleFileChange = (e) => {
-        setFiles(e.target.files);
+        setImages(e.target.files);
     };
 
     const handleClickReportAdd = async (e) => {
         console.log("type :", type, targetId);
-        console.log("reportId :", reportId, reportednickname);
+        console.log("reportId :", reporterId);
         e.preventDefault(); 
 
         const formData = new FormData();
         formData.append('type', report.type);
         formData.append('targetId', report.targetId);
-        formData.append('reportId', report.reportId);
+        formData.append('reporterId', report.reporterId);
         formData.append('complaintReason', report.complaintReason);
-        formData.append('reportedId', report.reportedId);
 
-        for (let i = 0; i < files.length; i++) {
-            formData.append('images', files[i]);
+        for (let i = 0; i < images.length; i++) {
+            formData.append('images', images[i]);
         }
 
         try {
             const response = await addReport(formData);
 
-            if (response.status === 200) {
+            if (response) {
                 Swal.fire({
-                    title: `${reportedId, reportednickname}님을 신고하시겠습니까?`,
+                    title: `${selectedType}을 신고하시겠습니까?`,
                     text: '신고 철회는 불가능합니다.',
                     icon: 'warning',
                     showCancelButton: true,
@@ -81,7 +79,7 @@ const ReportModal = ({ type, targetId, reportId, reportedId, reportednickname, o
                     cancelButtonText: '취소'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire('신고 완료', `${reportedId}에 대한 신고가 접수되었습니다.`, 'success').then(() => {
+                        Swal.fire('신고 완료', `${selectedType}에 대한 신고가 접수되었습니다.`, 'success').then(() => {
                             setIsClosing(true);
                         });
                     }
@@ -97,7 +95,7 @@ const ReportModal = ({ type, targetId, reportId, reportedId, reportednickname, o
 
 
     return (
-        <div className='modal-background' onClick={onClose}>
+        <div className='report-modal-background' onClick={onClose}>
             <div className='report-modal' onClick={(e) => e.stopPropagation()}>
                 <div className='report-modal-header'>
                     <div className='report-modal-title'>신고</div>
@@ -122,9 +120,9 @@ const ReportModal = ({ type, targetId, reportId, reportedId, reportednickname, o
                         onChange={handleFileChange}
                     />
                 </div>
-                <div className="form-buttons">
-                    <button className="save-button" onClick={handleClickReportAdd}>보내기</button>
-                    <button className="cancel-button" onClick={onClose}>취소</button>
+                <div className="report-form-buttons">
+                    <button className="report-save-button" onClick={handleClickReportAdd}>보내기</button>
+                    <button className="report-cancel-button" onClick={onClose}>취소</button>
                 </div>
             </div>
         </div>
