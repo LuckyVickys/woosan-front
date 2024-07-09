@@ -217,7 +217,7 @@ const ReplyComponent = () => {
               {reply.children.map((child) => renderReply(child, true))}
             </div>
           )}
-          {openMsgModal && <MsgModal senderId={userId} receiver={reply.writerId} nickname={reply.nickname} onClose={closeMsg}/> }
+          {openMsgModal && <MsgModal senderId={userId} receiver={reply.nickname} onClose={closeMsg}/> }
         </div>
     );
   };

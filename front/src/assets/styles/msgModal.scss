@@ -1,4 +1,8 @@
-.modal-background {
+.msg-modal-background {
+    position: fixed;
+    top:0; left: 0; bottom: 0; right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 100;
     font-family: 'Pretendard-Regular', sans-serif;
 }
 
@@ -46,11 +50,10 @@
     padding: 25px 0;
 }
 
-.input {
+.msg-input {
     margin: 10px 0;
     border: 1px solid #E6E6E6;
     border-radius: 6px;
-    color: #999999;
     font-size: 16px;
     padding: 15px;
     outline: none;
@@ -68,7 +71,7 @@
     }
 }
 
-.form-buttons {
+.msg-form-buttons {
     display: flex;
     justify-content: flex-end;
 
@@ -82,17 +85,17 @@
         cursor: pointer;
         font-weight: 900;
 
-        &.save-button {
+        &.msg-save-button {
             background-color: #2388FF;
             margin-right: 10px;
         }
 
-        &.remove-button {
+        &.msg-remove-button {
             background-color: #EA4B48;
             margin-right: 10px;
         }
 
-        &.cancel-button {
+        &.msg-cancel-button {
             background-color: #EA4B48;
             margin-right: 10px;
         }
