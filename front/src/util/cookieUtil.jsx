@@ -4,10 +4,11 @@ const cookies = new Cookies();
 
 export const setCookie = (name, value, days) => {
     const expires = new Date();
-    expires.setUTCDate(expires.getUTCDate + days);   // 보관기한
+    expires.setUTCDate(expires.getUTCDate() + days);   // 수정된 부분
 
-    return cookies.set(name, value, {path: '/', expires:expires});
+    return cookies.set(name, value, { path: '/', expires });
 }
+
 
 export const getCookie = (name) => {
     return cookies.get(name);
