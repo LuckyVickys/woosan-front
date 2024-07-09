@@ -4,8 +4,12 @@ import logoImage from "../../assets/image/logo.svg";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 import LoginModal from "../member/LoginModal";
 import '../../assets/styles/App.scss';
+import { useSelector } from "react-redux";
 
 const Header = () => {
+
+    const loginState = useSelector(state => state.loginSlice);
+
     const [openLogin, setOpenLogin] = useState(false);
     const [openSignUp, setOpenSignUp] = useState(false);
     const [openFindPW, setOpenFindPW] = useState(false);
@@ -26,16 +30,21 @@ const Header = () => {
             <div className="login">
                 <MdOutlineLocalPostOffice className="messageIcon" />
                 <div className="loginBar"> | </div>
-                <div className="loginButton" id="loginButton" onClick={() => setOpenLogin(true)}>
-                    로그인
-                </div>
-                <div className="profile-box" id="loginProfile">
+                
+                {loginState.email ?
+                    <div className="profile-box" id="loginProfile">
                     <div className='user-level-nickname'>
-                        <div className='user-level'>dmdkrdmr</div>
-                        <div className='user-nickname'>dfdfdf</div>
+                        <div className='user-level'>Lv3. </div>
+                        <div className='user-nickname'>카카시</div>
                     </div>
                     <div className='user-profile'></div>
                 </div>
+                :
+                <div className="loginButton" id="loginButton" onClick={() => setOpenLogin(true)}>
+                    로그인
+                </div>
+                }
+                
             </div>
             {openLogin && <LoginModal onClose={closeLoginModal} />}
         </header>

@@ -4,6 +4,12 @@ import React, { useState, useEffect } from 'react';
 import '../../assets/styles/App.scss';
 import SignUpModal from './SignUpModal';
 import FinePWModal from './FinePWModal';
+import { useDispatch } from 'react-redux';
+
+const initState = {
+  email:'',
+  password:''
+}
 
 const LoginModal = ({ onClose }) =>{
 
@@ -17,6 +23,10 @@ const LoginModal = ({ onClose }) =>{
   const [isClosing, setIsClosing] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
   const [openFinePW, setOpenFinePW] = useState(false);
+
+  // 헤리 추가
+  // const dispatch = useDispatch();
+  // const [loginParam, setLoginParam] = useState({...initState});
 
   useEffect(() => {
     if (isClosing) {
@@ -46,6 +56,7 @@ const LoginModal = ({ onClose }) =>{
     }
 
     if (valid) {
+      // dispatch(login(loginParam));   // 혜리 추가
       onClose();
     }
   };
@@ -84,6 +95,7 @@ const LoginModal = ({ onClose }) =>{
               type="email"
               placeholder="이메일"
               value={email}
+              // valid={loginParam.email}
               onChange={(e) => setEmail(e.target.value)}
             />
             {emailError && <p className='input-error'>{emailError}</p>}
@@ -93,6 +105,7 @@ const LoginModal = ({ onClose }) =>{
               type="password"
               placeholder="비밀번호"
               value={password}
+              // valid={loginParam.password}
               onChange={(e) => setPassword(e.target.value)}
             />
             {passwordError && <p className='input-error'>{passwordError}</p>}
