@@ -1,10 +1,8 @@
 import axios from "axios";
-import { API_SERVER_HOST } from "./boardApi";
 
-// const host = `${API_SERVER_HOST}/api`;
 const host = `http://localhost:80/api`;
 
-// 이메일 불일치
+// 이메일 일치 확인
 export const matchEmail = async (loginParam) => {
 
     console.log("Matching email for Email:", loginParam.email);
@@ -22,7 +20,7 @@ export const matchEmail = async (loginParam) => {
     }
 }
 
-// 비밀번호 불일치
+// 비밀번호 일치 확인
 export const matchPassword = async (email) => {
 
     console.log("Matching password for Email:", email);

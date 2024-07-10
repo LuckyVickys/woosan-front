@@ -86,12 +86,12 @@ export const translate = async (id, boardDTO) => {
     }
 };
 
-export const autocomplete = async (keyword, searchType) => {
+export const autocomplete = async (keyword, searchType, category) => {
     const url = `${prefix}/autocomplete`;
     console.log(`Autocomplete request URL: ${url}`);
     try {
       const response = await axios.get(url, {
-        params: { keyword, searchType },
+        params: { keyword, searchType, category },
       });
       console.log("Autocomplete API response:", response.data);
       return response.data;
@@ -100,7 +100,7 @@ export const autocomplete = async (keyword, searchType) => {
       throw error;
     }
   };
-
+  
 export const searchBoard = async (category, filter, keyword) => {
     try {
         const params = { category, filter, keyword };
