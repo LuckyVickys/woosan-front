@@ -47,9 +47,6 @@ const LoginModal = ({ onClose }) =>{
   }
 
   const validateForm = () => {
-    console.log("Email :", loginParam.email);
-    console.log("Password :", loginParam.password);
-
     let valid = true;
 
     if (loginParam.email.trim() === '') {
@@ -73,7 +70,6 @@ const LoginModal = ({ onClose }) =>{
         const data = await doLogin(loginParam);
         if (data) {
           dispatch(login(data));
-          console.log(data);
           onClose();
         } else {
           Swal.fire('로그인 실패', '아이디와 비밀번호를 확인해주세요.', 'error');

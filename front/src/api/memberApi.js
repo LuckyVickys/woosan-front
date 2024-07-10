@@ -2,7 +2,38 @@ import axios from "axios";
 
 const host = `http://localhost:80/api`;
 
-// 로그인
+// 이메일 일치 확인
+export const matchEmail = async (loginParam) => {
+
+    console.log("Matching email for Email:", loginParam.email);
+
+    const header = {headers: {"Content-Type": "application/json"}};
+    const data = {
+        email: loginParam.email,
+    };
+
+    try {
+        const res = await axios.post(`${host}/auth/login`, data, header);
+        return res.data;
+    } catch (error) {
+        
+    }
+}
+
+// 비밀번호 일치 확인
+export const matchPassword = async (email) => {
+
+    console.log("Matching password for Email:", email);
+
+    try {
+        const response = await axios.get(`${host}/email/{email}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error matching password:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
 export const loginPost = async (loginParam) => {
     const header = {headers: {"Content-Type": "application/json"}};
     const data = {
@@ -61,6 +92,22 @@ export const sendEmail = async (email) => {
         return response.data;
     } catch (error) {
         console.error('Error fetching data:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+// 멤버 정보 요청
+export const getMemberWithMemberId = async (memberId) => {
+
+    try {
+        const res = await axios.get(`${host}/info`, {
+            params: {
+                memberId: memberId
+            }
+        });
+        console.log(res.data);
+    } catch (error) {
+        console.error('Error fetching data:', error.res ? error.res.data : error.message);
         throw error;
     }
 }

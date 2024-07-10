@@ -28,11 +28,10 @@ const Header = () => {
                     <Link to={'/'}>우리는 함께 산다</Link>
                 </div>
             </div>
-            <div className="login">
+            {loginState.email ?
+                <div className="login">
                 <MdOutlineLocalPostOffice className="messageIcon" />
                 <div className="loginBar"> | </div>
-                
-                {loginState.email ?
                     <div className="profile-box" id="loginProfile">
                     <div className='user-level-nickname'>
                         <div className='user-level'>Lv3. </div>
@@ -40,13 +39,15 @@ const Header = () => {
                     </div>
                     <div className='user-profile'></div>
                 </div>
-                :
+            </div>
+            :
+            <div className="login">
+                <div className="loginBar"> | </div>
                 <div className="loginButton" id="loginButton" onClick={() => setOpenLogin(true)}>
                     로그인
                 </div>
-                }
-                
             </div>
+            }
             {openLogin && <LoginModal onClose={closeLoginModal} />}
         </header>
     )
