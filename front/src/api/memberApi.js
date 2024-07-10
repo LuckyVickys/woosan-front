@@ -106,6 +106,7 @@ export const getMemberWithMemberId = async (memberId) => {
             }
         });
         console.log(res.data);
+        return res.data;
     } catch (error) {
         console.error('Error fetching data:', error.res ? error.res.data : error.message);
         throw error;

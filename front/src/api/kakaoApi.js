@@ -37,8 +37,17 @@ export const getAccessToken = async (authCode) => {
 
 export const getKakaoMemberWithAccessToken = async (accessToken) => {
 
-    // const res = await axios.get(`${API_SERVER_HOST}/api/oauth/kakao?accessToken=${accessToken}`);
-    const res = await axios.get(`http://localhost:80/api/oauth/kakao?accessToken=${accessToken}`);
+    const res = await axios.get(`${API_SERVER_HOST}/api/oauth/kakao?accessToken=${accessToken}`);
 
     return res.data;
+}
+
+export const getKakaoUserData = async (token) => {
+    const kakaoUser = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+
+    return await kakaoUser.data;
 }
