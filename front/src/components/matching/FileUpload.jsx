@@ -1,34 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from '../../assets/styles/matching/FileUpload.module.scss';
 
 const FileUpload = ({ files, setFiles }) => {
-    const [fileList, setFileList] = useState(files || []);
-
     const handleFileChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
-        setFileList(selectedFiles);
-        setFiles(selectedFiles);
+        setFiles([...files, ...selectedFiles]);
+    };
+
+    const handleRemoveFile = (index) => {
+        const newFiles = files.filter((_, i) => i !== index);
+        setFiles(newFiles);
     };
 
     return (
-        <div className={styles.fileUpload}>
-            <label htmlFor="fileUpload" className={styles.label}>파일 업로드</label>
+        <div className={styles.formGroup}>
+            <label htmlFor="fileUpload">첨부파일</label>
             <input
                 id="fileUpload"
-                className={styles.input}
+                name="fileUpload"
                 type="file"
                 multiple
                 onChange={handleFileChange}
             />
-            <div className={styles.preview}>
-                {fileList.map((file, index) => (
+            <button type="button" className={styles.uploadButton}>업로드</button>
+            <div className={styles.fileList}>
+                {files.map((file, index) => (
                     <div key={index} className={styles.fileItem}>
-                        {file.name}
+                        <span>{file.name}</span>
+                        <button type="button" onClick={() => handleRemoveFile(index)}>삭제</button>
                     </div>
                 ))}
             </div>
         </div>
     );
+};
+
+FileUpload.propTypes = {
+    files: PropTypes.arrayOf(PropTypes.object).isRequired,
+    setFiles: PropTypes.func.isRequired,
 };
 
 export default FileUpload;

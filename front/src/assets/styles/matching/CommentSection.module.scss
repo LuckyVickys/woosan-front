@@ -1,17 +1,18 @@
 .commentSection {
-    border-top: 1px solid #e0e0e0;
-    padding-top: 20px;
     margin-top: 20px;
 }
 
 .comment {
-    padding: 10px 0;
-    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .commentHeader {
     display: flex;
     justify-content: space-between;
+    font-size: 14px;
 }
 
 .commentWriter {
@@ -20,34 +21,64 @@
 
 .commentDate {
     font-size: 12px;
-    color: #999;
+    color: gray;
 }
 
 .commentContent {
-    margin-top: 10px;
+    margin-top: 5px;
+    font-size: 14px;
 }
 
 .commentInputContainer {
     display: flex;
-    flex-direction: column;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .commentInput {
-    width: 100%;
-    height: 80px;
+    flex: 1;
     padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
 }
 
 .commentButton {
-    align-self: flex-end;
-    background-color: #007bff;
-    color: white;
     padding: 10px 20px;
+    background-color: #00B207;
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.replyToggleButton {
+    background: none;
+    border: none;
+    color: #00B207;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.replyInputContainer {
+    display: flex;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.replyInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.replyButton {
+    padding: 10px 20px;
+    background-color: #00B207;
+    color: white;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
 }
