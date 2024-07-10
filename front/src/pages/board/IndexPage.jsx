@@ -11,7 +11,7 @@ const IndexPage = () => {
     const searchParams = new URLSearchParams(location.search);
 
     useEffect(() => {
-        const categoryNameParam = searchParams.get('categoryName') || '';
+        const categoryNameParam = searchParams.get('categoryName') || '전체'; // Default category set to '전체'
         setCategoryName(categoryNameParam);
     }, [location.search]);
 
@@ -54,7 +54,7 @@ const IndexPage = () => {
     }
 
     const categories = [
-        { label: '전체', value: '' },
+        { label: '전체', value: '전체' },
         { label: '맛집', value: '맛집' },
         { label: '청소', value: '청소' },
         { label: '요리', value: '요리' },

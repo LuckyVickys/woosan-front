@@ -38,8 +38,8 @@ const SearchBar = ({ categories, filters }) => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
 
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [selectedFilter, setSelectedFilter] = useState('title');
   const [keyword, setKeyword] = useState('');
 
   const categoryRef = useRef(null);
@@ -80,8 +80,8 @@ const SearchBar = ({ categories, filters }) => {
   }, []);
 
   useEffect(() => {
-    setSelectedCategory('');
-    setSelectedFilter('');
+    setSelectedCategory('전체');
+    setSelectedFilter('title');
     setShowCategoryDropdown(false);
     setShowFilterDropdown(false);
     setAutocompleteSuggestions([]);
@@ -128,13 +128,13 @@ const SearchBar = ({ categories, filters }) => {
     <>
       <div className="search-bar">
         <div className="catagory-dropdown" ref={categoryRef}>
-          {selectedCategory ? categories.find(c => c.value === selectedCategory).label : '카테고리'}
+          {selectedCategory ? categories.find(c => c.value === selectedCategory).label : '전체'}
           <div className="dropdown" onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}></div>
           {showCategoryDropdown && <CatagoryDropdown categories={categories} onSelect={handleCategorySelect} />}
           <div className='dropdown-arrow'></div>
         </div>
         <div className="filter-dropdown" ref={filterRef}>
-          {selectedFilter ? filters.find(f => f.value === selectedFilter).label : '검색 필터'}
+          {selectedFilter ? filters.find(f => f.value === selectedFilter).label : '제목'}
           <div className="dropdown" onClick={() => setShowFilterDropdown(!showFilterDropdown)}></div>
           {showFilterDropdown && <FilterDropdown filters={filters} onSelect={handleFilterSelect} />}
           <div className='dropdown-arrow'></div>
