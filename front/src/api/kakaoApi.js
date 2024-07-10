@@ -35,7 +35,7 @@ export const getAccessToken = async (authCode) => {
     return accessToken;
 }
 
-export const getMemberWithAccessToken = async (accessToken) => {
+export const getKakaoMemberWithAccessToken = async (accessToken) => {
 
     // const res = await axios.get(`${API_SERVER_HOST}/api/oauth/kakao?accessToken=${accessToken}`);
     const res = await axios.get(`http://localhost:80/api/oauth/kakao?accessToken=${accessToken}`);

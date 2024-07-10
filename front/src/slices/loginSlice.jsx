@@ -3,6 +3,7 @@ import { loginPost } from "../api/memberApi";
 import { getCookie, removeCookie, setCookie } from "../util/cookieUtil";
 
 const initState = {
+    id: null,
     email:''
 }
 
@@ -19,6 +20,7 @@ const loadMemberCookie = () => {
 }
 
 export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => {
+
     return loginPost(param);
 })
 
@@ -30,7 +32,9 @@ const loginSlice = createSlice({
             console.log("login.....");
             const payload = action.payload;
             setCookie("member", JSON.stringify(payload), 1);    // 1일
+
             return payload;
+            // return {email: payload.email};
         },
         logout: (state, action) => {
             console.log("logout.....");
