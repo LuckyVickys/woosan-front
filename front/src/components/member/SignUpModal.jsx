@@ -77,7 +77,7 @@ const SignUpModal = ({ onClose }) =>{
     return (
       <>
         {/* <div className='modal-background'> */}
-          <div className='signup-modal'  onClick={(e) => {e.stopPropagation(); onClose();}}>
+          <div className='signup-modal'  onClick={(e) => {e.stopPropagation();}}>
             <h2>회원가입</h2>
             <form onSubmit={handleSignUp} className='form-box' >
               <div className='input-box'>

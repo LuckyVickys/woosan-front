@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { loginPostAsync, logout } from "../slices/loginSlice";
 import { useState, useEffect } from "react";
-import Swal from 'sweetalert2';
 
 const useCustomLogin = () => {
     
