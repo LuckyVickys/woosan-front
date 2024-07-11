@@ -9,7 +9,7 @@ const CreateMatching = () => {
 
     const handleSubmit = async (data) => {
         try {
-            data.memberId = 60; // 임시로 memberId를 999로 하드코딩
+            data.memberId = 70; // 임시로 memberId를 60으로 하드코딩
             console.log('제출된 데이터:', data); // 디버깅을 위한 콘솔 로그
             let response;
             if (matchingType === 1) {
@@ -27,31 +27,27 @@ const CreateMatching = () => {
             }
         } catch (error) {
             console.error('모임 생성 중 오류 발생:', error); // 디버깅을 위한 콘솔 로그
-            Swal.fire('오류!', '모임 생성 중 오류가 발생했습니다.', 'error');
+            Swal.fire('오류!', error.response.data, 'error');
         }
     };
 
     return (
         <div className={styles.container}>
+            <div className={styles.titleBar}>
+                <div className={styles.titleBarLine}></div>
+                <div className={styles.titleBarText}>모임 만들기</div>
+            </div>
             <div className={styles.categorySelector}>
-                <button
-                    className={matchingType === 1 ? styles.active : ''}
-                    onClick={() => setMatchingType(1)}
+                <label htmlFor="category">카테고리</label>
+                <select
+                    id="category"
+                    value={matchingType}
+                    onChange={(e) => setMatchingType(Number(e.target.value))}
                 >
-                    정기 모임
-                </button>
-                <button
-                    className={matchingType === 2 ? styles.active : ''}
-                    onClick={() => setMatchingType(2)}
-                >
-                    번개
-                </button>
-                <button
-                    className={matchingType === 3 ? styles.active : ''}
-                    onClick={() => setMatchingType(3)}
-                >
-                    셀프 소개팅
-                </button>
+                    <option value={1}>정기 모임</option>
+                    <option value={2}>번개</option>
+                    <option value={3}>셀프 소개팅</option>
+                </select>
             </div>
             <MatchingForm onSubmit={handleSubmit} initialValues={{}} matchingType={matchingType} />
         </div>

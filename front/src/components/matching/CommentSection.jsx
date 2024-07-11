@@ -7,21 +7,14 @@ import styles from '../../assets/styles/matching/CommentSection.module.scss';
 const CommentSection = ({ matchingId }) => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
-    const [replyMap, setReplyMap] = useState({});
+    const [replyInputs, setReplyInputs] = useState({});
+    const [showReplyInput, setShowReplyInput] = useState({});
 
     useEffect(() => {
         const fetchComments = async () => {
             try {
                 const res = await getReplies(matchingId, { page: 0, size: 10 }); // 페이지네이션 예시
                 setComments(res.content);
-                // Fetch replies for each comment
-                for (const comment of res.content) {
-                    const replyRes = await getReplies(comment.id);
-                    setReplyMap((prevReplyMap) => ({
-                        ...prevReplyMap,
-                        [comment.id]: replyRes
-                    }));
-                }
             } catch (error) {
                 console.error("댓글을 가져오는 중 오류 발생:", error);
             }
@@ -36,7 +29,7 @@ const CommentSection = ({ matchingId }) => {
     const handleCommentSubmit = async () => {
         const requestDTO = {
             matchingBoardId: matchingId,
-            memberId: 999, // 현재 로그인한 사용자 ID로 변경 필요
+            memberId: 25, // 현재 로그인한 사용자 ID로 변경 필요
             content: newComment
         };
         try {
@@ -51,6 +44,47 @@ const CommentSection = ({ matchingId }) => {
         }
     };
 
+    const handleReplyChange = (commentId, e) => {
+        setReplyInputs({
+            ...replyInputs,
+            [commentId]: e.target.value
+        });
+    };
+
+    const handleReplySubmit = async (commentId) => {
+        const requestDTO = {
+            matchingBoardId: matchingId,
+            memberId: 25, // 현재 로그인한 사용자 ID로 변경 필요
+            content: replyInputs[commentId],
+            parentId: commentId
+        };
+        try {
+            await saveReply(requestDTO);
+            setReplyInputs({
+                ...replyInputs,
+                [commentId]: ''
+            });
+            const res = await getReplies(matchingId, { page: 0, size: 10 });
+            setComments(res.content);
+            alert('답글이 성공적으로 저장되었습니다.');
+        } catch (error) {
+            console.error("답글 저장 중 오류 발생:", error);
+            alert('답글 저장 중 오류가 발생했습니다.');
+        }
+    };
+
+    const handleReplyAdded = async () => {
+        const res = await getReplies(matchingId, { page: 0, size: 10 });
+        setComments(res.content);
+    };
+
+    const toggleReplyInput = (commentId) => {
+        setShowReplyInput({
+            ...showReplyInput,
+            [commentId]: !showReplyInput[commentId]
+        });
+    };
+
     return (
         <div className={styles.commentSection}>
             <h3>댓글</h3>
@@ -62,7 +96,35 @@ const CommentSection = ({ matchingId }) => {
                             <span className={styles.commentDate}>{new Date(comment.createdDate).toLocaleString()}</span>
                         </div>
                         <p className={styles.commentContent}>{comment.content}</p>
-                        <ReplySection replies={replyMap[comment.id]} />
+                        {comment.replies && comment.replies.length > 0 && (
+                            <ReplySection 
+                                replies={comment.replies} 
+                                parentId={comment.id} 
+                                onReplyAdded={handleReplyAdded} 
+                            />
+                        )}
+                        <button 
+                            className={styles.replyToggleButton} 
+                            onClick={() => toggleReplyInput(comment.id)}
+                        >
+                            답글 달기
+                        </button>
+                        {showReplyInput[comment.id] && (
+                            <div className={styles.replyInputContainer}>
+                                <textarea
+                                    className={styles.replyInput}
+                                    placeholder="답글을 입력하세요"
+                                    value={replyInputs[comment.id] || ''}
+                                    onChange={(e) => handleReplyChange(comment.id, e)}
+                                ></textarea>
+                                <button
+                                    className={styles.replyButton}
+                                    onClick={() => handleReplySubmit(comment.id)}
+                                >
+                                    답글 작성
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ))
             ) : (

@@ -3,44 +3,66 @@ import PropTypes from 'prop-types';
 import styles from '../../assets/styles/matching/MatchingItem.module.scss';
 
 const MatchingItem = ({
-    id, memberId, matchingType, title, content, placeName, locationX, locationY, address, meetDate, tag, headCount,
+    id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag, headCount,
     location, introduce, mbti, gender, age, height, onClick
 }) => {
     const typeLabel = getTypeLabel(matchingType);
-    
+
     function getTypeLabel(type) {
         switch (type) {
             case 1:
-                return '정기 모임';
+                return '정기모임';
             case 2:
                 return '번개';
             case 3:
-                return '셀프 소개팅';
+                return '셀프소개팅';
             default:
                 return '모임';
         }
     }
 
+    function getTypeStyle(type) {
+        switch (type) {
+            case 1:
+                return styles.정기모임;
+            case 2:
+                return styles.번개;
+            case 3:
+                return styles.셀프소개팅;
+            default:
+                return '';
+        }
+    }
+
     return (
         <div className={styles.matchingItemCard} onClick={() => onClick(id)}>
-            <div className={styles.matchingItemHeader}>
-                <span className={`${styles.tag} ${styles[typeLabel]}`}>{typeLabel}</span>
-                <span className={styles.title}>{title}</span>
-            </div>
-            <div className={styles.matchingItemBody}>
-                {matchingType !== 3 && <div className={styles.tag}>{tag}</div>}
-                <div className={styles.placeName}>장소: {placeName}</div>
-                <div className={styles.datetime}>날짜: {new Date(meetDate).toLocaleDateString()}</div>
-                <div className={styles.memberId}>주최자: {memberId}</div>
-                {matchingType !== 3 ? (
-                    <div className={styles.headCount}>모집 인원: {headCount}</div>
-                ) : (
-                    <>
-                        <div className={styles.gender}>성별: {gender}</div>
-                        <div className={styles.age}>나이: {age}세</div>
-                        <div className={styles.mbti}>MBTI: {mbti}</div>
-                    </>
-                )}
+            <div className={styles.imagePlaceholder}></div>
+            <div className={styles.matchingItemContent}>
+                <div className={styles.matchingItemHeader}>
+                    <span className={`${styles.typeLabel} ${getTypeStyle(matchingType)}`}>{typeLabel}</span>
+                    {matchingType !== 3 && <span className={styles.tag}>{tag}</span>}
+                    {matchingType === 3 && <span className={styles.tag}>{mbti}</span>}
+                </div>
+                <div className={styles.matchingItemBody}>
+                    <span className={styles.title}>{title}</span>
+                    <div className={styles.details}>
+                        <div className={styles.detailItem}><strong>장소:</strong> {placeName}</div>
+                        {matchingType !== 3 && (
+                            <>
+                                <div className={styles.detailItem}><strong>날짜:</strong> {new Date(meetDate).toLocaleDateString()}</div>
+                                <div className={styles.detailItem}><strong>주최자:</strong> {memberId}</div>
+                                <div className={styles.detailItem}><strong>모집 인원:</strong> {headCount}</div>
+                            </>
+                        )}
+                        {matchingType === 3 && (
+                            <>
+                                <div className={styles.detailItem}><strong>성별:</strong> {gender}</div>
+                                <div className={styles.detailItem}><strong>주최자:</strong> {memberId}</div>
+                                <div className={styles.detailItem}><strong>나이:</strong> {age}세</div>
+                            </>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -52,6 +74,9 @@ MatchingItem.propTypes = {
     matchingType: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
+    regDate: PropTypes.string.isRequired, 
+    views: PropTypes.number.isRequired, 
+    isDeleted: PropTypes.bool.isRequired, 
     placeName: PropTypes.string.isRequired,
     locationX: PropTypes.number.isRequired,
     locationY: PropTypes.number.isRequired,

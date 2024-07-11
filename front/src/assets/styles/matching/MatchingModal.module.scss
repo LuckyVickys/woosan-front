@@ -1,65 +1,84 @@
+@import '../Font.scss';
+
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
 }
 
 .modal {
     background: white;
+    border-radius: 10px;
+    width: 985px;
+    height: 600px;
     padding: 20px;
-    border-radius: 8px;
-    max-width: 600px;
-    width: 100%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
 }
 
 .modalHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
 .titleContainer {
     display: flex;
-    flex-direction: column;
-}
-
-.title {
-    margin: 0;
-    font-size: 24px;
+    align-items: center;
 }
 
 .labels {
     display: flex;
-    gap: 8px;
-    margin-top: 8px;
-}
-
-.matchingType,
-.tag {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 14px;
-    color: white;
+    align-items: center;
+    margin-left: 10px;
 }
 
 .matchingType {
-    background-color: #4caf50; /* 초록색 */
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.정기모임 {
+    background-color: #EA4B48;
+    color: white;
+}
+
+.번개 {
+    background-color: #FDCA00;
+    color: white;
+}
+
+.셀프소개팅 {
+    background-color: #2388FF;
+    color: white;
 }
 
 .tag {
-    background-color: #00bcd4; /* 청록색 */
+    padding: 5px 10px;
+    background-color: #00B207;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    margin-left: 10px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
 }
 
 .closeButton {
@@ -78,74 +97,116 @@
 
 .leftInfo {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
 }
 
-.memberId,
-.views,
-.commentsCount,
-.date {
+.applyButton,
+.cancelButton,
+.leaveButton,
+.managerButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
     font-size: 14px;
-    color: #555;
 }
 
 .applyButton {
-    background-color: #4caf50; /* 초록색 */
+    background-color: #00B207;
     color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 .cancelButton {
-    background-color: #f44336; /* 빨간색 */
+    background-color: #EA4B48;
     color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 .leaveButton {
-    background-color: #ff9800; /* 주황색 */
+    background-color: #FDCA00;
     color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 .managerButton {
-    background-color: #2196f3; /* 파란색 */
+    background-color: #2388FF;
     color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 .detailsContainer {
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
     margin-bottom: 20px;
-}
 
-.detailBox {
-    padding: 10px;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    flex: 1;
-    text-align: center;
+    .detailBox {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-right: 10px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
 }
 
 .contentContainer {
+    font-size: 14px;
+    line-height: 1.5;
     margin-bottom: 20px;
+
+    .contentBox {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .image {
+        width: 100%;
+        height: auto;
+        margin-top: 10px;
+    }
 }
 
-.image {
-    width: 100%;
-    border-radius: 8px;
-    margin-top: 10px;
+.commentsContainer {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+
+    .commentBox {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    .replyBox {
+        padding-left: 20px;
+        margin-top: 10px;
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    .pageButton {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin: 0 5px;
+        cursor: pointer;
+        background-color: #fff;
+    }
+
+    .active {
+        background-color: #2388FF;
+        color: white;
+    }
 }

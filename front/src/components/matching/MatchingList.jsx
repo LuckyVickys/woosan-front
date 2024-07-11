@@ -20,6 +20,9 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     matchingType={item.matchingType}
                     title={item.title}
                     content={item.content}
+                    regDate={item.regDate} // 추가된 부분
+                    views={item.views} // 추가된 부분
+                    isDeleted={item.isDeleted} // 추가된 부분
                     placeName={item.placeName}
                     locationX={item.locationX}
                     locationY={item.locationY}
@@ -41,7 +44,29 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
 };
 
 MatchingList.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object).isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        memberId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        matchingType: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        regDate: PropTypes.string.isRequired,
+        views: PropTypes.number.isRequired,
+        isDeleted: PropTypes.bool.isRequired,
+        placeName: PropTypes.string.isRequired,
+        locationX: PropTypes.number.isRequired,
+        locationY: PropTypes.number.isRequired,
+        address: PropTypes.string.isRequired,
+        meetDate: PropTypes.string.isRequired,
+        tag: PropTypes.string,
+        headCount: PropTypes.number.isRequired,
+        location: PropTypes.string,
+        introduce: PropTypes.string,
+        mbti: PropTypes.string,
+        gender: PropTypes.string,
+        age: PropTypes.number,
+        height: PropTypes.number
+    })).isRequired,
     onItemClick: PropTypes.func.isRequired,
     gridColumns: PropTypes.number.isRequired,
 };

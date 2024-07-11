@@ -1,3 +1,5 @@
+@import '../Font.scss';
+
 .form {
     display: flex;
     flex-direction: column;
@@ -33,27 +35,58 @@ textarea {
     resize: vertical;
 }
 
-.submitButton {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
 
-.submitButton:hover {
-    background-color: #218838;
-}
-
-.submitButton:active {
-    background-color: #1e7e34;
-}
 
 .resultMessage {
     margin-top: 15px;
     font-size: 1rem;
     color: #28a745;
+}
+
+.container {
+    padding: 20px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+
+    .titleBar {
+        width: 100%;
+        height: 60px;
+        background-color: #E2E5E2;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .titleBarLine {
+            width: 3px;
+            height: 60px;
+            background-color: #20B526;
+            margin-right: 10px;
+        }
+
+        .titleBarText {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .categorySelector {
+        margin-bottom: 20px;
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        select {
+            width: 100%;
+            max-width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    }
 }

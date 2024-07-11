@@ -1,15 +1,28 @@
-.field {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.label {
-    font-weight: bold;
+.formGroup {
+    margin-bottom: 20px;
 }
 
 .input {
-    padding: 8px;
+    width: calc(100% - 30px);
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.selectedAddress {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.selectedAddress span {
+    flex: 1;
+}
+
+.deleteButton {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
 }

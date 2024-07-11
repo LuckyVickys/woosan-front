@@ -2,70 +2,88 @@
 
 .matchingItemCard {
     width: 460px;  // 카드 넓이
-    height: 140px;  // 카드 높이
+    height: auto;  // 카드 높이
     padding: 10px;
     border: 1px solid #ddd;
     margin-bottom: 10px;
     text-align: left;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
     cursor: pointer;
     background-color: #fff;  // 배경색 설정
     border-radius: 10px;  // 모서리 둥글게 설정
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  // 그림자 추가
     font-family: 'Pretendard-Regular', sans-serif;  // 폰트 설정
 
-    .matchingItemHeader {
+    .imagePlaceholder {
+        width: 155px;
+        height: 135px;
+        background-color: #ddd;
+        border-radius: 10px;
+        margin-right: 10px;
+    }
+
+    .matchingItemContent {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
+        width: calc(100% - 165px); // 이미지 공간 확보
 
-    .tag {
-        padding: 5px;
-        border-radius: 4px;
-        background-color: #eee;
-        font-size: 14px;  // 태그 글씨 크기
-        font-weight: 600;  // 태그 글씨 두께
-    }
+        .matchingItemHeader {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
 
-    .title {
-        font-size: 16px;  // 타이틀 글씨 크기
-        font-weight: bold;
-    }
+            .typeLabel {
+                border-radius: 4px; // 둥근 모서리 적용
+                padding: 5px 10px;
+                margin-right: 10px; // 태그와의 간격 설정
+            }
 
-    .details {
-        font-size: 14px;  // 나머지 글씨 크기
-        margin-top: 10px;
+            .tag {
+                padding: 5px;
+                background-color: #00B207;
+                border-radius: 4px;
+                font-size: 14px;  // 태그 글씨 크기
+                
+                color: white;
+            }
+        }
 
-        .placeName,
-        .datetime,
-        .memberId,
-        .headCount,
-        .tags,
-        .location,
-        .introduce,
-        .mbti,
-        .gender,
-        .age,
-        .height,
-        .host {
-            margin: 5px 0;
+        
+        .title {
+            font-size: 16px;  // 타이틀 글씨 크기
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 14px;  // 나머지 글씨 크기
+            justify-content: space-between;
+
+            .detailItem {
+                width: 45%;
+                margin: 5px 0;
+            
+            }
         }
     }
 }
 
 /* 각 유형에 대한 배경 색상 */
 .정기모임 {
-    background-color: #ffcc00;
+    background-color: #EA4B48;
+    color: white;
 }
 
 .번개 {
-    background-color: #ff5733;
+    background-color: #FDCA00;
+    color: white;
 }
 
 .셀프소개팅 {
-    background-color: #33c3ff;
+    background-color: #2388FF;
+    color: white;
 }
