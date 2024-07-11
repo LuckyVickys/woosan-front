@@ -47,6 +47,32 @@ h2{
       margin: 5px 0;
     }
 
+    .input-info-password {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: left;
+      margin: 5px 0;
+
+      .input-info-password-title {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 800;
+        text-align: left;
+        font-family: 'Pretendard-Regular', sans-serif;
+      }
+
+      .input-info-pw {
+        margin: 0 0 0 5px ; /* Adjusted margin to give space between texts */
+        color: #999999;
+        font-size: 12px;
+        font-weight: 400;
+        text-align: left;
+        font-family: 'Pretendard-Regular', sans-serif;
+      }
+    }
+
     .email-input,
     .pw-input,
     .nickname-input,
@@ -60,7 +86,9 @@ h2{
       border-radius: 6px;
       font-size: 14px;
       font-weight: 400;
+      font-family: 'Pretendard-Regular', sans-serif;
     }
+
     .input-error {
       color: #EA4B48;
       font-size: 12px;
@@ -70,12 +98,10 @@ h2{
     }
 
     .input-button {
-      display: flex;
-      align-items: center;
+      position: relative;
 
       .email-input,
       .nickname-input {
-        flex: 1;
         outline: none;
         padding: 10px;
         box-sizing: border-box;
@@ -86,12 +112,15 @@ h2{
       }
 
       .check-button {
-        margin-left: 10px;
-        padding: 10px 5px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        height: 20px;
+        transform: translateY(-50%);
         background: #9bcc66;
         color: #fff;
         border: none;
-        border-radius: 6px;
+        border-radius: 2px;
         font-size: 10px;
         font-weight: 400;
         cursor: pointer;
@@ -103,7 +132,7 @@ h2{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 0 0 0;
+    margin: 10px 0 0 0;
     font-size: 12px;
     font-weight: 400;
 

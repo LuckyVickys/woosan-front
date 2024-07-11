@@ -2,38 +2,7 @@ import axios from "axios";
 
 const host = `http://localhost:80/api`;
 
-// 이메일 일치 확인
-export const matchEmail = async (loginParam) => {
-
-    console.log("Matching email for Email:", loginParam.email);
-
-    const header = {headers: {"Content-Type": "application/json"}};
-    const data = {
-        email: loginParam.email,
-    };
-
-    try {
-        const res = await axios.post(`${host}/auth/login`, data, header);
-        return res.data;
-    } catch (error) {
-        
-    }
-}
-
-// 비밀번호 일치 확인
-export const matchPassword = async (email) => {
-
-    console.log("Matching password for Email:", email);
-
-    try {
-        const response = await axios.get(`${host}/email/{email}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error matching password:', error.response ? error.response.data : error.message);
-        throw error;
-    }
-}
-
+// 로그인
 export const loginPost = async (loginParam) => {
     const header = {headers: {"Content-Type": "application/json"}};
     const data = {
@@ -49,10 +18,10 @@ export const loginPost = async (loginParam) => {
 }
 
 // 이메일 중복 체크
-export const emailCheck = async (email) => {
-    console.log("Checking email for Email:", email);
+export const checkEmail = async (email) => {
+    console.log("Checking email:", email);
     try {
-        const response = await axios.get(`${host}/email/{email}`);
+        const response = await axios.get(`${host}/member/email/{email}`);
         return response.data;
     } catch (error) {
         console.error('Error checking email:', error.response ? error.response.data : error.message);
@@ -61,10 +30,10 @@ export const emailCheck = async (email) => {
 }
 
 // 닉네임 중복 체크
-export const nicknameCheck = async (nickname) => {
-    console.log("Checking nickname for Nickname:", nickname);
+export const checkNickname = async (nickname) => {
+    console.log("Checking nickname:", nickname);
     try {
-        const response = await axios.post(`${host}/nickname/{nickname}`);
+        const response = await axios.get(`${host}/member/nickname/{nickname}`);
         return response.data;
     } catch (error) {
         console.error('Error checking nickname:', error.response ? error.response.data : error.message);
@@ -73,13 +42,14 @@ export const nicknameCheck = async (nickname) => {
 }
 
 // 회원가입
-export const signUp = async (id) => {
-    console.log("Fetching data for ID:", id);
+export const signUp = async (signupData) => {
+    console.log("Signing up with:", signupData);
+    const header = { headers: { "Content-Type": "application/json" } };
     try {
-        const response = await axios.get(`${host}/signUp`);
+        const response = await axios.post(`${host}/member/signUp`, signupData, header);
         return response.data;
     } catch (error) {
-        console.error('Error fetching data:', error.response ? error.response.data : error.message);
+        console.error('Error signing up:', error.response ? error.response.data : error.message);
         throw error;
     }
 }
