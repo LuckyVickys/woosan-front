@@ -7,7 +7,7 @@ import { validateBoardInputs } from "../../util/validationUtil";
 const categories = ["선택", "맛집", "청소", "요리", "재테크", "인테리어", "정책", "기타"];
 
 const initState = {
-    writerId: 1, // 하드코딩된 writerId
+    writerId: 3, // 하드코딩된 writerId
     categoryName: "선택",
     title: "",
     content: "",

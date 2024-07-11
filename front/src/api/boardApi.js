@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const API_SERVER_HOST = "http://localhost:80";
+// export const API_SERVER_HOST = "http://223.130.139.24:7777";
 
 const prefix = `${API_SERVER_HOST}/api/board`;
 
@@ -90,17 +91,17 @@ export const autocomplete = async (keyword, searchType, category) => {
     const url = `${prefix}/autocomplete`;
     console.log(`Autocomplete request URL: ${url}`);
     try {
-      const response = await axios.get(url, {
-        params: { keyword, searchType, category },
-      });
-      console.log("Autocomplete API response:", response.data);
-      return response.data;
+        const response = await axios.get(url, {
+            params: { keyword, searchType, category },
+        });
+        console.log("Autocomplete API response:", response.data);
+        return response.data;
     } catch (error) {
-      console.error("Error fetching autocomplete data:", error.response ? error.response.data : error.message);
-      throw error;
+        console.error("Error fetching autocomplete data:", error.response ? error.response.data : error.message);
+        throw error;
     }
-  };
-  
+};
+
 export const searchBoard = async (category, filter, keyword) => {
     try {
         const params = { category, filter, keyword };
@@ -108,6 +109,18 @@ export const searchBoard = async (category, filter, keyword) => {
         return res.data;
     } catch (error) {
         console.error('Error searching board:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+export const searchWithSynonyms = async (keyword) => {
+    try {
+        const res = await axios.get(`${prefix}/search/synonyms`, {
+            params: { keyword }
+        });
+        return res.data;
+    } catch (error) {
+        console.error('Error searching with synonyms:', error.response ? error.response.data : error.message);
         throw error;
     }
 }
