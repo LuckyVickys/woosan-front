@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../assets/styles/App.scss';
-import { autocomplete } from "../../api/boardApi"; // 추가한 API 함수 가져오기
 // import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
 // import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
 
+import { autocomplete, saveSearchKeyword } from "../../api/boardApi";
 
 const AutocompleteDropdown = ({ suggestions, onSelect, highlightedIndex }) => (
   <ul className="dropdown-list">
@@ -96,8 +96,16 @@ const SearchBar = ({ categories, filters }) => {
     setAutocompleteSuggestions([]);
   }, [location.pathname]);
 
-  const handleSearch = (event) => {
+  const handleSearch = async (event) => {
     event.preventDefault();
+
+    // 검색 키워드를 저장
+    try {
+      await saveSearchKeyword(keyword);
+    } catch (error) {
+      console.error('Error saving search keyword:', error);
+    }
+
     navigate(`/board/search?category=${selectedCategory}&filter=${selectedFilter}&keyword=${keyword}`);
   };
 
