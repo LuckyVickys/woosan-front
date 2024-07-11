@@ -1,4 +1,5 @@
 $shadow: #E5E5E5;
+$font-family: 'Pretendard-Regular', sans-serif;
 
 body {
     margin: 0;
@@ -69,8 +70,9 @@ header {
         color: white;
         background: #00B207;
         border-radius: 43px;
-        font-family: 'Pretendard-Regular', sans-serif;
+        font-family: $font-family;
         font-weight: 800;
+        cursor: pointer;
     }
 
     .profile-box {
@@ -80,7 +82,7 @@ header {
 
         .user-level-nickname {
             margin-right: 10px;
-            font-family: 'Pretendard-Regular', sans-serif;
+            font-family: $font-family;
 
             .user-level {
                 color: #9BCC66;
@@ -101,6 +103,156 @@ header {
             background-size: contain;
             border-radius: 50%;
             cursor: pointer;
+            position: relative;
+        }
+
+        .profile-dropdown-wrapper {
+            position: absolute;
+            top: 8%;
+            right: 1%;
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            font-family: $font-family;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+
+            &.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .profile-triangle {
+                width: 0px;
+                height: 0px;
+                border-bottom: 20px solid #F5F5F5;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                margin-right: 10%;
+            }
+
+            .profile-contents {
+                background-color: #F5F5F5;
+                border-radius: 10px;
+                width: 250px;
+                padding: 15px;
+                color: #909090;
+                box-shadow: 0 10px 10px -5px;
+
+                hr {
+                    border: 1px solid #E5E5E5;
+                }
+
+                .profile-info-wrapper {
+                    color: #868E96;
+                    margin: 10px 0 20px 0;
+
+                    .profile-nickname {
+                        font-size: 17px;
+                        font-weight: 900;
+                        margin-bottom: 5px;
+                        color: #555B61;
+                    }
+
+                    .profile-email {
+                        font-size: 15px;
+                    }
+                }
+
+                .profile-level-point {
+                    margin: 20px 0;
+
+                    .profile-level {
+                        font-size: 17px;
+                        color: #555B61;
+                        font-weight: 900;
+                    }
+
+                    .profile-point-bar-wrapper {
+                        width: 230px;
+                        height: 10px;
+                        display: flex;
+                        position: relative;
+    
+                        .point-bar {
+                            border-radius: 10px;
+                            height: 7px;
+                            margin-top: 5px;
+                        }
+        
+                        .profile-point-bar {
+                            width: 100px;
+                            background-color: #98C863;
+                            position: absolute;
+                            z-index: 1;
+                        }
+        
+                        .profile-nextpoint-bar {
+                            width: 250px;
+                            background-color: #E5E5E5;
+                            position: absolute;
+                        }
+                    }
+                }
+
+                .profile-point-info {
+                    margin-top: 5px;
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 15px;
+                    
+                    .profile-point-wrapper {
+                        display: flex;
+                        color: #868E96;
+                    }
+                }
+
+                .profile-nav {
+                    color: #555B61;
+                    font-size: 14px;
+                    margin: 20px 0;
+
+                    .profile-mypage {
+                        margin: 10px 0;
+                        font-weight: 900;
+                        font-size: 17px;
+                    }
+
+                    .profile-messages {
+                        margin: 5px 0;
+                        display: flex;
+                        align-items: center;
+                        color: #868E96;
+                        font-size: 15px;
+                    }
+
+                    .profile-likes {
+                        margin: 5px 0;
+                        display: flex;
+                        align-items: center;
+                        color: #868E96;
+                        font-size: 15px;
+                    }
+
+                    .profile-mode {
+                        margin: 5px 0;
+                        display: flex;
+                        align-items: center;
+                        color: #868E96;
+                        font-size: 15px;
+                    }
+                }
+
+                .profile-logout {
+                    color: #666666;
+                    font-size: 16px;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
         }
     }
 }
@@ -123,7 +275,7 @@ nav {
         .cs,
         .myPage {
             margin-right: 32px;
-            font-family: 'Pretendard-Regular', sans-serif;
+            font-family: $font-family;
             font-size: 14px;
             font-weight: 700;
 
@@ -176,7 +328,7 @@ nav {
 
         h1 {
             font-size: 20px;
-            font-family: 'Pretendard-Regular', sans-serif;
+            font-family: $font-family;
             font-weight: 700;
             font-style: normal;
         }
@@ -192,7 +344,7 @@ nav {
 
     .catagory-info {
         font-size: 16px;
-        font-family: 'Pretendard-Regular', sans-serif;
+        font-family: $font-family;
         font-weight: 300;
         font-style: normal;
         color: #00B207;
@@ -206,7 +358,7 @@ nav {
     padding: 20px;
     gap: 15px;
     font-size: 16px;
-    font-family: 'Pretendard-Regular', sans-serif;
+    font-family: $font-family;
     font-weight: 300;
     font-style: normal;
 
@@ -273,7 +425,7 @@ nav {
             width: 100%;
             border: none;
             font-size: 16px;
-            font-family: 'Pretendard-Regular', sans-serif;
+            font-family: $font-family;
             font-weight: 300;
             font-style: normal;
         }
@@ -320,7 +472,7 @@ nav {
         border-radius: 43px;
         background: #fff;
         font-size: 14px;
-        font-family: 'Pretendard-Regular', sans-serif;
+        font-family: $font-family;
         font-weight: 700;
         font-style: normal;
         cursor: pointer;
@@ -339,7 +491,7 @@ footer {
     background: #333333;
     font-size: 10px;
     color: white;
-    font-family: 'Pretendard-Regular', sans-serif;
+    font-family: $font-family;
 
     .site {
         justify-content: center;
