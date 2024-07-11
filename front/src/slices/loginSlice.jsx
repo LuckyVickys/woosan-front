@@ -3,15 +3,22 @@ import { loginPost } from "../api/memberApi";
 import { getCookie, removeCookie, setCookie } from "../util/cookieUtil";
 
 const initState = {
-    id: null,
-    email:''
+    id: '',
+    email:'',
+    nickname: '',
+    point: '',
+    nextPoint: '',
+    memberType: '',
+    level: '',
+    accessToken: '',
+    refreshToken: '',
+    isKakao: false,
 }
 
 const loadMemberCookie = () => {
     
     const userInfo = getCookie("member");
 
-    // 닉네임 처리
     if(userInfo && userInfo.nickname) {
         userInfo.nickname = decodeURIComponent(userInfo.nickname);
     }
@@ -32,7 +39,6 @@ const loginSlice = createSlice({
             console.log("login.....");
             const payload = action.payload;
             setCookie("member", JSON.stringify(payload), 1);    // 1일
-
             return payload;
             // return {email: payload.email};
         },

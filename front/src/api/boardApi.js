@@ -92,7 +92,7 @@ export const autocomplete = async (keyword, searchType) => {
     console.log(`Autocomplete request URL: ${url}`);
     try {
         const response = await axios.get(url, {
-            params: { keyword, searchType },
+            params: { keyword, searchType, category },
         });
         console.log("Autocomplete API response:", response.data);
         return response.data;
@@ -109,6 +109,18 @@ export const searchBoard = async (category, filter, keyword) => {
         return res.data;
     } catch (error) {
         console.error('Error searching board:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
+
+export const searchWithSynonyms = async (keyword) => {
+    try {
+        const res = await axios.get(`${prefix}/search/synonyms`, {
+            params: { keyword }
+        });
+        return res.data;
+    } catch (error) {
+        console.error('Error searching with synonyms:', error.response ? error.response.data : error.message);
         throw error;
     }
 }

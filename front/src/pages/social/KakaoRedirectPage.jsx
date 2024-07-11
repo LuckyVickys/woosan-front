@@ -21,15 +21,8 @@ const KakaoRedirectPage = () => {
 
                 console.log("--------------------");
                 console.log(userInfo);
-
-                dispatch(login(userInfo));
-
-                // 소셜 회원이 아니라면
-                if(userInfo && userInfo.socialType === 'NORMAL') {
-                    moveToPath("/");
-                } else {    // 소셜 회원이라면
-                    moveToPath("/myPage/info"); // 정보 수정 페이지로 이동
-                }
+                dispatch(login({ ...userInfo, accessToken, isKakao: true })); // isKakao 추가
+                moveToPath("/");
             })
         });
     }, [authCode]);
