@@ -21,7 +21,7 @@ export const loginPost = async (loginParam) => {
 export const checkEmail = async (email) => {
   console.log("Checking email:", email);
   try {
-    const response = await axios.get(`${host}/member/email/{email}`);
+    const response = await axios.get(`${host}/member/email/${email}`);
     return response.data;
   } catch (error) {
     console.error(
