@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoImage from "../../assets/image/logo.svg";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 import LoginModal from "../member/LoginModal";
@@ -9,6 +9,7 @@ import { getKakaoUserData } from "../../api/kakaoApi";
 import { login } from "../../slices/loginSlice";
 import Swal from "sweetalert2";
 import { getMemberWithEmail } from "../../api/memberApi";
+import ProfileDropdown from "../member/ProfileDropdown";
 
 const Header = () => {
   const loginState = useSelector((state) => state.loginSlice);
@@ -20,9 +21,20 @@ const Header = () => {
   const [openFindPW, setOpenFindPW] = useState(false);
   const [kakaoUserData, setKakaoUserData] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  
+  const navigate = useNavigate();
 
   const closeLoginModal = () => {
     setOpenLogin(false);
+  };
+  
+  const navToMessages = () => {
+    navigate(`/myPage/msg`);
+}
+
+  const toggleProfileDropdown = () => {
+    setIsProfileDropdownOpen((prevState) => !prevState);
   };
 
   useEffect(() => {
@@ -30,9 +42,9 @@ const Header = () => {
       if (loginState.email) {
         try {
           console.log("Fetching user data...");
-          const memberData = await getMemberWithEmail(loginState.email);
-          console.log("Member data fetched: ", memberData);
-          setUserData(memberData);
+          const userData = await getMemberWithEmail(loginState.email);
+          console.log("Member data fetched: ", userData);
+          setUserData(userData);
 
           if (loginState.isKakao) {
             const kakaoData = await getKakaoUserData(loginState.accessToken);
@@ -54,6 +66,19 @@ const Header = () => {
     fetchData();
   }, [loginState.email, loginState.accessToken, loginState.isKakao]);
 
+  useEffect(() => {
+    // 프로필 드롭다운 상태가 변경될 때마다 애니메이션을 추가
+    if (isProfileDropdownOpen) {
+      const dropdown = document.querySelector(".profile-dropdown-wrapper");
+      if (dropdown) {
+        // setTimeout을 이용하여 애니메이션 효과 부여
+        setTimeout(() => {
+          dropdown.classList.add("active");
+        }, 40); // 50ms 지연 후 애니메이션 시작
+      }
+    }
+  }, [isProfileDropdownOpen]);
+
   return (
     <header className="header">
       <div className="logo">
@@ -68,7 +93,7 @@ const Header = () => {
       </div>
       {loginState.email ? (
         <div className="login">
-          <MdOutlineLocalPostOffice className="messageIcon" />
+          <MdOutlineLocalPostOffice className="messageIcon" onClick={navToMessages} />
           <div className="loginBar"> | </div>
           {userData ? (
             <div className="profile-box" id="loginProfile">
@@ -85,10 +110,15 @@ const Header = () => {
                   className="user-profile"
                   src={kakaoUserData?.properties?.profile_image}
                   alt="프로필 이미지"
+                  onClick={toggleProfileDropdown}
                 />
               ) : (
-                <div className="user-profile"></div>
+                <div
+                  className="user-profile"
+                  onClick={toggleProfileDropdown}
+                ></div>
               )}
+               {isProfileDropdownOpen && <ProfileDropdown />}
             </div>
           ) : (
             <div className="profile-box" id="loginProfile">
@@ -102,7 +132,11 @@ const Header = () => {
       ) : (
         <div className="login">
           <div className="loginBar"> | </div>
-          <div className="loginButton" id="loginButton" onClick={() => setOpenLogin(true)}>
+          <div
+            className="loginButton"
+            id="loginButton"
+            onClick={() => setOpenLogin(true)}
+          >
             로그인
           </div>
         </div>

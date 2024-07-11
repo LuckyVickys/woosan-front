@@ -73,6 +73,13 @@ const LoginModal = ({ onClose }) => {
         const data = await doLogin(loginParam);
         if (data) {
           dispatch(login(data));
+          Swal.fire({
+            icon: 'success',
+            title: '로그인 되었습니다.',
+            text: '오늘도 즐거운 자취생활 되세요!',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '확인'
+          })
           onClose();
         } else {
           Swal.fire(
