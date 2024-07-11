@@ -41,6 +41,7 @@
     width: 100%;
 
     .input-box {
+      position: relative;
       margin-bottom: 10px;
 
       .input-info {
@@ -48,6 +49,20 @@
         font-weight: 800;
         text-align: left;
         margin: 5px 0;
+      }
+
+      .toggle-password-button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        height: 20px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        border-radius: 2px;
+        font-size: 15px;
+        font-weight: 400;
+        cursor: pointer;
       }
 
       .input-info-password {
