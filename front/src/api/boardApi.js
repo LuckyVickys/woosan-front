@@ -87,7 +87,7 @@ export const translate = async (id, boardDTO) => {
     }
 };
 
-export const autocomplete = async (keyword, searchType) => {
+export const autocomplete = async (keyword, searchType, category) => {
     const url = `${prefix}/autocomplete`;
     console.log(`Autocomplete request URL: ${url}`);
     try {
