@@ -108,7 +108,9 @@ header {
 // nav
 nav {
     display: flex;
-    justify-content: left;
+    // justify-content: left;
+    justify-content: space-between;
+    /* 전체 nav를 좌우로 벌리기 위해 추가 */
     align-items: center;
     height: 23px;
     padding: 20px 0px;
@@ -139,6 +141,70 @@ nav {
             a.active {
                 color: #00B207;
             }
+        }
+    }
+
+    .real-time-rankings {
+        background: #fff;
+        border: 1px solid $shadow;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: 'Pretendard-Regular', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        overflow: hidden;
+        height: 30px; // Adjust as necessary
+
+        .slide {
+            display: flex;
+            flex-direction: column;
+            animation: slide 10s linear infinite;
+        }
+    }
+
+    @keyframes slide {
+        0% {
+            transform: translateY(0%);
+        }
+
+        10% {
+            transform: translateY(-10%);
+        }
+
+        20% {
+            transform: translateY(-20%);
+        }
+
+        30% {
+            transform: translateY(-30%);
+        }
+
+        40% {
+            transform: translateY(-40%);
+        }
+
+        50% {
+            transform: translateY(-50%);
+        }
+
+        60% {
+            transform: translateY(-60%);
+        }
+
+        70% {
+            transform: translateY(-70%);
+        }
+
+        80% {
+            transform: translateY(-80%);
+        }
+
+        90% {
+            transform: translateY(-90%);
+        }
+
+        100% {
+            transform: translateY(-100%);
         }
     }
 }
