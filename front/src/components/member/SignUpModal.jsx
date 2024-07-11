@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import LoginModal from "./LoginModal";
 import { checkEmail, checkNickname, signUp } from "../../api/memberApi";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import TogglePassword from "./TogglePassword";
 import "../../assets/styles/App.scss";
 
 const initState = {
@@ -14,13 +14,20 @@ const initState = {
 const SignUpModal = ({ onClose }) => {
   const [signupData, setSignupData] = useState({ ...initState });
 
+  const [emailAvailable, setEmailAvailable] = useState(false);
+  const [nicknameAvailable, setNicknameAvailable] = useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
+  const [showPwCheck, setShowPwCheck] = useState(false);
+
   const [pwCheck, setPwCheck] = useState("");
 
   const [emailError, setEmailError] = useState("");
   const [nicknameError, setNicknameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [pwCheckError, setPwCheckError] = useState("");
+
+  const [agreeTerms, setAgreeTerms] = useState(false);
 
   const [signedUp, setSignedUp] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -39,8 +46,12 @@ const SignUpModal = ({ onClose }) => {
     setShowPassword(!showPassword);
   };
 
+  const togglePwCheck = () => {
+    setShowPwCheck(!showPwCheck);
+  };
+
   const isValidEmail = (email) => {
-    // '@'가 포함되어야 함
+    // '@', .이 포함되어야 함
     return /\S+@\S+\.\S+/.test(email);
   };
 
@@ -56,8 +67,51 @@ const SignUpModal = ({ onClose }) => {
     );
   };
 
+  const handleEmailCheck = async () => {
+    if (!signupData.email) {
+      setEmailError("필수 입력 사항입니다.");
+      return;
+    } else if (!isValidEmail(signupData.email)) {
+      setEmailError("이메일 형식이 올바르지 않습니다.");
+      return;
+    }
+
+    try {
+      const emailResponse = await checkEmail(signupData.email);
+      if (emailResponse === false) {
+        setEmailError("사용 가능한 이메일입니다.");
+        setEmailAvailable(true);
+      }
+    } catch (error) {
+      setEmailError("이미 가입된 이메일입니다.");
+      setEmailAvailable(false);
+    }
+  };
+
+  const handleNicknameCheck = async () => {
+    if (!signupData.nickname) {
+      setNicknameError("필수 입력 사항입니다.");
+      return;
+    } else if (!isValidNickname(signupData.nickname)) {
+      setNicknameError("닉네임 형식이 올바르지 않습니다.");
+      return;
+    }
+
+    try {
+      const nicknameResponse = await checkNickname(signupData.nickname);
+      if (nicknameResponse === false) {
+        setNicknameError("사용 가능한 닉네임입니다.");
+        setNicknameAvailable(true);
+      }
+    } catch (error) {
+      setNicknameError("이미 존재하는 닉네임입니다.");
+      setNicknameAvailable(false);
+    }
+  };
+
   const handleSignUp = async (e) => {
     e.preventDefault();
+
     let valid = true;
 
     if (!signupData.email) {
@@ -92,26 +146,17 @@ const SignUpModal = ({ onClose }) => {
       valid = false;
     }
 
-    const agreeTerms = document.getElementById("agreeTerms").checked;
     if (!agreeTerms) {
       Swal.fire("회원가입 실패", "필수 약관에 동의해주세요.", "error");
+      setEmailError("");
+      setNicknameError("");
+      setPasswordError("");
+      setPwCheckError("");
       return;
     }
 
     if (valid) {
       try {
-        const emailResponse = await checkEmail(signupData.email);
-        if (emailResponse.exists) {
-          setEmailError("이미 가입된 이메일입니다.");
-          return;
-        }
-
-        const nicknameResponse = await checkNickname(signupData.nickname);
-        if (nicknameResponse.exists) {
-          setNicknameError("이미 존재하는 닉네임입니다.");
-          return;
-        }
-
         const signUpResponse = await signUp(signupData);
         console.log("회원가입 완료:", signUpResponse);
         setSignedUp(true);
@@ -131,52 +176,6 @@ const SignUpModal = ({ onClose }) => {
     }
   };
 
-  const handleEmailCheck = async () => {
-    if (!signupData.email) {
-      setEmailError("필수 입력 사항입니다.");
-      return;
-    } else if (!isValidEmail(signupData.email)) {
-      setEmailError("이메일 형식이 올바르지 않습니다.");
-      return;
-    }
-    try {
-      const emailResponse = await checkEmail(signupData.email);
-      if (emailResponse.exists) {
-        setEmailError("이미 가입된 이메일입니다.");
-      } else {
-        setEmailError("사용 가능한 이메일입니다.");
-      }
-    } catch (error) {
-      console.error(
-        "이메일 중복 체크 오류:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
-
-  const handleNicknameCheck = async () => {
-    if (!signupData.nickname) {
-      setNicknameError("필수 입력 사항입니다.");
-      return;
-    } else if (!isValidNickname(signupData.nickname)) {
-      setNicknameError("닉네임 형식이 올바르지 않습니다.");
-      return;
-    }
-    try {
-      const nicknameResponse = await checkNickname(signupData.nickname);
-      if (nicknameResponse.exists) {
-        setNicknameError("이미 존재하는 닉네임입니다.");
-      } else {
-        setNicknameError("사용 가능한 닉네임입니다.");
-      }
-    } catch (error) {
-      console.error(
-        "닉네임 중복 체크 오류:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
-
   const openLoginModal = () => {
     onClose();
     setTimeout(() => {
@@ -186,7 +185,6 @@ const SignUpModal = ({ onClose }) => {
 
   return (
     <>
-      {/* <div className='modal-background'> */}
       <div
         className="signup-modal"
         onClick={(e) => {
@@ -215,7 +213,11 @@ const SignUpModal = ({ onClose }) => {
                 중복체크
               </button>
             </div>
-            {emailError && <p className="input-error">{emailError}</p>}
+            {emailError && (
+              <p className={`input-error ${emailAvailable ? "available" : ""}`}>
+                {emailError}
+              </p>
+            )}
           </div>
           <div className="input-box">
             <p className="input-info">닉네임</p>
@@ -237,38 +239,66 @@ const SignUpModal = ({ onClose }) => {
                 중복체크
               </button>
             </div>
-            {nicknameError && <p className="input-error">{nicknameError}</p>}
+            {nicknameError && (
+              <p
+                className={`input-error ${
+                  nicknameAvailable ? "available" : ""
+                }`}
+              >
+                {nicknameError}
+              </p>
+            )}
           </div>
           <div className="input-box">
             <div className="input-info-password">
               <p className="input-info-password-title">비밀번호</p>
-              <p className="input-info-pw">(영문, 숫자, 특수문자 조합하여 8~16자)</p>
+              <p className="input-info-pw">
+                (영문, 숫자, 특수문자 조합하여 8~16자)
+              </p>
             </div>
-            <input
-              className="pw-input"
-              type="password"
-              placeholder="특수문자(‘~’, ‘^’, ‘,’) 제외"
-              value={signupData.password}
-              onChange={(e) =>
-                setSignupData({ ...signupData, password: e.target.value })
-              }
-            />
+            <div className="input-button">
+              <input
+                className="pw-input"
+                type={showPassword ? "text" : "password"}
+                placeholder="특수문자(‘~’, ‘^’, ‘,’) 제외"
+                value={signupData.password}
+                onChange={(e) =>
+                  setSignupData({ ...signupData, password: e.target.value })
+                }
+              />
+              <TogglePassword
+                isVisible={showPassword}
+                toggleVisibility={togglePassword}
+              />
+            </div>
             {passwordError && <p className="input-error">{passwordError}</p>}
           </div>
           <div className="input-box">
             <p className="input-info">비밀번호 확인</p>
-            <input
-              className="pw-check-input"
-              type="pwCheck"
-              placeholder="비밀번호 재입력"
-              value={pwCheck}
-              onChange={(e) => setPwCheck(e.target.value)}
-            />
+            <div className="input-button">
+              <input
+                className="pw-check-input"
+                type={showPwCheck ? "text" : "password"}
+                placeholder="비밀번호 재입력"
+                value={pwCheck}
+                onChange={(e) => setPwCheck(e.target.value)}
+              />
+              <TogglePassword
+                isVisible={showPwCheck}
+                toggleVisibility={togglePwCheck}
+              />
+            </div>
             {pwCheckError && <p className="input-error">{pwCheckError}</p>}
           </div>
           <div className="add-fucntion">
             <div className="agree-checkbox">
-              <input className="checkbox" type="checkbox" id="agreeTerms" />
+              <input
+                className="checkbox"
+                type="checkbox"
+                id="agreeTerms"
+                checked={agreeTerms}
+                onChange={() => setAgreeTerms(!agreeTerms)}
+              />
               <div className="checkbox-text">필수 약관 동의</div>
             </div>
           </div>
@@ -284,7 +314,6 @@ const SignUpModal = ({ onClose }) => {
         </p>
       </div>
       {openLogin && <LoginModal />}
-      {/* </div> */}
     </>
   );
 };
