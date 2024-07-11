@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoImage from "../../assets/image/logo.svg";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 import LoginModal from "../member/LoginModal";
@@ -22,10 +22,16 @@ const Header = () => {
   const [kakaoUserData, setKakaoUserData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  
+  const navigate = useNavigate();
 
   const closeLoginModal = () => {
     setOpenLogin(false);
   };
+  
+  const navToMessages = () => {
+    navigate(`/myPage/msg`);
+}
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen((prevState) => !prevState);
@@ -87,7 +93,7 @@ const Header = () => {
       </div>
       {loginState.email ? (
         <div className="login">
-          <MdOutlineLocalPostOffice className="messageIcon" />
+          <MdOutlineLocalPostOffice className="messageIcon" onClick={navToMessages} />
           <div className="loginBar"> | </div>
           {userData ? (
             <div className="profile-box" id="loginProfile">
