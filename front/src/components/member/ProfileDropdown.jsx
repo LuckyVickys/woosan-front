@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/styles/Common.scss";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,6 +6,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 import { FaHeart } from "react-icons/fa6";
 import { MdSunny } from "react-icons/md";
+import { FaMoon } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { logout } from '../../slices/loginSlice';
 
@@ -13,6 +14,8 @@ const ProfileDropdown = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     const navToMypage = () => {
         navigate(`/myPage`);
@@ -52,6 +55,12 @@ const ProfileDropdown = () => {
         });
     }
 
+    const toggleMode = () => {
+        setIsDarkMode(prevMode => !prevMode);
+    }
+
+    const pointPercent = ((loginState.point / loginState.nextPoint) * 100).toFixed(1) + "%";
+
     return (
         <>
         <div className="profile-dropdown-wrapper">
@@ -65,7 +74,7 @@ const ProfileDropdown = () => {
                 <div className="profile-level-point">
                     <div className="profile-level">{loginState.level}</div>
                     <div className="profile-point-bar-wrapper">
-                        <div className="profile-point-bar point-bar"/>
+                        <div className="profile-point-bar point-bar" style={{width: pointPercent}} />
                         <div className="profile-nextpoint-bar point-bar"/>
                     </div>
                     <div className="profile-point-info">
@@ -73,19 +82,22 @@ const ProfileDropdown = () => {
                             <div className="profile-point">{loginState.point}</div> / 
                             <div className="profile-nextpoint">{loginState.nextPoint} P</div>
                         </div>
-                        <div className="profile-point-percent">81%</div>
+                        <div className="profile-point-percent">{pointPercent}</div>
                     </div>
                 </div>
                 <hr />
                 <div className="profile-nav">
                     <div className="profile-mypage" onClick={navToMypage}>마이페이지</div>
                     <div className="profile-messages" onClick={navToMessages}>
-                        <MdOutlineLocalPostOffice size={20} style={{marginRight: 5}} />쪽지함
+                        <MdOutlineLocalPostOffice size={20} color="#00B207" style={{marginRight: 5}} />쪽지함
                     </div>
                     <div className="profile-likes" onClick={navToLikes}>
-                        <FaHeart size={20} color="red" style={{marginRight: 5}}/> 추천 게시물
+                        <FaHeart size={20} color="#00B207" style={{marginRight: 5}}/> 추천 게시물
                     </div>
-                    <div className="profile-mode"><MdSunny size={20} style={{marginRight: 5}}/> 다크모드/라이트모드</div>
+                    <div className="profile-mode" onClick={toggleMode}>
+                        {isDarkMode ? <FaMoon size={20} color="#00B207" style={{marginRight: 5}} /> : <MdSunny size={20} color="#00B207" style={{marginRight: 5}} />}
+                        다크모드/라이트모드
+                    </div>
                 </div>
                 <hr />
                 <div className="profile-logout" onClick={handleLogout}><IoLogOutOutline size={20} style={{marginRight: 5}} />Log-out</div>
