@@ -102,16 +102,17 @@ export const autocomplete = async (keyword, searchType, category) => {
     }
 };
 
-export const searchBoard = async (category, filter, keyword) => {
+
+export const searchBoard = async (category, filter, keyword, page = 1, size = 10) => {
     try {
-        const params = { category, filter, keyword };
+        const params = { category, filter, keyword, page, size };
         const res = await axios.get(`${prefix}/search`, { params });
         return res.data;
     } catch (error) {
         console.error('Error searching board:', error.response ? error.response.data : error.message);
         throw error;
     }
-}
+};
 
 export const searchWithSynonyms = async (keyword) => {
     try {

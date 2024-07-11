@@ -56,7 +56,6 @@ const SearchBar = ({ categories, filters }) => {
   // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
   // const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
-
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setShowCategoryDropdown(false);
@@ -98,6 +97,10 @@ const SearchBar = ({ categories, filters }) => {
 
   const handleSearch = async (event) => {
     event.preventDefault();
+
+    if (!keyword.trim()) {
+      return;
+    }
 
     // 검색 키워드를 저장
     try {
@@ -187,7 +190,7 @@ const SearchBar = ({ categories, filters }) => {
             autoComplete="off"
             ref={inputRef}
           />
-          <button className="search-button" type="submit"></button>
+          <button className="search-button" type="submit" disabled={!keyword.trim()}></button>
           {autocompleteSuggestions.length > 0 && (
             <AutocompleteDropdown
               suggestions={autocompleteSuggestions}

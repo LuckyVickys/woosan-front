@@ -1,52 +1,56 @@
 import React, { useEffect, useState } from "react";
 import { searchBoard, searchWithSynonyms } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove";
-import ListPageComponent from "./element/ListPageComponent";
-import TableRowComponent from "./element/TableLowComponent";
+import ListPageComponent from "../../components/board/element/ListPageComponent";
+import TableRowComponent from "../../components/board/element/TableLowComponent";
 import "../../assets/styles/App.scss";
 
 const initState = {
-    boardPage: {
-        dtoList: [],
-        pageNumList: [],
-        pageRequestDTO: {
-            page: 0,
-            size: 10
-        },
-        prev: false,
-        next: false,
-        totalCount: 0,
-        prevPage: 0,
-        nextPage: 0,
-        totalPage: 0,
-        current: 0,
-    }
+    dtoList: [],
+    pageNumList: [],
+    pageRequestDTO: {
+        page: 1,
+        size: 10
+    },
+    prev: false,
+    next: false,
+    totalCount: 0,
+    prevPage: 0,
+    nextPage: 0,
+    totalPage: 0,
+    current: 1,
 };
 
 const SearchListComponent = ({ category, filter, keyword }) => {
     const { moveToRead } = useCustomMove();
     const [serverData, setServerData] = useState(initState);
     const [synonymData, setSynonymData] = useState([]);
+    const [pageSize, setPageSize] = useState(10);
 
-    useEffect(() => {
-        searchBoard(category, filter, keyword).then(data => {
-            console.log("Fetched data:", data);
+    const fetchData = (page = 1) => {
+        searchBoard(category, filter, keyword, page, pageSize).then(data => {
             setServerData(data.boardPage);
         }).catch(err => {
-            console.error("Failed to fetch data:", err);
+            console.error('Failed to fetch data:', err);
         });
 
         searchWithSynonyms(keyword).then(data => {
-            console.log("Fetched synonym data:", data);
             setSynonymData(data);
         }).catch(err => {
-            console.error("Failed to fetch synonym data:", err);
+            console.error('Failed to fetch synonym data:', err);
         });
-    }, [category, filter, keyword]);
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [category, filter, keyword, pageSize]);
 
     const handleRowClick = (id) => {
         moveToRead(id, serverData);
-        console.log("HandleRowClick:", serverData);
+    };
+
+    const movePage = (page) => {
+        fetchData(page);
     };
 
     const { dtoList } = serverData;
@@ -67,11 +71,14 @@ const SearchListComponent = ({ category, filter, keyword }) => {
                 </thead>
                 <tbody>
                     {dtoList && dtoList.map((item) => (
-                        <TableRowComponent key={item.id} item={item} onClick={handleRowClick} />
+                        <TableRowComponent key={item.id} item={item} onClick={() => handleRowClick(item.id)} />
                     ))}
                 </tbody>
             </table>
-            <ListPageComponent serverData={serverData} />
+            <ListPageComponent
+                serverData={serverData}
+                movePage={movePage}
+            />
 
             <h2>유의/동의어 검색 결과</h2>
             <table className="list-table">
@@ -87,7 +94,7 @@ const SearchListComponent = ({ category, filter, keyword }) => {
                 </thead>
                 <tbody>
                     {synonymData && synonymData.map((item) => (
-                        <TableRowComponent key={item.id} item={item} onClick={handleRowClick} />
+                        <TableRowComponent key={item.id} item={item} onClick={() => handleRowClick(item.id)} />
                     ))}
                 </tbody>
             </table>
