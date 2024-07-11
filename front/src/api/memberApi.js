@@ -67,12 +67,12 @@ export const sendEmail = async (email) => {
 }
 
 // 멤버 정보 요청
-export const getMemberWithMemberId = async (memberId) => {
+export const getMemberWithEmail = async (email) => {
 
     try {
-        const res = await axios.get(`${host}/info`, {
+        const res = await axios.get(`${host}/member/info`, {
             params: {
-                memberId: memberId
+                email: email
             }
         });
         console.log(res.data);
