@@ -217,6 +217,7 @@ header {
                         margin: 10px 0;
                         font-weight: 900;
                         font-size: 17px;
+                        cursor: pointer;
                     }
 
                     .profile-messages {
@@ -225,6 +226,7 @@ header {
                         align-items: center;
                         color: #868E96;
                         font-size: 15px;
+                        cursor: pointer;
                     }
 
                     .profile-likes {
@@ -233,6 +235,7 @@ header {
                         align-items: center;
                         color: #868E96;
                         font-size: 15px;
+                        cursor: pointer;
                     }
 
                     .profile-mode {
@@ -241,6 +244,7 @@ header {
                         align-items: center;
                         color: #868E96;
                         font-size: 15px;
+                        cursor: pointer;
                     }
                 }
 
@@ -251,6 +255,7 @@ header {
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    cursor: pointer;
                 }
             }
         }

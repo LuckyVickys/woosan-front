@@ -36,9 +36,9 @@ const Header = () => {
       if (loginState.email) {
         try {
           console.log("Fetching user data...");
-          const memberData = await getMemberWithEmail(loginState.email);
-          console.log("Member data fetched: ", memberData);
-          setUserData(memberData);
+          const userData = await getMemberWithEmail(loginState.email);
+          console.log("Member data fetched: ", userData);
+          setUserData(userData);
 
           if (loginState.isKakao) {
             const kakaoData = await getKakaoUserData(loginState.accessToken);
