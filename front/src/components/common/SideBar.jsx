@@ -2,10 +2,14 @@ import React, { useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "../../assets/styles/siderbar.scss";
 import { FaUtensils, FaBroom, FaConciergeBell, FaMoneyBill, FaPaintRoller, FaRegFileAlt, FaTh, FaRegSmile } from 'react-icons/fa'; // react-icons에서 아이콘 가져오기
+import Swal from 'sweetalert2';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../slices/loginSlice';
 
 const SideBar = ({ pageType }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
     const [activeCategory, setActiveCategory] = React.useState('');
 
     // URL의 검색 파라미터를 기반으로 activeCategory 상태를 설정
@@ -20,6 +24,33 @@ const SideBar = ({ pageType }) => {
         setActiveCategory(categoryName);
         navigate(`/board?page=1&size=10&categoryName=${categoryName}`);
     };
+
+    // 로그아웃
+    const handleLogout = () => {
+        Swal.fire({
+            icon: 'warning',
+            title: '로그아웃 하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+                dispatch(logout());
+                Swal.fire({
+                    icon: 'success',
+                    title: '로그아웃 되었습니다.',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '확인'
+                }).then((res) => {
+                    if(result.isConfirmed) {
+                        navigate('/');
+                    }
+                })
+            }
+        });
+    }
 
     return (
         <aside className="sidebar">
@@ -145,9 +176,9 @@ const SideBar = ({ pageType }) => {
                             </NavLink>
                         </div>
                         <div className="sub-category">
-                            <NavLink to={'/myPage/logout'}>
+                            <div onClick={handleLogout}>
                                 <FaRegSmile className="icon" />Log out
-                            </NavLink>
+                            </div>
                         </div>
                     </>
                 )}
