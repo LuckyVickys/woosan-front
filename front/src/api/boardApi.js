@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const API_SERVER_HOST = "http://localhost:80";
-// export const API_SERVER_HOST = "http://223.130.139.24:7777";
+// export const API_SERVER_HOST = "http://localhost:80";
+export const API_SERVER_HOST = "http://223.130.147.56:7777";
 
 const prefix = `${API_SERVER_HOST}/api/board`;
 
