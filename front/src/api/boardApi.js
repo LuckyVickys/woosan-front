@@ -113,9 +113,9 @@ export const getRealTimeSearchRankings = async () => {
     }
 };
 
-export const combinedSearch = async (category, filter, keyword, standardPage = 1, synonymPage = 1, size = 10) => {
+export const combinedSearch = async (category, filter, keyword, page = 1, rpage = 1, size = 10) => {
     try {
-        const params = { category, filter, keyword, standardPage, synonymPage, size };
+        const params = { category, filter, keyword, page, rpage, size };
         const res = await axios.get(`${prefix}/search`, { params });
         return res.data;
     } catch (error) {
