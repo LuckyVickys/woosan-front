@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux"; // Redux의 useSelector 훅 사용
 import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import { toggleLike, getLikes } from "../../api/likesApi";
 import '../../assets/styles/App.scss';
 
-const LikeButton = ({ memberId, type, targetId, initialLikesCount }) => {
+const LikeButton = ({ type, targetId, initialLikesCount }) => {
+    const loginState = useSelector((state) => state.loginSlice);
+    const memberId = loginState.id;
+
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(initialLikesCount);
 
     useEffect(() => {
+        if (!memberId) return;
+
         const fetchLikeStatus = async () => {
             try {
                 const toggleRequest = {
@@ -26,10 +32,14 @@ const LikeButton = ({ memberId, type, targetId, initialLikesCount }) => {
     }, [memberId, type, targetId]);
 
     const handleLikeToggle = async () => {
+        if (!memberId) {
+            console.error("User is not logged in");
+            return;
+        }
+
         try {
             const toggleRequest = {
-                // memberId,
-                memberId: 1,
+                memberId,
                 type,
                 targetId
             };

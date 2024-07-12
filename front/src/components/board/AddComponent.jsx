@@ -1,13 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { addBoard } from "../../api/boardApi"; // API 모듈에서 호출
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux"; // Redux의 useSelector 훅 사용
 import "../../assets/styles/App.scss";
 import { validateBoardInputs } from "../../util/validationUtil";
 
 const categories = ["선택", "맛집", "청소", "요리", "재테크", "인테리어", "정책", "기타"];
 
 const initState = {
-    writerId: 3, // 하드코딩된 writerId
+    writerId: null, // 초기 상태를 null로 설정
     categoryName: "선택",
     title: "",
     content: "",
@@ -15,12 +16,22 @@ const initState = {
 };
 
 const AddComponent = () => {
+    const loginState = useSelector((state) => state.loginSlice);
     const [board, setBoard] = useState({ ...initState });
     const [showDropdown, setShowDropdown] = useState(false); // 드롭다운 상태 관리
     const [files, setFiles] = useState([]); // 파일 상태 관리
     const [errors, setErrors] = useState({}); // 오류 메시지 상태 관리
     const uploadRef = useRef();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (loginState.id) {
+            setBoard((prevBoard) => ({
+                ...prevBoard,
+                writerId: loginState.id,
+            }));
+        }
+    }, [loginState.id]);
 
     const handleChangeBoard = (e) => {
         const { name, value } = e.target;

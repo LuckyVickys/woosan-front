@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "../../assets/styles/App.scss";
 import { getBoard, translate } from "../../api/boardApi";
 import { summary } from "../../api/summaryApi";
@@ -10,7 +11,7 @@ import LikeButton from "../../components/common/LikeButton";
 import { FaComment } from "react-icons/fa";
 import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
-import { convertLineBreaks } from "../../util/convertUtil";  // 추가된 부분
+import { convertLineBreaks } from "../../util/convertUtil";
 import defaultProfile from "../../assets/image/profile.png";
 
 const initState = {
@@ -29,8 +30,8 @@ const initState = {
 };
 
 const ReadComponent = () => {
-  const [userId, setUserId] = useState(3); // 로그인한 사용자 id(임시)
-
+  const loginState = useSelector((state) => state.loginSlice);
+  const [userId, setUserId] = useState(null);
   const { id } = useParams();
 
   const [board, setBoard] = useState(initState);
@@ -42,9 +43,14 @@ const ReadComponent = () => {
   const type = "board";
 
   useEffect(() => {
+    if (loginState.id) {
+      setUserId(loginState.id);
+    }
+  }, [loginState.id]);
+
+  useEffect(() => {
     getBoard(id).then((data) => {
-      console.log("Received board data:", data); // Log the received data
-      const contentWithLineBreaks = convertLineBreaks(data.content); // 수정된 부분
+      const contentWithLineBreaks = convertLineBreaks(data.content);
       setBoard({ ...data, content: contentWithLineBreaks });
     });
   }, [id]);
@@ -55,7 +61,7 @@ const ReadComponent = () => {
       setBoard((prevBoard) => ({
         ...prevBoard,
         title: translated.title,
-        content: convertLineBreaks(translated.content), // 수정된 부분
+        content: convertLineBreaks(translated.content),
       }));
     } catch (error) {
       console.error("번역 중 오류 발생:", error);
@@ -65,7 +71,6 @@ const ReadComponent = () => {
   const handleClovaSummary = async () => {
     try {
       const summarized = await summary(id, { title: board.title, content: board.content });
-      console.log("요약 중: ", summarized);
       setSummarizedBoard({ content: summarized });
     } catch (error) {
       console.error("요약 중 오류 발생:", error);
@@ -143,7 +148,7 @@ const ReadComponent = () => {
         <div className="right">
           <LikeButton
             className="like-button"
-            memberId={1}
+            memberId={userId}
             type="게시물"
             targetId={id}
             initialLikesCount={board.likesCount}
@@ -151,7 +156,15 @@ const ReadComponent = () => {
           <FaComment className="replyIcon" /> {board.replyCount}
           <button className="menu-button" onClick={handleBoardMenuSelect} ref={boardMenuRef}>
             ⋮
-            {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} openReport={openReport} openMsg={openMsg} />}
+            {showBoardMenu && (
+              <BoardDropDown
+                id={id}
+                onSelect={handleBoardMenuSelect}
+                openReport={openReport}
+                openMsg={openMsg}
+                showModifyButton={userId === board.writerId} // 수정된 부분
+              />
+            )}
           </button>
         </div>
       </div>

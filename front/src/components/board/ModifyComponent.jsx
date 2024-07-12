@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { modifyBoard, getOne, deleteBoard } from "../../api/boardApi";
 import "../../assets/styles/App.scss";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import useCustomMove from "../../hooks/useCustomMove";
 import { validateBoardInputs } from "../../util/validationUtil";
 
@@ -22,6 +23,7 @@ const initState = {
 
 const ModifyComponent = () => {
     const { id } = useParams();
+    const loginState = useSelector((state) => state.loginSlice);
     const [board, setBoard] = useState(initState);
     const [showDropdown, setShowDropdown] = useState(false); // 드롭다운 상태 관리
     const [files, setFiles] = useState([]); // 파일 상태 관리
@@ -33,6 +35,11 @@ const ModifyComponent = () => {
         const fetchData = async () => {
             try {
                 const response = await getOne(id);
+                if (response.writerId !== loginState.id) {
+                    alert("접근 권한이 없습니다.");
+                    navigate("/board");
+                    return;
+                }
                 const { categoryName, title, content, filePathUrl } = response;
                 setBoard((prevBoard) => ({
                     ...prevBoard,
@@ -46,7 +53,7 @@ const ModifyComponent = () => {
             }
         };
         fetchData();
-    }, [id]);
+    }, [id, loginState.id, navigate]);
 
     const handleChangeBoard = (e) => {
         const { name, value } = e.target;
@@ -91,7 +98,7 @@ const ModifyComponent = () => {
         formData.append('categoryName', board.categoryName);
         formData.append('title', board.title);
         formData.append('content', board.content);
-        formData.append('writerId', 1);
+        formData.append('writerId', loginState.id); // 로그인된 사용자의 ID 사용
 
         for (let i = 0; i < files.length; i++) {
             // 파일이 이미 업로드된 URL인지 확인하여 적절히 처리
