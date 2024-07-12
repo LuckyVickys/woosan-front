@@ -4,7 +4,7 @@ import styles from '../../assets/styles/matching/MatchingItem.module.scss';
 
 const MatchingItem = ({
     id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag, headCount,
-    location, introduce, mbti, gender, age, height, onClick
+    location, introduce, mbti, gender, age, height, onClick, filePathUrl
 }) => {
     const typeLabel = getTypeLabel(matchingType);
 
@@ -36,7 +36,13 @@ const MatchingItem = ({
 
     return (
         <div className={styles.matchingItemCard} onClick={() => onClick(id)}>
-            <div className={styles.imagePlaceholder}></div>
+            <div className={styles.imagePlaceholder}>
+                {filePathUrl && filePathUrl.length > 0 ? (
+                    <img src={filePathUrl[0]} alt="Matching Thumbnail" className={styles.matchingImage} />
+                ) : (
+                    <div className={styles.noImage}>No Image</div>
+                )}
+            </div>
             <div className={styles.matchingItemContent}>
                 <div className={styles.matchingItemHeader}>
                     <span className={`${styles.typeLabel} ${getTypeStyle(matchingType)}`}>{typeLabel}</span>
@@ -91,6 +97,7 @@ MatchingItem.propTypes = {
     age: PropTypes.number,
     height: PropTypes.number,
     onClick: PropTypes.func.isRequired,
+    filePathUrl: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default MatchingItem;

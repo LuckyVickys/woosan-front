@@ -77,6 +77,8 @@
     list-style: none;
     padding: 0;
     margin: 10px 0;
+    max-height: 200px;
+    overflow-y: auto; // 스크롤 처리
 }
 
 .searchResults li {
@@ -89,6 +91,7 @@
 
 .searchResults li:hover {
     background: #f1f1f1;
+    color: #007bff; // 마우스오버 시 색상 변경
 }
 
 .modalButtons {
@@ -122,4 +125,9 @@
 
 .cancelButton:hover {
     background: #c82333;
+}
+
+.errorMessage {
+    color: red;
+    margin-top: 10px;
 }
