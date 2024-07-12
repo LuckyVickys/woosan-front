@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../assets/styles/App.scss';
-// import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
-// import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
+import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
+import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
 
 import { autocomplete, saveSearchKeyword } from "../../api/boardApi";
 
@@ -53,8 +53,7 @@ const SearchBar = ({ categories, filters }) => {
   const filterRef = useRef(null);
   const inputRef = useRef(null);
 
-  // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
-  // const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+  const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
 
   const handleCategorySelect = (category) => {
@@ -110,7 +109,11 @@ const SearchBar = ({ categories, filters }) => {
   };
 
   const handleWriteButtonClick = () => {
-    navigate('/board/add'); // AddPage 경로로 이동
+    if(!isLogin) {
+      return moveToLoginReturn();
+    } else {
+      navigate('/board/add'); // AddPage 경로로 이동
+    }
   };
 
   const handleInputChange = async (event) => {
@@ -198,7 +201,7 @@ const SearchBar = ({ categories, filters }) => {
         </form>
         <button className='write-button' onClick={handleWriteButtonClick}>글 쓰기</button>
       </div>
-      {/* {isLoginModalOpen && <LoginModal onClose={closeLoginModal}/>} // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게 */}
+      {isLoginModalOpen && <LoginModal onClose={closeLoginModal}/>}
     </>
   );
 }
