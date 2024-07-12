@@ -102,13 +102,6 @@ const SearchBar = ({ categories, filters }) => {
       return;
     }
 
-    // 검색 키워드를 저장
-    try {
-      await saveSearchKeyword(keyword);
-    } catch (error) {
-      console.error('Error saving search keyword:', error);
-    }
-
     navigate(`/board/search?category=${selectedCategory}&filter=${selectedFilter}&keyword=${keyword}`);
   };
 

@@ -1,59 +1,94 @@
 import React, { useEffect, useState } from "react";
-import { searchBoard, searchWithSynonyms } from "../../api/boardApi";
+import { combinedSearch } from "../../api/boardApi";
+import { useSearchParams } from "react-router-dom";
 import useCustomMove from "../../hooks/useCustomMove";
-import ListPageComponent from "../../components/board/element/ListPageComponent";
-import TableRowComponent from "../../components/board/element/TableLowComponent";
+import SearchListPageComponent from "../../components/board/element/SearchListPageComponent";
+import TableRowComponent from "../../components/board/element/TableRowComponent";
 import "../../assets/styles/App.scss";
 
 const initState = {
-    dtoList: [],
-    pageNumList: [],
-    pageRequestDTO: {
-        page: 1,
-        size: 10
+    standardResult: {
+        dtoList: [],
+        pageRequestDTO: {
+            page: 1,
+            size: 10
+        },
+        prev: false,
+        next: false,
+        totalCount: 0,
+        prevPage: 0,
+        nextPage: 0,
+        totalPage: 0,
+        current: 1,
     },
-    prev: false,
-    next: false,
-    totalCount: 0,
-    prevPage: 0,
-    nextPage: 0,
-    totalPage: 0,
-    current: 1,
+    synonymResult: {
+        dtoList: [],
+        pageRequestDTO: {
+            page: 1,
+            size: 10
+        },
+        prev: false,
+        next: false,
+        totalCount: 0,
+        prevPage: 0,
+        nextPage: 0,
+        totalPage: 0,
+        current: 1,
+    },
 };
 
 const SearchListComponent = ({ category, filter, keyword }) => {
     const { moveToRead } = useCustomMove();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [serverData, setServerData] = useState(initState);
-    const [synonymData, setSynonymData] = useState([]);
-    const [pageSize, setPageSize] = useState(10);
+    const [loading, setLoading] = useState(true);
 
-    const fetchData = (page = 1) => {
-        searchBoard(category, filter, keyword, page, pageSize).then(data => {
-            setServerData(data.boardPage);
+    const fetchData = (standardPage = 1, synonymPage = 1) => {
+        setLoading(true);
+        const size = parseInt(searchParams.get('size')) || 10;
+        combinedSearch(category, filter, keyword, standardPage, synonymPage, size).then(data => {
+            console.log("Combined search:", data);
+            setServerData(data);
+            setLoading(false);
         }).catch(err => {
             console.error('Failed to fetch data:', err);
-        });
-
-        searchWithSynonyms(keyword).then(data => {
-            setSynonymData(data);
-        }).catch(err => {
-            console.error('Failed to fetch synonym data:', err);
+            setLoading(false);
         });
     };
 
     useEffect(() => {
-        fetchData();
-    }, [category, filter, keyword, pageSize]);
+        const standardPage = parseInt(searchParams.get('standardPage')) || 1;
+        const synonymPage = parseInt(searchParams.get('synonymPage')) || 1;
+        fetchData(standardPage, synonymPage);
+    }, [searchParams, category, filter, keyword]);
 
     const handleRowClick = (id) => {
         moveToRead(id, serverData);
     };
 
-    const movePage = (page) => {
-        fetchData(page);
+    const moveStandardPage = (page) => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set('standardPage', page.toString());
+        setSearchParams(newParams);
+        fetchData(page, parseInt(searchParams.get('synonymPage')) || 1);
     };
 
-    const { dtoList } = serverData;
+    const moveSynonymPage = (page) => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set('synonymPage', page.toString());
+        setSearchParams(newParams);
+        fetchData(parseInt(searchParams.get('standardPage')) || 1, page);
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!serverData || !serverData.standardResult || !serverData.synonymResult) {
+        return <div>No data available</div>;
+    }
+
+    const { standardResult, synonymResult } = serverData;
 
     return (
         <div className="list-component">
@@ -70,15 +105,12 @@ const SearchListComponent = ({ category, filter, keyword }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {dtoList && dtoList.map((item) => (
+                    {standardResult.dtoList && standardResult.dtoList.map((item) => (
                         <TableRowComponent key={item.id} item={item} onClick={() => handleRowClick(item.id)} />
                     ))}
                 </tbody>
             </table>
-            <ListPageComponent
-                serverData={serverData}
-                movePage={movePage}
-            />
+            <SearchListPageComponent serverData={standardResult} movePage={moveStandardPage} />
 
             <h2>유의/동의어 검색 결과</h2>
             <table className="list-table">
@@ -93,11 +125,12 @@ const SearchListComponent = ({ category, filter, keyword }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {synonymData && synonymData.map((item) => (
+                    {synonymResult.dtoList && synonymResult.dtoList.map((item) => (
                         <TableRowComponent key={item.id} item={item} onClick={() => handleRowClick(item.id)} />
                     ))}
                 </tbody>
             </table>
+            <SearchListPageComponent serverData={synonymResult} movePage={moveSynonymPage} />
         </div>
     );
 };
