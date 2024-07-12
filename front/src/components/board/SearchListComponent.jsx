@@ -43,10 +43,10 @@ const SearchListComponent = ({ category, filter, keyword }) => {
     const [serverData, setServerData] = useState(initState);
     const [loading, setLoading] = useState(true);
 
-    const fetchData = (standardPage = 1, synonymPage = 1) => {
+    const fetchData = (page = 1, rpage = 1) => {
         setLoading(true);
         const size = parseInt(searchParams.get('size')) || 10;
-        combinedSearch(category, filter, keyword, standardPage, synonymPage, size).then(data => {
+        combinedSearch(category, filter, keyword, page, rpage, size).then(data => {
             console.log("Combined search:", data);
             setServerData(data);
             setLoading(false);
@@ -57,9 +57,9 @@ const SearchListComponent = ({ category, filter, keyword }) => {
     };
 
     useEffect(() => {
-        const standardPage = parseInt(searchParams.get('standardPage')) || 1;
-        const synonymPage = parseInt(searchParams.get('synonymPage')) || 1;
-        fetchData(standardPage, synonymPage);
+        const page = parseInt(searchParams.get('page')) || 1;
+        const rpage = parseInt(searchParams.get('rpage')) || 1;
+        fetchData(page, rpage);
     }, [searchParams, category, filter, keyword]);
 
     const handleRowClick = (id) => {
@@ -68,16 +68,16 @@ const SearchListComponent = ({ category, filter, keyword }) => {
 
     const moveStandardPage = (page) => {
         const newParams = new URLSearchParams(searchParams);
-        newParams.set('standardPage', page.toString());
+        newParams.set('page', page.toString());
         setSearchParams(newParams);
-        fetchData(page, parseInt(searchParams.get('synonymPage')) || 1);
+        fetchData(page, parseInt(searchParams.get('rpage')) || 1);
     };
 
     const moveSynonymPage = (page) => {
         const newParams = new URLSearchParams(searchParams);
-        newParams.set('synonymPage', page.toString());
+        newParams.set('rpage', page.toString());
         setSearchParams(newParams);
-        fetchData(parseInt(searchParams.get('standardPage')) || 1, page);
+        fetchData(parseInt(searchParams.get('page')) || 1, page);
     };
 
     if (loading) {
