@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const host = `http://localhost:80/api`;
+import { API_SERVER_HOST } from "./boardApi.js";
+
+const host = `${API_SERVER_HOST}/api`;
 
 // 로그인
 export const loginPost = async (loginParam) => {
