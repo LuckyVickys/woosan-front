@@ -55,7 +55,6 @@ const SearchBar = ({ categories, filters }) => {
 
   const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
-
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setShowCategoryDropdown(false);
@@ -98,11 +97,8 @@ const SearchBar = ({ categories, filters }) => {
   const handleSearch = async (event) => {
     event.preventDefault();
 
-    // 검색 키워드를 저장
-    try {
-      await saveSearchKeyword(keyword);
-    } catch (error) {
-      console.error('Error saving search keyword:', error);
+    if (!keyword.trim()) {
+      return;
     }
 
     navigate(`/board/search?category=${selectedCategory}&filter=${selectedFilter}&keyword=${keyword}`);
@@ -190,7 +186,7 @@ const SearchBar = ({ categories, filters }) => {
             autoComplete="off"
             ref={inputRef}
           />
-          <button className="search-button" type="submit"></button>
+          <button className="search-button" type="submit" disabled={!keyword.trim()}></button>
           {autocompleteSuggestions.length > 0 && (
             <AutocompleteDropdown
               suggestions={autocompleteSuggestions}

@@ -20,17 +20,11 @@ const useCustomMove = (defaultPath = "/board") => {
     const queryDefault = createSearchParams({ page, size, categoryName }).toString();
 
     const moveToList = (pageParam) => {
-        let queryStr = "";
+        const pageNum = getNum(pageParam?.page, page);
+        const sizeNum = getNum(pageParam?.size, size);
+        const category = pageParam?.categoryName || categoryName;
 
-        if (pageParam) {
-            const pageNum = getNum(pageParam.page, 1);
-            const sizeNum = getNum(pageParam.size, 10);
-            const category = pageParam.categoryName || categoryName;
-
-            queryStr = createSearchParams({ page: pageNum, size: sizeNum, categoryName: category }).toString();
-        } else {
-            queryStr = queryDefault;
-        }
+        const queryStr = createSearchParams({ page: pageNum, size: sizeNum, categoryName: category }).toString();
 
         console.log(`Navigating to ${defaultPath} with query: ${queryStr}`);
 
@@ -39,7 +33,7 @@ const useCustomMove = (defaultPath = "/board") => {
             search: queryStr
         });
 
-        setRefresh(!refresh);
+        setRefresh(!refresh);  // 강제로 리렌더링
     };
 
     const moveToModify = (num) => {

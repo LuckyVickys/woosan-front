@@ -102,40 +102,6 @@ export const autocomplete = async (keyword, searchType, category) => {
     }
 };
 
-export const searchBoard = async (category, filter, keyword) => {
-    try {
-        const params = { category, filter, keyword };
-        const res = await axios.get(`${prefix}/search`, { params });
-        return res.data;
-    } catch (error) {
-        console.error('Error searching board:', error.response ? error.response.data : error.message);
-        throw error;
-    }
-}
-
-export const searchWithSynonyms = async (keyword) => {
-    try {
-        const res = await axios.get(`${prefix}/search/synonyms`, {
-            params: { keyword }
-        });
-        return res.data;
-    } catch (error) {
-        console.error('Error searching with synonyms:', error.response ? error.response.data : error.message);
-        throw error;
-    }
-}
-
-export const saveSearchKeyword = async (keyword) => {
-    try {
-        const timestamp = new Date().toISOString();  // 현재 시간을 ISO 형식의 타임스탬프로 설정
-        const data = { keyword, timestamp };
-        const res = await axios.post(`${prefix}/save`, data);
-        return res.data;
-    } catch (error) {
-        console.error('Error saving search keyword:', error.response ? error.response.data : error.message);
-        throw error;
-    }
-}
 
 export const getRealTimeSearchRankings = async () => {
     try {
@@ -143,6 +109,17 @@ export const getRealTimeSearchRankings = async () => {
         return res.data;
     } catch (error) {
         console.error('Error fetching real-time search rankings:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
+
+export const combinedSearch = async (category, filter, keyword, standardPage = 1, synonymPage = 1, size = 10) => {
+    try {
+        const params = { category, filter, keyword, standardPage, synonymPage, size };
+        const res = await axios.get(`${prefix}/search`, { params });
+        return res.data;
+    } catch (error) {
+        console.error('Error searching board:', error.response ? error.response.data : error.message);
         throw error;
     }
 };

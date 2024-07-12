@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getList } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import ListPageComponent from "../../components/board/element/ListPageComponent";
-import TableRowComponent from "../board/element/TableLowComponent";
+import TableRowComponent from "../board/element/TableRowComponent";
 import "../../assets/styles/App.scss";
 
 const initState = {
@@ -26,8 +26,7 @@ const initState = {
 };
 
 const ListComponent = () => {
-    const { page, size, categoryName, moveToList, moveToRead } = useCustomMove();
-
+    const { page, size, categoryName, moveToList, moveToRead, refresh } = useCustomMove();  // refresh 추가
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {
@@ -37,14 +36,12 @@ const ListComponent = () => {
         }).catch(err => {
             console.error("Failed to fetch data:", err);
         });
-    }, [page, size, categoryName]);
+    }, [page, size, categoryName, refresh]);  // refresh 추가
 
     const handleRowClick = (id) => {
-        moveToRead(id, serverData)
+        moveToRead(id, serverData);
         console.log("HandleRowClick:", serverData);
     };
-
-
 
     const { notice, popularList, boardPage } = serverData;
 
@@ -63,13 +60,13 @@ const ListComponent = () => {
                 </thead>
                 <tbody>
                     {notice && notice.id && (
-                        <TableRowComponent item={notice} onClick={handleRowClick} isNotice={true} />
+                        <TableRowComponent item={notice} onClick={() => handleRowClick(notice.id)} isNotice={true} />
                     )}
                     {popularList && popularList.map((item) => (
-                        <TableRowComponent key={item.id} item={item} onClick={handleRowClick} isPopular={true} />
+                        <TableRowComponent key={item.id} item={item} onClick={() => handleRowClick(item.id)} isPopular={true} />
                     ))}
                     {boardPage.dtoList && boardPage.dtoList.map((item) => (
-                        <TableRowComponent key={item.id} item={item} onClick={handleRowClick} />
+                        <TableRowComponent key={item.id} item={item} onClick={() => handleRowClick(item.id)} />
                     ))}
                 </tbody>
             </table>
@@ -77,6 +74,5 @@ const ListComponent = () => {
         </div>
     );
 };
-
 
 export default ListComponent;
