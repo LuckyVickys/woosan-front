@@ -1,22 +1,33 @@
+@import '../Font.scss';
+
 .formGroup {
+    display: flex;
+    flex-direction: column; /* 수평 수직 정렬로 변경 */
     margin-bottom: 20px;
 }
 
 .input {
-    width: calc(100% - 30px);
+    width: 25%; /* 입력창 너비를 25%로 설정 */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin: 0.5rem 0;
 }
 
 .selectedAddress {
     display: flex;
     align-items: center;
     margin-top: 10px;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid #9BCC66;
+    border-radius: 4px; /* 타원형으로 만들기 위한 값 */
+    width: fit-content; /* 내용에 맞게 너비 조절 */
+    
 }
 
 .selectedAddress span {
-    flex: 1;
+    margin-right: 1px; /* X 버튼과의 간격 조절 */
 }
 
 .deleteButton {
@@ -25,4 +36,5 @@
     color: red;
     font-size: 20px;
     cursor: pointer;
+    margin-left: 10px;
 }

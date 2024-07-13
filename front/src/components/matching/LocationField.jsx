@@ -3,14 +3,19 @@ import PropTypes from 'prop-types';
 import KakaoMapModal from './KakaoMapModal';
 import styles from '../../assets/styles/matching/LocationField.module.scss';
 
-const LocationField = ({ placeName, setPlaceName, locationX, setLocationX, locationY, setLocationY }) => {
+const LocationField = ({ placeName, setPlaceName, locationX, setLocationX, locationY, setLocationY, address, setAddress }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSaveLocation = (address, x, y, placeName) => {
-        console.log('주소 저장:', address, x, y, placeName);
+        console.log('저장된 주소:', address, x, y, placeName);
         setPlaceName(placeName || address);
-        setLocationX(x);
-        setLocationY(y);
+        setLocationX(x.toString()); // 숫자를 문자열로 변환
+        setLocationY(y.toString()); // 숫자를 문자열로 변환
+        setAddress(address); // address 상태 업데이트
+        console.log('LocationField - 저장된 address:', address);
+        console.log('LocationField - 저장된 placeName:', placeName);
+        console.log('LocationField - 저장된 locationX:', x.toString());
+        console.log('LocationField - 저장된 locationY:', y.toString());
         setIsModalOpen(false);
     };
 
@@ -19,6 +24,7 @@ const LocationField = ({ placeName, setPlaceName, locationX, setLocationX, locat
         setPlaceName('');
         setLocationX('');
         setLocationY('');
+        setAddress(''); // address 상태 초기화
     };
 
     return (
@@ -54,10 +60,12 @@ const LocationField = ({ placeName, setPlaceName, locationX, setLocationX, locat
 LocationField.propTypes = {
     placeName: PropTypes.string.isRequired,
     setPlaceName: PropTypes.func.isRequired,
-    locationX: PropTypes.string.isRequired,
+    locationX: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     setLocationX: PropTypes.func.isRequired,
-    locationY: PropTypes.string.isRequired,
+    locationY: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     setLocationY: PropTypes.func.isRequired,
+    address: PropTypes.string.isRequired,
+    setAddress: PropTypes.func.isRequired,
 };
 
 export default LocationField;
