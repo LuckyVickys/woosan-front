@@ -68,11 +68,29 @@ export const signUp = async (signupData) => {
   }
 };
 
-// 임시비밀번호 메일 전송 및 임시비밀번호 변경
-export const sendEmail = async (email) => {
+// 임시비밀번호 메일 전송
+export const sendEmail = async (updateData) => {
+  const header = { headers: { "Content-Type": "application/json" } };
+  const data = {
+    email: updateData.email,
+  };
+  try {
+    const response = await axios.post(`${host}/member/sendEmail`, data, header);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error fetching data:",
+      error.response ? error.response.data : error.message
+    );
+    throw error.response.data;
+  }
+};
+
+// 비밀번호 변경
+export const updatePW = async (email) => {
   console.log("Fetching data for Email:", email);
   try {
-    const response = await axios.get(`${host}/sendEmail`);
+    const response = await axios.put(`${host}/member/updatePw`);
     return response.data;
   } catch (error) {
     console.error(

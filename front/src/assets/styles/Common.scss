@@ -1,115 +1,177 @@
-$shadow: #E5E5E5;
-$font-family: 'Pretendard-Regular', sans-serif;
+$shadow: #e5e5e5;
+$font-family: "Pretendard-Regular", sans-serif;
 
 body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }
 
 // BasicLayout의 전체 영역(header. nav, area, footer)
 .wrapper {
-    width: 100%;
-    height: 100vh;
+  width: 100%;
+  height: 100vh;
 }
 
 // header
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: auto;
-    padding: 20px;
-    border-bottom: 2px solid $shadow;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  padding: 20px;
+  border-bottom: 2px solid $shadow;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    height: 27.5px;
+  display: flex;
+  align-items: center;
+  height: 27.5px;
 
-    .logoImage {
-        width: 80px;
-        height: 46px;
-        margin-right: 13px;
+  .logoImage {
+    width: 80px;
+    height: 46px;
+    margin-right: 13px;
+  }
+
+  .logoTitle {
+    font-size: 32px;
+    font-family: "GodoB", sans-serif;
+
+    a {
+      color: #000;
     }
-
-    .logoTitle {
-        font-size: 32px;
-        font-family: 'GodoB', sans-serif;
-
-        a {
-            color: #000;
-        }
-    }
+  }
 }
 
 .login {
+  display: flex;
+  align-items: center;
+
+  .messageIcon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  .loginBar {
+    margin: 0px 20px;
+    color: $shadow;
+  }
+
+  .loginButton {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75px;
+    height: auto;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: white;
+    background: #00b207;
+    border-radius: 43px;
+    font-family: $font-family;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .profile-box {
+    display: flex;
+    justify-content: center;
     align-items: center;
 
-    .messageIcon {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-    }
+    .user-level-nickname {
+      margin-right: 10px;
+      font-family: $font-family;
 
-    .loginBar {
-        margin: 0px 20px;
-        color: $shadow;
-    }
-
-    .loginButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 75px;
-        height: auto;
-        padding: 10px 14px;
+      .user-level {
+        color: #9bcc66;
         font-size: 14px;
-        color: white;
-        background: #00B207;
-        border-radius: 43px;
-        font-family: $font-family;
+        font-weight: 400;
+      }
+
+      .user-nickname {
+        font-size: 16px;
         font-weight: 800;
-        cursor: pointer;
+      }
     }
 
-    .profile-box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .user-profile {
+      width: 45px;
+      height: 45px;
+      background: url("../image/clova.png") no-repeat;
+      background-size: contain;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+    }
 
-        .user-level-nickname {
-            margin-right: 10px;
-            font-family: $font-family;
+    .profile-dropdown-wrapper {
+      position: absolute;
+      top: 8%;
+      right: 1%;
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      font-family: $font-family;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
 
-            .user-level {
-                color: #9BCC66;
-                font-size: 14px;
-                font-weight: 400;
-            }
+      &.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-            .user-nickname {
-                font-size: 16px;
-                font-weight: 800;
-            }
+      .profile-triangle {
+        width: 0px;
+        height: 0px;
+        border-bottom: 20px solid #f5f5f5;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        margin-right: 10%;
+      }
+
+      .profile-contents {
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        width: 250px;
+        padding: 15px;
+        color: #909090;
+        box-shadow: 0 10px 10px -5px;
+
+        hr {
+          border: 1px solid #e5e5e5;
         }
 
-        .user-profile {
-            width: 45px;
-            height: 45px;
-            background: url('../image/clova.png') no-repeat;
-            background-size: contain;
-            border-radius: 50%;
-            cursor: pointer;
-            position: relative;
+        .profile-info-wrapper {
+          color: #868e96;
+          margin: 10px 0 20px 0;
+
+          .profile-nickname {
+            font-size: 17px;
+            font-weight: 900;
+            margin-bottom: 5px;
+            color: #555b61;
+          }
+
+          .profile-email {
+            font-size: 15px;
+          }
         }
 
-        .profile-dropdown-wrapper {
-            position: absolute;
-            top: 8%;
-            right: 1%;
+        .profile-level-point {
+          margin: 20px 0;
+
+          .profile-level {
+            font-size: 17px;
+            color: #555b61;
+            font-weight: 900;
+          }
+
+          .profile-point-bar-wrapper {
+            width: 230px;
+            height: 10px;
             display: flex;
             flex-direction: column;
             align-items: end;
@@ -124,502 +186,444 @@ header {
                 transform: translateY(0);
             }
 
-            .profile-triangle {
-                width: 0px;
-                height: 0px;
-                border-bottom: 20px solid #F5F5F5;
-                border-left: 10px solid transparent;
-                border-right: 10px solid transparent;
-                margin-right: 10%;
+            .profile-point-bar {
+              width: 100px;
+              background-color: #98c863;
+              position: absolute;
+              z-index: 1;
             }
 
-            .profile-contents {
-                background-color: #F5F5F5;
-                border-radius: 10px;
-                width: 250px;
-                padding: 15px;
-                color: #909090;
-                box-shadow: 0 10px 10px -5px;
-
-                hr {
-                    border: 1px solid #E5E5E5;
-                }
-
-                .profile-info-wrapper {
-                    color: #868E96;
-                    margin: 10px 0 20px 0;
-
-                    .profile-nickname {
-                        font-size: 17px;
-                        font-weight: 900;
-                        margin-bottom: 5px;
-                        color: #555B61;
-                    }
-
-                    .profile-email {
-                        font-size: 15px;
-                    }
-                }
-
-                .profile-level-point {
-                    margin: 20px 0;
-
-                    .profile-level {
-                        font-size: 17px;
-                        color: #555B61;
-                        font-weight: 900;
-                    }
-
-                    .profile-point-bar-wrapper {
-                        width: 230px;
-                        height: 10px;
-                        display: flex;
-                        position: relative;
-    
-                        .point-bar {
-                            border-radius: 10px;
-                            height: 7px;
-                            margin-top: 5px;
-                        }
-        
-                        .profile-point-bar {
-                            width: 100px;
-                            background-color: #98C863;
-                            position: absolute;
-                            z-index: 1;
-                        }
-        
-                        .profile-nextpoint-bar {
-                            width: 250px;
-                            background-color: #E5E5E5;
-                            position: absolute;
-                        }
-                    }
-                }
-
-                .profile-point-info {
-                    margin-top: 5px;
-                    display: flex;
-                    justify-content: space-between;
-                    font-size: 15px;
-                    
-                    .profile-point-wrapper {
-                        display: flex;
-                        color: #868E96;
-                    }
-                }
-
-                .profile-nav {
-                    color: #555B61;
-                    font-size: 14px;
-                    margin: 20px 0;
-
-                    .profile-mypage {
-                        margin: 10px 0;
-                        font-weight: 900;
-                        font-size: 17px;
-                        cursor: pointer;
-                    }
-
-                    .profile-messages {
-                        margin: 5px 0;
-                        display: flex;
-                        align-items: center;
-                        color: #868E96;
-                        font-size: 15px;
-                        cursor: pointer;
-                    }
-
-                    .profile-likes {
-                        margin: 5px 0;
-                        display: flex;
-                        align-items: center;
-                        color: #868E96;
-                        font-size: 15px;
-                        cursor: pointer;
-                    }
-
-                    .profile-mode {
-                        margin: 5px 0;
-                        display: flex;
-                        align-items: center;
-                        color: #868E96;
-                        font-size: 15px;
-                        cursor: pointer;
-                    }
-                }
-
-                .profile-logout {
-                    color: #666666;
-                    font-size: 16px;
-                    height: 30px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                }
+            .profile-nextpoint-bar {
+              width: 250px;
+              background-color: #e5e5e5;
+              position: absolute;
             }
+          }
         }
+
+        .profile-point-info {
+          margin-top: 5px;
+          display: flex;
+          justify-content: space-between;
+          font-size: 15px;
+
+          .profile-point-wrapper {
+            display: flex;
+            color: #868e96;
+          }
+        }
+
+        .profile-nav {
+          color: #555b61;
+          font-size: 14px;
+          margin: 20px 0;
+
+          .profile-mypage {
+            margin: 10px 0;
+            font-weight: 900;
+            font-size: 17px;
+            cursor: pointer;
+          }
+
+          .profile-messages {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            color: #868e96;
+            font-size: 15px;
+            cursor: pointer;
+          }
+
+          .profile-likes {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            color: #868e96;
+            font-size: 15px;
+            cursor: pointer;
+          }
+
+          .profile-mode {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            color: #868e96;
+            font-size: 15px;
+            cursor: pointer;
+          }
+        }
+
+        .profile-logout {
+          color: #666666;
+          font-size: 16px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+      }
     }
+  }
 }
 
 // nav
 nav {
+  display: flex;
+  // justify-content: left;
+  justify-content: space-between;
+  /* 전체 nav를 좌우로 벌리기 위해 추가 */
+  align-items: center;
+  height: 23px;
+  padding: 20px 0px;
+
+  .catagory {
     display: flex;
-    // justify-content: left;
     justify-content: space-between;
-    /* 전체 nav를 좌우로 벌리기 위해 추가 */
     align-items: center;
-    height: 23px;
-    padding: 20px 0px;
 
-    .catagory {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .board,
+    .matching,
+    .cs,
+    .myPage {
+      margin-right: 32px;
+      font-family: $font-family;
+      font-size: 14px;
+      font-weight: 700;
 
-        .board,
-        .matching,
-        .cs,
-        .myPage {
-            margin-right: 32px;
-            font-family: $font-family;
-            font-size: 14px;
-            font-weight: 700;
+      a {
+        color: #666;
+        transition: color 0.3s ease;
+      }
 
-            a {
-                color: #666;
-                transition: color 0.3s ease;
-            }
+      a:hover {
+        color: #00b207;
+      }
 
-            a:hover {
-                color: #00B207;
-            }
+      a.active {
+        color: #00b207;
+      }
+    }
+  }
 
-            a.active {
-                color: #00B207;
-            }
-        }
+  .real-time-rankings {
+    background: #fff;
+    border: 1px solid $shadow;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Pretendard-Regular", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    overflow: hidden;
+    height: 30px; // Adjust as necessary
+
+    .slide {
+      display: flex;
+      flex-direction: column;
+      animation: slide 10s linear infinite;
+    }
+  }
+
+  @keyframes slide {
+    0% {
+      transform: translateY(0%);
     }
 
-    .real-time-rankings {
-        background: #fff;
-        border: 1px solid $shadow;
-        padding: 10px;
-        border-radius: 5px;
-        font-family: 'Pretendard-Regular', sans-serif;
-        font-size: 14px;
-        font-weight: 700;
-        overflow: hidden;
-        height: 30px; // Adjust as necessary
-
-        .slide {
-            display: flex;
-            flex-direction: column;
-            animation: slide 10s linear infinite;
-        }
+    10% {
+      transform: translateY(-10%);
     }
 
-    @keyframes slide {
-        0% {
-            transform: translateY(0%);
-        }
-
-        10% {
-            transform: translateY(-10%);
-        }
-
-        20% {
-            transform: translateY(-20%);
-        }
-
-        30% {
-            transform: translateY(-30%);
-        }
-
-        40% {
-            transform: translateY(-40%);
-        }
-
-        50% {
-            transform: translateY(-50%);
-        }
-
-        60% {
-            transform: translateY(-60%);
-        }
-
-        70% {
-            transform: translateY(-70%);
-        }
-
-        80% {
-            transform: translateY(-80%);
-        }
-
-        90% {
-            transform: translateY(-90%);
-        }
-
-        100% {
-            transform: translateY(-100%);
-        }
+    20% {
+      transform: translateY(-20%);
     }
+
+    30% {
+      transform: translateY(-30%);
+    }
+
+    40% {
+      transform: translateY(-40%);
+    }
+
+    50% {
+      transform: translateY(-50%);
+    }
+
+    60% {
+      transform: translateY(-60%);
+    }
+
+    70% {
+      transform: translateY(-70%);
+    }
+
+    80% {
+      transform: translateY(-80%);
+    }
+
+    90% {
+      transform: translateY(-90%);
+    }
+
+    100% {
+      transform: translateY(-100%);
+    }
+  }
 }
 
 // BasidLayout의 area
 .area {
-    display: flex;
-    align-items: left;
-    min-height: calc(100vh - 60px);
-    padding-bottom: 60px;
+  display: flex;
+  align-items: left;
+  min-height: calc(100vh - 60px);
+  padding-bottom: 60px;
 }
 
 // BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
 .contents {
-    flex: 1;
-    display: flex;
-    // width: 100%;
-    // height: 100%;
-    flex-direction: column;
+  flex: 1;
+  display: flex;
+  // width: 100%;
+  // height: 100%;
+  flex-direction: column;
 }
 
 // PageTitle
 .page-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  padding: 0 20px;
+  border-bottom: 2px solid $shadow;
+
+  .catagory-main-sub {
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
-    height: auto;
-    padding: 0 20px;
-    border-bottom: 2px solid $shadow;
 
-    .catagory-main-sub {
-        display: flex;
-        justify-content: left;
-        align-items: center;
-
-        h1 {
-            font-size: 20px;
-            font-family: $font-family;
-            font-weight: 700;
-            font-style: normal;
-        }
-
-        .category-arrow {
-            margin-left: 8px;
-            width: 15px;
-            height: 15px;
-            background: url('../image/category-arrow.svg') no-repeat;
-            background-size: contain;
-        }
+    h1 {
+      font-size: 20px;
+      font-family: $font-family;
+      font-weight: 700;
+      font-style: normal;
     }
 
-    .catagory-info {
-        font-size: 16px;
-        font-family: $font-family;
-        font-weight: 300;
-        font-style: normal;
-        color: #00B207;
+    .category-arrow {
+      margin-left: 8px;
+      width: 15px;
+      height: 15px;
+      background: url("../image/category-arrow.svg") no-repeat;
+      background-size: contain;
     }
-}
+  }
 
-// searchbar
-.search-bar {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    gap: 15px;
+  .catagory-info {
     font-size: 16px;
     font-family: $font-family;
     font-weight: 300;
     font-style: normal;
+    color: #00b207;
+  }
+}
 
-    .catagory-dropdown,
-    .filter-dropdown {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-        border: 1px solid #E6E6E6;
-        border-radius: 8px;
-        padding: 8px;
-        width: 150px;
-        cursor: pointer;
+// searchbar
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 15px;
+  font-size: 16px;
+  font-family: $font-family;
+  font-weight: 300;
+  font-style: normal;
 
-        .dropdown-arrow {
-            margin-top: 5px;
-            width: 10px;
-            height: 10px;
-            transform: rotate(90deg);
-            background: url('../image/category-arrow.svg') no-repeat;
-            background-size: contain;
-            float: right;
-        }
+  .catagory-dropdown,
+  .filter-dropdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    padding: 8px;
+    width: 150px;
+    cursor: pointer;
+
+    .dropdown-arrow {
+      margin-top: 5px;
+      width: 10px;
+      height: 10px;
+      transform: rotate(90deg);
+      background: url("../image/category-arrow.svg") no-repeat;
+      background-size: contain;
+      float: right;
+    }
+  }
+
+  .dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    background: #fff;
+    z-index: 10;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .dropdown-list li {
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  .dropdown-list li:hover,
+  .dropdown-list li.highlighted {
+    background: #edf2ee;
+  }
+
+  .search-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 24px;
+    color: #999999;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    padding: 5.5px;
+    position: relative;
+
+    .search-input {
+      width: 100%;
+      border: none;
+      font-size: 16px;
+      font-family: $font-family;
+      font-weight: 300;
+      font-style: normal;
+    }
+
+    .search-button {
+      border: none;
+      width: 30px;
+      height: 30px;
+      background: url("../image/icon-search.svg") no-repeat;
+      background-size: contain;
+      cursor: pointer;
     }
 
     .dropdown-list {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        border: 1px solid #E6E6E6;
-        border-radius: 8px;
-        background: #fff;
-        z-index: 10;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      border: 1px solid #e6e6e6;
+      border-radius: 8px;
+      background: #fff;
+      z-index: 10;
+      list-style: none;
+      padding: 0;
+      margin: 0;
 
-    .dropdown-list li {
+      li {
         padding: 8px;
         cursor: pointer;
+      }
+
+      li:hover,
+      li.highlighted {
+        background: #edf2ee;
+      }
     }
+  }
 
-    .dropdown-list li:hover,
-    .dropdown-list li.highlighted {
-        background: #EDF2EE;
-    }
-
-    .search-box {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        height: 24px;
-        color: #999999;
-        border: 1px solid #E6E6E6;
-        border-radius: 8px;
-        padding: 5.5px;
-        position: relative;
-
-        .search-input {
-            width: 100%;
-            border: none;
-            font-size: 16px;
-            font-family: $font-family;
-            font-weight: 300;
-            font-style: normal;
-        }
-
-        .search-button {
-            border: none;
-            width: 30px;
-            height: 30px;
-            background: url('../image/icon-search.svg') no-repeat;
-            background-size: contain;
-            cursor: pointer;
-        }
-
-        .dropdown-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            border: 1px solid #E6E6E6;
-            border-radius: 8px;
-            background: #fff;
-            z-index: 10;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-
-            li {
-                padding: 8px;
-                cursor: pointer;
-            }
-
-            li:hover,
-            li.highlighted {
-                background: #EDF2EE;
-            }
-        }
-    }
-
-    .write-button {
-        width: 130px;
-        height: 37px;
-        padding: 8px;
-        border: 2px solid #9BCC66;
-        border-radius: 43px;
-        background: #fff;
-        font-size: 14px;
-        font-family: $font-family;
-        font-weight: 700;
-        font-style: normal;
-        cursor: pointer;
-    }
+  .write-button {
+    width: 130px;
+    height: 37px;
+    padding: 8px;
+    border: 2px solid #9bcc66;
+    border-radius: 43px;
+    background: #fff;
+    font-size: 14px;
+    font-family: $font-family;
+    font-weight: 700;
+    font-style: normal;
+    cursor: pointer;
+  }
 }
 
 // footer
 footer {
-    position: relative;
-    transform: translateY(-100%);
-    display: flex;
-    justify-content: space-between;
+  position: relative;
+  transform: translateY(-100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 20px;
+  background: #333333;
+  font-size: 10px;
+  color: white;
+  font-family: $font-family;
+
+  .site {
+    justify-content: center;
     align-items: center;
-    height: 60px;
-    padding: 0 20px;
-    background: #333333;
-    font-size: 10px;
-    color: white;
-    font-family: $font-family;
+    margin-right: 20px;
+  }
 
-    .site {
-        justify-content: center;
-        align-items: center;
-        margin-right: 20px;
-    }
-
-    .site img {
-        margin-right: 16px;
-    }
+  .site img {
+    margin-right: 16px;
+  }
 }
 
 // Link 밑줄 제거, hover
 a {
-    text-decoration: none;
+  text-decoration: none;
 
-    &:hover {
-        text-decoration: none;
-    }
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .notFound-container {
-    display: flex;
-    flex-direction: column;
-    /* 세로 방향 정렬 */
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    /* 화면 높이 전체를 사용 */
-    background-color: #f0f0f0;
-    /* 필요에 따라 배경색을 설정 */
+  display: flex;
+  flex-direction: column;
+  /* 세로 방향 정렬 */
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  /* 화면 높이 전체를 사용 */
+  background-color: #f0f0f0;
+  /* 필요에 따라 배경색을 설정 */
 }
 
 .notFound {
-    max-width: 80%;
-    max-height: 80%;
-    width: auto;
-    height: auto;
+  max-width: 80%;
+  max-height: 80%;
+  width: auto;
+  height: auto;
 }
 
 .notFoundBtn {
-    margin-top: 20px;
-    /* 버튼과 이미지 사이에 간격을 줍니다 */
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: #9BCC66;
-    /* 버튼 배경색을 9BCC66으로 변경 */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
+  margin-top: 20px;
+  /* 버튼과 이미지 사이에 간격을 줍니다 */
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #9bcc66;
+  /* 버튼 배경색을 9BCC66으로 변경 */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
 }
 
 .notFoundBtn:hover {
-    background-color: #7FAF4E;
-    /* 버튼 hover 시 색깔을 약간 어둡게 설정 */
+  background-color: #7faf4e;
+  /* 버튼 hover 시 색깔을 약간 어둡게 설정 */
 }

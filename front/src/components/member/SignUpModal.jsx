@@ -67,7 +67,7 @@ const SignUpModal = ({ onClose }) => {
     );
   };
 
-  const handleEmailCheck = async () => {
+  const handleCheckEmail = async () => {
     if (!signupData.email) {
       setEmailError("필수 입력 사항입니다.");
       return;
@@ -88,7 +88,7 @@ const SignUpModal = ({ onClose }) => {
     }
   };
 
-  const handleNicknameCheck = async () => {
+  const handleCheckNickname = async () => {
     if (!signupData.nickname) {
       setNicknameError("필수 입력 사항입니다.");
       return;
@@ -208,7 +208,7 @@ const SignUpModal = ({ onClose }) => {
               <button
                 type="button"
                 className="check-button"
-                onClick={handleEmailCheck}
+                onClick={handleCheckEmail}
               >
                 중복체크
               </button>
@@ -234,7 +234,7 @@ const SignUpModal = ({ onClose }) => {
               <button
                 type="button"
                 className="check-button"
-                onClick={handleNicknameCheck}
+                onClick={handleCheckNickname}
               >
                 중복체크
               </button>

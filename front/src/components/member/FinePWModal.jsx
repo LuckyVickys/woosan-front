@@ -1,56 +1,170 @@
-import React, { useState } from 'react';
-import LoginModal from './LoginModal';
-import '../../assets/styles/App.scss';
+import React, { useState, useEffect } from "react";
+import LoginModal from "./LoginModal";
+import { sendEmail } from "../../api/memberApi";
+import Swal from "sweetalert2";
+import TogglePassword from "./TogglePassword";
+import "../../assets/styles/App.scss";
+
+const initState = {
+  email: "",
+  password: "",
+  newPassword: "",
+};
 
 const FinePWModal = ({ onClose }) => {
-  const [email, setEmail] = useState('');
-  const [emailPassword, setEmailPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [pwCheck, setPwCheck] = useState('');
+  const [updateData, setUpdateData] = useState({ ...initState });
 
-  const [emailError, setEmailError] = useState('');
-  const [emailPasswordError, setEmailPasswordError] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState('');
-  const [pwCheckError, setPwCheckError] = useState('');
+  const [emailAvailable, setEmailAvailable] = useState(false);
+  const [passwordAvailable, setPasswordAvailable] = useState(false);
 
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showPwCheck, setShowPwCheck] = useState(false);
+
+  const [pwCheck, setPwCheck] = useState("");
+
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [newPasswordError, setNewPasswordError] = useState("");
+  const [pwCheckError, setPwCheckError] = useState("");
+
+  const [updatePW, setUpdatePW] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
 
-  const handleLogin = (e) => {
+  useEffect(() => {
+    if (isClosing) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [isClosing, onClose]);
+
+  const toggleNewPassword = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+
+  const togglePwCheck = () => {
+    setShowPwCheck(!showPwCheck);
+  };
+
+  const isValidEmail = (email) => {
+    // '@', .이 포함되어야 함
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
+  const isValidPassword = (password) => {
+    // 특수문자 ('~', '^', ',')를 제외하고, 영문, 숫자, 특수문자 조합하여 8~16자
+    return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/.test(
+      password
+    );
+  };
+
+  const handleSendEmail = async () => {
+    if (!updateData.email) {
+      setEmailError("필수 입력 사항입니다.");
+      return;
+    } else if (!isValidEmail(updateData.email)) {
+      setEmailError("이메일 형식이 올바르지 않습니다.");
+      return;
+    }
+
+    try {
+      const emailResponse = await sendEmail(updateData.email);
+      console.log("emailResponse");
+
+      if (emailResponse === true) {
+        setEmailError("작성해주신 이메일로 재발급된 비밀번호를 전송했습니다.");
+        setEmailAvailable(true);
+      } else {
+        setEmailError("가입되어 있지 않은 이메일입니다.");
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire("이메일 전송 실패", `다시 시도해주세요.`, "error");
+      setEmailError("");
+      setEmailAvailable(false);
+    }
+  };
+
+  const handleCheckPassword = async () => {
+    if (!updateData.password) {
+      setPasswordError("필수 입력 사항입니다.");
+      return;
+    }
+
+    try {
+      const passwordResponse = await updatePW(updateData.password);
+
+      if (passwordResponse === true) {
+        setPasswordError("임시 비밀번호와 일치합니다.");
+        setPasswordAvailable(true);
+      }
+    } catch (error) {
+      setEmailError("임시 비밀번호와 일치하지 않습니다.");
+      setEmailAvailable(false);
+    }
+  };
+
+  const handleUpdatePW = async (e) => {
     e.preventDefault();
+
     let valid = true;
-    
-    if (!email) {
-      setEmailError('이메일이 형식이 올바르지 않습니다.');
+
+    if (!updateData.email) {
+      setEmailError("필수 입력 사항입니다.");
       valid = false;
-    } else if (email=== "") {
-      setEmailError('필수 입력 사항입니다.');
-    } else if (email=== "") {
-      setEmailError('이미 가입된 이메일입니다.');
+    } else if (!isValidEmail(updateData.email)) {
+      setEmailError("이메일 형식이 올바르지 않습니다.");
+      valid = false;
     }
 
-    if (!emailPassword) {
-      setEmailPasswordError('일치하지 않습니다.');
+    if (!updateData.password) {
+      setPasswordError("필수 입력 사항입니다.");
       valid = false;
-    } else if (emailPassword === "") {
-      setEmailPasswordError('필수 입력 사항입니다.');
-    } 
-
-    if (!newPassword) {
-      setNewPasswordError('형식이 올바르지 않습니다.');
-      valid = false;
-    } else if (newPassword === "") {
-      setNewPasswordError('필수 입력 사항입니다.');
     }
 
-    if (pwCheck !== pwCheck) {
-      setPwCheckError('비밀번호와 일치하지 않습니다.');
+    if (!updateData.password) {
+      setPasswordError("필수 입력 사항입니다.");
       valid = false;
-    } else if (pwCheck === "") {
-      setPwCheckError('필수 입력 사항입니다.');
+    }
+
+    if (!updateData.newPassword) {
+      setNewPasswordError("필수 입력 사항입니다.");
+      valid = false;
+    } else if (!isValidPassword(updateData.newPassword)) {
+      setNewPasswordError("비밀번호 형식이 올바르지 않습니다.");
+      valid = false;
+    }
+
+    if (!pwCheck) {
+      setPwCheckError("필수 입력 사항입니다.");
+      valid = false;
+    } else if (updateData.password !== pwCheck) {
+      setPwCheckError("비밀번호가 일치하지 않습니다.");
+      valid = false;
     }
 
     if (valid) {
-      // Handle login
+      try {
+        const updateResponse = await updatePW(updateData);
+        console.log("비밀번호 변경 완료:", updateResponse);
+        setUpdatePW(true);
+
+        Swal.fire(
+          "비밀번호 변경 완료",
+          `로그인 창으로 전환됩니다.`,
+          "success"
+        ).then(() => {
+          onClose();
+        });
+      } catch (error) {
+        console.error(
+          "비밀번호 변경 실패:",
+          error.response ? error.response.data : error.message
+        );
+        Swal.fire("비밀번호 변경 실패", `다시 시도해주세요.`, "error");
+      }
     }
   };
 
@@ -61,60 +175,109 @@ const FinePWModal = ({ onClose }) => {
     }, 200);
   };
 
-    return (
-      <>
-        {/* <div className='modal-background'> */}
-          <div className='pwfind-modal'  onClick={(e) => {e.stopPropagation();}}>
-            <h2>비밀번호 찾기</h2>
-            <form onSubmit={handleLogin} className='form-box' >
-              <div className='input-box'>
-                <p className='input-info'>이메일</p>
-                <input className='email-input'
-                  type="email"
-                  placeholder="가입한 이메일을 입력해주세요."
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {emailError && <p className='input-error'>{emailError}</p>}
-              </div>
-              <div className='input-box'>
-                <p className='input-info'>재발급된 비밀번호</p>
-                <input className='emailPassword-input'
-                  type="emailPassword"
-                  placeholder="이메일로 재발급된 비밀번호를 입력해주세요."
-                  value={emailPassword}
-                  onChange={(e) => setEmailPassword(e.target.value)}
-                />
-                {emailPasswordError && <p className='input-error'>{emailPasswordError}</p>}
-              </div>
-              <div className='input-box'>
-                <p className='input-info'>새로운 비밀번호</p>
-                <input className='pw-input'
-                  type="newPassword"
-                  placeholder="특수문자(‘~’, ‘^’, ‘,’) 제외"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                {newPasswordError && <p className='input-error'>{newPasswordError}</p>}
-              </div>
-              <div className='input-box'>
-                <p className='input-info'>비밀번호 확인</p>
-                <input className='pw-check-input'
-                  type="pwCheck"
-                  placeholder="비밀번호 재입력"
-                  value={pwCheck}
-                  onChange={(e) => setPwCheck(e.target.value)}
-                />
-                {pwCheckError && <p className='input-error'>{pwCheckError}</p>}
-              </div>
-              <button className='pwchange-button' type="submit">비밀번호 변경하기</button>
-            </form>
-            <p className='signup-text'>이미 계정이 있으신가요? <a className='signup-link' onClick={openLoginModal}>로그인</a></p>
+  return (
+    <>
+      <div
+        className="pwfind-modal"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <h2>비밀번호 찾기</h2>
+        <form onSubmit={handleUpdatePW} className="form-box">
+          <div className="input-box">
+            <p className="input-info">이메일</p>
+            <div className="input-button">
+              <input
+                className="email-input"
+                type="email"
+                placeholder="가입한 이메일을 입력해주세요."
+                value={updateData.email}
+                onChange={(e) =>
+                  setUpdateData({ ...updateData, email: e.target.value })
+                }
+              />
+              <button
+                type="button"
+                className="check-button"
+                onClick={handleSendEmail}
+              >
+                비밀번호 재발급
+              </button>
+            </div>
+            {emailError && <p className="input-error">{emailError}</p>}
           </div>
-          {openLogin && <LoginModal />}
-        {/* </div> */}
-      </>
-      );
-    };
+          <div className="input-box">
+            <p className="input-info">재발급된 비밀번호</p>
+            <div className="input-button">
+              <input
+                className="pw-input"
+                type="password"
+                placeholder="이메일로 재발급된 비밀번호를 입력해주세요."
+                value={updateData.password}
+                onChange={(e) =>
+                  setUpdateData({ ...updateData, password: e.target.value })
+                }
+              />
+              <button
+                type="button"
+                className="check-button"
+                onClick={handleCheckPassword}
+              >
+                확인
+              </button>
+            </div>
+            {passwordError && <p className="input-error">{passwordError}</p>}
+          </div>
+          <div className="input-box">
+            <div className="input-info-password">
+              <p className="input-info-password-title">새로운 비밀번호</p>
+              <p className="input-info-pw">
+                (영문, 숫자, 특수문자 조합하여 8~16자)
+              </p>
+            </div>
+            <input
+              className="pw-input"
+              type="password"
+              placeholder="특수문자(‘~’, ‘^’, ‘,’) 제외"
+              value={updateData.newPassword}
+              onChange={(e) =>
+                setUpdateData({ ...updateData, newPassword: e.target.value })
+              }
+            />
+            <TogglePassword
+              isVisible={showPwCheck}
+              toggleVisibility={togglePwCheck}
+            />
+            {newPasswordError && (
+              <p className="input-error">{newPasswordError}</p>
+            )}
+          </div>
+          <div className="input-box">
+            <p className="input-info">비밀번호 확인</p>
+            <input
+              className="pw-check-input"
+              type="password"
+              placeholder="비밀번호 재입력"
+              value={pwCheck}
+              onChange={(e) => setPwCheck(e.target.value)}
+            />
+            {pwCheckError && <p className="input-error">{pwCheckError}</p>}
+          </div>
+          <button className="pwchange-button" type="submit">
+            비밀번호 변경하기
+          </button>
+        </form>
+        <p className="signup-text">
+          이미 계정이 있으신가요?{" "}
+          <a className="signup-link" onClick={openLoginModal}>
+            로그인
+          </a>
+        </p>
+      </div>
+      {openLogin && <LoginModal />}
+    </>
+  );
+};
 
 export default FinePWModal;
