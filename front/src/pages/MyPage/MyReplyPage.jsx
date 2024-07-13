@@ -1,9 +1,10 @@
+import MyReplyComponent from "../../components/myPage/MyReplyComponent";
 
 const MyReplyPage = () => {
 
     return (
         <div className="">
-            작성한 댓글 조회
+            <MyReplyComponent />
         </div>
     );
 }
