@@ -69,13 +69,30 @@ export const signUp = async (signupData) => {
 };
 
 // 임시비밀번호 메일 전송
-export const sendEmail = async (updateData) => {
-  const header = { headers: { "Content-Type": "application/json" } };
-  const data = {
-    email: updateData.email,
-  };
+// export const sendEmail = async (email) => {
+//   const header = { headers: { "Content-Type": "application/json" } };
+//   const data = {
+//     email: email,
+//   };
+//   try {
+//     const response = await axios.post(`${host}/member/sendEmail`, data, header);
+//     return response.data;
+//   } catch (error) {
+//     console.error(
+//       "Error fetching data:",
+//       error.response ? error.response.data : error.message
+//     );
+//     throw error.response.data;
+//   }
+// };
+
+// 원래 백엔드 코드(현재 깃)에 맞는 api
+export const sendEmail = async (email) => {
   try {
-    const response = await axios.post(`${host}/member/sendEmail`, data, header);
+    const response = await axios.post(
+      `${host}/member/sendEmail?email=${email}`
+    );
+    console.log(response.data.message);
     return response.data;
   } catch (error) {
     console.error(
