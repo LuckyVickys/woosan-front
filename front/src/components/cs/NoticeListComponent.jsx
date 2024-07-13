@@ -3,7 +3,7 @@ import { getNoticeList } from "../../api/csApi";
 import useCustomMove from "../../hooks/useCustomMove";
 import '../../assets/styles/board2.scss';
 import ListPageComponent from "../../components/board/element/ListPageComponent";
-import TableRowComponent from "../../components/board/element/TableLowComponent";
+import TableRowComponent from "../../components/board/element/TableRowComponent";
 
 
 const initState = {

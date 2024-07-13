@@ -10,6 +10,7 @@ import LikeButton from "../../components/common/LikeButton";
 import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
 import defaultProfile from "../../assets/image/profile.png";
+import { useSelector } from "react-redux";
 
 const initState = {
   "dtoList": [],
@@ -28,8 +29,8 @@ const initState = {
 };
 
 const ReplyComponent = () => {
-  const [userId, setUserId] = useState(3); // 로그인한 사용자 id(임시)
-
+  const loginState = useSelector((state) => state.loginSlice);
+  const [userId, setUserId] = useState(null); // 로그인한 사용자 id
   const { id } = useParams();
   const [replyForms, setReplyForms] = useState({});
   const [replies, setReplies] = useState(initState);
@@ -40,6 +41,12 @@ const ReplyComponent = () => {
   const [openMsgModal, setOpenMsgModal] = useState(false);
   const dropDownRefs = useRef([]);
   const type = "reply";
+
+  useEffect(() => {
+    if (loginState.id) {
+      setUserId(loginState.id);
+    }
+  }, [loginState.id]);
 
   useEffect(() => {
     const getReplies = async (page = 1) => {
@@ -126,7 +133,7 @@ const ReplyComponent = () => {
   const handleReplySubmit = async () => {
     try {
       const newReply = await addReply({
-        writerId: 2,
+        writerId: userId,
         content: replyContent,
         parentId: null,
         boardId: id,
@@ -136,6 +143,7 @@ const ReplyComponent = () => {
         ...prevReplies,
         dtoList: [newReply, ...prevReplies.dtoList]
       }));
+      window.location.reload(); // 페이지 새로고침
     } catch (error) {
       console.error("Error adding reply:", error);
     }
@@ -144,7 +152,7 @@ const ReplyComponent = () => {
   const handleChildReplySubmit = async (replyId) => {
     try {
       const newChildReply = await addReply({
-        writerId: 2,
+        writerId: userId,
         content: childReplyContent[replyId],
         parentId: replyId,
         boardId: id,
@@ -158,6 +166,7 @@ const ReplyComponent = () => {
             : reply
         )
       }));
+      window.location.reload(); // 페이지 새로고침
     } catch (error) {
       console.error("Error adding child reply:", error);
     }
@@ -184,7 +193,7 @@ const ReplyComponent = () => {
             <div className="reply-right">
               <LikeButton
                 className="like-button"
-                memberId={1}
+                memberId={userId}
                 type="댓글"
                 targetId={reply.id}
                 initialLikesCount={reply.likesCount}
@@ -214,7 +223,7 @@ const ReplyComponent = () => {
               <img src={replyArrow} alt="replyArrow" className="reply-arrow" />
               <div className="reply-form">
                 <img
-                  src="https://kr.object.ncloudstorage.com/woosan/board/f18d0019-b9a0-41de-8b6e-5c0f814c4899_%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-05-29%20163620.png"
+                  src={defaultProfile}
                   alt="프로필"
                   className="reply-profile-image"
                 />

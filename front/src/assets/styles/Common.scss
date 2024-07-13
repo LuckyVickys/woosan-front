@@ -173,12 +173,17 @@ header {
             width: 230px;
             height: 10px;
             display: flex;
-            position: relative;
+            flex-direction: column;
+            align-items: end;
+            font-family: $font-family;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1;
 
-            .point-bar {
-              border-radius: 10px;
-              height: 7px;
-              margin-top: 5px;
+            &.active {
+                opacity: 1;
+                transform: translateY(0);
             }
 
             .profile-point-bar {

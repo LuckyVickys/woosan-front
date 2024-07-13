@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "../../assets/styles/App.scss";
 import { getBoard, translate } from "../../api/boardApi";
 import { summary } from "../../api/summaryApi";
@@ -10,7 +11,7 @@ import LikeButton from "../../components/common/LikeButton";
 import { FaComment } from "react-icons/fa";
 import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
-import { convertLineBreaks } from "../../util/convertUtil";  // 추가된 부분
+import { convertLineBreaks } from "../../util/convertUtil";
 import defaultProfile from "../../assets/image/profile.png";
 
 const initState = {
@@ -29,8 +30,8 @@ const initState = {
 };
 
 const ReadComponent = () => {
-  const [userId, setUserId] = useState(3); // 로그인한 사용자 id(임시)
-
+  const loginState = useSelector((state) => state.loginSlice);
+  const [userId, setUserId] = useState(null);
   const { id } = useParams();
 
   const [board, setBoard] = useState(initState);
@@ -42,20 +43,28 @@ const ReadComponent = () => {
   const type = "board";
 
   useEffect(() => {
+    if (loginState.id) {
+      setUserId(loginState.id);
+    }
+  }, [loginState.id]);
+
+  useEffect(() => {
     getBoard(id).then((data) => {
-      console.log("Received board data:", data); // Log the received data
-      const contentWithLineBreaks = convertLineBreaks(data.content); // 수정된 부분
+      const contentWithLineBreaks = convertLineBreaks(data.content);
       setBoard({ ...data, content: contentWithLineBreaks });
     });
   }, [id]);
 
   const handlePapagoTranslate = async () => {
     try {
-      const translated = await translate(id, { title: board.title, content: board.content });
+      const translated = await translate(id, {
+        title: board.title,
+        content: board.content,
+      });
       setBoard((prevBoard) => ({
         ...prevBoard,
         title: translated.title,
-        content: convertLineBreaks(translated.content), // 수정된 부분
+        content: convertLineBreaks(translated.content),
       }));
     } catch (error) {
       console.error("번역 중 오류 발생:", error);
@@ -64,8 +73,10 @@ const ReadComponent = () => {
 
   const handleClovaSummary = async () => {
     try {
-      const summarized = await summary(id, { title: board.title, content: board.content });
-      console.log("요약 중: ", summarized);
+      const summarized = await summary(id, {
+        title: board.title,
+        content: board.content,
+      });
       setSummarizedBoard({ content: summarized });
     } catch (error) {
       console.error("요약 중 오류 발생:", error);
@@ -102,7 +113,10 @@ const ReadComponent = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (boardMenuRef.current && !boardMenuRef.current.contains(event.target)) {
+      if (
+        boardMenuRef.current &&
+        !boardMenuRef.current.contains(event.target)
+      ) {
         setShowBoardMenu(false);
       }
     };
@@ -127,8 +141,14 @@ const ReadComponent = () => {
       <div className="post-title">
         <h1 className="post-title-text">{board.title}</h1>
         <div className="api-button">
-          <button className="papago-button" onClick={handlePapagoTranslate}></button>
-          <button className="clova-button" onClick={handleClovaSummary}></button>
+          <button
+            className="papago-button"
+            onClick={handlePapagoTranslate}
+          ></button>
+          <button
+            className="clova-button"
+            onClick={handleClovaSummary}
+          ></button>
         </div>
       </div>
       <div className="board-header">
@@ -136,27 +156,41 @@ const ReadComponent = () => {
           <div className="author-info">
             <p className="post-author">
               <img src={profileSrc} alt="프로필" className="profile-image" />
-              {board.nickname} | &nbsp; 조회수 {board.views} | 댓글 {board.replyCount} | {formatDate(board.regDate)}
+              {board.nickname} | &nbsp; 조회수 {board.views} | 댓글{" "}
+              {board.replyCount} | {formatDate(board.regDate)}
             </p>
           </div>
         </div>
         <div className="right">
           <LikeButton
             className="like-button"
-            memberId={1}
+            memberId={userId}
             type="게시물"
             targetId={id}
             initialLikesCount={board.likesCount}
           />
           <FaComment className="replyIcon" /> {board.replyCount}
-          <button className="menu-button" onClick={handleBoardMenuSelect} ref={boardMenuRef}>
+          <button
+            className="menu-button"
+            onClick={handleBoardMenuSelect}
+            ref={boardMenuRef}
+          >
             ⋮
-            {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} openReport={openReport} openMsg={openMsg} />}
+            {showBoardMenu && (
+              <BoardDropDown
+                id={id}
+                onSelect={handleBoardMenuSelect}
+                openReport={openReport}
+                openMsg={openMsg}
+                showModifyButton={userId === board.writerId} // 수정된 부분
+              />
+            )}
           </button>
         </div>
       </div>
       <p className="alert-message">
-        ※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수 있습니다.
+        ※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수
+        있습니다.
       </p>
       <div className="post-content">
         <div dangerouslySetInnerHTML={{ __html: board.content }}></div>
@@ -165,18 +199,38 @@ const ReadComponent = () => {
         {summarizedBoard && (
           <div className="summary-content" id="result">
             <div className="summary-state">요약 완료</div>
-            <div dangerouslySetInnerHTML={{ __html: summarizedBoard.content }}></div>
+            <div
+              dangerouslySetInnerHTML={{ __html: summarizedBoard.content }}
+            ></div>
           </div>
         )}
         <div className="image-container">
           {board.filePathUrl.map((url, index) => (
-            <img key={index} src={url} alt={`image-${index}`} className="image" />
+            <img
+              key={index}
+              src={url}
+              alt={`image-${index}`}
+              className="image"
+            />
           ))}
         </div>
       </div>
       <PageComponent />
-      {openMsgModal && <MsgModal senderId={userId} receiver={board.nickname} onClose={closeMsg} />}
-      {openReportModal && <ReportModal type={type} targetId={board.id} reporterId={userId} onClose={closeReport} />}
+      {openMsgModal && (
+        <MsgModal
+          senderId={userId}
+          receiver={board.nickname}
+          onClose={closeMsg}
+        />
+      )}
+      {openReportModal && (
+        <ReportModal
+          type={type}
+          targetId={board.id}
+          reporterId={userId}
+          onClose={closeReport}
+        />
+      )}
     </>
   );
 };
