@@ -51,19 +51,19 @@
         margin: 5px 0;
       }
 
-      .toggle-password-button {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        height: 20px;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        border-radius: 2px;
-        font-size: 15px;
-        font-weight: 400;
-        cursor: pointer;
-      }
+      // .toggle-password-button {
+      //   position: absolute;
+      //   right: 10px;
+      //   top: 50%;
+      //   height: 20px;
+      //   transform: translateY(-50%);
+      //   background: none;
+      //   border: none;
+      //   border-radius: 2px;
+      //   font-size: 15px;
+      //   font-weight: 400;
+      //   cursor: pointer;
+      // }
 
       .input-info-password {
         display: flex;
@@ -94,7 +94,8 @@
       .email-input,
       .pw-input,
       .nickname-input,
-      .pw-check-input {
+      .pw-check-input,
+      .new-pw-input {
         outline: none;
         width: 100%;
         padding: 10px;
@@ -118,7 +119,7 @@
         }
       }
 
-      .input-button {
+      .input-button-container {
         position: relative;
 
         .email-input,
@@ -146,6 +147,10 @@
           font-weight: 400;
           cursor: pointer;
         }
+      }
+
+      .input-toggle-container {
+        position: relative;
 
         .toggle-password-button {
           position: absolute;
@@ -160,6 +165,7 @@
           font-weight: 400;
           cursor: pointer;
         }
+
       }
     }
 
