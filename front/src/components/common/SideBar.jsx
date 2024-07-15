@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "../../assets/styles/App.scss";
 import { FaUtensils, FaBroom, FaConciergeBell, FaMoneyBill, FaPaintRoller, FaRegFileAlt, FaTh, FaRegSmile, FaUserEdit, FaClipboardList, FaComments, FaHeart, FaUsers, FaEnvelopeOpenText, FaSignOutAlt, FaBullhorn, FaGift } from 'react-icons/fa';
+import { GoReport } from "react-icons/go";
+import { FiUpload } from "react-icons/fi";
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../slices/loginSlice';
@@ -30,6 +32,8 @@ const SideBar = ({ pageType }) => {
             navigate(`/myPage/${categoryName}`);
         } else if (pageType === 'matching') {
             navigate(`/matching/${categoryName}`);
+        } else if (pageType === "adminPage") {
+            navigate(`/adminPage/${categoryName}`);
         }
     };
 
@@ -185,6 +189,31 @@ const SideBar = ({ pageType }) => {
                             <div onClick={handleLogout}>
                                 <FaSignOutAlt className="icon" />Log out
                             </div>
+                        </div>
+                    </>
+                )}
+                {pageType === 'adminPage' && (
+                    <>
+                        <div className="category-title">관리자 페이지</div>
+                        <div className={`sub-category ${activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('upload')} className={activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}>
+                                <FiUpload className={`icon ${activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}`} />배너 관리
+                            </button>
+                        </div>
+                        <div className={`sub-category ${activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('reports')} className={activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}>
+                                <GoReport className={`icon ${activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}`} />신고 관리
+                            </button>
+                        </div>
+                        <div className={`sub-category ${activeCategory === 'notices' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('notices')} className={activeCategory === 'notices' ? 'active' : ''}>
+                                <FaBullhorn className={`icon ${activeCategory === 'notices' ? 'active' : ''}`} />공지사항 관리
+                            </button>
+                        </div>
+                        <div className={`sub-category ${activeCategory === 'msgs' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('msgs')} className={activeCategory === 'msgs' ? 'active' : ''}>
+                                <FaGift className={`icon ${activeCategory === 'msgs' ? 'active' : ''}`} />쪽지함
+                            </button>
                         </div>
                     </>
                 )}
