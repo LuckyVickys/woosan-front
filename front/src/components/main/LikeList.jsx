@@ -17,7 +17,7 @@ const LikeList = () => {
         <div className='likelist'>
             {best.map(likeItem => (
                 <div key={likeItem.id} className="likelist-post">
-                    <div className="likelist-catagory">
+                    <div className="likelist-category">
                         {likeItem.categoryName}
                     </div>
                     <div className="likelist-title">
