@@ -15,8 +15,8 @@ const FinePWModal = ({ onClose }) => {
   const [updateData, setUpdateData] = useState({ ...initState });
 
   const [emailAvailable, setEmailAvailable] = useState(false);
-  const [passwordAvailable, setPasswordAvailable] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showPwCheck, setShowPwCheck] = useState(false);
 
@@ -39,6 +39,10 @@ const FinePWModal = ({ onClose }) => {
       return () => clearTimeout(timer);
     }
   }, [isClosing, onClose]);
+
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const toggleNewPassword = () => {
     setShowNewPassword(!showNewPassword);
@@ -86,30 +90,6 @@ const FinePWModal = ({ onClose }) => {
       setEmailAvailable(false);
     }
   };
-
-  // const handleCheckPassword = async () => {
-  //   if (!updateData.password) {
-  //     setPasswordError("필수 입력 사항입니다.");
-  //     return;
-  //   }
-
-  //   try {
-  //     const passwordResponse = await checkPassword(updateData.password);
-  //     console.log(passwordResponse);
-
-  //     if (passwordResponse === true) {
-  //       setPasswordError("임시 비밀번호와 일치합니다.");
-  //       setPasswordAvailable(true);
-  //     } else {
-  //       setPasswordError("임시 비밀번호와 일치하지 않습니다.");
-  //       setPasswordAvailable(false);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error checking password:", error);
-  //     setPasswordError("서버 오류로 인해 비밀번호 확인에 실패하였습니다.");
-  //     setPasswordAvailable(false);
-  //   }
-  // };
 
   const handleUpdatePW = async (e) => {
     e.preventDefault();
@@ -209,27 +189,28 @@ const FinePWModal = ({ onClose }) => {
                 비밀번호 재발급
               </button>
             </div>
-            {emailError && <p className="input-error">{emailError}</p>}
+            {emailError && (
+              <p className={`input-error ${emailAvailable ? "available" : ""}`}>
+                {emailError}
+              </p>
+            )}
           </div>
           <div className="input-box">
             <p className="input-info">재발급된 비밀번호</p>
-            <div className="input-button-container">
+            <div className="input-toggle-container">
               <input
                 className="pw-input"
-                type="text"
+                type={showPassword ? "text" : "password"}
                 placeholder="이메일로 재발급된 비밀번호를 입력해주세요."
                 value={updateData.password}
                 onChange={(e) =>
                   setUpdateData({ ...updateData, password: e.target.value })
                 }
               />
-              {/* <button
-                type="button"
-                className="check-button"
-                onClick={handleCheckPassword}
-              >
-                확인
-              </button> */}
+              <TogglePassword
+                isVisible={showPassword}
+                toggleVisibility={togglePassword}
+              />
             </div>
             {passwordError && <p className="input-error">{passwordError}</p>}
           </div>
@@ -253,7 +234,8 @@ const FinePWModal = ({ onClose }) => {
               <TogglePassword
                 isVisible={showNewPassword}
                 toggleVisibility={toggleNewPassword}
-            /></div>
+              />
+            </div>
             {newPasswordError && (
               <p className="input-error">{newPasswordError}</p>
             )}
