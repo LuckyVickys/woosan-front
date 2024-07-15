@@ -120,7 +120,11 @@ const ModifyComponent = () => {
 
     const handleRemove = async () => {
         try {
-            await deleteBoard(id);
+            const removeDTO = {
+                id: id,
+                writerId: loginState.id,
+            }
+            await deleteBoard(removeDTO);
             console.log("삭제 성공");
             moveToList();
         } catch (error) {

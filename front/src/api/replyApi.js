@@ -25,9 +25,9 @@ export const addReply = async (ReplyDTO) => {
     }
 }
 
-export const deleteReply = async (id) => {
+export const deleteReply = async (removeDTO) => {
     try {
-        const res = await axios.delete(`${host}/${id}`);
+        const res = await axios.delete(`${host}`, removeDTO);
         return res.data;
     } catch (error) {
         console.error("Error deleting reply:", error);
