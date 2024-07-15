@@ -188,6 +188,31 @@ const SideBar = ({ pageType }) => {
                         </div>
                     </>
                 )}
+                {pageType === 'adminPage' && (
+                    <>
+                        <div className="category-title">관리자 페이지</div>
+                        <div className={`sub-category ${activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('upload')} className={activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}>
+                                <FaBullhorn className={`icon ${activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}`} />배너 관리
+                            </button>
+                        </div>
+                        <div className={`sub-category ${activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('reports')} className={activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}>
+                                <FaBullhorn className={`icon ${activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}`} />신고 관리
+                            </button>
+                        </div>
+                        <div className={`sub-category ${activeCategory === 'notices' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('notices')} className={activeCategory === 'notices' ? 'active' : ''}>
+                                <FaGift className={`icon ${activeCategory === 'notices' ? 'active' : ''}`} />공지사항 관리
+                            </button>
+                        </div>
+                        <div className={`sub-category ${activeCategory === 'msgs' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('notices')} className={activeCategory === 'notices' ? 'active' : ''}>
+                                <FaGift className={`icon ${activeCategory === 'notices' ? 'active' : ''}`} />쪽지함
+                            </button>
+                        </div>
+                    </>
+                )}
             </div>
         </aside>
     );
