@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "../../assets/styles/App.scss";
 import { FaUtensils, FaBroom, FaConciergeBell, FaMoneyBill, FaPaintRoller, FaRegFileAlt, FaTh, FaRegSmile, FaUserEdit, FaClipboardList, FaComments, FaHeart, FaUsers, FaEnvelopeOpenText, FaSignOutAlt, FaBullhorn, FaGift } from 'react-icons/fa';
+import { GoReport } from "react-icons/go";
+import { FiUpload } from "react-icons/fi";
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../slices/loginSlice';
@@ -195,17 +197,17 @@ const SideBar = ({ pageType }) => {
                         <div className="category-title">관리자 페이지</div>
                         <div className={`sub-category ${activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}`}>
                             <button onClick={() => handleNavigation('upload')} className={activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}>
-                                <FaBullhorn className={`icon ${activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}`} />배너 관리
+                                <FiUpload className={`icon ${activeCategory === 'upload' || activeCategory === '' ? 'active' : ''}`} />배너 관리
                             </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}`}>
                             <button onClick={() => handleNavigation('reports')} className={activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}>
-                                <FaBullhorn className={`icon ${activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}`} />신고 관리
+                                <GoReport className={`icon ${activeCategory === 'reports' || activeCategory === '' ? 'active' : ''}`} />신고 관리
                             </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'notices' ? 'active' : ''}`}>
                             <button onClick={() => handleNavigation('notices')} className={activeCategory === 'notices' ? 'active' : ''}>
-                                <FaGift className={`icon ${activeCategory === 'notices' ? 'active' : ''}`} />공지사항 관리
+                                <FaBullhorn className={`icon ${activeCategory === 'notices' ? 'active' : ''}`} />공지사항 관리
                             </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'msgs' ? 'active' : ''}`}>
