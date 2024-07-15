@@ -63,7 +63,7 @@ const SearchListComponent = ({ category, filter, keyword }) => {
     }, [searchParams, category, filter, keyword]);
 
     const handleRowClick = (id) => {
-        moveToRead(id, serverData);
+        moveToRead(id, "/board");  // "/board"를 customPath로 명시적으로 전달
     };
 
     const moveStandardPage = (page) => {

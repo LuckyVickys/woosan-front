@@ -39,7 +39,7 @@ const ListComponent = () => {
     }, [page, size, categoryName, refresh]);  // refresh 추가
 
     const handleRowClick = (id) => {
-        moveToRead(id, serverData);
+        moveToRead(id);
         console.log("HandleRowClick:", serverData);
     };
 

@@ -2,10 +2,8 @@ import { useState } from "react";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 
 const getNum = (param, defaultValue) => {
-    if (!param) {
-        return defaultValue;
-    }
-    return parseInt(param);
+    const num = parseInt(param, 10);
+    return isNaN(num) ? defaultValue : num;
 };
 
 const useCustomMove = (defaultPath = "/board") => {
@@ -44,12 +42,12 @@ const useCustomMove = (defaultPath = "/board") => {
         });
     };
 
-    const moveToRead = (num, serverData) => {
-        console.log(`Navigating to ${defaultPath}/${num}`);
+    const moveToRead = (num, customPath) => {
+        const path = customPath || defaultPath;
+        console.log(`Navigating to ${path}/${num}`);
         navigate({
-            pathname: `${defaultPath}/${num}`,
-            search: queryDefault,
-            state: { serverData }
+            pathname: `${path}/${num}`,
+            search: queryDefault
         });
     };
 

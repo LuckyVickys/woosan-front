@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getMyReplies } from "../../api/myPageApi";
+import { getMyBoard } from "../../api/myPageApi";
 import useCustomMove from "../../hooks/useCustomMove";
-import ListPageComponent from "../../components/board/element/ListPageComponent";
-import MyRepliesTableRowComponent from "../../components/myPage/element/MyRepliesTableRowComponent";
+import ListPageComponent from "../../components/myPage/element/ListPageComponent";
+import MyBoardTableRowComponent from "../../components/myPage/element/MyBoardTableRowComponent";
 import "../../assets/styles/App.scss";
 
 const initState = {
@@ -21,20 +21,22 @@ const initState = {
     current: 0,
 };
 
-const MyReplyComponent = () => {
-    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/board");
+const MyBoardComponent = () => {
+    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/myPage/board");
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {
-        console.log(`Fetching replies with page: ${page}, size: ${size}`);
+        const currentPage = page || 1;
+        const currentSize = size || 10;
+        console.log(`Fetching data with page: ${currentPage}, size: ${currentSize}`);
         const params = {
             memberId: 10, // 실제로는 로그인된 사용자의 ID를 가져와야 합니다.
             pageRequestDTO: {
-                page,
-                size
+                page: currentPage,
+                size: currentSize
             }
         };
-        getMyReplies(params).then(data => {
+        getMyBoard(params).then(data => {
             console.log("Fetched data:", data);
             setServerData(data);
         }).catch(err => {
@@ -42,8 +44,8 @@ const MyReplyComponent = () => {
         });
     }, [page, size, refresh]);
 
-    const handleRowClick = (boardId) => {
-        moveToRead(boardId);
+    const handleRowClick = (id) => {
+        moveToRead(id, "/board");
     };
 
     const { dtoList, pageNumList, pageRequestDTO, prev, next, totalCount, prevPage, nextPage, totalPage, current } = serverData;
@@ -55,15 +57,20 @@ const MyReplyComponent = () => {
                     <tr>
                         <th>번호</th>
                         <th>카테고리</th>
-                        <th>게시물 제목</th>
-                        <th>내용</th>
+                        <th>제목</th>
                         <th>작성 날짜</th>
+                        <th>조회수</th>
                         <th>추천</th>
                     </tr>
                 </thead>
                 <tbody>
                     {dtoList && dtoList.map((item, index) => (
-                        <MyRepliesTableRowComponent key={item.id} item={item} index={index} onClick={() => handleRowClick(item.boardId)} />
+                        <MyBoardTableRowComponent
+                            key={item.id}
+                            item={item}
+                            index={index}
+                            onClick={() => handleRowClick(item.id)}
+                        />
                     ))}
                 </tbody>
             </table>
@@ -75,4 +82,4 @@ const MyReplyComponent = () => {
     );
 };
 
-export default MyReplyComponent;
+export default MyBoardComponent;
