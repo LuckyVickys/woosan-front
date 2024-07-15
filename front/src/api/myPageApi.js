@@ -22,3 +22,13 @@ export const getMyBoard = async (params) => {
         throw error;
     }
 };
+
+export const getLikedBoard = async (params) => {
+    try {
+        const response = await axios.post(`${host}/my/like`, params);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching my replies:', error.response ? error.response.data : error.message);
+        throw error;
+    }
+};
