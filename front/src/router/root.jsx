@@ -17,7 +17,7 @@ const Board = lazy(() => import("../pages/board/IndexPage"))
 const Matching = lazy(() => import("../pages/matching/IndexPage"))
 const CS = lazy(() => import("../pages/cs/IndexPage"))
 const MyPage = lazy(() => import("../pages/myPage/IndexPage"))
-// const AdminMyPage = lazy(() => import("../pages/adminMyPage/ReportList"))
+const AdminPage = lazy(() => import("../pages/adminPage/IndexPage"))
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage")); // 추가
 
 const root = createBrowserRouter([
@@ -49,10 +49,10 @@ const root = createBrowserRouter([
         element: <Suspense fallback={Loading}><MyPage /></Suspense>,
         children: myPageRouter()
     },
-    // {
-    //     path: "adminMyPage",
-    //     element: <Suspense fallback={Loading}><AdminMyPage/></Suspense>
-    // }
+    {
+        path: "adminPage",
+        element: <Suspense fallback={Loading}><AdminPage/></Suspense>
+    },
     {
         path: "*", // catch-all route
         element: <Suspense fallback={Loading}><NotFoundPage /></Suspense>
