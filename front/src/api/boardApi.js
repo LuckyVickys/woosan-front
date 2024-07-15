@@ -65,9 +65,9 @@ export const modifyBoard = async (id, formData) => {
 }
 
 
-export const deleteBoard = async (id) => {
+export const deleteBoard = async (removeDTO) => {
     try {
-        const res = await axios.patch(`${prefix}/delete/${id}`);
+        const res = await axios.patch(`${prefix}/delete`, removeDTO);
         return res.data;
     } catch (error) {
         console.error('Error deleting board:', error.response ? error.response.data : error.message);

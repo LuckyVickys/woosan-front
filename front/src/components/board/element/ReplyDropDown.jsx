@@ -3,12 +3,15 @@ import ReportModal from './ReportModal';
 import MsgModal from './MsgModal';
 import Swal from 'sweetalert2';
 import { deleteReply } from "../../../api/replyApi"; // Import deleteReply function
+import { useSelector } from "react-redux";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 import '../../../assets/styles/App.scss';
 
 const ReplyDropDown = ({ onSelect, replyId, openReport, openMsg, onDeleteSuccess }) => {
     const [openReportModal, setOpenReportModal] = useState(false);
     const [openMsgModal, setOpenMsgModal] = useState(false);
+    const loginState = useSelector((state) => state.loginSlice);
+
 
     const handleReport = () => {
         // const id = replyId;
@@ -23,8 +26,11 @@ const ReplyDropDown = ({ onSelect, replyId, openReport, openMsg, onDeleteSuccess
     };
 
     const handleDelete = () => {
-        console.log("Deleted id:", replyId);
-        onSelect("delete", replyId);
+        // onSelect("delete", replyId);
+        const removeDTO = {
+            id: replyId,
+            writerId: loginState.id,
+        }
         Swal.fire({
             title: '댓글을 삭제하시겠습니까?',
             text: `${replyId}를 삭제하시면 복구하실 수 없습니다.`,
@@ -36,7 +42,7 @@ const ReplyDropDown = ({ onSelect, replyId, openReport, openMsg, onDeleteSuccess
             cancelButtonText: '취소'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteReply(replyId)
+                deleteReply(removeDTO)
                     .then(() => {
                         Swal.fire('삭제 완료', `${replyId}가 삭제되었습니다.`, 'success').then(() => {
                             onDeleteSuccess(replyId); // 여기에서 상태 업데이트를 호출합니다
@@ -59,7 +65,7 @@ const ReplyDropDown = ({ onSelect, replyId, openReport, openMsg, onDeleteSuccess
                         <div className='comment-report-text'>신고하기</div>
                     </div>
                     <div className='comment-dropdown' onClick={handleMsg}>
-                    <MdOutlineLocalPostOffice className='comment-msg-icon'/>
+                        <MdOutlineLocalPostOffice className='comment-msg-icon' />
                         <div className='comment-msg-text'>쪽지 전송</div>
                     </div>
                     <div className='comment-dropdown' onClick={handleDelete}>
