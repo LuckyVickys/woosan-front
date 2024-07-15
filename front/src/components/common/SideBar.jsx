@@ -30,6 +30,8 @@ const SideBar = ({ pageType }) => {
             navigate(`/myPage/${categoryName}`);
         } else if (pageType === 'matching') {
             navigate(`/matching/${categoryName}`);
+        } else if (pageType === "adminPage") {
+            navigate(`/adminPage/${categoryName}`);
         }
     };
 
