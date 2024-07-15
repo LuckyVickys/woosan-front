@@ -62,10 +62,10 @@ const SideBar = ({ pageType }) => {
 
     return (
         <aside className="sidebar">
-            <div className="catagory">
+            <div className="category">
                 {pageType === 'board' && (
                     <>
-                        <div className="catagory-title">꿀팁</div>
+                        <div className="category-title">꿀팁</div>
                         <div className={`sub-category ${activeCategory === '' ? 'active' : ''}`}>
                             <button onClick={() => handleNavigation('')} className={activeCategory === '' ? 'active' : ''}>
                                 <FaTh className={`icon ${activeCategory === '' ? 'active' : ''}`} />전체
@@ -110,7 +110,7 @@ const SideBar = ({ pageType }) => {
                 )}
                 {pageType === 'matching' && (
                     <>
-                        <div className="catagory-title">모임</div>
+                        <div className="category-title">모임</div>
                         <div className={`sub-category ${activeCategory === '' ? 'active' : ''}`}>
                             <button onClick={() => handleNavigation('')} className={activeCategory === '' ? 'active' : ''}>
                                 <FaTh className={`icon ${activeCategory === '' ? 'active' : ''}`} />전체
@@ -135,7 +135,7 @@ const SideBar = ({ pageType }) => {
                 )}
                 {pageType === 'cs' && (
                     <>
-                        <div className="catagory-title">고객 지원</div>
+                        <div className="category-title">고객 지원</div>
                         <div className={`sub-category ${activeCategory === 'notices' || activeCategory === '' ? 'active' : ''}`}>
                             <button onClick={() => handleNavigation('notices')} className={activeCategory === 'notices' || activeCategory === '' ? 'active' : ''}>
                                 <FaBullhorn className={`icon ${activeCategory === 'notices' || activeCategory === '' ? 'active' : ''}`} />공지사항
@@ -150,7 +150,7 @@ const SideBar = ({ pageType }) => {
                 )}
                 {pageType === 'myPage' && (
                     <>
-                        <div className="catagory-title">마이페이지</div>
+                        <div className="category-title">마이페이지</div>
                         <div className={`sub-category ${activeCategory === 'info' || activeCategory === '' ? 'active' : ''}`}>
                             <button onClick={() => handleNavigation('info')} className={activeCategory === 'info' || activeCategory === '' ? 'active' : ''}>
                                 <FaUserEdit className={`icon ${activeCategory === 'info' || activeCategory === '' ? 'active' : ''}`} />회원 정보 수정

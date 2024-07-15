@@ -6,13 +6,15 @@
     overflow: hidden;
     box-sizing: border-box;
 
-    .catagory {
+    .category {
+        // padding-left: 20px;
         width: 100%;
         box-sizing: border-box;
         border: 1px solid #E6E6E6;
         border-radius: 8px;
 
-        .catagory-title {
+        .category-title {
+            margin-right: 32px;
             padding: 20px 20px;
             width: 100%;
             font-family: 'Pretendard-Regular', sans-serif;
@@ -56,8 +58,7 @@
                 }
             }
 
-            button,
-            .nav-link {
+            button {
                 background: none;
                 border: none;
                 font-size: 16px;
@@ -66,7 +67,6 @@
                 display: flex;
                 align-items: center;
                 color: #666666;
-                text-decoration: none;
 
                 &.active {
                     font-weight: bold;
