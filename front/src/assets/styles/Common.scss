@@ -182,8 +182,8 @@ header {
             z-index: 1;
 
             &.active {
-                opacity: 1;
-                transform: translateY(0);
+              opacity: 1;
+              transform: translateY(0);
             }
 
             .profile-point-bar {
@@ -267,17 +267,14 @@ header {
   }
 }
 
-// nav
 nav {
   display: flex;
-  // justify-content: left;
   justify-content: space-between;
-  /* 전체 nav를 좌우로 벌리기 위해 추가 */
   align-items: center;
   height: 23px;
   padding: 20px 0px;
 
-  .catagory {
+  .category {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -315,12 +312,25 @@ nav {
     font-size: 14px;
     font-weight: 700;
     overflow: hidden;
-    height: 30px; // Adjust as necessary
+    height: 30px;
 
     .slide {
       display: flex;
       flex-direction: column;
       animation: slide 10s linear infinite;
+    }
+
+    .ranking-item {
+      display: flex;
+      align-items: center;
+      height: 30px;
+
+      .rank-number {
+        display: inline-block;
+        width: 20px;
+        font-weight: bold;
+        color: #00b207; // 순위 번호 색상
+      }
     }
   }
 
@@ -397,7 +407,7 @@ nav {
   padding: 0 20px;
   border-bottom: 2px solid $shadow;
 
-  .catagory-main-sub {
+  .category-main-sub {
     display: flex;
     justify-content: left;
     align-items: center;
@@ -418,7 +428,7 @@ nav {
     }
   }
 
-  .catagory-info {
+  .category-info {
     font-size: 16px;
     font-family: $font-family;
     font-weight: 300;
@@ -438,7 +448,7 @@ nav {
   font-weight: 300;
   font-style: normal;
 
-  .catagory-dropdown,
+  .category-dropdown,
   .filter-dropdown {
     display: flex;
     justify-content: space-between;

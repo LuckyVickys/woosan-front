@@ -21,7 +21,7 @@ const Nav = () => {
 
     return (
         <nav id='navbar' className="nav poppins-medium">
-            <div className="catagory">
+            <div className="category">
                 <div className="board">
                     <NavLink to={'/board/'} className={({ isActive }) => isActive ? "active" : ""}>
                         꿀팁
@@ -48,7 +48,9 @@ const Nav = () => {
                 {rankings.length > 0 && (
                     <div className="slide">
                         {rankings.map((keyword, index) => (
-                            <div key={index}>{keyword}</div>
+                            <div key={index} className="ranking-item">
+                                <span className="rank-number">{index + 1}</span> {keyword}
+                            </div>
                         ))}
                     </div>
                 )}
