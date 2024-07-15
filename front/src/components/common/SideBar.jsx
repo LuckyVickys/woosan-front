@@ -207,8 +207,8 @@ const SideBar = ({ pageType }) => {
                             </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'msgs' ? 'active' : ''}`}>
-                            <button onClick={() => handleNavigation('notices')} className={activeCategory === 'notices' ? 'active' : ''}>
-                                <FaGift className={`icon ${activeCategory === 'notices' ? 'active' : ''}`} />쪽지함
+                            <button onClick={() => handleNavigation('msgs')} className={activeCategory === 'msgs' ? 'active' : ''}>
+                                <FaGift className={`icon ${activeCategory === 'msgs' ? 'active' : ''}`} />쪽지함
                             </button>
                         </div>
                     </>
