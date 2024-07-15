@@ -3,6 +3,7 @@ import boardRouter from "./boardRouter"
 import matchingRouter from "./matchingRouter"
 import csRouter from "./csRouter"
 import myPageRouter from "./myPageRouter";
+import adminPageRouter from "./adminPageRouter";
 
 import { createBrowserRouter } from "react-router-dom";
 import KakaoRedirectPage from "../pages/social/KakaoRedirectPage";
@@ -51,7 +52,8 @@ const root = createBrowserRouter([
     },
     {
         path: "adminPage",
-        element: <Suspense fallback={Loading}><AdminPage/></Suspense>
+        element: <Suspense fallback={Loading}><AdminPage/></Suspense>,
+        children: adminPageRouter()
     },
     {
         path: "*", // catch-all route
