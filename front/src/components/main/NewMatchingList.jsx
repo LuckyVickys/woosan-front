@@ -17,7 +17,7 @@ const NewMatchingList = () => {
 
     return (
         <div className='newMatchingList'>
-                {/*{newMatching.map(matchingItem => (
+            {/*{newMatching.map(matchingItem => (
                     <div key={matchingItem.id} className="newMatchingList-post">
                         <div className="newMatchingList-img"></div>
                         <div className="newMatchingList-contents">
@@ -64,7 +64,7 @@ const NewMatchingList = () => {
             <div className="newMatchingList-post">
                 <div className="newMatchingList-img"></div>
                 <div className="newMatchingList-contents">
-                    <div className='newMatchingList-catagory-tag'>
+                    <div className='newMatchingList-category-tag'>
                         <div className="newMatchingList-regurlary">정기 모임</div>
                         <div className="newMatchingList-tag">골프</div>
                     </div>
@@ -96,7 +96,7 @@ const NewMatchingList = () => {
             <div className="newMatchingList-post">
                 <div className="newMatchingList-img"></div>
                 <div className="newMatchingList-contents">
-                    <div className='newMatchingList-catagory-tag'>
+                    <div className='newMatchingList-category-tag'>
                         <div className="newMatchingList-temporary">번개</div>
                         <div className="newMatchingList-tag">맥주</div>
                     </div>
@@ -125,7 +125,7 @@ const NewMatchingList = () => {
                     </div>
                 </div>
             </div>
-            
+
         </div>
     );
 }

@@ -20,7 +20,7 @@ const AutocompleteDropdown = ({ suggestions, onSelect, highlightedIndex }) => (
   </ul>
 );
 
-const CatagoryDropdown = ({ categories, onSelect }) => (
+const CategoryDropdown = ({ categories, onSelect }) => (
   <ul className="dropdown-list">
     {categories.map((category, index) => (
       <li key={index} onClick={() => onSelect(category.value)}>{category.label}</li>
@@ -105,7 +105,7 @@ const SearchBar = ({ categories, filters }) => {
   };
 
   const handleWriteButtonClick = () => {
-    if(!isLogin) {
+    if (!isLogin) {
       return moveToLoginReturn();
     } else {
       navigate('/board/add'); // AddPage 경로로 이동
@@ -162,10 +162,10 @@ const SearchBar = ({ categories, filters }) => {
   return (
     <>
       <div className="search-bar">
-        <div className="catagory-dropdown" ref={categoryRef}>
+        <div className="category-dropdown" ref={categoryRef}>
           {selectedCategory ? categories.find(c => c.value === selectedCategory).label : '전체'}
           <div className="dropdown" onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}></div>
-          {showCategoryDropdown && <CatagoryDropdown categories={categories} onSelect={handleCategorySelect} />}
+          {showCategoryDropdown && <CategoryDropdown categories={categories} onSelect={handleCategorySelect} />}
           <div className='dropdown-arrow'></div>
         </div>
         <div className="filter-dropdown" ref={filterRef}>
@@ -197,7 +197,7 @@ const SearchBar = ({ categories, filters }) => {
         </form>
         <button className='write-button' onClick={handleWriteButtonClick}>글 쓰기</button>
       </div>
-      {isLoginModalOpen && <LoginModal onClose={closeLoginModal}/>}
+      {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
     </>
   );
 }

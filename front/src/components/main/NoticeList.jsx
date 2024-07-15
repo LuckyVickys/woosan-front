@@ -17,7 +17,7 @@ const NoticeList = () => {
         <div className='noticelist'>
             {notices.map(notice => (
                 <div key={notice.id} className="noticelist-post">
-                    <div className="noticelist-catagory">{notice.categoryName}</div>
+                    <div className="noticelist-category">{notice.categoryName}</div>
                     <div className="noticelist-title">{notice.title}</div>
                     <div className="noticelist-date">{new Date(notice.regDate).toLocaleDateString()}</div>
                 </div>
