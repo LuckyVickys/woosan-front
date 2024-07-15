@@ -1,23 +1,9 @@
 import { NavLink } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import { getRealTimeSearchRankings } from "../../api/boardApi";
+import React from "react";
 import '../../assets/styles/App.scss';
+import RankingList from "./RankingList";
 
 const Nav = () => {
-    const [rankings, setRankings] = useState([]);
-
-    useEffect(() => {
-        const fetchRankings = async () => {
-            try {
-                const data = await getRealTimeSearchRankings();
-                setRankings(data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchRankings();
-    }, []);
 
     return (
         <nav id='navbar' className="nav poppins-medium">
@@ -44,17 +30,7 @@ const Nav = () => {
                 </div>
             </div>
 
-            <div className="real-time-rankings">
-                {rankings.length > 0 && (
-                    <div className="slide">
-                        {rankings.map((keyword, index) => (
-                            <div key={index} className="ranking-item">
-                                <span className="rank-number">{index + 1}</span> {keyword}
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
+            <RankingList />
         </nav>
     );
 }

@@ -103,15 +103,16 @@ export const autocomplete = async (keyword, searchType, category) => {
 };
 
 
-export const getRealTimeSearchRankings = async () => {
+export const getRankingChanges = async () => {
     try {
         const res = await axios.get(`${prefix}/ranking`);
         return res.data;
     } catch (error) {
-        console.error('Error fetching real-time search rankings:', error.response ? error.response.data : error.message);
+        console.error('Error fetching ranking changes:', error.response ? error.response.data : error.message);
         throw error;
     }
 };
+
 
 export const combinedSearch = async (category, filter, keyword, page = 1, rpage = 1, size = 10) => {
     try {
