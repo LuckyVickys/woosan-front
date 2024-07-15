@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LoginModal from "./LoginModal";
-import { sendEmail } from "../../api/memberApi";
+import { sendEmail, updatePassword } from "../../api/memberApi";
 import Swal from "sweetalert2";
 import TogglePassword from "./TogglePassword";
 import "../../assets/styles/App.scss";
@@ -55,7 +55,7 @@ const FinePWModal = ({ onClose }) => {
 
   const isValidPassword = (password) => {
     // 특수문자 ('~', '^', ',')를 제외하고, 영문, 숫자, 특수문자 조합하여 8~16자
-    return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/.test(
+    return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,16}$/.test(
       password
     );
   };
@@ -71,9 +71,9 @@ const FinePWModal = ({ onClose }) => {
 
     try {
       const emailResponse = await sendEmail(updateData.email);
-      console.log("emailResponse");
+      console.log(emailResponse);
 
-      if (emailResponse === true) {
+      if (emailResponse === "메일 전송 완료") {
         setEmailError("작성해주신 이메일로 재발급된 비밀번호를 전송했습니다.");
         setEmailAvailable(true);
       } else {
@@ -87,24 +87,29 @@ const FinePWModal = ({ onClose }) => {
     }
   };
 
-  const handleCheckPassword = async () => {
-    if (!updateData.password) {
-      setPasswordError("필수 입력 사항입니다.");
-      return;
-    }
+  // const handleCheckPassword = async () => {
+  //   if (!updateData.password) {
+  //     setPasswordError("필수 입력 사항입니다.");
+  //     return;
+  //   }
 
-    try {
-      const passwordResponse = await updatePW(updateData.password);
+  //   try {
+  //     const passwordResponse = await checkPassword(updateData.password);
+  //     console.log(passwordResponse);
 
-      if (passwordResponse === true) {
-        setPasswordError("임시 비밀번호와 일치합니다.");
-        setPasswordAvailable(true);
-      }
-    } catch (error) {
-      setEmailError("임시 비밀번호와 일치하지 않습니다.");
-      setEmailAvailable(false);
-    }
-  };
+  //     if (passwordResponse === true) {
+  //       setPasswordError("임시 비밀번호와 일치합니다.");
+  //       setPasswordAvailable(true);
+  //     } else {
+  //       setPasswordError("임시 비밀번호와 일치하지 않습니다.");
+  //       setPasswordAvailable(false);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error checking password:", error);
+  //     setPasswordError("서버 오류로 인해 비밀번호 확인에 실패하였습니다.");
+  //     setPasswordAvailable(false);
+  //   }
+  // };
 
   const handleUpdatePW = async (e) => {
     e.preventDefault();
@@ -124,11 +129,6 @@ const FinePWModal = ({ onClose }) => {
       valid = false;
     }
 
-    if (!updateData.password) {
-      setPasswordError("필수 입력 사항입니다.");
-      valid = false;
-    }
-
     if (!updateData.newPassword) {
       setNewPasswordError("필수 입력 사항입니다.");
       valid = false;
@@ -140,14 +140,14 @@ const FinePWModal = ({ onClose }) => {
     if (!pwCheck) {
       setPwCheckError("필수 입력 사항입니다.");
       valid = false;
-    } else if (updateData.password !== pwCheck) {
+    } else if (updateData.newPassword !== pwCheck) {
       setPwCheckError("비밀번호가 일치하지 않습니다.");
       valid = false;
     }
 
     if (valid) {
       try {
-        const updateResponse = await updatePW(updateData);
+        const updateResponse = await updatePassword(updateData);
         console.log("비밀번호 변경 완료:", updateResponse);
         setUpdatePW(true);
 
@@ -164,6 +164,10 @@ const FinePWModal = ({ onClose }) => {
           error.response ? error.response.data : error.message
         );
         Swal.fire("비밀번호 변경 실패", `다시 시도해주세요.`, "error");
+        setEmailError("");
+        setPasswordError("");
+        setNewPasswordError("");
+        setPwCheckError("");
       }
     }
   };
@@ -187,7 +191,7 @@ const FinePWModal = ({ onClose }) => {
         <form onSubmit={handleUpdatePW} className="form-box">
           <div className="input-box">
             <p className="input-info">이메일</p>
-            <div className="input-button">
+            <div className="input-button-container">
               <input
                 className="email-input"
                 type="email"
@@ -209,23 +213,23 @@ const FinePWModal = ({ onClose }) => {
           </div>
           <div className="input-box">
             <p className="input-info">재발급된 비밀번호</p>
-            <div className="input-button">
+            <div className="input-button-container">
               <input
                 className="pw-input"
-                type="password"
+                type="text"
                 placeholder="이메일로 재발급된 비밀번호를 입력해주세요."
                 value={updateData.password}
                 onChange={(e) =>
                   setUpdateData({ ...updateData, password: e.target.value })
                 }
               />
-              <button
+              {/* <button
                 type="button"
                 className="check-button"
                 onClick={handleCheckPassword}
               >
                 확인
-              </button>
+              </button> */}
             </div>
             {passwordError && <p className="input-error">{passwordError}</p>}
           </div>
@@ -236,32 +240,39 @@ const FinePWModal = ({ onClose }) => {
                 (영문, 숫자, 특수문자 조합하여 8~16자)
               </p>
             </div>
-            <input
-              className="pw-input"
-              type="password"
-              placeholder="특수문자(‘~’, ‘^’, ‘,’) 제외"
-              value={updateData.newPassword}
-              onChange={(e) =>
-                setUpdateData({ ...updateData, newPassword: e.target.value })
-              }
-            />
-            <TogglePassword
-              isVisible={showPwCheck}
-              toggleVisibility={togglePwCheck}
-            />
+            <div className="input-toggle-container">
+              <input
+                className="new-pw-input"
+                type={showNewPassword ? "text" : "password"}
+                placeholder="특수문자(‘~’, ‘^’, ‘,’) 제외"
+                value={updateData.newPassword}
+                onChange={(e) =>
+                  setUpdateData({ ...updateData, newPassword: e.target.value })
+                }
+              />
+              <TogglePassword
+                isVisible={showNewPassword}
+                toggleVisibility={toggleNewPassword}
+            /></div>
             {newPasswordError && (
               <p className="input-error">{newPasswordError}</p>
             )}
           </div>
           <div className="input-box">
             <p className="input-info">비밀번호 확인</p>
-            <input
-              className="pw-check-input"
-              type="password"
-              placeholder="비밀번호 재입력"
-              value={pwCheck}
-              onChange={(e) => setPwCheck(e.target.value)}
-            />
+            <div className="input-toggle-container">
+              <input
+                className="pw-check-input"
+                type={showPwCheck ? "text" : "password"}
+                placeholder="비밀번호 재입력"
+                value={pwCheck}
+                onChange={(e) => setPwCheck(e.target.value)}
+              />
+              <TogglePassword
+                isVisible={showPwCheck}
+                toggleVisibility={togglePwCheck}
+              />
+            </div>
             {pwCheckError && <p className="input-error">{pwCheckError}</p>}
           </div>
           <button className="pwchange-button" type="submit">

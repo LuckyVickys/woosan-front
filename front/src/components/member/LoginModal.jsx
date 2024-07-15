@@ -137,18 +137,20 @@ const LoginModal = ({ onClose }) => {
             {emailError && <p className="input-error">{emailError}</p>}
           </div>
           <div className="input-box">
-            <input
-              className="pw-input"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="비밀번호"
-              value={loginParam.password}
-              onChange={handleChange}
-            />
-            <TogglePassword
-              isVisible={showPassword}
-              toggleVisibility={togglePassword}
-            />
+            <div className="input-toggle-container">
+              <input
+                className="pw-input"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="비밀번호"
+                value={loginParam.password}
+                onChange={handleChange}
+              />
+              <TogglePassword
+                isVisible={showPassword}
+                toggleVisibility={togglePassword}
+              />
+            </div>
             {passwordError && <p className="input-error">{passwordError}</p>}
           </div>
           <div className="add-fucntion">

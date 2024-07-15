@@ -195,7 +195,7 @@ const SignUpModal = ({ onClose }) => {
         <form onSubmit={handleSignUp} className="form-box">
           <div className="input-box">
             <p className="input-info">이메일</p>
-            <div className="input-button">
+            <div className="input-button-container">
               <input
                 className="email-input"
                 type="email"
@@ -221,7 +221,7 @@ const SignUpModal = ({ onClose }) => {
           </div>
           <div className="input-box">
             <p className="input-info">닉네임</p>
-            <div className="input-button">
+            <div className="input-button-container">
               <input
                 className="nickname-input"
                 type="nickname"
@@ -256,7 +256,7 @@ const SignUpModal = ({ onClose }) => {
                 (영문, 숫자, 특수문자 조합하여 8~16자)
               </p>
             </div>
-            <div className="input-button">
+            <div className="input-toggle-container">
               <input
                 className="pw-input"
                 type={showPassword ? "text" : "password"}
@@ -275,7 +275,7 @@ const SignUpModal = ({ onClose }) => {
           </div>
           <div className="input-box">
             <p className="input-info">비밀번호 확인</p>
-            <div className="input-button">
+            <div className="input-toggle-container">
               <input
                 className="pw-check-input"
                 type={showPwCheck ? "text" : "password"}

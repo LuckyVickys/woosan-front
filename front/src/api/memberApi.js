@@ -12,7 +12,12 @@ export const loginPost = async (loginParam) => {
     password: loginParam.password,
   };
   try {
-    const res = await axios.post(`${host}/auth/login`, data, header);
+    const res = await axios.post(
+      `${host}/auth/login`, 
+      // `http://localhost:80/api/auth/login`,
+      data, 
+      header
+    );
     return res.data;
   } catch (error) {
     throw error;
@@ -69,13 +74,13 @@ export const signUp = async (signupData) => {
 };
 
 // 임시비밀번호 메일 전송
-export const sendEmail = async (updateData) => {
-  const header = { headers: { "Content-Type": "application/json" } };
-  const data = {
-    email: updateData.email,
-  };
+export const sendEmail = async (email) => {
   try {
-    const response = await axios.post(`${host}/member/sendEmail`, data, header);
+    const response = await axios.post(
+      `${host}/member/sendEmail?email=${email}`
+      // `http://localhost:80/api/member/sendEmail?email=${email}`
+    );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(
@@ -87,10 +92,13 @@ export const sendEmail = async (updateData) => {
 };
 
 // 비밀번호 변경
-export const updatePW = async (email) => {
-  console.log("Fetching data for Email:", email);
+export const updatePassword = async (updateData) => {
+  console.log("Checking Password:", updateData);
   try {
-    const response = await axios.put(`${host}/member/updatePw`);
+    const response = await axios.put(
+      `${host}/member/updatePw`, updateData
+      // `http://localhost:80/api/member/updatePw`, updateData
+    );
     return response.data;
   } catch (error) {
     console.error(
