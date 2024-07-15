@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getMyReplies } from "../../api/myPageApi";
+import { getLikedBoard } from "../../api/myPageApi";
 import useCustomMove from "../../hooks/useCustomMove";
-import ListPageComponent from "../../components/myPage/element/ListPageComponent";
-import MyRepliesTableRowComponent from "../../components/myPage/element/MyRepliesTableRowComponent";
+import ListPageComponent from "./element/ListPageComponent";
+import MyBoardTableRowComponent from "./element/MyBoardTableRowComponent";
 import "../../assets/styles/App.scss";
 
 const initState = {
@@ -21,14 +21,14 @@ const initState = {
     current: 0,
 };
 
-const MyReplyComponent = () => {
+const MyLikedComponent = () => {
     const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/myPage/board");
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {
         const currentPage = page || 1;
         const currentSize = size || 10;
-        console.log(`Fetching replies with page: ${page}, size: ${size}`);
+        console.log(`Fetching data with page: ${currentPage}, size: ${currentSize}`);
         const params = {
             memberId: 10, // 실제로는 로그인된 사용자의 ID를 가져와야 합니다.
             pageRequestDTO: {
@@ -36,7 +36,7 @@ const MyReplyComponent = () => {
                 size: currentSize
             }
         };
-        getMyReplies(params).then(data => {
+        getLikedBoard(params).then(data => {
             console.log("Fetched data:", data);
             setServerData(data);
         }).catch(err => {
@@ -44,8 +44,8 @@ const MyReplyComponent = () => {
         });
     }, [page, size, refresh]);
 
-    const handleRowClick = (boardId) => {
-        moveToRead(boardId);
+    const handleRowClick = (id) => {
+        moveToRead(id, "/board");
     };
 
     const { dtoList, pageNumList, pageRequestDTO, prev, next, totalCount, prevPage, nextPage, totalPage, current } = serverData;
@@ -57,15 +57,20 @@ const MyReplyComponent = () => {
                     <tr>
                         <th>번호</th>
                         <th>카테고리</th>
-                        <th>게시물 제목</th>
-                        <th>내용</th>
+                        <th>제목</th>
                         <th>작성 날짜</th>
+                        <th>조회수</th>
                         <th>추천</th>
                     </tr>
                 </thead>
                 <tbody>
                     {dtoList && dtoList.map((item, index) => (
-                        <MyRepliesTableRowComponent key={item.id} item={item} index={index} onClick={() => handleRowClick(item.boardId)} />
+                        <MyBoardTableRowComponent
+                            key={item.id}
+                            item={item}
+                            index={index}
+                            onClick={() => handleRowClick(item.id)}
+                        />
                     ))}
                 </tbody>
             </table>
@@ -77,4 +82,4 @@ const MyReplyComponent = () => {
     );
 };
 
-export default MyReplyComponent;
+export default MyLikedComponent;
