@@ -20,10 +20,10 @@ $font-family: "Pretendard-Regular", sans-serif;
         margin-bottom: 15px;
 
         label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 14px;
-        font-family: $font-family;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-family: $font-family;
         }
 
         input,
@@ -62,14 +62,16 @@ $font-family: "Pretendard-Regular", sans-serif;
     }
 
     // UpdateInfo
-    .update-user-info-profile{
+    .update-user-info-profile {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
 
-        .update-user-info{
-            width: 100%;
+        .update-user-info {
+            width: 60%;
 
-            .location-gender{
+            .location-gender {
                 display: flex;
                 justify-content: space-between;
                 gap: 10px;
@@ -81,8 +83,8 @@ $font-family: "Pretendard-Regular", sans-serif;
 
             .point-level {
                 margin-bottom: 15px;
-    
-                .level-point{
+
+                .level-point {
                     width: 100%;
                     padding: 6px;
                     font-size: 14px;
@@ -90,12 +92,14 @@ $font-family: "Pretendard-Regular", sans-serif;
                     border-radius: 4px;
                     font-family: $font-family;
                     box-sizing: border-box;
+                    display: flex;
+                    align-items: center;
                 }
-        
+
                 span {
                     margin-right: 10px;
                 }
-        
+
                 .progress-bar {
                     margin-top: 10px;
                     margin-bottom: 10px;
@@ -106,19 +110,19 @@ $font-family: "Pretendard-Regular", sans-serif;
                     overflow: hidden;
                     display: flex;
                 }
-        
+
                 .progress {
                     height: 100%;
                     background-color: #9bcc66;
                     width: 80%; /* 변경 가능 */
                 }
-        
+
                 span:last-child {
                     margin-left: auto;
                 }
             }
 
-            .age-height{
+            .age-height {
                 display: flex;
                 justify-content: space-between;
                 gap: 10px;
@@ -129,20 +133,31 @@ $font-family: "Pretendard-Regular", sans-serif;
             }
         }
 
-        .update-profile{display: flex;
+        .update-profile {
+            display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 80px;
-            height: 100%;
+            width: 30%;
 
-            .user-profile{
-            width: 200px;
-            height: 200px;
-            background: #e5e5e5;
-            border-radius: 50%;
+            .user-profile {
+                width: 200px;
+                height: 200px;
+                background: #e5e5e5;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
 
-            .update-profile-button{
+            .update-profile-button {
+                text-align: center;
                 margin-top: 15px;
                 width: 115px;
                 padding: 10px;

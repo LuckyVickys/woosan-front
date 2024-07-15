@@ -18,6 +18,7 @@ const ProfileDropdown = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const navToMypage = () => {
+        const userId = loginState.id;  
         navigate(`/myPage`);
     }
 
