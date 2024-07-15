@@ -7,14 +7,12 @@
     box-sizing: border-box;
 
     .catagory {
-        // padding-left: 20px;
         width: 100%;
         box-sizing: border-box;
         border: 1px solid #E6E6E6;
         border-radius: 8px;
 
-        .catagory-title{
-            margin-right: 32px;
+        .catagory-title {
             padding: 20px 20px;
             width: 100%;
             font-family: 'Pretendard-Regular', sans-serif;
@@ -58,7 +56,8 @@
                 }
             }
 
-            button {
+            button,
+            .nav-link {
                 background: none;
                 border: none;
                 font-size: 16px;
@@ -67,6 +66,7 @@
                 display: flex;
                 align-items: center;
                 color: #666666;
+                text-decoration: none;
 
                 &.active {
                     font-weight: bold;

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import "../../assets/styles/siderbar.scss";
-import { FaUtensils, FaBroom, FaConciergeBell, FaMoneyBill, FaPaintRoller, FaRegFileAlt, FaTh, FaRegSmile } from 'react-icons/fa'; // react-icons에서 아이콘 가져오기
+import "../../assets/styles/App.scss";
+import { FaUtensils, FaBroom, FaConciergeBell, FaMoneyBill, FaPaintRoller, FaRegFileAlt, FaTh, FaRegSmile, FaUserEdit, FaClipboardList, FaComments, FaHeart, FaUsers, FaEnvelopeOpenText, FaSignOutAlt, FaBullhorn, FaGift } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../slices/loginSlice';
@@ -10,7 +10,7 @@ const SideBar = ({ pageType }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
-    const [activeCategory, setActiveCategory] = React.useState('');
+    const [activeCategory, setActiveCategory] = useState('');
 
     // URL의 검색 파라미터를 기반으로 activeCategory 상태를 설정
     useEffect(() => {
@@ -22,7 +22,15 @@ const SideBar = ({ pageType }) => {
     // 카테고리 클릭 시 URL을 변경하고 activeCategory 상태를 업데이트
     const handleNavigation = (categoryName) => {
         setActiveCategory(categoryName);
-        navigate(`/board?page=1&size=10&categoryName=${categoryName}`);
+        if (pageType === 'board') {
+            navigate(`/board?page=1&size=10&categoryName=${categoryName}`);
+        } else if (pageType === 'cs') {
+            navigate(`/cs/${categoryName}`);
+        } else if (pageType === 'myPage') {
+            navigate(`/myPage/${categoryName}`);
+        } else if (pageType === 'matching') {
+            navigate(`/matching/${categoryName}`);
+        }
     };
 
     // 로그아웃
@@ -36,7 +44,7 @@ const SideBar = ({ pageType }) => {
             confirmButtonText: '확인',
             cancelButtonText: '취소'
         }).then((result) => {
-            if(result.isConfirmed) {
+            if (result.isConfirmed) {
                 dispatch(logout());
                 Swal.fire({
                     icon: 'success',
@@ -44,7 +52,7 @@ const SideBar = ({ pageType }) => {
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: '확인'
                 }).then((res) => {
-                    if(result.isConfirmed) {
+                    if (result.isConfirmed) {
                         navigate('/');
                     }
                 })
@@ -57,9 +65,7 @@ const SideBar = ({ pageType }) => {
             <div className="catagory">
                 {pageType === 'board' && (
                     <>
-                        <div className="catagory-title">
-                            꿀팁
-                        </div>
+                        <div className="catagory-title">꿀팁</div>
                         <div className={`sub-category ${activeCategory === '' ? 'active' : ''}`}>
                             <button onClick={() => handleNavigation('')} className={activeCategory === '' ? 'active' : ''}>
                                 <FaTh className={`icon ${activeCategory === '' ? 'active' : ''}`} />전체
@@ -104,80 +110,80 @@ const SideBar = ({ pageType }) => {
                 )}
                 {pageType === 'matching' && (
                     <>
-                        <div className="category-title">모임</div>
+                        <div className="catagory-title">모임</div>
                         <div className={`sub-category ${activeCategory === '' ? 'active' : ''}`}>
-                            <NavLink to={'/matching'} className={activeCategory === '' ? 'active' : ''} onClick={() => setActiveCategory('')}>
+                            <button onClick={() => handleNavigation('')} className={activeCategory === '' ? 'active' : ''}>
                                 <FaTh className={`icon ${activeCategory === '' ? 'active' : ''}`} />전체
-                            </NavLink>
+                            </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'regularly' ? 'active' : ''}`}>
-                            <NavLink to={'/matching/regularly'} className={activeCategory === 'regularly' ? 'active' : ''} onClick={() => setActiveCategory('regularly')}>
+                            <button onClick={() => handleNavigation('regularly')} className={activeCategory === 'regularly' ? 'active' : ''}>
                                 <FaUtensils className={`icon ${activeCategory === 'regularly' ? 'active' : ''}`} />정기 모임
-                            </NavLink>
+                            </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'temporary' ? 'active' : ''}`}>
-                            <NavLink to={'/matching/temporary'} className={activeCategory === 'temporary' ? 'active' : ''} onClick={() => setActiveCategory('temporary')}>
+                            <button onClick={() => handleNavigation('temporary')} className={activeCategory === 'temporary' ? 'active' : ''}>
                                 <FaBroom className={`icon ${activeCategory === 'temporary' ? 'active' : ''}`} />번개
-                            </NavLink>
+                            </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'self' ? 'active' : ''}`}>
-                            <NavLink to={'/matching/self'} className={activeCategory === 'self' ? 'active' : ''} onClick={() => setActiveCategory('self')}>
+                            <button onClick={() => handleNavigation('self')} className={activeCategory === 'self' ? 'active' : ''}>
                                 <FaConciergeBell className={`icon ${activeCategory === 'self' ? 'active' : ''}`} />셀프 소개팅
-                            </NavLink>
+                            </button>
                         </div>
                     </>
                 )}
                 {pageType === 'cs' && (
                     <>
-                        <div className="category-title">고객 지원</div>
-                        <div className={`sub-category ${activeCategory === 'notices' ? 'active' : ''}`}>
-                            <NavLink to={'/cs/notices'} className={activeCategory === 'notices' ? 'active' : ''} onClick={() => setActiveCategory('notices')}>
-                                <FaRegFileAlt className={`icon ${activeCategory === 'notices' ? 'active' : ''}`} />공지사항
-                            </NavLink>
+                        <div className="catagory-title">고객 지원</div>
+                        <div className={`sub-category ${activeCategory === 'notices' || activeCategory === '' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('notices')} className={activeCategory === 'notices' || activeCategory === '' ? 'active' : ''}>
+                                <FaBullhorn className={`icon ${activeCategory === 'notices' || activeCategory === '' ? 'active' : ''}`} />공지사항
+                            </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'event' ? 'active' : ''}`}>
-                            <NavLink to={'/cs/event'} className={activeCategory === 'event' ? 'active' : ''} onClick={() => setActiveCategory('event')}>
-                                <FaRegSmile className={`icon ${activeCategory === 'event' ? 'active' : ''}`} />이벤트
-                            </NavLink>
+                            <button onClick={() => handleNavigation('event')} className={activeCategory === 'event' ? 'active' : ''}>
+                                <FaGift className={`icon ${activeCategory === 'event' ? 'active' : ''}`} />이벤트
+                            </button>
                         </div>
                     </>
                 )}
                 {pageType === 'myPage' && (
                     <>
-                        <div className="category-title">마이페이지</div>
-                        <div className={`sub-category ${activeCategory === 'info' ? 'active' : ''}`}>
-                            <NavLink to={'/myPage/info'} className={activeCategory === 'info' ? 'active' : ''} onClick={() => setActiveCategory('info')}>
-                                <FaRegSmile className={`icon ${activeCategory === 'info' ? 'active' : ''}`} />회원 정보 수정
-                            </NavLink>
+                        <div className="catagory-title">마이페이지</div>
+                        <div className={`sub-category ${activeCategory === 'info' || activeCategory === '' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('info')} className={activeCategory === 'info' || activeCategory === '' ? 'active' : ''}>
+                                <FaUserEdit className={`icon ${activeCategory === 'info' || activeCategory === '' ? 'active' : ''}`} />회원 정보 수정
+                            </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'board' ? 'active' : ''}`}>
-                            <NavLink to={'/myPage/board'} className={activeCategory === 'board' ? 'active' : ''} onClick={() => setActiveCategory('board')}>
-                                <FaRegFileAlt className={`icon ${activeCategory === 'board' ? 'active' : ''}`} />작성한 게시글 조회
-                            </NavLink>
+                            <button onClick={() => handleNavigation('board')} className={activeCategory === 'board' ? 'active' : ''}>
+                                <FaClipboardList className={`icon ${activeCategory === 'board' ? 'active' : ''}`} />작성한 게시글 조회
+                            </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'reply' ? 'active' : ''}`}>
-                            <NavLink to={'/myPage/reply'} className={activeCategory === 'reply' ? 'active' : ''} onClick={() => setActiveCategory('reply')}>
-                                <FaRegSmile className={`icon ${activeCategory === 'reply' ? 'active' : ''}`} />작성한 댓글 조회
-                            </NavLink>
+                            <button onClick={() => handleNavigation('reply')} className={activeCategory === 'reply' ? 'active' : ''}>
+                                <FaComments className={`icon ${activeCategory === 'reply' ? 'active' : ''}`} />작성한 댓글 조회
+                            </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'like' ? 'active' : ''}`}>
-                            <NavLink to={'/myPage/like'} className={activeCategory === 'like' ? 'active' : ''} onClick={() => setActiveCategory('like')}>
-                                <FaRegSmile className={`icon ${activeCategory === 'like' ? 'active' : ''}`} />추천 게시글
-                            </NavLink>
+                            <button onClick={() => handleNavigation('like')} className={activeCategory === 'like' ? 'active' : ''}>
+                                <FaHeart className={`icon ${activeCategory === 'like' ? 'active' : ''}`} />추천 게시글
+                            </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'matching' ? 'active' : ''}`}>
-                            <NavLink to={'/myPage/matching'} className={activeCategory === 'matching' ? 'active' : ''} onClick={() => setActiveCategory('matching')}>
-                                <FaRegSmile className={`icon ${activeCategory === 'matching' ? 'active' : ''}`} />모임 조회
-                            </NavLink>
+                            <button onClick={() => handleNavigation('matching')} className={activeCategory === 'matching' ? 'active' : ''}>
+                                <FaUsers className={`icon ${activeCategory === 'matching' ? 'active' : ''}`} />모임 조회
+                            </button>
                         </div>
                         <div className={`sub-category ${activeCategory === 'msg' ? 'active' : ''}`}>
-                            <NavLink to={'/myPage/msg'} className={activeCategory === 'msg' ? 'active' : ''} onClick={() => setActiveCategory('msg')}>
-                                <FaRegSmile className={`icon ${activeCategory === 'msg' ? 'active' : ''}`} />쪽지함
-                            </NavLink>
+                            <button onClick={() => handleNavigation('msg')} className={activeCategory === 'msg' ? 'active' : ''}>
+                                <FaEnvelopeOpenText className={`icon ${activeCategory === 'msg' ? 'active' : ''}`} />쪽지함
+                            </button>
                         </div>
                         <div className="sub-category">
                             <div onClick={handleLogout}>
-                                <FaRegSmile className="icon" />Log out
+                                <FaSignOutAlt className="icon" />Log out
                             </div>
                         </div>
                     </>
