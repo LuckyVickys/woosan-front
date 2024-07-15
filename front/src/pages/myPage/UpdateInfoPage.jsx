@@ -1,10 +1,13 @@
 import React from 'react';
+import UpdatePassword from '../../components/myPage/UpdatePassword';
+import UpdateInfo from '../../components/myPage/UpdateInfo';
 
 const UpdateInfoPage = () => {
 
     return (
         <div className="contents">
-            회원 정보 수정
+            <UpdatePassword />
+            <UpdateInfo />
         </div>
     );
 }
