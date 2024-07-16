@@ -14,11 +14,21 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
     const [locationY, setLocationY] = useState(initialValues.locationY || '');
     const [address, setAddress] = useState(initialValues.address || '');
     const [meetDate, setMeetDate] = useState(initialValues.meetDate || new Date().toISOString().slice(0, 16));
-    const [tag, setTag] = useState(initialValues.tag || '');
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [tag, setTag] = useState({}); // 초기값을 빈 객체로 설정
     const [headCount, setHeadCount] = useState(initialValues.headCount || '');
     const [errors, setErrors] = useState({});
     const [files, setFiles] = useState([]); // 파일 상태 관리
     const uploadRef = useRef();
+
+    const categoryLabels = {
+        romance: '연애&사랑',
+        sports: '운동&스포츠',
+        food: '푸드&드링크',
+        culture: '문화&예술',
+        neighborhood: '동네&또래',
+        study_class: '스터디&클래스'
+    };
 
     // 셀프 소개팅에 필요한 상태들
     const [location, setLocation] = useState(initialValues.location || '');
@@ -35,7 +45,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
         if (!content) newErrors.content = '모임 소개를 입력해주세요';
         if (!placeName) newErrors.placeName = '모임 장소를 입력해주세요';
         if (!meetDate) newErrors.meetDate = '모임 날짜 / 시간을 입력해주세요';
-        if (!tag) newErrors.tag = '태그를 입력해주세요';
+        if (Object.keys(tag).length === 0) newErrors.tag = '태그를 입력해주세요';
         if (!headCount) newErrors.headCount = '모집 인원을 입력해주세요';
 
         if (matchingType === 3) {
@@ -65,7 +75,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
         formData.append('locationY', locationY);
         formData.append('address', address); // address 추가
         formData.append('meetDate', meetDate);
-        formData.append('tag', tag);
+        formData.append('tag', JSON.stringify(tag)); // tag를 JSON 문자열로 변환
         formData.append('headCount', headCount);
         for (let i = 0; i < files.length; i++) {
             formData.append('images', files[i]);
@@ -83,7 +93,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
 
         console.log('폼 데이터 제출 중:', Object.fromEntries(formData.entries())); // 디버깅을 위한 콘솔 로그
 
-        await onSubmit(formData);
+        await onSubmit(formData, loginState.id);
     };
 
     const handleCancel = () => {
@@ -110,18 +120,62 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
         }
     };
 
+    const handleTagSubmit = (e) => {
+        e.preventDefault();
+        if (tag && selectedCategory) {
+            setTag({ [tag]: selectedCategory }); // 기존 값을 덮어쓰기
+            setTag('');
+            setSelectedCategory('');
+        }
+    };
+
+    const handleTagRemove = (tagToRemove) => {
+        setTag((prevTag) => {
+            const newTag = { ...prevTag };
+            delete newTag[tagToRemove];
+            return newTag;
+        });
+    };
+
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.row}>
-                <div className={`${styles.formGroup} ${styles.short}`}>
+                <div className={styles.formGroup}>
                     <label htmlFor="tag">태그</label>
+                    <select
+                        id="category"
+                        value={selectedCategory}
+                        onChange={handleInputChange(setSelectedCategory)}
+                        className={`${styles.categorySelect} ${styles.short}`}
+                    >
+                        <option value="">카테고리를 선택하세요</option>
+                        <option value="romance">연애&사랑</option>
+                        <option value="sports">운동&스포츠</option>
+                        <option value="food">푸드&드링크</option>
+                        <option value="culture">문화&예술</option>
+                        <option value="neighborhood">동네&또래</option>
+                        <option value="study_class">스터디&클래스</option>
+                    </select>
+                    {errors.category && <div className={styles.error}>{errors.category}</div>}
                     <input
                         id="tag"
                         value={tag}
                         onChange={handleInputChange(setTag)}
                         placeholder="태그를 입력해주세요"
+                        className={`${styles.tagInput} ${styles.short}`}
                     />
                     {errors.tag && <div className={styles.error}>{errors.tag}</div>}
+                    <button onClick={handleTagSubmit} className={styles.addButton}>추가</button>
+                    <div className={styles.tagContainer}>
+                        {Object.entries(tag).map(([tag, category]) => (
+                            <div key={tag} className={styles.tag}>
+                                {categoryLabels[category]}: {tag}
+                                <button type="button" onClick={() => handleTagRemove(tag)} className={styles.deleteButton}>
+                                    X
+                                </button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className={`${styles.formGroup} ${styles.short}`}>
                     <label htmlFor="meetDate">모임 날짜 / 시간</label>

@@ -1,84 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import { applyMatching, cancelMatchingRequest, leaveMatching, getMembers, getPendingRequestsByBoardId } from '../../api/memberMatchingApi';
-import { getReplies, getRepliesByParentId } from '../../api/matchingBoardReplyApi';
-import CommentSection from './CommentSection';
+import ReplySection from './ReplySection';
+import MatchingDropDown from '../matching/element/MatchingDropDown.jsx';
 import styles from '../../assets/styles/matching/MatchingModal.module.scss';
 import { formatDate } from "../../util/DateUtil.jsx";
+import { useSelector } from 'react-redux';
+import { BsThreeDotsVertical } from "react-icons/bs";
+import ReportModal from "../board/element/ReportModal.jsx"; // 리포트 모달 컴포넌트 임포트
+import MsgModal from "../board/element/MsgModal.jsx"; // 메시지 모달 컴포넌트 임포트
+import { useNavigate } from 'react-router-dom';
 
 const MatchingModal = ({ item, onClose }) => {
-    const memberID = 25; // 현재 로그인한 사용자 ID를 하드코딩
+    const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기
+    const memberId = loginState.id; // 로그인된 회원 ID
+    const navigate = useNavigate(); // useNavigate 설정
 
     const [isApplied, setIsApplied] = useState(false); // 가입 신청 상태
     const [isMember, setIsMember] = useState(false); // 가입 완료 상태
     const [isManager, setIsManager] = useState(false); // 매니저 여부
-    const [comments, setComments] = useState([]); // 댓글 목록
-    const [newComment, setNewComment] = useState(''); // 새로운 댓글
     const [membersCount, setMembersCount] = useState(0); // 멤버 수
-    const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
-    const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
 
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태 관리
+    const [isReportModalOpen, setIsReportModalOpen] = useState(false); // 리포트 모달 상태 관리
+    const [isMsgModalOpen, setIsMsgModalOpen] = useState(false); // 메시지 모달 상태 관리
+    const dropdownRef = useRef(null);
+
+    // 매칭 상태를 가져오는 함수
+    const fetchMatchingStatus = useCallback(async () => {
+        try {
+            const members = await getMembers(item.id);
+            const pendingRequests = await getPendingRequestsByBoardId(item.id);
+
+            setIsApplied(pendingRequests.some(request => request.memberId === memberId));
+            setIsMember(members.some(member => member.id === memberId));
+            setIsManager(item.memberId === memberId); // 매니저 여부 확인
+            setMembersCount(members.length); // 멤버 수 설정
+
+            console.log('매칭 상태를 성공적으로 가져왔습니다:', { members, pendingRequests, isApplied, isMember, isManager });
+            console.log('로그인된 회원 ID:', memberId);
+
+        } catch (error) {
+            console.error('매칭 상태를 가져오는 중 오류 발생:', error);
+        }
+    }, [item.id, memberId]);
+
+    // 매칭 상태를 컴포넌트가 처음 마운트될 때 가져옴
     useEffect(() => {
-        const fetchMatchingStatus = async () => {
-            try {
-                const members = await getMembers(item.id);
-                const pendingRequests = await getPendingRequestsByBoardId(item.id);
-
-                setIsApplied(pendingRequests.some(request => request.memberId === memberID));
-                setIsMember(members.some(member => member.id === memberID));
-                setIsManager(item.isManager(memberID)); // 엔티티 메서드를 사용하여 매니저 여부 확인
-                setMembersCount(members.length); // 멤버 수 설정
-
-                const totalCommentsCount = await fetchTotalCommentsCount(item.id);
-                setTotalPages(Math.ceil(totalCommentsCount / 10)); // 댓글 수를 기반으로 페이지 수 설정
-
-                const fetchedComments = await fetchComments(item.id, 0); // 첫 페이지 댓글 가져오기
-                setComments(fetchedComments);
-
-            } catch (error) {
-                console.error('매칭 상태를 가져오는 중 오류 발생:', error);
-            }
-        };
-
         fetchMatchingStatus();
-    }, [item, memberID]);
+    }, [item.id, memberId, fetchMatchingStatus]);
 
-    const fetchTotalCommentsCount = async (matchingId) => {
-        let totalComments = 0;
+    // 매칭 상태가 변경될 때마다 재로드
+    useEffect(() => {
+        if (isApplied || isMember || isManager) {
+            fetchMatchingStatus();
+        }
+    }, [isApplied, isMember, isManager, fetchMatchingStatus]);
 
-        const fetchReplies = async (parentId = null) => {
-            const pageable = { page: 0, size: 100 };
-            const replies = parentId 
-                ? await getRepliesByParentId(parentId)
-                : await getReplies(matchingId, pageable);
-            
-            totalComments += replies.content.length;
-
-            for (const reply of replies.content) {
-                await fetchReplies(reply.id);
+    // 드롭다운 외부 클릭 시 드롭다운 닫기
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
             }
         };
 
-        await fetchReplies();
-        return totalComments;
-    };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
-    const fetchComments = async (matchingId, page) => {
-        const pageable = { page: page, size: 10 };
-        const replies = await getReplies(matchingId, pageable);
-        return replies.content;
-    };
-
-    const handlePageChange = async (page) => {
-        const fetchedComments = await fetchComments(item.id, page);
-        setComments(fetchedComments);
-        setCurrentPage(page);
-    };
-
+    // 가입 신청 핸들러
     const handleApply = async () => {
         const requestDTO = {
-            memberId: memberID,
+            memberId: memberId,
             matchingId: item.id
         };
         try {
@@ -91,9 +88,10 @@ const MatchingModal = ({ item, onClose }) => {
         }
     };
 
+    // 가입 신청 취소 핸들러
     const handleCancelApply = async () => {
         const requestDTO = {
-            memberId: memberID,
+            memberId: memberId,
             matchingId: item.id
         };
         try {
@@ -106,9 +104,10 @@ const MatchingModal = ({ item, onClose }) => {
         }
     };
 
+    // 모임 탈퇴 핸들러
     const handleLeave = async () => {
         const requestDTO = {
-            memberId: memberID,
+            memberId: memberId,
             matchingId: item.id
         };
         try {
@@ -121,6 +120,7 @@ const MatchingModal = ({ item, onClose }) => {
         }
     };
 
+    // 매칭 타입 라벨을 반환하는 함수
     const getTypeLabel = (type) => {
         switch (type) {
             case 1:
@@ -132,7 +132,37 @@ const MatchingModal = ({ item, onClose }) => {
             default:
                 return '모임';
         }
-    }
+    };
+
+    // 태그를 렌더링하는 함수
+    const renderTag = () => {
+        if (typeof item.tag === 'string') {
+            return item.tag;
+        } else if (typeof item.tag === 'object' && item.tag !== null) {
+            return Object.entries(item.tag).map(([key, value]) => (
+                <div key={key}>
+                    {key}: {value}
+                </div>
+            ));
+        } else {
+            return '';
+        }
+    };
+
+    // 리포트 모달 열기 핸들러
+    const openReport = () => {
+        setIsReportModalOpen(true);
+    };
+
+    // 메시지 모달 열기 핸들러
+    const openMsg = () => {
+        setIsMsgModalOpen(true);
+    };
+
+    // 수정 버튼 클릭 핸들러
+    const handleMyMatching = () => {
+        navigate(`/myPage/matching/${item.id}`);
+    };
 
     return (
         <div className={styles.modalOverlay}>
@@ -144,7 +174,7 @@ const MatchingModal = ({ item, onClose }) => {
                             <span className={`${styles.matchingType} ${styles[getTypeLabel(item.matchingType)]}`}>
                                 {item.matchingType === 1 ? '정기모임' : item.matchingType === 2 ? '번개' : '셀프소개팅'}
                             </span>
-                            <span className={styles.tag}>{item.tag}</span>
+                            <span className={styles.tag}>{renderTag()}</span>
                         </div>
                     </div>
                     <button className={styles.closeButton} onClick={onClose}>&times;</button>
@@ -153,11 +183,27 @@ const MatchingModal = ({ item, onClose }) => {
                     <div className={styles.leftInfo}>
                         <span className={styles.memberId}>작성자: {item.memberId}</span>
                         <span className={styles.views}>조회수: {item.views}</span>
-                        <span className={styles.commentsCount}>댓글 수: {comments.length}</span>
                         <span className={styles.date}>작성 날짜: {formatDate(item.regDate)}</span>
                     </div>
+                    <div className={styles.dropdownWrapper} ref={dropdownRef}>
+                        <BsThreeDotsVertical 
+                            className={styles.threeDotsIcon} 
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        />
+                        {isDropdownOpen && (
+                            <MatchingDropDown 
+                                id={item.id} 
+                                openReport={openReport}
+                                openMsg={openMsg}
+                                showModifyButton={isManager} 
+                            />
+                        )}
+                    </div>
+                </div>
+                <div>※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수 있습니다.</div>
+                <div className={styles.buttonContainer}>
                     {isManager ? (
-                        <button className={styles.managerButton}>설정</button>
+                        <button className={styles.managerButton} onClick={handleMyMatching}>모임 관리</button>
                     ) : isMember ? (
                         <button className={styles.leaveButton} onClick={handleLeave}>모임 탈퇴</button>
                     ) : isApplied ? (
@@ -180,27 +226,35 @@ const MatchingModal = ({ item, onClose }) => {
                 <div className={styles.contentContainer}>
                     <div className={styles.contentBox}>
                         <p>{item.content}</p>
-                        {item.image && <img className={styles.image} src={item.image} alt="모임 이미지" />}
+                        {item.filePathUrl && item.filePathUrl.length > 0 && (
+                            <div className={styles.imagesContainer}>
+                                {item.filePathUrl.map((url, index) => (
+                                    <img key={index} className={styles.image} src={url} alt={`모임 이미지 ${index + 1}`} />
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
-                <CommentSection matchingId={item.id} />
-                {totalPages > 1 && (
-                    <div className={styles.pagination}>
-                        {Array.from({ length: totalPages }, (_, index) => (
-                            <button
-                                key={index}
-                                className={`${styles.pageButton} ${currentPage === index ? styles.active : ''}`}
-                                onClick={() => handlePageChange(index)}
-                            >
-                                {index + 1}
-                            </button>
-                        ))}
-                    </div>
+                <ReplySection matchingId={item.id} />
+                {isMsgModalOpen && (
+                    <MsgModal
+                        senderId={memberId}
+                        receiver={item.nickname}
+                        onClose={() => setIsMsgModalOpen(false)}
+                    />
+                )}
+                {isReportModalOpen && (
+                    <ReportModal
+                        type="matching"
+                        targetId={item.id}
+                        reporterId={memberId}
+                        onClose={() => setIsReportModalOpen(false)}
+                    />
                 )}
             </div>
         </div>
     );
-}
+};
 
 MatchingModal.propTypes = {
     item: PropTypes.shape({
@@ -215,10 +269,13 @@ MatchingModal.propTypes = {
         views: PropTypes.number.isRequired,
         likes: PropTypes.number,
         description: PropTypes.string,
-        image: PropTypes.string,
+        filePathUrl: PropTypes.arrayOf(PropTypes.string), // 이미지 경로 배열
         content: PropTypes.string.isRequired,
         regDate: PropTypes.string.isRequired,
-        tag: PropTypes.string,
+        tag: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.object
+        ]),
         comments: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.number.isRequired,
             writer: PropTypes.string.isRequired,

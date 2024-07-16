@@ -22,13 +22,18 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
         sports: ['운동', '스포츠', '골프', '축구', '야구', '농구', '클라이밍', '등산'],
         food: ['푸드', '드링크'],
         culture: ['문화', '예술'],
-        neighborhood: ['동네', '또래']
+        neighborhood: ['동네', '또래'],
+        study_class: ['스터디', '클래스']
     }), []);
 
     const filterItemsByCategory = useCallback((category, items) => {
         if (!items) return [];
         if (category === 'all') return items;
-        return items.filter(item => categories[category].some(tag => item.tag.includes(tag)));
+        return items.filter(item => 
+            item.tags && Object.entries(item.tags).some(([tag, categoryValue]) => 
+                categories[category].includes(categoryValue)
+            )
+        );
     }, [categories]);
 
     const getSortedItems = (items) => {
@@ -83,7 +88,30 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
 };
 
 MatchingPageTemplate.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object).isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        memberId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+        matchingType: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        regDate: PropTypes.string.isRequired,
+        views: PropTypes.number.isRequired,
+        isDeleted: PropTypes.bool.isRequired,
+        placeName: PropTypes.string.isRequired,
+        locationX: PropTypes.number.isRequired,
+        locationY: PropTypes.number.isRequired,
+        address: PropTypes.string.isRequired,
+        meetDate: PropTypes.string.isRequired,
+        tags: PropTypes.object.isRequired, // tags를 객체로 받도록 수정
+        headCount: PropTypes.number.isRequired,
+        location: PropTypes.string,
+        introduce: PropTypes.string,
+        mbti: PropTypes.string,
+        gender: PropTypes.string,
+        age: PropTypes.number,
+        height: PropTypes.number,
+        filePathUrl: PropTypes.arrayOf(PropTypes.string)
+    })).isRequired,
     ListComponent: PropTypes.elementType.isRequired,
     gridColumns: PropTypes.number.isRequired,
 };

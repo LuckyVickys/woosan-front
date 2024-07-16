@@ -38,15 +38,3 @@ export const getReplies = async (matchingId, pageable) => {
         throw error;
     }
 };
-
-// 특정 부모 댓글의 모든 자식 댓글 가져오기
-export const getRepliesByParentId = async (parentId) => {
-    try {
-        const res = await axios.get(`${host}/parent/${parentId}`);
-        console.log('답글 목록을 성공적으로 가져왔습니다.');
-        return res.data;
-    } catch (error) {
-        console.error('답글 목록을 가져오는데 실패하였습니다:', error.response ? error.response.data : error.message);
-        throw error;
-    }
-};
