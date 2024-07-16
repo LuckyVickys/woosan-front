@@ -10,6 +10,9 @@ import styles from '../../assets/styles/matching/MatchingList.module.scss';
  * @param {number} gridColumns - 그리드 컬럼 수
  */
 const MatchingList = ({ items, onItemClick, gridColumns }) => {
+    // 아이템 데이터 디버깅 로그
+    console.log('매칭 리스트 아이템들:', items);
+
     return (
         <div className={styles.itemsGrid} style={{ gridTemplateColumns: `repeat(${gridColumns}, 1fr)` }}>
             {items.map(item => (
@@ -20,15 +23,15 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     matchingType={item.matchingType}
                     title={item.title}
                     content={item.content}
-                    regDate={item.regDate} // 추가된 부분
-                    views={item.views} // 추가된 부분
-                    isDeleted={item.isDeleted} // 추가된 부분
+                    regDate={item.regDate}
+                    views={item.views}
+                    isDeleted={item.isDeleted}
                     placeName={item.placeName}
                     locationX={item.locationX}
                     locationY={item.locationY}
                     address={item.address}
                     meetDate={item.meetDate}
-                    tag={item.tag}
+                    tag={item.tag} // tag를 객체로 전달
                     headCount={item.headCount}
                     location={item.location}
                     introduce={item.introduce}
@@ -36,7 +39,8 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     gender={item.gender}
                     age={item.age}
                     height={item.height}
-                    onClick={onItemClick} // 적절한 클릭 핸들러 함수 추가
+                    filePathUrl={item.filePathUrl}
+                    onClick={onItemClick}
                 />
             ))}
         </div>
@@ -58,14 +62,15 @@ MatchingList.propTypes = {
         locationY: PropTypes.number.isRequired,
         address: PropTypes.string.isRequired,
         meetDate: PropTypes.string.isRequired,
-        tag: PropTypes.string,
+        tag: PropTypes.object, // tag를 객체로 변경
         headCount: PropTypes.number.isRequired,
         location: PropTypes.string,
         introduce: PropTypes.string,
         mbti: PropTypes.string,
         gender: PropTypes.string,
         age: PropTypes.number,
-        height: PropTypes.number
+        height: PropTypes.number,
+        filePathUrl: PropTypes.arrayOf(PropTypes.string)
     })).isRequired,
     onItemClick: PropTypes.func.isRequired,
     gridColumns: PropTypes.number.isRequired,

@@ -2,6 +2,8 @@ import React from 'react';
 import useTemporary from '../../hooks/useTemporary';
 import MatchingPageTemplate from './MatchingPageTemplate';
 import MatchingList from '../../components/matching/MatchingList';
+import styles from '../../assets/styles/matching/TemporaryPagePage.module.scss';
+
 
 const TemporaryPage = () => {
     const { temporary, loading, error } = useTemporary();

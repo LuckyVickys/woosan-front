@@ -18,11 +18,11 @@
 .formGroup {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    
     margin-bottom: 15px;
 
     &.short {
-        width: 230px;
+        width: 240px;
     }
 
     &.inline {
@@ -144,4 +144,58 @@ textarea {
     border: none;
     color: red;
     cursor: pointer;
+}
+
+.tagContainer {
+    margin-top: 10px;
+}
+
+.tagInput {
+    &.short {
+        width: 240px; // 모임 장소 크기와 동일하게 설정
+    }
+}
+
+.categorySelect {
+    &.short {
+        width: 260px; // 모임 장소 크기와 동일하게 설정
+    }
+}
+
+.addButton {
+    margin-top: 10px;
+    padding: 5px 10px; // 작게 조정
+    border: none;
+    border-radius: 5px;
+    background-color: #2388FF;
+    color: white;
+    font-size: 16px; // 작게 조정
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100px;
+}
+
+.addButton:hover {
+    background-color: #1a6bc7;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-right: 1px;
+    padding: 5px 10px;
+    border: 1px solid #9BCC66;
+    border-radius: 4px;
+    
+    font-size: 16px;
+}
+
+.tag .deleteButton {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 5px;
 }

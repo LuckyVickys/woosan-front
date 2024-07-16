@@ -102,6 +102,14 @@
     font-size: 14px;
 }
 
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .applyButton,
 .cancelButton,
 .leaveButton,
@@ -111,6 +119,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    margin-left: 10px;
 }
 
 .applyButton {
@@ -166,10 +175,19 @@
         border-radius: 4px;
     }
 
-    .image {
-        width: 100%;
-        height: auto;
+    .imagesContainer {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
         margin-top: 10px;
+        justify-content: center; /* 중앙 정렬 */
+    }
+
+    .image {
+        width: 295px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 5px;
     }
 }
 
@@ -209,4 +227,43 @@
         background-color: #2388FF;
         color: white;
     }
+}
+
+/* 드롭다운 스타일 추가 */
+.threeDotsIcon {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.board-dropdown-wrapper {
+    position: relative;
+}
+
+.board-dropdown-list {
+    position: absolute;
+    top: 30px; /* 아이콘 아래에 드롭다운이 열리도록 설정 */
+    right: 0;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    width: 200px; /* 드롭다운 너비 조절 */
+}
+
+.board-dropdown {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.board-dropdown:hover {
+    background-color: #f1f1f1;
+}
+
+.board-report-icon,
+.board-msg-icon,
+.board-modify-icon {
+    margin-right: 10px;
 }

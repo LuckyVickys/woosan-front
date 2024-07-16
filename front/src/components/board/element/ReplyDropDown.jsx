@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import ReportModal from './ReportModal';
 import MsgModal from './MsgModal';
 import Swal from 'sweetalert2';
-import { deleteReply } from "../../../api/replyApi"; // Import deleteReply function
+import { deleteReply } from "../../../api/matchingBoardReplyApi"; // Import deleteReply function
 import { useSelector } from "react-redux";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
-import '../../../assets/styles/App.scss';
+
 
 const ReplyDropDown = ({ onSelect, replyId, openReport, openMsg, onDeleteSuccess }) => {
     const [openReportModal, setOpenReportModal] = useState(false);
@@ -14,10 +14,6 @@ const ReplyDropDown = ({ onSelect, replyId, openReport, openMsg, onDeleteSuccess
 
 
     const handleReport = () => {
-        // const id = replyId;
-        // console.log("Send Report id:", id);
-        // onSelect("report", id);
-        // setOpenReportModal(true);
         openReport();
     };
 

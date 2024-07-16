@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// export const API_SERVER_HOST = "http://localhost:80";
-export const API_SERVER_HOST = "http://223.130.147.56:7777";
+export const API_SERVER_HOST = "http://localhost:80";
+// export const API_SERVER_HOST = "http://223.130.147.56:7777";
 
 const prefix = `${API_SERVER_HOST}/api/board`;
 
@@ -65,9 +65,9 @@ export const modifyBoard = async (id, formData) => {
 }
 
 
-export const deleteBoard = async (removeDTO) => {
+export const deleteBoard = async (id) => {
     try {
-        const res = await axios.patch(`${prefix}/delete`, removeDTO);
+        const res = await axios.patch(`${prefix}/delete/${id}`);
         return res.data;
     } catch (error) {
         console.error('Error deleting board:', error.response ? error.response.data : error.message);
