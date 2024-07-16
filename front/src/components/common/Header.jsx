@@ -6,31 +6,31 @@ import LoginModal from "../member/LoginModal";
 import "../../assets/styles/App.scss";
 import { useSelector } from "react-redux";
 import { getKakaoUserData } from "../../api/kakaoApi";
-import { login } from "../../slices/loginSlice";
 import Swal from "sweetalert2";
 import { getMemberWithEmail } from "../../api/memberApi";
 import ProfileDropdown from "../member/ProfileDropdown";
+import { login } from "../../slices/loginSlice";
 
 const Header = () => {
   const loginState = useSelector((state) => state.loginSlice);
-  console.log("id: " + loginState.id);
-  console.log("email: " + loginState.email);
+  // loginState 값을 콘솔에 출력
+  useEffect(() => {
+    console.log("loginState: ", loginState);
+  }, [loginState]);
 
   const [openLogin, setOpenLogin] = useState(false);
-  const [openSignUp, setOpenSignUp] = useState(false);
-  const [openFindPW, setOpenFindPW] = useState(false);
   const [kakaoUserData, setKakaoUserData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  
+
   const navigate = useNavigate();
 
   const closeLoginModal = () => {
     setOpenLogin(false);
   };
-  
+
   const navToMessages = () => {
-    navigate(`/myPage/msg`);
+    navigate(`/myPage/msg/send`);
 }
 
   const toggleProfileDropdown = () => {
@@ -41,9 +41,9 @@ const Header = () => {
     const fetchData = async () => {
       if (loginState.email) {
         try {
-          console.log("Fetching user data...");
+          console.log("HEADER Fetching user data...");
           const userData = await getMemberWithEmail(loginState.email);
-          console.log("Member data fetched: ", userData);
+          console.log("HEADER data fetched: ", userData);
           setUserData(userData);
 
           if (loginState.isKakao) {
@@ -67,33 +67,42 @@ const Header = () => {
   }, [loginState.email, loginState.accessToken, loginState.isKakao]);
 
   useEffect(() => {
-    // 프로필 드롭다운 상태가 변경될 때마다 애니메이션을 추가
     if (isProfileDropdownOpen) {
       const dropdown = document.querySelector(".profile-dropdown-wrapper");
       if (dropdown) {
-        // setTimeout을 이용하여 애니메이션 효과 부여
         setTimeout(() => {
           dropdown.classList.add("active");
-        }, 40); // 50ms 지연 후 애니메이션 시작
+        }, 40);
       }
     }
   }, [isProfileDropdownOpen]);
+
+  useEffect(() => {
+    if (loginState.profile && loginState.profile.length > 0) {
+      console.log("HeaderConsoleProfile: ", loginState.profile[0]);
+    } else {
+      console.log("HeaderConsoleProfile: No profile image");
+    }
+  }, [loginState.profile]);
 
   return (
     <header className="header">
       <div className="logo">
         <div className="logoImage">
-          <Link to={"/"}>
+          <Link to="/">
             <img src={logoImage} alt="Logo" />
           </Link>
         </div>
         <div className="logoTitle">
-          <Link to={"/"}>우리는 함께 산다</Link>
+          <Link to="/">우리는 함께 산다</Link>
         </div>
       </div>
       {loginState.email ? (
         <div className="login">
-          <MdOutlineLocalPostOffice className="messageIcon" onClick={navToMessages} />
+          <MdOutlineLocalPostOffice
+            className="messageIcon"
+            onClick={navToMessages}
+          />
           <div className="loginBar"> | </div>
           {userData ? (
             <div className="profile-box" id="loginProfile">
@@ -112,13 +121,20 @@ const Header = () => {
                   alt="프로필 이미지"
                   onClick={toggleProfileDropdown}
                 />
+              ) : userData.profile && userData.profile.length > 0 ? (
+                <img
+                  className="user-profile"
+                  src={userData.profile[0]}
+                  alt="프로필 이미지"
+                  onClick={toggleProfileDropdown}
+                />
               ) : (
                 <div
                   className="user-profile"
                   onClick={toggleProfileDropdown}
                 ></div>
               )}
-               {isProfileDropdownOpen && <ProfileDropdown />}
+              {isProfileDropdownOpen && <ProfileDropdown />}
             </div>
           ) : (
             <div className="profile-box" id="loginProfile">

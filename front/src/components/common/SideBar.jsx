@@ -21,6 +21,12 @@ const SideBar = ({ pageType }) => {
         setActiveCategory(categoryName || '');
     }, [location.search]);
 
+    useEffect(() => {
+        const pathSegments = location.pathname.split('/'); // URL에서 categoryName 추출
+        const categoryName = pathSegments[2];
+        setActiveCategory(categoryName || '');
+    }, [location]);
+
     // 카테고리 클릭 시 URL을 변경하고 activeCategory 상태를 업데이트
     const handleNavigation = (categoryName) => {
         setActiveCategory(categoryName);
@@ -180,9 +186,14 @@ const SideBar = ({ pageType }) => {
                                 <FaUsers className={`icon ${activeCategory === 'matching' ? 'active' : ''}`} />모임 조회
                             </button>
                         </div>
-                        <div className={`sub-category ${activeCategory === 'msg' ? 'active' : ''}`}>
-                            <button onClick={() => handleNavigation('msg')} className={activeCategory === 'msg' ? 'active' : ''}>
-                                <FaEnvelopeOpenText className={`icon ${activeCategory === 'msg' ? 'active' : ''}`} />쪽지함
+                        <div className={`sub-category ${activeCategory === 'msg/send' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('msg/send')} className={activeCategory === 'msg/send' ? 'active' : ''}>
+                                <FaEnvelopeOpenText className={`icon ${activeCategory === 'msg/send' ? 'active' : ''}`} />보낸 쪽지함
+                            </button>
+                        </div>
+                        <div className={`sub-category ${activeCategory === 'msg/receive' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('msg/receive')} className={activeCategory === 'msg/receive' ? 'active' : ''}>
+                                <FaEnvelopeOpenText className={`icon ${activeCategory === 'msg/receive' ? 'active' : ''}`} />받은 쪽지함
                             </button>
                         </div>
                         <div className="sub-category">
@@ -212,7 +223,7 @@ const SideBar = ({ pageType }) => {
                         </div>
                         <div className={`sub-category ${activeCategory === 'msgs' ? 'active' : ''}`}>
                             <button onClick={() => handleNavigation('msgs')} className={activeCategory === 'msgs' ? 'active' : ''}>
-                                <FaGift className={`icon ${activeCategory === 'msgs' ? 'active' : ''}`} />쪽지함
+                                <FaGift className={`icon ${activeCategory === 'msgs' ? 'active' : ''}`} />받은 쪽지함
                             </button>
                         </div>
                     </>
