@@ -30,7 +30,7 @@ const Header = () => {
   };
   
   const navToMessages = () => {
-    navigate(`/myPage/msg`);
+    navigate(`/myPage/msg/send`);
 }
 
   const toggleProfileDropdown = () => {
