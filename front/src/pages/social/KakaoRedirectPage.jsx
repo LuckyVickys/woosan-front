@@ -4,6 +4,8 @@ import { getAccessToken, getKakaoMemberWithAccessToken } from "../../api/kakaoAp
 import { useDispatch } from 'react-redux';
 import { login } from "../../slices/loginSlice";
 import useCustomLogin from "../../hooks/useCustomLogin";
+import { getMemberWithEmail } from "../../api/memberApi";
+import Swal from "sweetalert2";
 
 const KakaoRedirectPage = () => {
 
@@ -21,16 +23,30 @@ const KakaoRedirectPage = () => {
 
                 console.log("--------------------");
                 console.log(userInfo);
-                dispatch(login({ ...userInfo, accessToken, isKakao: true })); // isKakao 추가
-                moveToPath("/");
+
+                getMemberWithEmail(userInfo.email).then(memberInfo => {
+                    const {level, point, nextPoint} = memberInfo;
+                    dispatch(login({ ...userInfo, level, point, nextPoint, accessToken, isKakao: true }));
+
+                    Swal.fire({
+                        title: `카카오 회원은 닉네임을 변경해주세요.`,
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "확인",
+                    }).then((result) => {
+                        if(result.isConfirmed) {
+                            moveToPath("/myPage/info");
+                        }
+                    });
+                }).catch(error => {
+                    console.err("Error: ", error);
+                });
             })
         });
     }, [authCode]);
 
     return (
         <div>
-            <div>Kakao Login Redirect</div>
-            <div>{authCode}</div>
         </div>
     )
 }
