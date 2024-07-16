@@ -320,6 +320,7 @@ nav {
       display: flex;
       align-items: center;
       height: 30px;
+      z-index: 1;
 
       .rank-number {
         display: inline-block;
