@@ -228,9 +228,6 @@ const ReplyComponent = () => {
                                         replyId={reply.id}
                                         openReport={openReport}
                                         openMsg={openMsg}
-                                        showDeleteButton={
-                                            userId === reply.writerId
-                                        }
                                         onDeleteSuccess={handleDeleteSuccess}
                                     />
                                 </div>
@@ -238,17 +235,17 @@ const ReplyComponent = () => {
                         </button>
                     </div>
                 </div>
-                <p className="reply-text">
-                    {reply.content}{" "}
+                <div className="reply-text-button">
+                    <p className="reply-text">{reply.content}</p>
                     {!isChild && (
                         <button
                             className="reply-button"
                             onClick={() => handleReplyClick(reply.id)}
                         >
-                            대댓글 달기
+                            답글
                         </button>
                     )}
-                </p>
+                </div>
 
                 {replyForms[reply.id] && (
                     <div className="reply-form-container">
@@ -276,7 +273,7 @@ const ReplyComponent = () => {
                                 className="submit-button"
                                 onClick={() => handleChildReplySubmit(reply.id)}
                             >
-                                대댓글 작성
+                                답글 작성
                             </button>
                         </div>
                     </div>
