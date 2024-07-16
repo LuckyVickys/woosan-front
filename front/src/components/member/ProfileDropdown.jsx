@@ -23,7 +23,7 @@ const ProfileDropdown = () => {
     }
 
     const navToMessages = () => {
-        navigate(`/myPage/msg`);
+        navigate(`/myPage/msg/send`);
     }
     
     const navToLikes = () => {
