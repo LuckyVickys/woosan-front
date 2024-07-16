@@ -26,9 +26,12 @@ const IndexPage = () => {
         case "/myPage/matching":
             sub = "모임 조회";
             break;
-        case "/myPage/msg":
-            sub = "쪽지함";
+        case "/myPage/msg/send":
+            sub = "보낸 쪽지함";
             break;
+            case "/myPage/msg/receive":
+                sub = "받은 쪽지함";
+                break;
         default:
             sub = "회원 정보 수정";
             break;
