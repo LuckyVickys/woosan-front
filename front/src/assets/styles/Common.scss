@@ -117,6 +117,7 @@ header {
       opacity: 0;
       transform: translateY(-10px);
       transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 1;
 
       &.active {
         opacity: 1;
@@ -164,42 +165,37 @@ header {
           margin: 20px 0;
 
           .profile-level {
-            font-size: 17px;
-            color: #555b61;
-            font-weight: 900;
+              font-size: 17px;
+              color: #555B61;
+              font-weight: 900;
           }
 
           .profile-point-bar-wrapper {
-            width: 230px;
-            height: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: end;
-            font-family: $font-family;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            z-index: 1;
+              width: 230px;
+              height: 10px;
+              display: flex;
+              position: relative;
 
-            &.active {
-              opacity: 1;
-              transform: translateY(0);
-            }
+              .point-bar {
+                  border-radius: 10px;
+                  height: 7px;
+                  margin-top: 5px;
+              }
 
-            .profile-point-bar {
-              width: 100px;
-              background-color: #98c863;
-              position: absolute;
-              z-index: 1;
-            }
+              .profile-point-bar {
+                  width: 100px;
+                  background-color: #98C863;
+                  position: absolute;
+                  z-index: 1;
+              }
 
-            .profile-nextpoint-bar {
-              width: 250px;
-              background-color: #e5e5e5;
-              position: absolute;
-            }
+              .profile-nextpoint-bar {
+                  width: 250px;
+                  background-color: #E5E5E5;
+                  position: absolute;
+              }
           }
-        }
+      }
 
         .profile-point-info {
           margin-top: 5px;
