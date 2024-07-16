@@ -13,24 +13,24 @@ import defaultProfile from "../../assets/image/profile.png";
 import { useSelector } from "react-redux";
 
 const initState = {
-  "dtoList": [],
-  "pageNumList": [],
-  "pageRequestDTO": {
-    "page": 1,
-    "size": 10
+  dtoList: [],
+  pageNumList: [],
+  pageRequestDTO: {
+    page: 1,
+    size: 10
   },
-  "prev": false,
-  "next": false,
-  "totalCount": 0,
-  "prevPage": 0,
-  "nextPage": 0,
-  "totalPage": 0,
-  "current": 1
+  prev: false,
+  next: false,
+  totalCount: 0,
+  prevPage: 0,
+  nextPage: 0,
+  totalPage: 0,
+  current: 1
 };
 
 const ReplyComponent = () => {
   const loginState = useSelector((state) => state.loginSlice);
-  const [userId, setUserId] = useState(null); // 로그인한 사용자 id
+  const [userId, setUserId] = useState(null);
   const { id } = useParams();
   const [replyForms, setReplyForms] = useState({});
   const [replies, setReplies] = useState(initState);
@@ -39,6 +39,7 @@ const ReplyComponent = () => {
   const [childReplyContent, setChildReplyContent] = useState({});
   const [openReportModal, setOpenReportModal] = useState(false);
   const [openMsgModal, setOpenMsgModal] = useState(false);
+  const [reportReplyId, setReportReplyId] = useState(null); // 신고할 댓글의 ID를 저장
   const dropDownRefs = useRef([]);
   const type = "reply";
 
@@ -80,7 +81,9 @@ const ReplyComponent = () => {
   };
 
   const handleDropDownClick = (id) => {
+    console.log("Reply ID:", id);
     setOpenReplyDropDown(prev => (prev === id ? null : id));
+    setReportReplyId(id); // 신고할 댓글의 ID를 설정
   };
 
   const handleDropDownMenu = (menu, id) => {
@@ -89,6 +92,7 @@ const ReplyComponent = () => {
   };
 
   const openReport = () => {
+    console.log("Report Reply ID:", reportReplyId); // reportReplyId가 신고할 댓글의 ID
     setOpenReportModal(true);
     setOpenMsgModal(false);
     setOpenReplyDropDown(false);
@@ -244,7 +248,7 @@ const ReplyComponent = () => {
             </div>
           )}
           {openMsgModal && <MsgModal senderId={userId} receiver={reply.nickname} onClose={closeMsg}/> }
-          {openReportModal && <ReportModal type={type} targetId={reply.id} reporterId={userId} onClose={closeReport} />}
+          {openReportModal && <ReportModal type={type} targetId={reportReplyId} reporterId={userId} onClose={closeReport} />}
         </div>
     );
   };
