@@ -77,21 +77,21 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
             formData.append("images", images[i]);
         }
 
-        try {
-            const response = await addReport(formData);
+        Swal.fire({
+            title: `${selectedType}을 신고하시겠습니까?`,
+            text: "신고 철회는 불가능합니다.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "신고",
+            cancelButtonText: "취소",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await addReport(formData);
 
-            if (response) {
-                Swal.fire({
-                    title: `${selectedType}을 신고하시겠습니까?`,
-                    text: "신고 철회는 불가능합니다.",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "신고",
-                    cancelButtonText: "취소",
-                }).then((result) => {
-                    if (result.isConfirmed) {
+                    if (response) {
                         Swal.fire(
                             "신고 완료",
                             `${selectedType}에 대한 신고가 접수되었습니다.`,
@@ -99,15 +99,15 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
                         ).then(() => {
                             setIsClosing(true);
                         });
+                    } else {
+                        throw new Error("신고 접수에 실패했습니다.");
                     }
-                });
-            } else {
-                throw new Error("신고 접수에 실패했습니다.");
+                } catch (error) {
+                    console.error("신고 접수 오류:", error.message);
+                    Swal.fire("신고 접수 실패", error.message, "error");
+                }
             }
-        } catch (error) {
-            console.error("신고 접수 오류:", error.message);
-            Swal.fire("신고 접수 실패", error.message, "error");
-        }
+        });
     };
 
     return (
