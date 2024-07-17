@@ -29,9 +29,9 @@ const IndexPage = () => {
         case "/myPage/msg/send":
             sub = "보낸 쪽지함";
             break;
-            case "/myPage/msg/receive":
-                sub = "받은 쪽지함";
-                break;
+        case "/myPage/msg/receive":
+            sub = "받은 쪽지함";
+            break; 
         default:
             sub = "회원 정보 수정";
             break;

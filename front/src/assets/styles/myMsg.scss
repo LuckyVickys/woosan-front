@@ -39,10 +39,19 @@ $font-family: 'Pretendard-Regular', sans-serif;
                 .read-msg-role{
                     margin-right: 10px;
                     width: 45px;
+                    height: 23px;
                     padding: 5px;
                     color: #fff;
-                    background: #2388FF;
                     border-radius: 4px;
+                    font-size: 14px;
+                }
+                
+                .sender {
+                    background: #2388FF;
+                }
+
+                .receiver {
+                    background: #FDCA00;
                 }
     
                 .read-msg-profile-image {

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ListPageComponent from "../board/element/ListPageComponent";
-import TableRowComponent from "../board/element/TableRowComponent";
-import { TiDelete } from "react-icons/ti";
 import "../../assets/styles/App.scss";
 import MyReceiveMsgTableRowComponent from "./element/MyReceiveMsgTableRowComponent";
 import { useSelector } from "react-redux";
-import useCustomMove from "../../hooks/useCustomMove";
-import { getSendMessage } from "../../api/myPageApi";
+import useCustomMsgMove from "../../hooks/useCustomMsgMove";
+import { getReceiveMessage } from "../../api/myPageApi";
 
 const initState = {
     dtoList: [],
@@ -26,7 +24,7 @@ const initState = {
 
 const MyReceiveMsgComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const {page, size, moveToList, moveToRead, refresh} = useCustomMove("/myPage/msg/send");
+    const {page, size, moveToList, moveToRead, refresh} = useCustomMsgMove("/myPage/msg/send");
     const [msgData, setMsgData] = useState(initState);
 
     useEffect(() => {
@@ -40,7 +38,7 @@ const MyReceiveMsgComponent = () => {
                 size: currentSize
             }
         };
-        getSendMessage(params).then(data => {
+        getReceiveMessage(params).then(data => {
             console.log("Fetch data: ", data);
             setMsgData(data);
         }).catch(err => {
