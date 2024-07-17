@@ -221,10 +221,11 @@ const ReplyComponent = () => {
     };
 
     const renderReply = (reply, isChild = false) => {
-        const profileSrc =
-            reply.writerProfile && reply.writerProfile.length > 0
+        const profileSrc = reply.isKakao && reply.kakaoProfile
+            ? reply.kakaoProfile
+            : (reply.writerProfile && reply.writerProfile.length > 0
                 ? reply.writerProfile[0]
-                : defaultProfile;
+                : defaultProfile);
 
         return (
             <div
@@ -292,7 +293,13 @@ const ReplyComponent = () => {
                         />
                         <div className="reply-form">
                             <img
-                                src={userData?.profile && userData.profile.length > 0 ? userData.profile[0] : defaultProfile}
+                                src={
+                                    loginState.isKakao && kakaoUserData?.properties?.profile_image
+                                        ? kakaoUserData.properties.profile_image
+                                        : userData?.profile && userData.profile.length > 0
+                                            ? userData.profile[0]
+                                            : defaultProfile
+                                }
                                 alt="프로필"
                                 className="reply-profile-image"
                             />
@@ -372,7 +379,13 @@ const ReplyComponent = () => {
 
                 <div className="reply-input">
                     <img
-                        src={userData?.profile && userData.profile.length > 0 ? userData.profile[0] : defaultProfile}
+                        src={
+                            loginState.isKakao && kakaoUserData?.properties?.profile_image
+                                ? kakaoUserData.properties.profile_image
+                                : userData?.profile && userData.profile.length > 0
+                                    ? userData.profile[0]
+                                    : defaultProfile
+                        }
                         alt="프로필"
                         className="reply-profile-image"
                     />
