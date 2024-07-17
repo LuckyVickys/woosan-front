@@ -15,9 +15,9 @@ const initState = {
     files: [] // 빈 파일 리스트 초기화
 };
 
-const AddComponent = () => {
+const AddComponent = ({ category }) => {
     const loginState = useSelector((state) => state.loginSlice);
-    const [board, setBoard] = useState({ ...initState });
+    const [board, setBoard] = useState({ ...initState, categoryName: category ? category : "선택" });
     const [showDropdown, setShowDropdown] = useState(false); // 드롭다운 상태 관리
     const [files, setFiles] = useState([]); // 파일 상태 관리
     const [errors, setErrors] = useState({}); // 오류 메시지 상태 관리
