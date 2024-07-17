@@ -3,7 +3,7 @@ import { API_SERVER_HOST } from "./boardApi";
 
 const rest_api_key = `16087d2a0e3c11811566bbba566b3ad8`;
 // const redirect_uri = `http://localhost:3000/kakao`;
-const redirect_uri = `https://223.130.158.37:3000/kakao`;
+const redirect_uri = `http://223.130.158.37:3000/kakao`;
 
 const auth_code_path = `https://kauth.kakao.com/oauth/authorize`;
 
