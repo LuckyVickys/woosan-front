@@ -6,6 +6,8 @@ const Loading = <div>Loading....</div>;
 const UploadPage = lazy(() => import("../pages/adminPage/UploadPage"));
 const ReportPage = lazy(() => import("../pages/adminPage/ReportPage"));
 const NoticePage = lazy(() => import("../pages/adminPage/NoticePage"));
+const MySendMsgPage = lazy(() => import("../pages/myPage/MySendMsgPage"));
+const MyReceiveMsgPage = lazy(() => import("../pages/myPage/MyReceiveMsgPage"));
 const MsgPage = lazy(() => import("../pages/adminPage/MsgPage"));
 
 const adminPageRouter = () => {
@@ -23,7 +25,7 @@ const adminPageRouter = () => {
             ),
         },
         {
-            path: "reports",
+            path: "report",
             element: (
                 <Suspense fallback={Loading}>
                     <ReportPage />
@@ -31,7 +33,7 @@ const adminPageRouter = () => {
             ),
         },
         {
-            path: "notices",
+            path: "notice",
             element: (
                 <Suspense fallback={Loading}>
                     <NoticePage />
@@ -39,10 +41,18 @@ const adminPageRouter = () => {
             ),
         },
         {
-            path: "msgs",
+            path: "msg/send",
             element: (
                 <Suspense fallback={Loading}>
-                    <MsgPage />
+                    <MySendMsgPage />
+                </Suspense>
+            ),
+        },
+        {
+            path: "msg/receive",
+            element: (
+                <Suspense fallback={Loading}>
+                    <MyReceiveMsgPage />
                 </Suspense>
             ),
         },

@@ -11,7 +11,7 @@ const initState = {
     pageNumList: [],
     pageRequestDTO: {
         page: 0,
-        size: 10
+        size: 10,
     },
     prev: false,
     next: false,
@@ -24,7 +24,7 @@ const initState = {
 
 const MyReplyComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/myPage/board");
+    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/myPage/reply");
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {
@@ -35,47 +35,87 @@ const MyReplyComponent = () => {
             memberId: loginState.id,
             pageRequestDTO: {
                 page: currentPage,
-                size: currentSize
-            }
+                size: currentSize,
+            },
         };
-        getMyReplies(params).then(data => {
-            console.log("Fetched data:", data);
-            setServerData(data);
-        }).catch(err => {
-            console.error("Failed to fetch data:", err);
-        });
+        getMyReplies(params)
+            .then((data) => {
+                console.log("Fetched data:", data);
+                setServerData(data);
+            })
+            .catch((err) => {
+                console.error("Failed to fetch data:", err);
+            });
     }, [page, size, refresh]);
 
     const handleRowClick = (boardId) => {
-        moveToRead(boardId);
+        moveToRead(boardId, "/board");
     };
 
-    const { dtoList, pageNumList, pageRequestDTO, prev, next, totalCount, prevPage, nextPage, totalPage, current } = serverData;
+    const {
+        dtoList,
+        pageNumList,
+        pageRequestDTO,
+        prev,
+        next,
+        totalCount,
+        prevPage,
+        nextPage,
+        totalPage,
+        current,
+    } = serverData;
 
     return (
-        <div className="list-component">
-            <table className="list-table">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>카테고리</th>
-                        <th>게시물 제목</th>
-                        <th>내용</th>
-                        <th>작성 날짜</th>
-                        <th>추천</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {dtoList && dtoList.map((item, index) => (
-                        <MyRepliesTableRowComponent key={item.id} item={item} index={index} onClick={() => handleRowClick(item.boardId)} />
-                    ))}
-                </tbody>
-            </table>
-            <ListPageComponent
-                serverData={{ dtoList, pageNumList, pageRequestDTO, prev, next, totalCount, prevPage, nextPage, totalPage, current }}
-                movePage={(page) => moveToList({ page })}
-            />
-        </div>
+        <>
+            {dtoList.length > 0 ? (
+                <div className="list-component">
+                    <table className="list-table">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>카테고리</th>
+                                <th>게시물 제목</th>
+                                <th>내용</th>
+                                <th>작성 날짜</th>
+                                <th>추천</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {dtoList &&
+                                dtoList.map((item, index) => (
+                                    <MyRepliesTableRowComponent
+                                        key={item.id}
+                                        item={item}
+                                        index={index}
+                                        onClick={() =>
+                                            handleRowClick(item.boardId)
+                                        }
+                                    />
+                                ))}
+                        </tbody>
+                    </table>
+                    <ListPageComponent
+                        serverData={{
+                            dtoList,
+                            pageNumList,
+                            pageRequestDTO,
+                            prev,
+                            next,
+                            totalCount,
+                            prevPage,
+                            nextPage,
+                            totalPage,
+                            current,
+                        }}
+                        movePage={(page) => moveToList({ page })}
+                    />
+                </div>
+            ) : (
+                <div className="message-not-found">
+                    작성한 댓글이 존재하지 않습니다.
+                </div>
+            )}
+        </>
     );
 };
 
