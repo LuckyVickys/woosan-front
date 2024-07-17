@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getMyBoard } from "../../api/myPageApi";
-import useCustomMove from "../../hooks/useCustomMove";
-import ListPageComponent from "../../components/myPage/element/ListPageComponent";
-import MyBoardTableRowComponent from "../../components/myPage/element/MyBoardTableRowComponent";
+import ListPageComponent from "../board/element/ListPageComponent";
+import TableRowComponent from "../board/element/TableRowComponent";
+import { TiDelete } from "react-icons/ti";
 import "../../assets/styles/App.scss";
+import MyReceiveMsgTableRowComponent from "./element/MyReceiveMsgTableRowComponent";
 import { useSelector } from "react-redux";
+import useCustomMove from "../../hooks/useCustomMove";
+import { getSendMessage } from "../../api/myPageApi";
 
 const initState = {
     dtoList: [],
@@ -22,10 +24,10 @@ const initState = {
     current: 0,
 };
 
-const MyBoardComponent = () => {
+const MyReceiveMsgComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/myPage/board");
-    const [serverData, setServerData] = useState(initState);
+    const {page, size, moveToList, moveToRead, refresh} = useCustomMove("/myPage/msg/send");
+    const [msgData, setMsgData] = useState(initState);
 
     useEffect(() => {
         const currentPage = page || 1;
@@ -38,40 +40,46 @@ const MyBoardComponent = () => {
                 size: currentSize
             }
         };
-        getMyBoard(params).then(data => {
-            console.log("Fetched data:", data);
-            setServerData(data);
+        getSendMessage(params).then(data => {
+            console.log("Fetch data: ", data);
+            setMsgData(data);
         }).catch(err => {
-            console.error("Failed to fetch data:", err);
+            console.error("Failed to fetch data: ", err);
         });
     }, [page, size, refresh]);
 
-    const handleRowClick = (id) => {
-        moveToRead(id, "/board");
+    const handleMsgClick = (id) => {
+        console.log("HandleMsgClick:", id);
+        moveToRead(id, "/myPage/message");
     };
 
-    const { dtoList, pageNumList, pageRequestDTO, prev, next, totalCount, prevPage, nextPage, totalPage, current } = serverData;
+    const handleMsgDelete = (id) => {
+        console.log("HandleMsgDelete:", id);
+    };
+
+    const {dtoList, pageNumList, pageRequestDTO, prev, next, totalCount, prevPage, nextPage, totalPage, current} = msgData;
 
     return (
+    <>
+        {dtoList.length > 0 ?
         <div className="list-component">
             <table className="list-table">
                 <thead>
                     <tr>
                         <th>번호</th>
-                        <th>카테고리</th>
-                        <th>제목</th>
+                        <th>발신자</th>
+                        <th>내용</th>
                         <th>작성 날짜</th>
-                        <th>조회수</th>
-                        <th>추천</th>
+                        <th>삭제</th>
                     </tr>
                 </thead>
                 <tbody>
                     {dtoList && dtoList.map((item, index) => (
-                        <MyBoardTableRowComponent
+                        <MyReceiveMsgTableRowComponent
                             key={item.id}
                             item={item}
                             index={index}
-                            onClick={() => handleRowClick(item.id)}
+                            onClick={() => handleMsgClick(item.id)}
                         />
                     ))}
                 </tbody>
@@ -81,7 +89,11 @@ const MyBoardComponent = () => {
                 movePage={(page) => moveToList({ page })}
             />
         </div>
+        :
+        <div className="message-not-found">받은 쪽지가 존재하지 않습니다.</div>
+        }
+    </>
     );
 };
 
-export default MyBoardComponent;
+export default MyReceiveMsgComponent;
