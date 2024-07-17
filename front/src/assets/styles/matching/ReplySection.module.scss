@@ -71,44 +71,6 @@
     margin-top: 10px;
 }
 
-/* 드롭다운 스타일 수정 */
-.commentDropdownWrapper, .replyDropdownWrapper {
-    position: relative;
-}
-
-.commentDropdownList, .replyDropdownList {
-    position: absolute;
-    top: -30px; /* 아이콘 위로 드롭다운이 열리도록 설정 */
-    right: 0;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    width: 200px;
-}
-
-.commentDropdown, .replyDropdown {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: #f1f1f1;
-    }
-
-    .commentReportIcon, .commentMsgIcon, .commentDeleteIcon, .replyReportIcon, .replyMsgIcon, .replyDeleteIcon {
-        margin-right: 10px;
-    }
-}
-
-.threeDotsIcon {
-    cursor: pointer;
-    font-size: 18px;
-    color: gray;
-}
 
 .profileImage {
     width: 30px;

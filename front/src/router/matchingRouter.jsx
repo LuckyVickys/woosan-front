@@ -9,6 +9,7 @@ const RegularlyPage = lazy(() => import("../pages/matching/RegularlyPage"));
 const TemporaryPage = lazy(() => import("../pages/matching/TemporaryPage"));
 const SelfPage = lazy(() => import("../pages/matching/SelfPage"));
 const CreateMatchingPage = lazy(() => import("../pages/matching/CreateMatchingPage"));
+const ModifyMatchingPage = lazy(() => import("../pages/matching/ModifyMatchingPage"));
 
 const matchingRouter = ()=> {
     return [
@@ -31,6 +32,10 @@ const matchingRouter = ()=> {
         {
             path: "createMatching",
             element: <Suspense fallback={Loading}><CreateMatchingPage/></Suspense>
+        },
+        {
+            path: "modify/:id",
+            element: <Suspense fallback={Loading}><ModifyMatchingPage/></Suspense>
         }
     ]
 }
