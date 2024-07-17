@@ -3,6 +3,7 @@ import { API_SERVER_HOST } from './boardApi.js';
 
 const host = `${API_SERVER_HOST}/api/my`;
 
+// 마이페이지 댓글 목록
 export const getMyReplies = async (params) => {
     try {
         const response = await axios.post(`${host}/replies`, params);
@@ -13,6 +14,7 @@ export const getMyReplies = async (params) => {
     }
 };
 
+// 마이페이지 게시글 목록
 export const getMyBoard = async (params) => {
     try {
         const response = await axios.post(`${host}/board`, params);
@@ -23,6 +25,7 @@ export const getMyBoard = async (params) => {
     }
 };
 
+// 마이페이지 추천 게시글 목록
 export const getLikedBoard = async (params) => {
     try {
         const response = await axios.post(`${host}/like`, params);
