@@ -6,7 +6,8 @@ const Loading = <div>Loading....</div>;
 const UploadPage = lazy(() => import("../pages/adminPage/UploadPage"));
 const ReportPage = lazy(() => import("../pages/adminPage/ReportPage"));
 const NoticePage = lazy(() => import("../pages/adminPage/NoticePage"));
-const MsgPage = lazy(() => import("../pages/adminPage/MsgPage"));
+const SendMsgPage = lazy(() => import("../pages/adminPage/SendMsgPage"));
+const ReceiveMsgPage = lazy(() => import("../pages/adminPage/ReceiveMsgPage"));
 
 const adminPageRouter = () => {
     return [
@@ -16,35 +17,23 @@ const adminPageRouter = () => {
         },
         {
             path: "upload",
-            element: (
-                <Suspense fallback={Loading}>
-                    <UploadPage />
-                </Suspense>
-            ),
+            element: (<Suspense fallback={Loading}><UploadPage /></Suspense>),
         },
         {
             path: "reports",
-            element: (
-                <Suspense fallback={Loading}>
-                    <ReportPage />
-                </Suspense>
-            ),
+            element: (<Suspense fallback={Loading}>ReportPage /></Suspense>),
         },
         {
             path: "notices",
-            element: (
-                <Suspense fallback={Loading}>
-                    <NoticePage />
-                </Suspense>
-            ),
+            element: (<Suspense fallback={Loading}><NoticePage /></Suspense>),
         },
         {
-            path: "msgs",
-            element: (
-                <Suspense fallback={Loading}>
-                    <MsgPage />
-                </Suspense>
-            ),
+            path: "msg/send",
+            element: (<Suspense fallback={Loading}><SendMsgPage /></Suspense>),
+        },
+        {
+            path: "msg/receive",
+            element: (<Suspense fallback={Loading}><ReceiveMsgPage /></Suspense>),
         },
     ];
 };
