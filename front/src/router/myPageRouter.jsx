@@ -10,6 +10,7 @@ const LikePage = lazy(()=> import("../pages/myPage/LikePage"))
 const MyMatchingPage = lazy(()=> import("../pages/myPage/MyMatchingPage"))
 const MySendMsgPage = lazy(()=> import("../pages/myPage/MySendMsgPage"))
 const MyReceiveMsgPage = lazy(()=> import("../pages/myPage/MyReceiveMsgPage"))
+const MyMsgPage = lazy(()=> import("../pages/myPage/MyMsgPage"))
 
 const myPageRouter = ()=> {
     return [
@@ -41,9 +42,13 @@ const myPageRouter = ()=> {
             path: "msg/send",
             element: <Suspense fallback={Loading}><MySendMsgPage/></Suspense>
         },
-        {
+        {     
             path: "msg/receive",
             element: <Suspense fallback={Loading}><MyReceiveMsgPage/></Suspense>
+        },
+        {
+            path: "message",
+            element: <Suspense fallback={Loading}><MyMsgPage/></Suspense>
         }
     ]
 }

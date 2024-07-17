@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { API_SERVER_HOST } from './boardApi.js';
 
-const host = `${API_SERVER_HOST}/api/my`;
+// const host = `${API_SERVER_HOST}/api/my`;
+const host = `http://localhost:80/api/my`;
 
 // 마이페이지 댓글 목록
 export const getMyReplies = async (params) => {
@@ -37,9 +38,9 @@ export const getLikedBoard = async (params) => {
 };
 
 // 마이페이지 보낸 쪽지함
-export const sendMessage = async () => {
+export const getSendMessage = async (params) => {
     try {
-        const response = await axios.post(`${host}/message/list/send`);
+        const response = await axios.post(`${host}/message/list/send`, params);
         return response.data;
     } catch(error) {
         console.error('Error fetching my send messages: ', error.response ? error.response.data : error.message);
@@ -48,9 +49,9 @@ export const sendMessage = async () => {
 }
 
 // 마이페이지 받은 쪽지함
-export const receiveMessage = async () => {
+export const getReceiveMessage = async (params) => {
     try {
-        const response = await axios.post(`${host}/message/list/receive`);
+        const response = await axios.post(`${host}/message/list/receive`, params);
         return response.data;
     } catch(error) {
         console.error('Error fetching my receive messages: ', error.response ? error.response.data : error.message);
@@ -83,7 +84,7 @@ export const delReceiveMessage = async (id) => {
 }
 
 // 쪽지 상세 페이지
-export const messageDetail = async (id) => {
+export const getMessage = async (id) => {
     try {
         const response = await axios.get(`${host}/message/${id}`);
         console.log(response.data);
