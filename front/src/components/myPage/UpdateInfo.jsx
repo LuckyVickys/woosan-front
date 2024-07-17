@@ -188,15 +188,16 @@ const UpdateInfo = () => {
                             <label>등급 / 포인트</label>
                             <div className="point-level">
                                 <div className="level-point">
-                                    <span>Lv.3</span>
+                                    <span>{loginState.level}</span>
                                     <div className="progress-bar">
                                         <div
                                             className="progress"
                                             style={{ width: progressBarWidth }}
                                         ></div>
                                     </div>
-                                    <span>
-                                        {formData.point}/{formData.nextPoint} P
+                                    <span className="progress-point">
+                                        {formData.point} / {formData.nextPoint}{" "}
+                                        P
                                     </span>
                                 </div>
                             </div>
