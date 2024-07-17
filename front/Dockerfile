@@ -14,9 +14,12 @@ FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-# Self-Signed SSL 인증서 복사
-COPY /etc/nginx/ssl /etc/nginx/ssl
+EXPOSE 80
 
-EXPOSE 80 443
+# 로그 추가
+RUN echo "Listing /etc/nginx/conf.d after copying nginx.conf:"
+RUN ls -al /etc/nginx/conf.d/
+RUN echo "Displaying contents of /etc/nginx/conf.d/default.conf:"
+RUN cat /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
