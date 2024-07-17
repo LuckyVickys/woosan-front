@@ -37,11 +37,22 @@ const IndexPage = () => {
             break;
     }
 
+    const hideSubPaths = ['/myPage/message/:id'];
+
+    const shouldHideSub = (pathname) => {
+        return hideSubPaths.some((path) => {
+            const regex = new RegExp(`^${path.replace(/:\w+/g, '\\w+')}$`);
+            return regex.test(pathname);
+        });
+    };
+
     return (
         <BasicLayout>
             <SideBar pageType="myPage" />
             <div className="contents">
-                <PageTitle main="마이페이지" sub={sub} />
+                {!shouldHideSub(location.pathname) && (
+                    <PageTitle main="마이페이지" sub={sub} />
+                )}
                 <Outlet />
             </div>
         </BasicLayout>

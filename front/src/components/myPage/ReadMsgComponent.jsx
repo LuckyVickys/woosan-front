@@ -3,14 +3,6 @@ import "../../assets/styles/App.scss";
 import { useSelector } from "react-redux";
 import { formatDate } from "../../util/DateUtil";
 
-const initState = {
-    id: 0,
-    senderNickname: "",
-    receiverNickname: "",
-    content: "",
-    regDate: "",
-};
-
 const ReadMsgComponent = ({ selectedMsg }) => {
     const loginState = useSelector((state) => state.loginSlice);
 
@@ -26,6 +18,8 @@ const ReadMsgComponent = ({ selectedMsg }) => {
         console.log("Going back");
     }
 
+    const roleClassName = selectedMsg.role === "발신자" ? "sender" : "receiver";
+
     return (
         <>
             <div className="read-msg-title">
@@ -35,7 +29,7 @@ const ReadMsgComponent = ({ selectedMsg }) => {
                 <div className="left">
                     <div className="read-msg-author-info">
                         <div className="read-msg-author">
-                            <div className="read-msg-role sender">{selectedMsg.role}</div> | 
+                            <div className={`read-msg-role ${roleClassName}`}>{selectedMsg.role}</div> | 
                             {/* <img src={selectedMsg.profile} alt="프로필" className="read-msg-profile-image" /> */}
                             &nbsp; {selectedMsg.nickname} | {formatDate(selectedMsg.regDate)}
                         </div>
