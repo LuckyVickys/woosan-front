@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import { getMemberWithEmail } from "../../api/memberApi";
 import ProfileDropdown from "../member/ProfileDropdown";
 import { login } from "../../slices/loginSlice";
+import defaultProfile from "../../assets/image/profile.png";
+
 
 const Header = () => {
   const loginState = useSelector((state) => state.loginSlice);
@@ -113,10 +115,12 @@ const Header = () => {
                   onClick={toggleProfileDropdown}
                 />
               ) : (
-                <div
-                  className="user-profile"
-                  onClick={toggleProfileDropdown}
-                ></div>
+                <img
+                className="user-profile"
+                src={defaultProfile}
+                alt="프로필 기본 이미지"
+                onClick={toggleProfileDropdown}
+              />
               )}
               {isProfileDropdownOpen && <ProfileDropdown />}
             </div>
