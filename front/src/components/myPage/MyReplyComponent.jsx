@@ -4,6 +4,7 @@ import useCustomMove from "../../hooks/useCustomMove";
 import ListPageComponent from "../../components/myPage/element/ListPageComponent";
 import MyRepliesTableRowComponent from "../../components/myPage/element/MyRepliesTableRowComponent";
 import "../../assets/styles/App.scss";
+import { useSelector } from "react-redux";
 
 const initState = {
     dtoList: [],
@@ -22,6 +23,7 @@ const initState = {
 };
 
 const MyReplyComponent = () => {
+    const loginState = useSelector((state) => state.loginSlice);
     const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/myPage/board");
     const [serverData, setServerData] = useState(initState);
 
@@ -30,7 +32,7 @@ const MyReplyComponent = () => {
         const currentSize = size || 10;
         console.log(`Fetching replies with page: ${page}, size: ${size}`);
         const params = {
-            memberId: 10, // 실제로는 로그인된 사용자의 ID를 가져와야 합니다.
+            memberId: loginState.id,
             pageRequestDTO: {
                 page: currentPage,
                 size: currentSize
