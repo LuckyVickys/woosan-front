@@ -51,14 +51,44 @@ $font-family: "Pretendard-Regular", sans-serif;
     }
 
     // UpdatePassword
+    .form-group {
+        flex: 1;
+
+        .input-toggle-container {
+            position: relative;
+
+            .toggle-password-button {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                height: 20px;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                border-radius: 2px;
+                font-size: 15px;
+                font-weight: 400;
+                cursor: pointer;
+            }
+        }
+
+        .input-error {
+            color: #ea4b48;
+            font-size: 12px;
+            font-weight: 400;
+            text-align: left;
+            margin: 5px 0;
+
+            &.available {
+                color: #9bcc66;
+            }
+        }
+    }
+
     .password-fields {
         display: flex;
         justify-content: space-between;
         gap: 10px;
-
-        .form-group {
-            flex: 1;
-        }
     }
 
     // UpdateInfo
