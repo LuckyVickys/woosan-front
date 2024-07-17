@@ -1,5 +1,11 @@
+import MyBoardComponent from "../../components/myPage/MyBoardComponent";
+
 const NoticePage = () => {
-    return <div className="">공지사항 관리</div>;
+    return (
+        <div className="">
+            <MyBoardComponent />
+        </div>
+    );
 };
 
 export default NoticePage;

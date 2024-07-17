@@ -14,14 +14,17 @@ const IndexPage = () => {
         case "/adminPage/upload":
             sub = "배너 관리";
             break;
-        case "/adminPage/reports":
+        case "/adminPage/report":
             sub = "신고 관리";
             break;
-        case "/adminPage/notices":
+        case "/adminPage/notice":
             sub = "공지사항 관리";
             break;
-        case "/adminPage/msgs":
-            sub = "쪽지함";
+        case "/adminPage/msg/send":
+            sub = "보낸 쪽지함";
+            break;
+        case "/adminPage/msg/receive":
+            sub = "받은 쪽지함";
             break;
         default:
             sub = "배너 관리";
