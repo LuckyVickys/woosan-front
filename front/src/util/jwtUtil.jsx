@@ -8,7 +8,7 @@ const refreshJWT = async (accessToken, refreshToken) => {
     
     // const host = API_SERVER_HOST;
     // const host = `http://localhost:3000`;
-    const host = `https://223.130.158.37:3000`;
+    const host = `http://223.130.158.37:3000`;
     const header = {headers: {"Authorization":`Bearer ${accessToken}`}};
     const res = await axios.post(`${host}/api/auth/refresh`, {refreshToken}, header);
 

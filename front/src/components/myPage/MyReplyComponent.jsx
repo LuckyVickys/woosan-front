@@ -24,8 +24,7 @@ const initState = {
 
 const MyReplyComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const { page, size, moveToList, moveToRead, refresh } =
-       useCustomMove("/myPage/reply");
+    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/myPage/reply");
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {
@@ -33,7 +32,7 @@ const MyReplyComponent = () => {
         const currentSize = size || 10;
         console.log(`Fetching replies with page: ${page}, size: ${size}`);
         const params = {
-            memberId: loginState.id, 
+            memberId: loginState.id,
             pageRequestDTO: {
                 page: currentPage,
                 size: currentSize,

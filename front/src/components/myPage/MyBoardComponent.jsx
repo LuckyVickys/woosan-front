@@ -35,7 +35,7 @@ const MyBoardComponent = () => {
             `Fetching data with page: ${currentPage}, size: ${currentSize}`
         );
         const params = {
-            memberId: loginState.id, // 실제로는 로그인된 사용자의 ID를 가져와야 합니다.
+            memberId: loginState.id,
             pageRequestDTO: {
                 page: currentPage,
                 size: currentSize,
