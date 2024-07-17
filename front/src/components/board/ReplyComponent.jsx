@@ -11,6 +11,9 @@ import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
 import defaultProfile from "../../assets/image/profile.png";
 import { useSelector } from "react-redux";
+import { getKakaoUserData } from "../../api/kakaoApi";
+import Swal from "sweetalert2";
+import { getMemberWithEmail } from "../../api/memberApi";
 
 const initState = {
     dtoList: [],
@@ -31,6 +34,8 @@ const initState = {
 const ReplyComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const [userId, setUserId] = useState(null);
+    const [userData, setUserData] = useState(null);
+    const [kakaoUserData, setKakaoUserData] = useState(null);
     const { id } = useParams();
     const [replyForms, setReplyForms] = useState({});
     const [replies, setReplies] = useState(initState);
@@ -42,6 +47,37 @@ const ReplyComponent = () => {
     const [reportReplyId, setReportReplyId] = useState(null); // 신고할 댓글의 ID를 저장
     const dropDownRefs = useRef([]);
     const type = "reply";
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (loginState.email) {
+                try {
+                    console.log("Reply Fetching user data...");
+                    const userData = await getMemberWithEmail(loginState.email);
+                    console.log("Reply data fetched: ", userData);
+                    setUserData(userData);
+
+                    if (loginState.isKakao) {
+                        const kakaoData = await getKakaoUserData(loginState.accessToken);
+                        console.log("Kakao user data fetched: ", kakaoData);
+                        setKakaoUserData(kakaoData);
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        title: `로그인 에러`,
+                        text: `다시 시도해주세요.`,
+                        icon: "error",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "확인",
+                    });
+                    console.error("Error fetching user data: ", error);
+                }
+            } else {
+                console.log("loginState.email is not set");
+            }
+        };
+        fetchData();
+    }, [loginState.email, loginState.accessToken, loginState.isKakao]);
 
     useEffect(() => {
         if (loginState.id) {
@@ -187,7 +223,7 @@ const ReplyComponent = () => {
     const renderReply = (reply, isChild = false) => {
         const profileSrc =
             reply.writerProfile && reply.writerProfile.length > 0
-                ? reply.writerProfile
+                ? reply.writerProfile[0]
                 : defaultProfile;
 
         return (
@@ -256,7 +292,7 @@ const ReplyComponent = () => {
                         />
                         <div className="reply-form">
                             <img
-                                src={defaultProfile}
+                                src={userData?.profile && userData.profile.length > 0 ? userData.profile[0] : defaultProfile}
                                 alt="프로필"
                                 className="reply-profile-image"
                             />
@@ -336,7 +372,7 @@ const ReplyComponent = () => {
 
                 <div className="reply-input">
                     <img
-                        src={defaultProfile}
+                        src={userData?.profile && userData.profile.length > 0 ? userData.profile[0] : defaultProfile}
                         alt="프로필"
                         className="reply-profile-image"
                     />

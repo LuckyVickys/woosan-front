@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logoImage from "../../assets/image/logo.svg";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
@@ -13,10 +13,6 @@ import { login } from "../../slices/loginSlice";
 
 const Header = () => {
   const loginState = useSelector((state) => state.loginSlice);
-  // loginState 값을 콘솔에 출력
-  useEffect(() => {
-    console.log("loginState: ", loginState);
-  }, [loginState]);
 
   const [openLogin, setOpenLogin] = useState(false);
   const [kakaoUserData, setKakaoUserData] = useState(null);
@@ -31,7 +27,7 @@ const Header = () => {
 
   const navToMessages = () => {
     navigate(`/myPage/msg/send`);
-}
+  }
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen((prevState) => !prevState);
@@ -41,14 +37,11 @@ const Header = () => {
     const fetchData = async () => {
       if (loginState.email) {
         try {
-          console.log("HEADER Fetching user data...");
           const userData = await getMemberWithEmail(loginState.email);
-          console.log("HEADER data fetched: ", userData);
           setUserData(userData);
 
           if (loginState.isKakao) {
             const kakaoData = await getKakaoUserData(loginState.accessToken);
-            console.log("Kakao user data fetched: ", kakaoData);
             setKakaoUserData(kakaoData);
           }
         } catch (error) {
@@ -59,7 +52,6 @@ const Header = () => {
             confirmButtonColor: "#3085d6",
             confirmButtonText: "확인",
           });
-          console.error("Error fetching user data: ", error);
         }
       }
     };
@@ -76,14 +68,6 @@ const Header = () => {
       }
     }
   }, [isProfileDropdownOpen]);
-
-  useEffect(() => {
-    if (loginState.profile && loginState.profile.length > 0) {
-      console.log("HeaderConsoleProfile: ", loginState.profile[0]);
-    } else {
-      console.log("HeaderConsoleProfile: No profile image");
-    }
-  }, [loginState.profile]);
 
   return (
     <header className="header">
