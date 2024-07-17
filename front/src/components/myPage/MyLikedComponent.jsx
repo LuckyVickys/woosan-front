@@ -4,6 +4,7 @@ import useCustomMove from "../../hooks/useCustomMove";
 import ListPageComponent from "./element/ListPageComponent";
 import MyBoardTableRowComponent from "./element/MyBoardTableRowComponent";
 import "../../assets/styles/App.scss";
+import { useSelector } from "react-redux";
 
 const initState = {
     dtoList: [],
@@ -22,8 +23,9 @@ const initState = {
 };
 
 const MyLikedComponent = () => {
+    const loginState = useSelector((state) => state.loginSlice);
     const { page, size, moveToList, moveToRead, refresh } =
-        useCustomMove("/myPage/board");
+        useCustomMove("/myPage/like");
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {
@@ -33,7 +35,7 @@ const MyLikedComponent = () => {
             `Fetching data with page: ${currentPage}, size: ${currentSize}`
         );
         const params = {
-            memberId: 10, // 실제로는 로그인된 사용자의 ID를 가져와야 합니다.
+            memberId: loginState.id,
             pageRequestDTO: {
                 page: currentPage,
                 size: currentSize,
