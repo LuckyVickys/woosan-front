@@ -1,7 +1,6 @@
 import axios from "axios";
 import { API_SERVER_HOST } from "./boardApi";
 
-const rest_api_key = `16087d2a0e3c11811566bbba566b3ad8`;
 // const redirect_uri = `http://localhost:3000/kakao`;
 const redirect_uri = `http://223.130.158.37:3000/kakao`;
 
@@ -11,7 +10,7 @@ const acess_token_url = `https://kauth.kakao.com/oauth/token`;
 
 export const getKakaoLoginLink = () => {
     
-    const kakaoURL = `${auth_code_path}?response_type=code&client_id=${rest_api_key}&redirect_uri=${redirect_uri}`;
+    const kakaoURL = `${auth_code_path}?response_type=code&client_id=${process.env.REACT_APP_KAKAO_KEY}&redirect_uri=${redirect_uri}`;
 
     return kakaoURL;
 }
@@ -26,7 +25,7 @@ export const getAccessToken = async (authCode) => {
 
     const params = {
         grant_type: "authorization_code",
-        client_id: rest_api_key,
+        client_id: process.env.REACT_APP_KAKAO_KEY,
         redirect_uri: redirect_uri,
         code: authCode
     }
