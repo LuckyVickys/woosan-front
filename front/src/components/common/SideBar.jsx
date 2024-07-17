@@ -221,9 +221,14 @@ const SideBar = ({ pageType }) => {
                                 <FaBullhorn className={`icon ${activeCategory === 'notices' ? 'active' : ''}`} />공지사항 관리
                             </button>
                         </div>
-                        <div className={`sub-category ${activeCategory === 'msgs' ? 'active' : ''}`}>
-                            <button onClick={() => handleNavigation('msgs')} className={activeCategory === 'msgs' ? 'active' : ''}>
-                                <FaGift className={`icon ${activeCategory === 'msgs' ? 'active' : ''}`} />받은 쪽지함
+                        <div className={`sub-category ${activeCategory === 'msg/send' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('msg/send')} className={activeCategory === 'msg/send' ? 'active' : ''}>
+                                <FaEnvelopeOpenText className={`icon ${activeCategory === 'msg/send' ? 'active' : ''}`} />보낸 쪽지함
+                            </button>
+                        </div>
+                        <div className={`sub-category ${activeCategory === 'msg/receive' ? 'active' : ''}`}>
+                            <button onClick={() => handleNavigation('msg/receive')} className={activeCategory === 'msg/receive' ? 'active' : ''}>
+                                <FaEnvelopeOpenText className={`icon ${activeCategory === 'msg/receive' ? 'active' : ''}`} />받은 쪽지함
                             </button>
                         </div>
                     </>
