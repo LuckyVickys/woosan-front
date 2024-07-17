@@ -188,8 +188,11 @@ $font-family: "Pretendard-Regular", sans-serif;
                     width: 80%; /* 변경 가능 */
                 }
 
-                span:last-child {
-                    margin-left: auto;
+                .progress-point {
+                    margin-left: 10px;
+                    margin-right: 0;
+                    text-align: end;
+                    white-space: nowrap;
                 }
             }
 
