@@ -47,7 +47,7 @@ const myPageRouter = ()=> {
             element: <Suspense fallback={Loading}><MyReceiveMsgPage/></Suspense>
         },
         {
-            path: "message",
+            path: "message/:id",
             element: <Suspense fallback={Loading}><MyMsgPage/></Suspense>
         }
     ]

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../assets/styles/App.scss";
-import useCustomMove from "../../hooks/useCustomMove";
+import useCustomMsgMove from "../../hooks/useCustomMsgMove";
 import { useSelector } from "react-redux";
 import { getSendMessage } from "../../api/myPageApi";
 import MySendMsgTableRowComponent from "./element/MySendMsgTableRowComponent";
@@ -24,7 +24,7 @@ const initState = {
 
 const MySendMsgComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const {page, size, moveToList, moveToRead, refresh} = useCustomMove("/myPage/msg/send");
+    const {page, size, moveToList, moveToRead, refresh} = useCustomMsgMove("/myPage/msg/send");
     const [msgData, setMsgData] = useState(initState);
 
     useEffect(() => {
