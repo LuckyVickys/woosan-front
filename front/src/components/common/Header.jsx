@@ -15,6 +15,7 @@ import defaultProfile from "../../assets/image/profile.png";
 
 const Header = () => {
   const loginState = useSelector((state) => state.loginSlice);
+  const memberType = loginState.memberType;
 
   const [openLogin, setOpenLogin] = useState(false);
   const [kakaoUserData, setKakaoUserData] = useState(null);
@@ -28,7 +29,7 @@ const Header = () => {
   };
 
   const navToMessages = () => {
-    navigate(`/myPage/msg/send`);
+    navigate(memberType === "ADMIN" ? "/adminPage/msg/receive" : "/myPage/msg/receive");
   }
 
   const toggleProfileDropdown = () => {
@@ -93,7 +94,9 @@ const Header = () => {
           {userData ? (
             <div className="profile-box" id="loginProfile">
               <div className="user-level-nickname">
-                <div className="user-level">{userData.level}</div>
+                <div className="user-level">
+                {userData.memberType === "ADMIN" ? userData.memberType : userData.level}
+                </div>
                 <div className="user-nickname">
                   {loginState.isKakao
                     ? kakaoUserData?.properties?.nickname

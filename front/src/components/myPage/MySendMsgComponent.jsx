@@ -7,7 +7,8 @@ import MyMsgListComponent from "./element/MyMsgListComponent";
 
 const MySendMsgComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const { moveToRead } = useCustomMsgMove("/myPage/msg/send");
+    const memberType = loginState.memberType;
+    const { moveToRead } = useCustomMsgMove(memberType === "ADMIN" ? "/adminPage/msg/send" : "/myPage/msg/send");
 
     const fetchMessages = ({ page, size }) => {
         const params = {

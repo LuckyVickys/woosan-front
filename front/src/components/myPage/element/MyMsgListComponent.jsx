@@ -5,6 +5,7 @@ import ListPageComponent from "../../board/element/ListPageComponent";
 import "../../../assets/styles/App.scss";
 import { formatDate } from "../../../util/DateUtil";
 import { MdDeleteForever } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const initState = {
     dtoList: [],
@@ -24,6 +25,8 @@ const initState = {
 
 const MessageListComponent = ({ fetchMessages, deleteMessage, moveToRead, columnHeaders, role }) => {
     const [msgData, setMsgData] = useState(initState);
+    const loginState = useSelector((state) => state.loginSlice);
+    const memberType = loginState.memberType;
 
     useEffect(() => {
         const currentPage = msgData.pageRequestDTO.page || 1;
@@ -36,7 +39,7 @@ const MessageListComponent = ({ fetchMessages, deleteMessage, moveToRead, column
     }, [fetchMessages, msgData.pageRequestDTO.page, msgData.pageRequestDTO.size]);
 
     const handleMsgClick = (id) => {
-        moveToRead(id, "/myPage/message");
+        moveToRead(id, memberType === "ADMIN" ? "/adminPage/message" : "/myPage/message");
     };
 
     const handleDeleteMsg = (id) => {
