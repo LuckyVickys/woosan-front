@@ -74,6 +74,7 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
     };
 
     const roleClassName = selectedMsg.role === "발신자" ? "sender" : "receiver";
+    const isRemsg = selectedMsg.role === "발신자" ? true : false;
 
     return (
         <>
@@ -85,7 +86,7 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
                     <div className="read-msg-author-info">
                         <div className="read-msg-author">
                             <div className={`read-msg-role ${roleClassName}`}>{selectedMsg.role}</div> | 
-                            &nbsp; {selectedMsg.nickname} | {formatDate(selectedMsg.regDate)}
+                            {selectedMsg.nickname} | {formatDate(selectedMsg.regDate)}
                         </div>
                     </div>
                 </div>
@@ -100,7 +101,7 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
                 <p>{selectedMsg.content}</p>
             </div>
             <div className="msg-button">
-                <button className="msg-send-button" onClick={handleMsgSend}>답장</button>
+                {isRemsg && <button className="msg-send-button" onClick={handleMsgSend}>답장</button>}
                 <button className="msg-delete-button" onClick={handleMsgDelete}>삭제</button>
             </div>
             {isModalOpen && (
