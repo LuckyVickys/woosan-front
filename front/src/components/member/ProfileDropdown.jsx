@@ -8,7 +8,7 @@ import { FaHeart } from "react-icons/fa6";
 import { MdSunny } from "react-icons/md";
 import { FaMoon } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { login, logout } from '../../slices/loginSlice';
+import { logout } from '../../slices/loginSlice';
 
 const ProfileDropdown = () => {
     const loginState = useSelector((state) => state.loginSlice);
@@ -72,21 +72,21 @@ const ProfileDropdown = () => {
                     <div className="profile-email">{loginState.email}</div>
                 </div>
                 <hr />
-                <div className="profile-level-point">
-                    <div className="profile-level">{loginState.level}</div>
-                    <div className="profile-point-bar-wrapper">
-                        <div className="profile-point-bar point-bar" style={{width: pointPercent}} />
-                        <div className="profile-nextpoint-bar point-bar"/>
-                    </div>
-                    <div className="profile-point-info">
-                        <div className="profile-point-wrapper">
-                            <div className="profile-point">{loginState.point}</div> / 
-                            <div className="profile-nextpoint">{loginState.nextPoint} P</div>
+                        <div className="profile-level-point">
+                            <div className="profile-level">{loginState.level}</div>
+                            <div className="profile-point-bar-wrapper">
+                                <div className="profile-point-bar point-bar" style={{width: pointPercent}} />
+                                <div className="profile-nextpoint-bar point-bar"/>
+                            </div>
+                            <div className="profile-point-info">
+                                <div className="profile-point-wrapper">
+                                    <div className="profile-point">{loginState.point}</div> / 
+                                    <div className="profile-nextpoint">{loginState.nextPoint} P</div>
+                                </div>
+                                <div className="profile-point-percent">{pointPercent}</div>
+                            </div>
                         </div>
-                        <div className="profile-point-percent">{pointPercent}</div>
-                    </div>
-                </div>
-                <hr />
+                        <hr />
                 <div className="profile-nav">
                 {memberType === "USER" ? (
                     <div className="profile-mypage" onClick={navToMypage}>마이페이지</div>

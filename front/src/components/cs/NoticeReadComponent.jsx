@@ -11,6 +11,8 @@ import { FaComment } from "react-icons/fa";
 import MsgModal from "../../components/board/element/MsgModal";
 import { convertLineBreaks } from "../../util/convertUtil";
 import defaultProfile from "../../assets/image/profile.png";
+import { summary } from "../../api/summaryApi.js";
+import Swal from "sweetalert2";
 
 const initState = {
     id: 0,
@@ -36,6 +38,8 @@ const NoticeReadComponent = () => {
     const [showBoardMenu, setShowBoardMenu] = useState(false);
     const [openMsgModal, setOpenMsgModal] = useState(false);
     const boardMenuRef = useRef(null);
+    const [board, setBoard] = useState(initState);
+  const [summarizedBoard, setSummarizedBoard] = useState(null);
 
     useEffect(() => {
         if (loginState.id) {
@@ -69,6 +73,32 @@ const NoticeReadComponent = () => {
             console.error("번역 중 오류 발생:", error);
         }
     };
+
+    const handleClovaSummary = async () => {
+        try {
+          const summarized = await summary(id, {
+            title: board.title,
+            content: board.content,
+          });
+          setSummarizedBoard({ content: summarized });
+          Swal.fire({
+            icon: "success",
+            title: "요약 완료",
+            html: `게시글 요약이 완료되었습니다. <br> 게시글 하단을 확인해주세요.`,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "확인",
+          })
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "요약 실패",
+            text: "요약할 수 없는 게시글입니다.",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "확인",
+          });
+          console.error("요약 중 오류 발생:", error);
+        }
+      };
 
     const handleBoardMenuSelect = () => {
         setShowBoardMenu(!showBoardMenu);
@@ -117,7 +147,9 @@ const NoticeReadComponent = () => {
                         className="papago-button"
                         onClick={handlePapagoTranslate}
                     ></button>
-                    <button className="clova-button"></button>
+                    <button className="clova-button"
+                    onClick={handleClovaSummary}
+                    ></button>
                 </div>
             </div>
             <div className="board-header">
