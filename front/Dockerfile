@@ -17,9 +17,9 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 
 # 로그 추가
-RUN echo "Listing /etc/nginx/conf.d after copying nginx.conf:"
-RUN ls -al /etc/nginx/conf.d/
-RUN echo "Displaying contents of /etc/nginx/conf.d/default.conf:"
-RUN cat /etc/nginx/conf.d/default.conf
+RUN echo "Listing /etc/nginx/conf.d after copying nginx.conf:" && \
+    ls -al /etc/nginx/conf.d/ && \
+    echo "Displaying contents of /etc/nginx/conf.d/default.conf:" && \
+    cat /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
