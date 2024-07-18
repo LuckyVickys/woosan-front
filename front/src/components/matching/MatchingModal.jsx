@@ -157,7 +157,7 @@ const MatchingModal = ({ item, onClose }) => {
 
     // 수정 버튼 클릭 핸들러
     const handleMyMatching = () => {
-        navigate(`/myPage/matching/${item.id}`);
+        navigate(`/matching/modify/${item.id}`);
     };
 
     return (

@@ -25,7 +25,7 @@ const MyMatchingPage = () => {
     }, [loginState.id]);
 
     const handleMatchingClick = (Id) => {
-        navigate(`/myPage/matching/${Id}`);
+        navigate(`/matching/modify/${Id}`);
     };
 
     return (

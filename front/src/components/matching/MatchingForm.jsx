@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import LocationField from './LocationField';
 import styles from '../../assets/styles/matching/MatchingForm.module.scss';
 import { useSelector } from 'react-redux';
-import { getMemberWithEmail } from '../../api/memberApi';
 
 const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
     const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기

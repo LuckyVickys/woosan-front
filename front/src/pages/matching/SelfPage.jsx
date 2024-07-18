@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useSelf from '../../hooks/useSelf';
 import MatchingItem from '../../components/matching/MatchingItem';
 import MatchingModal from '../../components/matching/MatchingModal';
+import { useNavigate } from 'react-router-dom';
 import styles from '../../assets/styles/matching/SelfPage.module.scss';
 
 const SelfPage = ({ userGender }) => {
@@ -12,6 +13,7 @@ const SelfPage = ({ userGender }) => {
     const [receivedHearts, setReceivedHearts] = useState([]);
     const [dismissedIds, setDismissedIds] = useState([]);
     const [view, setView] = useState('default'); // 'default', 'sentHearts', 'receivedHearts'
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (self) {
@@ -56,6 +58,10 @@ const SelfPage = ({ userGender }) => {
         // 매칭 요청 거절 로직 추가
     };
 
+    const handleCreateButtonClick = () => {
+        navigate('/matching/CreateMatching');
+    };
+
     const renderDefaultView = () => (
         <>
             <div className={styles.matchingList}>
@@ -63,7 +69,7 @@ const SelfPage = ({ userGender }) => {
                     <div key={item.id} className={styles.matchingItem}>
                         <MatchingItem {...item} onClick={() => setSelectedItem(item)} />
                         <div className={styles.buttons}>
-                            <button className={styles.heartButton} onClick={() => handleHeartClick(item.id)}>❤️</button>
+                            <button className={styles.heartButton} onClick={() => handleHeartClick(item.id)}>❤️보내기</button>
                             <button className={styles.xButton} onClick={() => handleXClick(item.id)}>❌</button>
                         </div>
                     </div>
@@ -100,17 +106,20 @@ const SelfPage = ({ userGender }) => {
 
     if (loading) {
         console.log('로딩 중...');
-        return <div>Loading...</div>;
+        return <div className={styles.loading}>Loading...</div>;
     }
 
     if (error) {
         console.error('데이터를 가져오는 중 오류 발생:', error);
-        return <div>데이터를 가져오는 중 오류 발생</div>;
+        return <div className={styles.error}>데이터를 가져오는 중 오류 발생</div>;
     }
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
+                <button className={styles.createButton} onClick={handleCreateButtonClick}>모임 만들기</button>
+            </div>
+            <div className={styles.navButtons}>
                 <button className={styles.headerButton} onClick={() => setView('default')}>새로운 매칭</button>
                 <button className={styles.headerButton} onClick={() => setView('sentHearts')}>내가 보낸 하트</button>
                 <button className={styles.headerButton} onClick={() => setView('receivedHearts')}>내가 받은 하트</button>

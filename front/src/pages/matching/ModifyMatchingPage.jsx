@@ -5,6 +5,7 @@ import { getMatchingBoardsByMemberId, updateMatchingBoard, deleteMatchingBoard }
 import styles from '../../assets/styles/matching/ModifyMatching.module.scss';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
+import MemberManagement from '../../components/matching/MemberManagement'; 
 
 const ModifyMatchingPage = () => {
     const { id } = useParams();
@@ -12,8 +13,6 @@ const ModifyMatchingPage = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const [matching, setMatching] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [files, setFiles] = useState([]); // 파일 상태 관리
-    const [existingFiles, setExistingFiles] = useState([]); // 기존 파일 상태 관리
 
     useEffect(() => {
         const fetchMatching = async () => {
@@ -22,7 +21,6 @@ const ModifyMatchingPage = () => {
                 const matchingBoard = response.find((board) => board.id === Number(id));
                 if (matchingBoard) {
                     setMatching(matchingBoard);
-                    setExistingFiles(matchingBoard.filePathUrl ? [{ url: matchingBoard.filePathUrl }] : []);
                 } else {
                     Swal.fire('오류!', '매칭 보드를 찾을 수 없습니다.', 'error');
                     navigate(-1);
@@ -40,12 +38,6 @@ const ModifyMatchingPage = () => {
 
     const handleSubmit = async (formData) => {
         try {
-            files.forEach((file, index) => {
-                if (file instanceof File) {
-                    formData.append('images', file);
-                }
-            });
-
             await updateMatchingBoard(id, formData);
             Swal.fire('성공!', '매칭이 성공적으로 수정되었습니다.', 'success');
             navigate(`/matching/${id}`);
@@ -64,11 +56,6 @@ const ModifyMatchingPage = () => {
             console.error('매칭 삭제 중 오류 발생:', error);
             Swal.fire('오류!', error.response ? error.response.data : error.message, 'error');
         }
-    };
-
-    const handleFileChange = (e) => {
-        const selectedFiles = Array.from(e.target.files);
-        setFiles((prevFiles) => [...prevFiles, ...selectedFiles]);
     };
 
     const getMatchingTypeLabel = (type) => {
@@ -98,8 +85,15 @@ const ModifyMatchingPage = () => {
                 <div className={styles.titleBarLine}></div>
                 <div className={styles.titleBarText}>모임 수정하기</div>
             </div>
+            <div className={styles.deleteButtonContainer}>
+                <button onClick={handleDelete} className={styles.deleteButton}>모임 삭제</button>
+            </div>
+            <div className={styles.managementContainer}>
+                <MemberManagement matchingId={id} isManager={true} type="pending" />
+                <MemberManagement matchingId={id} isManager={true} type="approved" />
+            </div>
             <div className={styles.formGroup}>
-                <label htmlFor="matchingType">매칭 타입</label>
+                <label htmlFor="matchingType">모임 유형</label>
                 <input
                     id="matchingType"
                     value={getMatchingTypeLabel(matching.matchingType)}
@@ -108,17 +102,6 @@ const ModifyMatchingPage = () => {
                 />
             </div>
             <MatchingForm onSubmit={handleSubmit} initialValues={matching} matchingType={matching.matchingType} />
-            <div className={styles.formGroup}>
-                <label>기존 파일</label>
-                <div className={styles.fileList}>
-                    {existingFiles.map((file, index) => (
-                        <div key={index} className={styles.fileItem}>
-                            <img src={file.url} alt="preview" width="100" height="100" />
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <button onClick={handleDelete} className={styles.deleteButton}>모임 삭제</button>
         </div>
     );
 };

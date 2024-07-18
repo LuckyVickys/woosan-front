@@ -1,0 +1,111 @@
+@import '../Font.scss';
+
+.container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+    width: 340px;
+    height: 300px;
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    position: relative; /* 제목 상단 고정용 */
+}
+
+h3 {
+    background-color: #9BCC66; /* 초록색 배경 */
+    color: white; /* 하얀 글씨 */
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content {
+    padding-top: 40px; /* 제목 공간 확보 */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.memberItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.memberInfo {
+    display: flex;
+    align-items: center;
+}
+
+.memberInfo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.managerLabel {
+    color: #ff6347; /* 모임장 텍스트 색상 (예: 토마토색) */
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.acceptButton {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.acceptButton:hover {
+    background-color: #45a049;
+}
+
+.rejectButton {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.rejectButton:hover {
+    background-color: #e53935;
+}
+
+.kickButton {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.kickButton[disabled] {
+    background-color: #ccc; /* 비활성화된 버튼 색상 */
+    cursor: not-allowed;
+}
+
+.kickButton:hover:not([disabled]) {
+    background-color: #e53935;
+}
