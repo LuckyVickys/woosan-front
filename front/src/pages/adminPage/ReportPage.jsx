@@ -1,5 +1,11 @@
+import ReportListComponent from "../../components/adminPage/ReportListComponent";
+
 const ReportPage = () => {
-    return <div className="">신고 관리</div>;
+    return (
+        <div className="">
+            <ReportListComponent />
+        </div>
+    );
 };
 
 export default ReportPage;
