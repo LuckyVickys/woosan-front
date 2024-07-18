@@ -109,7 +109,7 @@ const NoticeReadComponent = ({ moveToList }) => {
                     <FaComment className="replyIcon" /> {notice.replyCount}
                     <button className="menu-button" onClick={handleBoardMenuSelect} ref={boardMenuRef}>
                         ⋮
-                        {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} />}
+                        {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} openMsg={openMsg} showReportButton={false} showMsgButton={userId !== notice.writerId} showModifyButton={userId === notice.writerId} />}
                     </button>
                 </div>
             </div>
