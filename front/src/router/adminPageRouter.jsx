@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Navigate } from "react-router-dom";
+import MyMsgPage from "../pages/myPage/MyMsgPage";
 
 const Loading = <div>Loading....</div>;
 
@@ -65,6 +66,10 @@ const adminPageRouter = () => {
                 </Suspense>
             ),
         },
+        {
+            path: "message/:id",
+            element: <Suspense fallback={Loading}><MyMsgPage/></Suspense>
+        }
     ];
 };
 

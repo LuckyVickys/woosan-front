@@ -40,8 +40,7 @@ const NoticeListComponent = () => {
     }, [page, size]);
 
     const handleRowClick = (id) => {
-        moveToRead(id, noticePage);
-        console.log("HandleRowClick:", noticePage);
+        moveToRead(id, "/board");
     };
     return (
         <div className="list-component">
@@ -58,7 +57,7 @@ const NoticeListComponent = () => {
                 </thead>
                 <tbody>
                     {noticePage.dtoList && noticePage.dtoList.map((item) => (
-                        <TableRowComponent key={item.id} item={item} onClick={(handleRowClick)} />
+                        <TableRowComponent key={item.id} item={item} onClick={() => handleRowClick(item.id)} />
                     ))}
                 </tbody>
             </table>

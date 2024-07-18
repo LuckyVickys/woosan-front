@@ -8,22 +8,22 @@ import { FaHeart } from "react-icons/fa6";
 import { MdSunny } from "react-icons/md";
 import { FaMoon } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { logout } from '../../slices/loginSlice';
+import { login, logout } from '../../slices/loginSlice';
 
 const ProfileDropdown = () => {
     const loginState = useSelector((state) => state.loginSlice);
+    const memberType = loginState.memberType;
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const navToMypage = () => {
-        const userId = loginState.id;  
-        navigate(`/myPage`);
+        navigate(memberType === "ADMIN" ? "/adminPage" : "/myPage");
     }
 
     const navToMessages = () => {
-        navigate(`/myPage/msg/send`);
+        navigate(memberType === "ADMIN" ? "/adminPage/msg/send" : "/myPage/msg/send");
     }
     
     const navToLikes = () => {
@@ -88,13 +88,19 @@ const ProfileDropdown = () => {
                 </div>
                 <hr />
                 <div className="profile-nav">
+                {memberType === "USER" ? (
                     <div className="profile-mypage" onClick={navToMypage}>마이페이지</div>
+                ):(
+                    <div className="profile-mypage" onClick={navToMypage}>관리자페이지</div>
+                )}
                     <div className="profile-messages" onClick={navToMessages}>
                         <MdOutlineLocalPostOffice size={20} color="#00B207" style={{marginRight: 5}} />쪽지함
                     </div>
-                    <div className="profile-likes" onClick={navToLikes}>
+                    {memberType === "USER" && (
+                        <div className="profile-likes" onClick={navToLikes}>
                         <FaHeart size={20} color="#00B207" style={{marginRight: 5}}/> 추천 게시물
-                    </div>
+                        </div>
+                    )}
                     <div className="profile-mode" onClick={toggleMode}>
                         {isDarkMode ? <FaMoon size={20} color="#00B207" style={{marginRight: 5}} /> : <MdSunny size={20} color="#00B207" style={{marginRight: 5}} />}
                         다크모드/라이트모드
