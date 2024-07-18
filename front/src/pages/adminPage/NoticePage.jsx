@@ -1,4 +1,4 @@
-import MyBoardComponent from "../../components/myPage/MyBoardComponent";
+import NoticeListComponent from "../../components/cs/NoticeListComponent";
 import { useNavigate } from "react-router-dom";
 
 const NoticePage = () => {
@@ -16,7 +16,7 @@ const NoticePage = () => {
                     공지사항 쓰기
                 </button>
             </div>
-            <MyBoardComponent />
+            <NoticeListComponent />
         </div>
     );
 };

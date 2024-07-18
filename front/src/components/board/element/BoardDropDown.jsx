@@ -1,12 +1,28 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 
-const BoardDropDown = ({ id, openReport, openMsg, showReportButton, showMsgButton, showModifyButton }) => {
+const BoardDropDown = ({
+    id,
+    openReport,
+    openMsg,
+    showReportButton,
+    showMsgButton,
+    showModifyButton,
+}) => {
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleModifyButtonClick = () => {
-        navigate(`/board/modify/${id}`);
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+    }, [location.search]);
+
+    const handleModifyButtonClick = (params) => {
+        if (location.pathname.includes("/board/")) {
+            navigate(`/board/modify/${id}`);
+        } else if (location.pathname.includes("/cs/notices/")) {
+            navigate(`/adminPage/notice/modify/${id}`);
+        }
     };
 
     const handleOpenReport = () => {
@@ -33,14 +49,17 @@ const BoardDropDown = ({ id, openReport, openMsg, showReportButton, showMsgButto
                     </div>
                 )}
                 {showModifyButton && (
-                    <div className='board-dropdown' onClick={handleModifyButtonClick}>
-                        <div className='board-modify-icon'></div>
-                        <div className='board-modify-text'>수정하기</div>
+                    <div
+                        className="board-dropdown"
+                        onClick={handleModifyButtonClick}
+                    >
+                        <div className="board-modify-icon"></div>
+                        <div className="board-modify-text">수정하기</div>
                     </div>
                 )}
             </div>
         </div>
     );
-}
+};
 
 export default BoardDropDown;
