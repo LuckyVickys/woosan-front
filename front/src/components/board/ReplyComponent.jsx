@@ -265,6 +265,9 @@ const ReplyComponent = () => {
                                         replyId={reply.id}
                                         openReport={openReport}
                                         openMsg={openMsg}
+                                        showReportButton={userId !== reply.writerId}
+                                        showMsgButton={userId !== reply.writerId}
+                                        showDeleteButton={userId === reply.writerId}
                                         onDeleteSuccess={handleDeleteSuccess}
                                     />
                                 </div>

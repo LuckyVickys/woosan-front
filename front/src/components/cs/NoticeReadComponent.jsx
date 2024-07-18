@@ -150,14 +150,7 @@ const NoticeReadComponent = () => {
                         ref={boardMenuRef}
                     >
                         ⋮
-                        {showBoardMenu && (
-                            <BoardDropDown
-                                id={id}
-                                onSelect={handleBoardMenuSelect}
-                                openMsg={openMsg}
-                                showModifyButton={userId === notice.writerId} // 수정된 부분
-                            />
-                        )}
+                        {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} openMsg={openMsg} showReportButton={false} showMsgButton={userId !== notice.writerId} showModifyButton={userId === notice.writerId} />}
                     </button>
                 </div>
             </div>

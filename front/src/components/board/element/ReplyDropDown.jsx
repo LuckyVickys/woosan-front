@@ -12,6 +12,8 @@ const ReplyDropDown = ({
     replyId,
     openReport,
     openMsg,
+    showReportButton,
+    showMsgButton,
     showDeleteButton,
     onDeleteSuccess,
 }) => {
@@ -70,14 +72,18 @@ const ReplyDropDown = ({
         <>
             <div className="comment-dropdown-wrapper">
                 <div className="comment-dropdown-list">
-                    <div className="comment-dropdown" onClick={handleReport}>
-                        <div className="comment-report-icon"></div>
-                        <div className="comment-report-text">신고하기</div>
-                    </div>
-                    <div className="comment-dropdown" onClick={handleMsg}>
-                        <MdOutlineLocalPostOffice className="comment-msg-icon" />
-                        <div className="comment-msg-text">쪽지 전송</div>
-                    </div>
+                    {showReportButton && (
+                        <div className="comment-dropdown" onClick={handleReport}>
+                            <div className="comment-report-icon"></div>
+                            <div className="comment-report-text">신고하기</div>
+                        </div>
+                    )}
+                    {showMsgButton && (
+                        <div className="comment-dropdown" onClick={handleMsg}>
+                            <MdOutlineLocalPostOffice className="comment-msg-icon" />
+                            <div className="comment-msg-text">쪽지 전송</div>
+                        </div>
+                    )}
                     {showDeleteButton && (
                         <div
                             className="comment-dropdown"
