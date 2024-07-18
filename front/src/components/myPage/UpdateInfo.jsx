@@ -4,7 +4,6 @@ import "../../assets/styles/App.scss";
 import { getMember, modifyProfile } from "../../api/memberProfileApi";
 import { checkNickname } from "../../api/memberApi";
 import defaultProfile from "../../assets/image/profile.png";
-
 const UpdateInfo = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id; // 로그인된 회원의 ID를 가져옴
@@ -13,6 +12,8 @@ const UpdateInfo = () => {
     const [nicknameAvailable, setNicknameAvailable] = useState(false);
     const [nicknameError, setNicknameError] = useState("");
     const [nicknameChecked, setNicknameChecked] = useState(false); // 닉네임 중복 체크 여부를 관리하는 상태
+
+    const [checkNickName, setCheckNickName] = useState(true); // checkNickName을 상태로 변경
 
     const [formData, setFormData] = useState({
         nickname: "카카시",
@@ -84,40 +85,36 @@ const UpdateInfo = () => {
     };
 
     const handleInfoChange = async () => {
-        if (!nicknameChecked) {
-            handleCheckNickname();
-        } else {
-            if (formData.nickname && !nicknameAvailable) {
-                setNicknameError("필수 입력 사항입니다.");
-                return;
-            }
-            try {
-                const profileUpdateDTO = {
-                    memberId: memberId,
-                    nickname: formData.nickname,
-                    location: formData.region,
-                    gender: formData.gender,
-                    age: formData.age,
-                    height: formData.height,
-                    mbti: formData.mbti,
-                    point: formData.point,
-                    nextPoint: formData.nextPoint,
-                    // image: [formData.fileImg], // 파일 객체를 리스트로 전달
-                };
+        if (!checkNickName && updateNickname) {
+            setNicknameError("닉네임 중복 체크를 진행해주세요.");
+            return;
+        }
 
-                // 이미지 파일이 선택된 경우에만 profileUpdateDTO에 image 필드 추가
-                if (formData.fileImg) {
-                    profileUpdateDTO.image = [formData.fileImg];
-                }
+        try {
+            const profileUpdateDTO = {
+                memberId: memberId,
+                nickname: formData.nickname,
+                location: formData.region,
+                gender: formData.gender,
+                age: formData.age,
+                height: formData.height,
+                mbti: formData.mbti,
+                point: formData.point,
+                nextPoint: formData.nextPoint,
+            };
 
-                await modifyProfile(memberId, profileUpdateDTO);
-                console.log("Information updated successfully");
-                alert("프로필을 수정했습니다.");
-                window.location.reload(); // 현재 페이지 리다이렉트
-            } catch (error) {
-                console.error("Error updating information:", error);
-                alert("프로필 수정에 실패했습니다."); // 에러 발생 시 알림창
+            // 이미지 파일이 선택된 경우에만 profileUpdateDTO에 image 필드 추가
+            if (formData.fileImg) {
+                profileUpdateDTO.image = [formData.fileImg];
             }
+
+            await modifyProfile(memberId, profileUpdateDTO);
+            console.log("Information updated successfully");
+            alert("프로필을 수정했습니다.");
+            window.location.reload(); // 현재 페이지 리다이렉트
+        } catch (error) {
+            console.error("Error updating information:", error);
+            alert("프로필 수정에 실패했습니다."); // 에러 발생 시 알림창
         }
     };
 
@@ -146,16 +143,19 @@ const UpdateInfo = () => {
             if (nicknameResponse === false) {
                 setNicknameError("사용 가능한 닉네임입니다.");
                 setNicknameAvailable(true);
+                setCheckNickName(true); // 닉네임 체크 통과
             }
         } catch (error) {
             setNicknameError("이미 존재하는 닉네임입니다.");
             setNicknameAvailable(false);
+            setCheckNickName(false); // 닉네임 체크 실패
         } finally {
             setNicknameChecked(true); // 중복 체크 완료 상태 설정
         }
     };
 
     const handleNicknameChange = () => {
+        setCheckNickName(false); // 닉네임 변경 시 중복 체크 다시 필요
         if (!updateNickname) {
             setUpdateNickname(true);
         } else {
@@ -312,7 +312,7 @@ const UpdateInfo = () => {
                     </div>
                 </div>
                 <button className="update-button" onClick={handleInfoChange}>
-                    {nicknameChecked ? "수정하기" : "변경하기"}
+                    변경하기
                 </button>
             </div>
         </div>
