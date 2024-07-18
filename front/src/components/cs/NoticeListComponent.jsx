@@ -40,7 +40,7 @@ const NoticeListComponent = () => {
     }, [page, size]);
 
     const handleRowClick = (id) => {
-        moveToRead(id, "/board");
+        moveToRead(id, "/cs/notices");
     };
     return (
         <div className="list-component">
