@@ -1,96 +1,37 @@
-import React, { useEffect, useState } from "react";
-import ListPageComponent from "../board/element/ListPageComponent";
-import "../../assets/styles/App.scss";
-import MyReceiveMsgTableRowComponent from "./element/MyReceiveMsgTableRowComponent";
+// MyReceiveMsgComponent.jsx
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import useCustomMsgMove from "../../hooks/useCustomMsgMove";
-import { getReceiveMessage } from "../../api/myPageApi";
-
-const initState = {
-    dtoList: [],
-    pageNumList: [],
-    pageRequestDTO: {
-        page: 0,
-        size: 10
-    },
-    prev: false,
-    next: false,
-    totalCount: 0,
-    prevPage: 0,
-    nextPage: 0,
-    totalPage: 0,
-    current: 0,
-};
+import { delReceiveMessage, getReceiveMessage } from "../../api/myPageApi";
+import MyMsgListComponent from "./element/MyMsgListComponent";
 
 const MyReceiveMsgComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const {page, size, moveToList, moveToRead, refresh} = useCustomMsgMove("/myPage/msg/send");
-    const [msgData, setMsgData] = useState(initState);
+    const { moveToRead } = useCustomMsgMove("/myPage/msg/receive");
 
-    useEffect(() => {
-        const currentPage = page || 1;
-        const currentSize = size || 10;
-        console.log(`Fetching data with page: ${currentPage}, size: ${currentSize}`);
+    const fetchMessages = ({ page, size }) => {
         const params = {
             memberId: loginState.id,
             pageRequestDTO: {
-                page: currentPage,
-                size: currentSize
+                page,
+                size
             }
         };
-        getReceiveMessage(params).then(data => {
-            console.log("Fetch data: ", data);
-            setMsgData(data);
-        }).catch(err => {
-            console.error("Failed to fetch data: ", err);
-        });
-    }, [page, size, refresh]);
-
-    const handleMsgClick = (id) => {
-        console.log("HandleMsgClick:", id);
-        moveToRead(id, "/myPage/message");
+        return getReceiveMessage(params);
     };
 
-    const handleMsgDelete = (id) => {
-        console.log("HandleMsgDelete:", id);
+    const deleteMessage = (id) => {
+        return delReceiveMessage(id);
     };
-
-    const {dtoList, pageNumList, pageRequestDTO, prev, next, totalCount, prevPage, nextPage, totalPage, current} = msgData;
 
     return (
-    <>
-        {dtoList.length > 0 ?
-        <div className="list-component">
-            <table className="list-table">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>발신자</th>
-                        <th>내용</th>
-                        <th>작성 날짜</th>
-                        <th>삭제</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {dtoList && dtoList.map((item, index) => (
-                        <MyReceiveMsgTableRowComponent
-                            key={item.id}
-                            item={item}
-                            index={index}
-                            onClick={() => handleMsgClick(item.id)}
-                        />
-                    ))}
-                </tbody>
-            </table>
-            <ListPageComponent
-                serverData={{ dtoList, pageNumList, pageRequestDTO, prev, next, totalCount, prevPage, nextPage, totalPage, current }}
-                movePage={(page) => moveToList({ page })}
-            />
-        </div>
-        :
-        <div className="message-not-found">받은 쪽지가 존재하지 않습니다.</div>
-        }
-    </>
+        <MyMsgListComponent 
+            fetchMessages={fetchMessages} 
+            deleteMessage={deleteMessage} 
+            moveToRead={moveToRead} 
+            columnHeaders={["번호", "발신자", "내용", "작성 날짜"]} 
+            role="receive"
+        />
     );
 };
 
