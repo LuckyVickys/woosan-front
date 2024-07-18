@@ -97,20 +97,9 @@ const Header = () => {
                 <div className="user-level">
                 {userData.memberType === "ADMIN" ? userData.memberType : userData.level}
                 </div>
-                <div className="user-nickname">
-                  {loginState.isKakao
-                    ? kakaoUserData?.properties?.nickname
-                    : userData.nickname}
-                </div>
+                <div className="user-nickname">{userData.nickname}</div>
               </div>
-              {loginState.isKakao ? (
-                <img
-                  className="user-profile"
-                  src={kakaoUserData?.properties?.profile_image}
-                  alt="프로필 이미지"
-                  onClick={toggleProfileDropdown}
-                />
-              ) : userData.profile && userData.profile.length > 0 ? (
+              {userData.profile && userData.profile.length > 0 ? (
                 <img
                   className="user-profile"
                   src={userData.profile[0]}
