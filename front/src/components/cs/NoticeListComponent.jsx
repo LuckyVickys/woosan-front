@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { getNoticeList } from "../../api/csApi";
 import useCustomMove from "../../hooks/useCustomMove";
-import '../../assets/styles/board2.scss';
+import "../../assets/styles/board2.scss";
 import ListPageComponent from "../../components/board/element/ListPageComponent";
 import TableRowComponent from "../../components/board/element/TableRowComponent";
-
 
 const initState = {
     dtoList: [],
     pageNumList: [],
     pageRequestDTO: {
         page: 0,
-        size: 10
+        size: 10,
     },
     prev: false,
     next: false,
@@ -28,19 +27,21 @@ const NoticeListComponent = () => {
     const [noticePage, setNoticePage] = useState(initState);
 
     useEffect(() => {
-        getNoticeList({ page, size }).then(data => {
-            console.log("Fetched data:", data);
-            setNoticePage(prevState => ({
-                ...prevState,
-                dtoList: data, // 서버에서 받은 데이터를 dtoList에 설정
-            }));
-        }).catch(err => {
-            console.error("Failed to fetch data:", err);
-        });
+        getNoticeList({ page, size })
+            .then((data) => {
+                console.log("Fetched data:", data);
+                setNoticePage((prevState) => ({
+                    ...prevState,
+                    dtoList: data, // 서버에서 받은 데이터를 dtoList에 설정
+                }));
+            })
+            .catch((err) => {
+                console.error("Failed to fetch data:", err);
+            });
     }, [page, size]);
 
     const handleRowClick = (id) => {
-        moveToRead(id, "/board");
+        moveToRead(id, "/cs/notices");
     };
     return (
         <div className="list-component">
@@ -56,9 +57,14 @@ const NoticeListComponent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {noticePage.dtoList && noticePage.dtoList.map((item) => (
-                        <TableRowComponent key={item.id} item={item} onClick={() => handleRowClick(item.id)} />
-                    ))}
+                    {noticePage.dtoList &&
+                        noticePage.dtoList.map((item) => (
+                            <TableRowComponent
+                                key={item.id}
+                                item={item}
+                                onClick={() => handleRowClick(item.id)}
+                            />
+                        ))}
                 </tbody>
             </table>
             <ListPageComponent serverData={noticePage} movePage={moveToList} />
