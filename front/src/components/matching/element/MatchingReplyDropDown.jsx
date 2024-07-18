@@ -46,20 +46,20 @@ const MatchingReplyDropDown = ({ replyId, openReport, openMsg, onDeleteSuccess, 
     };
 
     return (
-        <div className="reply-dropdown-wrapper">
-            <div className="reply-dropdown-list">
-                <div className="reply-dropdown" onClick={handleOpenReport}>
-                    <div className="reply-report-icon"></div>
-                    <div className="reply-report-text">신고하기</div>
+        <div className="comment-dropdown-wrapper">
+            <div className="comment-dropdown-list">
+                <div className="comment-dropdown" onClick={handleOpenReport}>
+                    <div className="comment-report-icon"></div>
+                    <div className="comment-report-text">신고하기</div>
                 </div>
-                <div className="reply-dropdown" onClick={handleOpenMsg}>
-                    <MdOutlineLocalPostOffice className="reply-msg-icon" />
-                    <div className="reply-msg-text">쪽지 전송</div>
+                <div className="comment-dropdown" onClick={handleOpenMsg}>
+                    <MdOutlineLocalPostOffice className="board-msg-icon" />
+                    <div className="comment-msg-text">쪽지 전송</div>
                 </div>
                 {showDeleteButton && (
-                    <div className="reply-dropdown" onClick={handleDelete}>
-                        <div className="reply-delete-icon"></div>
-                        <div className="reply-delete-text">삭제하기</div>
+                    <div className="comment-dropdown" onClick={handleDelete}>
+                        <div className="comment-delete-icon"></div>
+                        <div className="comment-delete-text">삭제하기</div>
                     </div>
                 )}
             </div>

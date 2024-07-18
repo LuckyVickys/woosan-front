@@ -41,6 +41,8 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     height={item.height}
                     filePathUrl={item.filePathUrl}
                     onClick={onItemClick}
+                    nickname={item.nickname} // nickname 추가
+                    profileImageUrl={item.profileImageUrl} // profileImageUrl 추가
                 />
             ))}
         </div>
@@ -70,7 +72,9 @@ MatchingList.propTypes = {
         gender: PropTypes.string,
         age: PropTypes.number,
         height: PropTypes.number,
-        filePathUrl: PropTypes.arrayOf(PropTypes.string)
+        filePathUrl: PropTypes.arrayOf(PropTypes.string),
+        nickname: PropTypes.string, // nickname 추가
+        profileImageUrl: PropTypes.arrayOf(PropTypes.string) // profileImageUrl 추가
     })).isRequired,
     onItemClick: PropTypes.func.isRequired,
     gridColumns: PropTypes.number.isRequired,

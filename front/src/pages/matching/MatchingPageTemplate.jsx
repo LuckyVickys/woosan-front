@@ -19,7 +19,7 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
     const categories = useMemo(() => ({
         all: '전체',
         romance: ['연애', '사랑'],
-        sports: ['운동', '스포츠', '골프', '축구', '야구', '농구', '클라이밍', '등산'],
+        sports: ['운동', '스포츠'],
         food: ['푸드', '드링크'],
         culture: ['문화', '예술'],
         neighborhood: ['동네', '또래'],
@@ -30,7 +30,7 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
         if (!items) return [];
         if (category === 'all') return items;
         return items.filter(item => 
-            item.tags && Object.entries(item.tags).some(([tag, categoryValue]) => 
+            item.tag && Object.entries(item.tag).some(([tag, categoryValue]) => 
                 categories[category].includes(categoryValue)
             )
         );
@@ -102,7 +102,7 @@ MatchingPageTemplate.propTypes = {
         locationY: PropTypes.number.isRequired,
         address: PropTypes.string.isRequired,
         meetDate: PropTypes.string.isRequired,
-        tags: PropTypes.object.isRequired, // tags를 객체로 받도록 수정
+        tag: PropTypes.object.isRequired, // tag를 객체로 받도록 수정
         headCount: PropTypes.number.isRequired,
         location: PropTypes.string,
         introduce: PropTypes.string,

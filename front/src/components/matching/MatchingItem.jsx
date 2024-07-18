@@ -3,9 +3,19 @@ import PropTypes from 'prop-types';
 import styles from '../../assets/styles/matching/MatchingItem.module.scss';
 
 const MatchingItem = ({
-    id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag = {}, headCount,
-    location, introduce, mbti, gender, age, height, onClick, filePathUrl
+    id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag = '{}', headCount,
+    location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
 }) => {
+
+    // 디버깅 로그 추가
+    console.log('MatchingItem props:', {
+        id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag, headCount,
+        location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
+    });
+
+
+
+
     const typeLabel = getTypeLabel(matchingType);
 
     // 매칭 타입에 따른 라벨을 반환하는 함수
@@ -36,10 +46,15 @@ const MatchingItem = ({
         }
     }
 
-    // 태그를 문자열로 변환하는 함수
+    // 태그를 문자열로 변환하여 키값만 반환하는 함수
     const renderTag = (tag) => {
-        if (!tag) return ''; // tag가 null 또는 undefined인 경우 빈 문자열 반환
-        return Object.entries(tag).map(([tag, category]) => `${tag} (${category})`).join(', ');
+        try {
+            const parsedTag = JSON.parse(tag);
+            return Object.keys(parsedTag).join(', ');
+        } catch (e) {
+            console.error("Failed to parse tag:", e);
+            return '';
+        }
     };
 
     // filePathUrl이 제대로 전달되는지 확인
@@ -49,6 +64,10 @@ const MatchingItem = ({
 
     // 이미지 URL이 제대로 설정되었는지 확인
     console.log("이미지 URL:", imageUrl);
+
+
+
+    
 
     return (
         <div className={styles.matchingItemCard} onClick={() => onClick(id)}>
@@ -72,14 +91,14 @@ const MatchingItem = ({
                         {matchingType !== 3 && (
                             <>
                                 <div className={styles.detailItem}><strong>날짜:</strong> {new Date(meetDate).toLocaleDateString()}</div>
-                                <div className={styles.detailItem}><strong>주최자:</strong> {memberId}</div>
+                                <div className={styles.detailItem}><strong>주최자:</strong> {nickname}</div>
                                 <div className={styles.detailItem}><strong>모집 인원:</strong> {headCount}</div>
                             </>
                         )}
                         {matchingType === 3 && (
                             <>
                                 <div className={styles.detailItem}><strong>성별:</strong> {gender}</div>
-                                <div className={styles.detailItem}><strong>주최자:</strong> {memberId}</div>
+                                <div className={styles.detailItem}><strong>주최자:</strong> {nickname}</div>
                                 <div className={styles.detailItem}><strong>나이:</strong> {age}세</div>
                             </>
                         )}
@@ -104,7 +123,7 @@ MatchingItem.propTypes = {
     locationY: PropTypes.number.isRequired,
     address: PropTypes.string.isRequired,
     meetDate: PropTypes.string.isRequired,
-    tag: PropTypes.object, // tag를 객체로 받도록 수정
+    tag: PropTypes.string, // tag를 문자열로 받도록 수정
     headCount: PropTypes.number.isRequired,
     location: PropTypes.string,
     introduce: PropTypes.string,
@@ -113,7 +132,9 @@ MatchingItem.propTypes = {
     age: PropTypes.number,
     height: PropTypes.number,
     onClick: PropTypes.func.isRequired,
-    filePathUrl: PropTypes.arrayOf(PropTypes.string)
+    filePathUrl: PropTypes.arrayOf(PropTypes.string),
+    nickname: PropTypes.string,
+    profileImageUrl: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default MatchingItem;

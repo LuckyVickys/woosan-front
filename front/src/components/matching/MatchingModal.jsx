@@ -135,16 +135,12 @@ const MatchingModal = ({ item, onClose }) => {
     };
 
     // 태그를 렌더링하는 함수
-    const renderTag = () => {
-        if (typeof item.tag === 'string') {
-            return item.tag;
-        } else if (typeof item.tag === 'object' && item.tag !== null) {
-            return Object.entries(item.tag).map(([key, value]) => (
-                <div key={key}>
-                    {key}: {value}
-                </div>
-            ));
-        } else {
+    const renderTag = (tag) => {
+        try {
+            const parsedTag = JSON.parse(tag);
+            return Object.keys(parsedTag).join(', ');
+        } catch (e) {
+            console.error("Failed to parse tag:", e);
             return '';
         }
     };
@@ -174,14 +170,19 @@ const MatchingModal = ({ item, onClose }) => {
                             <span className={`${styles.matchingType} ${styles[getTypeLabel(item.matchingType)]}`}>
                                 {item.matchingType === 1 ? '정기모임' : item.matchingType === 2 ? '번개' : '셀프소개팅'}
                             </span>
-                            <span className={styles.tag}>{renderTag()}</span>
+                            <span className={styles.tag}>{renderTag(item.tag)}</span>
                         </div>
                     </div>
                     <button className={styles.closeButton} onClick={onClose}>&times;</button>
                 </div>
                 <div className={styles.infoContainer}>
                     <div className={styles.leftInfo}>
-                        <span className={styles.memberId}>작성자: {item.memberId}</span>
+                        <span className={styles.memberInfo}>
+                            {item.profileImageUrl && item.profileImageUrl.length > 0 && (
+                                <img src={item.profileImageUrl[0]} alt="프로필 이미지" className={styles.profileImage} />
+                            )}
+                            <span className={styles.nickname}>{item.nickname}</span>
+                        </span>
                         <span className={styles.views}>조회수: {item.views}</span>
                         <span className={styles.date}>작성 날짜: {formatDate(item.regDate)}</span>
                     </div>
@@ -281,7 +282,9 @@ MatchingModal.propTypes = {
             writer: PropTypes.string.isRequired,
             date: PropTypes.string.isRequired,
             content: PropTypes.string.isRequired,
-        }))
+        })),
+        nickname: PropTypes.string.isRequired,
+        profileImageUrl: PropTypes.arrayOf(PropTypes.string) // 프로필 이미지 경로 배열
     }).isRequired,
     onClose: PropTypes.func.isRequired
 };

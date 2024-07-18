@@ -9,25 +9,27 @@ import styles from '../../assets/styles/matching/FilterBar.module.scss';
  * @param {Function} props.onCategoryChange - 카테고리 변경 시 호출되는 함수
  */
 const FilterBar = ({ activeCategory, onCategoryChange }) => {
-    // 카테고리 버튼을 렌더링하는 함수
-    const renderButton = (category, label) => (
-        <button
-            className={`${styles.filterButton} ${activeCategory === category ? styles.active : ''}`}
-            onClick={() => onCategoryChange(category)}
-        >
-            {label}
-        </button>
-    );
+    const categories = [
+        { key: 'all', label: '전체' },
+        { key: 'romance', label: '연애&사랑' },
+        { key: 'sports', label: '운동&스포츠' },
+        { key: 'food', label: '푸드&드링크' },
+        { key: 'culture', label: '문화&예술' },
+        { key: 'neighborhood', label: '동네&또래' },
+        { key: 'study_class', label: '스터디&클래스' }
+    ];
 
     return (
         <div className={styles.filterBar}>
-            {renderButton('all', '전체')}
-            {renderButton('romance', '연애&사랑')}
-            {renderButton('sports', '운동&스포츠')}
-            {renderButton('food', '푸드&드링크')}
-            {renderButton('culture', '문화&예술')}
-            {renderButton('neighborhood', '동네&또래')}
-            {renderButton('study_class', '스터디&클래스')}
+            {categories.map((category) => (
+                <button
+                    key={category.key}
+                    className={`${styles.filterButton} ${activeCategory === category.key ? styles.active : ''}`}
+                    onClick={() => onCategoryChange(category.key)}
+                >
+                    {category.label}
+                </button>
+            ))}
         </div>
     );
 };

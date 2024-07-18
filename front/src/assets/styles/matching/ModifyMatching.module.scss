@@ -1,0 +1,132 @@
+@import '../Font.scss';
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+
+
+.resultMessage {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #28a745;
+}
+
+.container {
+    padding: 20px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+
+    .titleBar {
+        width: 100%;
+        height: 60px;
+        background-color: #E2E5E2;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .titleBarLine {
+            width: 3px;
+            height: 60px;
+            background-color: #20B526;
+            margin-right: 10px;
+        }
+
+        .titleBarText {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .categorySelector {
+        margin-bottom: 20px;
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        select {
+            width: 100%;
+            max-width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    }
+}
+
+.deleteButton {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+}
+
+
+/* ModifyMatching.module.scss */
+.readOnlyInput {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.fileList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.fileItem {
+    position: relative;
+}
+
+.deleteButton {
+    margin-top: 20px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    background-color: #c9302c;
+}

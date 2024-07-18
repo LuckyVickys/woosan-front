@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LocationField from './LocationField';
 import styles from '../../assets/styles/matching/MatchingForm.module.scss';
 import { useSelector } from 'react-redux';
+import { getMemberWithEmail } from '../../api/memberApi';
 
 const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
     const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기
@@ -15,11 +16,22 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
     const [address, setAddress] = useState(initialValues.address || '');
     const [meetDate, setMeetDate] = useState(initialValues.meetDate || new Date().toISOString().slice(0, 16));
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [tag, setTag] = useState({}); // 초기값을 빈 객체로 설정
+    const [tagInput, setTagInput] = useState(''); // 태그 입력 필드 상태
+    const [tags, setTags] = useState({});
     const [headCount, setHeadCount] = useState(initialValues.headCount || '');
     const [errors, setErrors] = useState({});
     const [files, setFiles] = useState([]); // 파일 상태 관리
     const uploadRef = useRef();
+
+    useEffect(() => {
+        if (initialValues.tag) {
+            try {
+                setTags(JSON.parse(initialValues.tag));
+            } catch (error) {
+                console.error('Failed to parse tag JSON:', error);
+            }
+        }
+    }, [initialValues.tag]);
 
     const categoryLabels = {
         romance: '연애&사랑',
@@ -45,7 +57,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
         if (!content) newErrors.content = '모임 소개를 입력해주세요';
         if (!placeName) newErrors.placeName = '모임 장소를 입력해주세요';
         if (!meetDate) newErrors.meetDate = '모임 날짜 / 시간을 입력해주세요';
-        if (Object.keys(tag).length === 0) newErrors.tag = '태그를 입력해주세요';
+        if (Object.keys(tags).length === 0) newErrors.tags = '태그를 입력해주세요';
         if (!headCount) newErrors.headCount = '모집 인원을 입력해주세요';
 
         if (matchingType === 3) {
@@ -75,7 +87,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
         formData.append('locationY', locationY);
         formData.append('address', address); // address 추가
         formData.append('meetDate', meetDate);
-        formData.append('tag', JSON.stringify(tag)); // tag를 JSON 문자열로 변환
+        formData.append('tag', JSON.stringify(tags)); // tags를 JSON 문자열로 변환하여 tag 필드에 저장
         formData.append('headCount', headCount);
         for (let i = 0; i < files.length; i++) {
             formData.append('images', files[i]);
@@ -92,6 +104,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
         }
 
         console.log('폼 데이터 제출 중:', Object.fromEntries(formData.entries())); // 디버깅을 위한 콘솔 로그
+        console.log('로그인된 상태:', loginState); // 로그인된 상태 출력
 
         await onSubmit(formData, loginState.id);
     };
@@ -122,18 +135,18 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
 
     const handleTagSubmit = (e) => {
         e.preventDefault();
-        if (tag && selectedCategory) {
-            setTag({ [tag]: selectedCategory }); // 기존 값을 덮어쓰기
-            setTag('');
+        if (tagInput && selectedCategory) {
+            setTags((prevTags) => ({ ...prevTags, [tagInput]: selectedCategory }));
+            setTagInput('');
             setSelectedCategory('');
         }
     };
 
     const handleTagRemove = (tagToRemove) => {
-        setTag((prevTag) => {
-            const newTag = { ...prevTag };
-            delete newTag[tagToRemove];
-            return newTag;
+        setTags((prevTags) => {
+            const newTags = { ...prevTags };
+            delete newTags[tagToRemove];
+            return newTags;
         });
     };
 
@@ -141,7 +154,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
         <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.row}>
                 <div className={styles.formGroup}>
-                    <label htmlFor="tag">태그</label>
+                    <label htmlFor="category">카테고리</label>
                     <select
                         id="category"
                         value={selectedCategory}
@@ -158,18 +171,18 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
                     </select>
                     {errors.category && <div className={styles.error}>{errors.category}</div>}
                     <input
-                        id="tag"
-                        value={tag}
-                        onChange={handleInputChange(setTag)}
+                        id="tagInput"
+                        value={tagInput}
+                        onChange={handleInputChange(setTagInput)}
                         placeholder="태그를 입력해주세요"
                         className={`${styles.tagInput} ${styles.short}`}
                     />
-                    {errors.tag && <div className={styles.error}>{errors.tag}</div>}
+                    {errors.tags && <div className={styles.error}>{errors.tags}</div>}
                     <button onClick={handleTagSubmit} className={styles.addButton}>추가</button>
                     <div className={styles.tagContainer}>
-                        {Object.entries(tag).map(([tag, category]) => (
+                        {Object.keys(tags).map((tag) => (
                             <div key={tag} className={styles.tag}>
-                                {categoryLabels[category]}: {tag}
+                                {categoryLabels[tags[tag]]}: {tag}
                                 <button type="button" onClick={() => handleTagRemove(tag)} className={styles.deleteButton}>
                                     X
                                 </button>
