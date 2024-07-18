@@ -8,10 +8,15 @@ const NoticePage = () => {
     };
     return (
         <div className="">
+            <div className="search-bar">
+                <button
+                    className="write-button"
+                    onClick={handleWriteButtonClick}
+                >
+                    공지사항 쓰기
+                </button>
+            </div>
             <MyBoardComponent />
-            <button className="write-button" onClick={handleWriteButtonClick}>
-                글 쓰기
-            </button>
         </div>
     );
 };

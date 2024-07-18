@@ -31,11 +31,25 @@ const IndexPage = () => {
             break;
     }
 
+    const hideSubAndInfoPaths = [
+        "/adminPage/notice/add",
+        "/adminPage/notice/modify/:id",
+    ];
+
+    const shouldHideSubAndInfo = (pathname) => {
+        return hideSubAndInfoPaths.some((path) => {
+            const regex = new RegExp(`^${path.replace(/:\w+/g, "\\w+")}$`);
+            return regex.test(pathname);
+        });
+    };
+
     return (
         <BasicLayout>
             <SideBar pageType="adminPage" />
             <div className="contents">
-                <PageTitle main="관리자 페이지" sub={sub} />
+                {!shouldHideSubAndInfo(location.pathname) && (
+                    <PageTitle main="관리자 페이지" sub={sub} />
+                )}
                 <Outlet />
             </div>
         </BasicLayout>
