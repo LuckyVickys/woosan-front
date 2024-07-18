@@ -2,8 +2,11 @@ import { NavLink } from "react-router-dom";
 import React from "react";
 import '../../assets/styles/App.scss';
 import RankingList from "./RankingList";
+import { useSelector } from "react-redux";
 
 const Nav = () => {
+    const loginState = useSelector((state) => state.loginSlice);
+    const memberType = loginState.memberType;
 
     return (
         <nav id='navbar' className="nav poppins-medium">
@@ -24,9 +27,16 @@ const Nav = () => {
                     </NavLink>
                 </div>
                 <div className="myPage">
-                    <NavLink to={'/myPage/'} className={({ isActive }) => isActive ? "active" : ""}>
-                        마이페이지
-                    </NavLink>
+                    {memberType === "USER" ? (
+                        <NavLink to={'/myPage/'} className={({ isActive }) => isActive ? "active" : ""}>
+                            마이페이지
+                        </NavLink>
+                    ) : (
+                        <NavLink to={'/adminPage/'} className={({ isActive }) => isActive ? "active" : ""}>
+                            관리자페이지
+                        </NavLink>
+                    )}
+                    
                 </div>
             </div>
 
