@@ -13,8 +13,8 @@
     background-color: #fff;  // 배경색 설정
     border-radius: 10px;  // 모서리 둥글게 설정
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  // 그림자 추가
-    font-family: 'Pretendard-Regular', sans-serif;  // 폰트 설정
-
+    overflow: hidden;  // 내용이 넘칠 경우 숨김
+    
     .imagePlaceholder {
         width: 155px;
         height: 135px;
@@ -53,6 +53,9 @@
                 border-radius: 4px; // 둥근 모서리 적용
                 padding: 5px 10px;
                 margin-right: 10px; // 태그와의 간격 설정
+                white-space: nowrap;  // 텍스트가 한 줄에 표시되도록 함
+                overflow: hidden;  // 넘치는 텍스트를 숨김
+                text-overflow: ellipsis;  // 넘치는 텍스트를 ...로 표시
             }
 
             .tag {
@@ -61,6 +64,9 @@
                 border-radius: 4px;
                 font-size: 14px;  // 태그 글씨 크기
                 color: white;
+                white-space: nowrap;  // 텍스트가 한 줄에 표시되도록 함
+                overflow: hidden;  // 넘치는 텍스트를 숨김
+                text-overflow: ellipsis;  // 넘치는 텍스트를 ...로 표시
             }
         }
 
@@ -68,6 +74,9 @@
             font-size: 16px;  // 타이틀 글씨 크기
             font-weight: bold;
             margin-bottom: 10px;
+            white-space: nowrap;  // 텍스트가 한 줄에 표시되도록 함
+            overflow: hidden;  // 넘치는 텍스트를 숨김
+            text-overflow: ellipsis;  // 넘치는 텍스트를 ...로 표시
         }
 
         .details {
@@ -79,6 +88,35 @@
             .detailItem {
                 width: 45%;
                 margin: 5px 0;
+                display: flex;
+                align-items: center;
+                white-space: nowrap;  // 텍스트가 한 줄에 표시되도록 함
+                overflow: hidden;  // 넘치는 텍스트를 숨김
+                text-overflow: ellipsis;  // 넘치는 텍스트를 ...로 표시
+
+                strong {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .location,
+                .date,
+                .nickname,
+                .headCount,
+                .age {
+                    margin-right: 5px;
+                    width: 20px;
+                    height: 20px;
+                    display: inline-block;
+                    background-size: contain;
+                }
+
+                .gender {
+                    color: #00B207;
+                    font-size: 20px;  // 성별 아이콘 폰트 크기 설정
+                    margin-right: 5px;  // 아이콘과 텍스트 간격 설정
+                    display: inline-block;
+                }
             }
         }
     }
@@ -98,4 +136,36 @@
 .셀프소개팅 {
     background-color: #2388FF;
     color: white;
+}
+
+.location {
+    background: url('../../image/icon-location.svg') no-repeat;
+    background-size: contain;
+}
+.date {
+    background: url('../../image/icon-calendar.svg') no-repeat;
+    background-size: contain;
+}
+.nickname {
+    background: url('../../image/icon-person.svg') no-repeat;
+    background-size: contain;
+}
+.headCount {
+    background: url('../../image/icon-matching.svg') no-repeat;
+    background-size: contain;
+}
+.age {
+    background: url('../../image//icon-fire.svg') no-repeat;
+    background-size: contain;
+}
+
+.age,
+.location,
+.date,
+.nickname,
+.headCount {
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
 }

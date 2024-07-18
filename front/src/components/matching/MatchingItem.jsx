@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../assets/styles/matching/MatchingItem.module.scss';
+import { PiGenderIntersexFill } from "react-icons/pi";
 
 const MatchingItem = ({
     id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag = '{}', headCount,
@@ -12,9 +13,6 @@ const MatchingItem = ({
         id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag, headCount,
         location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
     });
-
-
-
 
     const typeLabel = getTypeLabel(matchingType);
 
@@ -49,11 +47,31 @@ const MatchingItem = ({
     // 태그를 문자열로 변환하여 키값만 반환하는 함수
     const renderTag = (tag) => {
         try {
+            console.log('Parsing tag:', tag);
             const parsedTag = JSON.parse(tag);
             return Object.keys(parsedTag).join(', ');
         } catch (e) {
             console.error("Failed to parse tag:", e);
             return '';
+        }
+    };
+
+    // 날짜 포맷팅 함수
+    const formatDateMinWithoutYear = (dateString) => {
+        const date = new Date(dateString);
+        const month = String(date.getMonth() + 1).padStart(2, '');
+        const day = String(date.getDate()).padStart(2, '');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+    
+        return `${month}. ${day}. ${hours}:${minutes}`;
+    };
+
+    const formatDateTime = (dateString, type) => {
+        if (type === 2) {
+            return formatDateMinWithoutYear(dateString);  // 번개의 경우 날짜와 시간을 포맷팅, 연도 제외
+        } else {
+            return new Date(dateString).toLocaleDateString('ko-KR');  // 그 외의 경우 날짜만 포맷팅
         }
     };
 
@@ -64,10 +82,6 @@ const MatchingItem = ({
 
     // 이미지 URL이 제대로 설정되었는지 확인
     console.log("이미지 URL:", imageUrl);
-
-
-
-    
 
     return (
         <div className={styles.matchingItemCard} onClick={() => onClick(id)}>
@@ -87,19 +101,19 @@ const MatchingItem = ({
                 <div className={styles.matchingItemBody}>
                     <span className={styles.title}>{title}</span>
                     <div className={styles.details}>
-                        <div className={styles.detailItem}><strong>장소:</strong> {placeName}</div>
+                        <div className={styles.detailItem}><strong><span className={styles.location}></span></strong> {placeName}</div>
                         {matchingType !== 3 && (
                             <>
-                                <div className={styles.detailItem}><strong>날짜:</strong> {new Date(meetDate).toLocaleDateString()}</div>
-                                <div className={styles.detailItem}><strong>주최자:</strong> {nickname}</div>
-                                <div className={styles.detailItem}><strong>모집 인원:</strong> {headCount}</div>
+                                <div className={styles.detailItem}><strong><span className={styles.date}></span></strong> {formatDateTime(meetDate, matchingType)}</div>
+                                <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
+                                <div className={styles.detailItem}><strong><span className={styles.headCount}></span></strong> {headCount}</div>
                             </>
                         )}
                         {matchingType === 3 && (
                             <>
-                                <div className={styles.detailItem}><strong>성별:</strong> {gender}</div>
-                                <div className={styles.detailItem}><strong>주최자:</strong> {nickname}</div>
-                                <div className={styles.detailItem}><strong>나이:</strong> {age}세</div>
+                                <div className={styles.detailItem}><strong><PiGenderIntersexFill className={styles.gender} /></strong> {gender}</div>
+                                <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
+                                <div className={styles.detailItem}><strong><span className={styles.age}></span></strong> {age}세</div>
                             </>
                         )}
                     </div>
@@ -115,9 +129,9 @@ MatchingItem.propTypes = {
     matchingType: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    regDate: PropTypes.string.isRequired, 
-    views: PropTypes.number.isRequired, 
-    isDeleted: PropTypes.bool.isRequired, 
+    regDate: PropTypes.string.isRequired,
+    views: PropTypes.number.isRequired,
+    isDeleted: PropTypes.bool.isRequired,
     placeName: PropTypes.string.isRequired,
     locationX: PropTypes.number.isRequired,
     locationY: PropTypes.number.isRequired,
