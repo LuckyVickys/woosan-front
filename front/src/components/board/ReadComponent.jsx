@@ -182,6 +182,8 @@ const ReadComponent = () => {
                 onSelect={handleBoardMenuSelect}
                 openReport={openReport}
                 openMsg={openMsg}
+                showReportButton={userId !== board.writerId}
+                showMsgButton={userId !== board.writerId}
                 showModifyButton={userId === board.writerId} // 수정된 부분
               />
             )}
