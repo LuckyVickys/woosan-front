@@ -26,22 +26,22 @@ const IndexPage = () => {
         case "/myPage/matching":
             sub = "모임 조회";
             break;
-        case "/myPage/msg/send":
+        case "/myPage/send-message":
             sub = "보낸 쪽지함";
             break;
-        case "/myPage/msg/receive":
+        case "/myPage/receive-message":
             sub = "받은 쪽지함";
-            break; 
+            break;
         default:
             sub = "회원 정보 수정";
             break;
     }
 
-    const hideSubPaths = ['/myPage/message/:id'];
+    const hideSubPaths = ["/myPage/message/:id"];
 
     const shouldHideSub = (pathname) => {
         return hideSubPaths.some((path) => {
-            const regex = new RegExp(`^${path.replace(/:\w+/g, '\\w+')}$`);
+            const regex = new RegExp(`^${path.replace(/:\w+/g, "\\w+")}$`);
             return regex.test(pathname);
         });
     };

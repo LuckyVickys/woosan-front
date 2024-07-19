@@ -20,10 +20,10 @@ const IndexPage = () => {
         case "/adminPage/notice":
             sub = "공지사항 관리";
             break;
-        case "/adminPage/msg/send":
+        case "/adminPage/send-message":
             sub = "보낸 쪽지함";
             break;
-        case "/adminPage/msg/receive":
+        case "/adminPage/receive-message":
             sub = "받은 쪽지함";
             break;
         default:
