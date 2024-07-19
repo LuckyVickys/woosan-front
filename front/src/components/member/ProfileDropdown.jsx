@@ -23,7 +23,7 @@ const ProfileDropdown = () => {
     }
 
     const navToMessages = () => {
-        navigate(memberType === "ADMIN" ? "/adminPage/msg/send" : "/myPage/msg/send");
+        navigate(memberType === "ADMIN" ? "/adminPage/send-message" : "/myPage/send-message");
     }
     
     const navToLikes = () => {
