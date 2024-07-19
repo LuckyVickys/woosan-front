@@ -39,11 +39,11 @@ const myPageRouter = ()=> {
             element: <Suspense fallback={Loading}><MyMatchingPage/></Suspense>
         },
         {
-            path: "msg/send",
+            path: "send-message",
             element: <Suspense fallback={Loading}><MySendMsgPage/></Suspense>
         },
         {     
-            path: "msg/receive",
+            path: "receive-message",
             element: <Suspense fallback={Loading}><MyReceiveMsgPage/></Suspense>
         },
         {
