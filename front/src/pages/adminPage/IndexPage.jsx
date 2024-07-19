@@ -5,31 +5,29 @@ import BasicLayout from "../../layouts/BasicLayout";
 import SideBar from "../../components/common/SideBar";
 import PageTitle from "../../components/common/PageTitle";
 
+const getSubTitle = (pathname) => {
+    if (pathname.startsWith("/adminPage/report")) {
+        return "신고 관리";
+    }
+    switch (pathname) {
+        case "/adminPage/upload":
+            return "배너 관리";
+        case "/adminPage/report":
+            return "신고 관리";
+        case "/adminPage/notice":
+            return "공지사항 관리";
+        case "/adminPage/send-message":
+            return "보낸 쪽지함";
+        case "/adminPage/receive-message":
+            return "받은 쪽지함";
+        default:
+            return "배너 관리";
+    }
+};
+
 const IndexPage = () => {
     const location = useLocation();
-
-    let sub = "";
-
-    switch (location.pathname) {
-        case "/adminPage/upload":
-            sub = "배너 관리";
-            break;
-        case "/adminPage/report":
-            sub = "신고 관리";
-            break;
-        case "/adminPage/notice":
-            sub = "공지사항 관리";
-            break;
-        case "/adminPage/send-message":
-            sub = "보낸 쪽지함";
-            break;
-        case "/adminPage/receive-message":
-            sub = "받은 쪽지함";
-            break;
-        default:
-            sub = "배너 관리";
-            break;
-    }
+    const sub = getSubTitle(location.pathname);
 
     const hideSubAndInfoPaths = [
         "/adminPage/notice/add",
