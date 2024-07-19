@@ -53,7 +53,7 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
                         confirmButtonText: '확인',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            navigate("/myPage/msg/send");
+                            navigate("/myPage/send-message");
                         }
                     });
                     setMsgData((prevData) => ({
