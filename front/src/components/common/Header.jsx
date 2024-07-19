@@ -29,7 +29,7 @@ const Header = () => {
   };
 
   const navToMessages = () => {
-    navigate(memberType === "ADMIN" ? "/adminPage/msg/receive" : "/myPage/msg/receive");
+    navigate(memberType === "ADMIN" ? "/adminPage/receive-message" : "/myPage/receive-message");
   }
 
   const toggleProfileDropdown = () => {
