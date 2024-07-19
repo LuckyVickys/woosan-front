@@ -67,6 +67,13 @@ const ReadComponent = () => {
         title: translated.title,
         content: convertLineBreaks(translated.content),
       }));
+      Swal.fire({
+        icon: "success",
+        title: "번역 완료",
+        text: `게시글 번역이 완료되었습니다.`,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "확인",
+      })
     } catch (error) {
       console.error("번역 중 오류 발생:", error);
     }
