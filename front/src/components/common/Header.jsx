@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logoImage from "../../assets/image/logo.svg";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
@@ -21,6 +21,7 @@ const Header = () => {
   const [kakaoUserData, setKakaoUserData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const profileBoxRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -72,6 +73,19 @@ const Header = () => {
     }
   }, [isProfileDropdownOpen]);
 
+  useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileBoxRef.current && !profileBoxRef.current.contains(event.target)) {
+                setIsProfileDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
   return (
     <header className="header">
       <div className="logo">
@@ -92,7 +106,7 @@ const Header = () => {
           />
           <div className="loginBar"> | </div>
           {userData ? (
-            <div className="profile-box" id="loginProfile">
+            <div className="profile-box" id="loginProfile" ref={profileBoxRef}>
               <div className="user-level-nickname">
                 <div className="user-level">
                 {userData.memberType === "ADMIN" ? userData.memberType : userData.level}
