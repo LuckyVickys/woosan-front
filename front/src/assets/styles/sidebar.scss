@@ -1,6 +1,5 @@
 .sidebar {
     margin-right: 20px;
-    background-color: #fff;
     border-radius: 8px;
     width: 280px;
     overflow: hidden;
@@ -10,14 +9,14 @@
         // padding-left: 20px;
         width: 100%;
         box-sizing: border-box;
-        border: 1px solid #E6E6E6;
+        border: 1px solid #e6e6e6;
         border-radius: 8px;
 
         .category-title {
             margin-right: 32px;
             padding: 20px 20px;
             width: 100%;
-            font-family: 'Pretendard-Regular', sans-serif;
+            font-family: "Pretendard-Regular", sans-serif;
             font-size: 20px;
             font-weight: 600;
         }
@@ -31,7 +30,7 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
-            font-family: 'Pretendard-Regular', sans-serif;
+            font-family: "Pretendard-Regular", sans-serif;
             font-size: 16px;
             font-weight: 400;
 
@@ -41,20 +40,20 @@
 
             &.active,
             &.active:hover {
-                background-color: #EDF2EE;
-                color: #00B207;
+                background-color: #edf2ee;
+                color: #00b207;
 
                 .icon {
-                    color: #00B207;
+                    color: #00b207;
                 }
 
                 &::before {
-                    content: '';
+                    content: "";
                     position: absolute;
                     left: 0;
                     width: 3px;
                     height: 55px;
-                    background-color: #20B526;
+                    background-color: #20b526;
                 }
             }
 
@@ -70,7 +69,7 @@
 
                 &.active {
                     font-weight: bold;
-                    color: #00B207;
+                    color: #00b207;
                 }
 
                 &:focus {
@@ -84,7 +83,65 @@
                 color: #666666;
 
                 &.active {
-                    color: #00B207;
+                    color: #00b207;
+                }
+            }
+        }
+    }
+
+    &.admin {
+        .category {
+            background: #65676d;
+            color: #fff;
+
+            .sub-category {
+                button {
+                    font-weight: bold;
+                    color: #fff;
+                }
+
+                .icon {
+                    margin-right: 8px;
+                    font-size: 18px;
+                    color: #fff;
+
+                    &.active {
+                        color: #00b207;
+                    }
+                }
+
+                &:hover {
+                    background-color: #edf2ee;
+
+                    button {
+                        color: #00b207;
+                    }
+
+                    .icon {
+                        color: #00b207;
+                    }
+                }
+
+                &.active,
+                &.active:hover {
+                    background-color: #edf2ee;
+
+                    button {
+                        color: #00b207;
+                    }
+
+                    .icon {
+                        color: #00b207;
+                    }
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        width: 3px;
+                        height: 55px;
+                        background-color: #20b526;
+                    }
                 }
             }
         }

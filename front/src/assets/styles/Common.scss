@@ -450,6 +450,19 @@ nav {
         font-style: normal;
         color: #00b207;
     }
+
+    &.admin {
+        border-radius: 8px;
+        background: #65676d;
+        color: #fff;
+
+        .category-main-sub {
+            .category-arrow {
+                background: url("../image/category-arrow-admin.svg") no-repeat;
+                background-size: contain;
+            }
+        }
+    }
 }
 
 // searchbar

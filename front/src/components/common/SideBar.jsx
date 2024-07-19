@@ -89,7 +89,7 @@ const SideBar = ({ pageType }) => {
     };
 
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar ${pageType === "adminPage" ? "admin" : ""}`}>
             <div className="category">
                 {pageType === "board" && (
                     <>
@@ -573,10 +573,10 @@ const SideBar = ({ pageType }) => {
                             </button>
                         </div>
                         <div className="sub-category">
-                            <div onClick={handleLogout}>
+                            <button onClick={handleLogout}>
                                 <FaSignOutAlt className="icon" />
                                 Log out
-                            </div>
+                            </button>
                         </div>
                     </>
                 )}
@@ -707,10 +707,10 @@ const SideBar = ({ pageType }) => {
                             </button>
                         </div>
                         <div className="sub-category">
-                            <div onClick={handleLogout}>
+                            <button onClick={handleLogout}>
                                 <FaSignOutAlt className="icon" />
                                 Log out
-                            </div>
+                            </button>
                         </div>
                     </>
                 )}
