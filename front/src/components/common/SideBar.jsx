@@ -1,25 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "../../assets/styles/App.scss";
-import {
-    FaUtensils,
-    FaBroom,
-    FaConciergeBell,
-    FaMoneyBill,
-    FaPaintRoller,
-    FaRegFileAlt,
-    FaTh,
-    FaRegSmile,
-    FaUserEdit,
-    FaClipboardList,
-    FaComments,
-    FaHeart,
-    FaUsers,
-    FaEnvelopeOpenText,
-    FaSignOutAlt,
-    FaBullhorn,
-    FaGift,
-} from "react-icons/fa";
+import {FaUtensils,FaBroom,FaConciergeBell,FaMoneyBill,FaPaintRoller,FaRegFileAlt,FaTh,FaRegSmile,FaUserEdit,FaClipboardList,FaComments,FaHeart,FaUsers,FaEnvelopeOpenText,FaSignOutAlt,FaBullhorn,FaGift} from "react-icons/fa";
 import { GoReport } from "react-icons/go";
 import { FiUpload } from "react-icons/fi";
 import Swal from "sweetalert2";
@@ -528,20 +510,20 @@ const SideBar = ({ pageType }) => {
                         </div>
                         <div
                             className={`sub-category ${
-                                activeCategory === "msg/send" ? "active" : ""
+                                activeCategory === "send-message" ? "active" : ""
                             }`}
                         >
                             <button
-                                onClick={() => handleNavigation("msg/send")}
+                                onClick={() => handleNavigation("send-message")}
                                 className={
-                                    activeCategory === "msg/send"
+                                    activeCategory === "send-message"
                                         ? "active"
                                         : ""
                                 }
                             >
                                 <FaEnvelopeOpenText
                                     className={`icon ${
-                                        activeCategory === "msg/send"
+                                        activeCategory === "send-message"
                                             ? "active"
                                             : ""
                                     }`}
@@ -551,20 +533,20 @@ const SideBar = ({ pageType }) => {
                         </div>
                         <div
                             className={`sub-category ${
-                                activeCategory === "msg/receive" ? "active" : ""
+                                activeCategory === "receive-message" ? "active" : ""
                             }`}
                         >
                             <button
-                                onClick={() => handleNavigation("msg/receive")}
+                                onClick={() => handleNavigation("receive-message")}
                                 className={
-                                    activeCategory === "msg/receive"
+                                    activeCategory === "receive-message"
                                         ? "active"
                                         : ""
                                 }
                             >
                                 <FaEnvelopeOpenText
                                     className={`icon ${
-                                        activeCategory === "msg/receive"
+                                        activeCategory === "receive-message"
                                             ? "active"
                                             : ""
                                     }`}
@@ -662,20 +644,20 @@ const SideBar = ({ pageType }) => {
                         </div>
                         <div
                             className={`sub-category ${
-                                activeCategory === "msg/send" ? "active" : ""
+                                activeCategory === "send-message" ? "active" : ""
                             }`}
                         >
                             <button
-                                onClick={() => handleNavigation("msg/send")}
+                                onClick={() => handleNavigation("send-message")}
                                 className={
-                                    activeCategory === "msg/send"
+                                    activeCategory === "send-message"
                                         ? "active"
                                         : ""
                                 }
                             >
                                 <FaEnvelopeOpenText
                                     className={`icon ${
-                                        activeCategory === "msg/send"
+                                        activeCategory === "send-message"
                                             ? "active"
                                             : ""
                                     }`}
@@ -685,20 +667,20 @@ const SideBar = ({ pageType }) => {
                         </div>
                         <div
                             className={`sub-category ${
-                                activeCategory === "msg/receive" ? "active" : ""
+                                activeCategory === "receive-message" ? "active" : ""
                             }`}
                         >
                             <button
-                                onClick={() => handleNavigation("msg/receive")}
+                                onClick={() => handleNavigation("receive-message")}
                                 className={
-                                    activeCategory === "msg/receive"
+                                    activeCategory === "receive-message"
                                         ? "active"
                                         : ""
                                 }
                             >
                                 <FaEnvelopeOpenText
                                     className={`icon ${
-                                        activeCategory === "msg/receive"
+                                        activeCategory === "receive-message"
                                             ? "active"
                                             : ""
                                     }`}
