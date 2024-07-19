@@ -3,16 +3,18 @@ import React from "react";
 import "../../assets/styles/App.scss";
 
 const PageTitle = ({ main, sub, info }) => {
-  return (
-    <div className="page-title">
-      <div className="category-main-sub">
-        <h1>{main}</h1>
-        <div className="category-arrow"></div>
-        <h1>{sub}</h1>
-      </div>
-      <div className="category-info">{info}</div>
-    </div>
-  );
+    return (
+        <div
+            className={`page-title ${main === "관리자 페이지" ? "admin" : ""}`}
+        >
+            <div className="category-main-sub">
+                <h1>{main}</h1>
+                <div className="category-arrow"></div>
+                <h1>{sub}</h1>
+            </div>
+            <div className="category-info">{info}</div>
+        </div>
+    );
 };
 
 export default PageTitle;

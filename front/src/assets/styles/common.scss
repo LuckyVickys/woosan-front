@@ -418,6 +418,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
     height: auto;
     padding: 0 20px;
     border-bottom: 2px solid $shadow;
@@ -450,13 +451,26 @@ nav {
         font-style: normal;
         color: #00b207;
     }
+
+    &.admin {
+        border-radius: 8px;
+        background: #65676d;
+        color: #fff;
+
+        .category-main-sub {
+            .category-arrow {
+                background: url("../image/category-arrow-admin.svg") no-repeat;
+                background-size: contain;
+            }
+        }
+    }
 }
 
 // searchbar
 .search-bar {
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     gap: 15px;
     font-size: 16px;
     font-family: $font-family;
