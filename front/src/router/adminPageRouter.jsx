@@ -6,12 +6,14 @@ const Loading = <div>Loading....</div>;
 
 const UploadPage = lazy(() => import("../pages/adminPage/UploadPage"));
 const ReportPage = lazy(() => import("../pages/adminPage/ReportPage"));
-const NoticePage = lazy(() => import("../pages/adminPage/NoticePage"));
+const ReportReadPage = lazy(() => import("../pages/adminPage/ReportReadPage"));
 
+const NoticePage = lazy(() => import("../pages/adminPage/NoticePage"));
 const AddNoticePage = lazy(() => import("../pages/adminPage/AddNoticePage"));
 const ModifyNoticePage = lazy(() =>
     import("../pages/adminPage/ModifyNoticePage")
 );
+
 const MySendMsgPage = lazy(() => import("../pages/myPage/MySendMsgPage"));
 const MyReceiveMsgPage = lazy(() => import("../pages/myPage/MyReceiveMsgPage"));
 const MsgPage = lazy(() => import("../pages/adminPage/MsgPage"));
@@ -35,6 +37,14 @@ const adminPageRouter = () => {
             element: (
                 <Suspense fallback={Loading}>
                     <ReportPage />
+                </Suspense>
+            ),
+        },
+        {
+            path: "report/:id",
+            element: (
+                <Suspense fallback={Loading}>
+                    <ReportReadPage />
                 </Suspense>
             ),
         },

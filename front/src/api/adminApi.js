@@ -17,3 +17,17 @@ export const getReportList = async (pageParam) => {
         throw error;
     }
 };
+
+export const getReport = async (id) => {
+    console.log("Fetching data for ID:", id);
+    try {
+        const res = await axios.get(`${prefix}/report/${id}`);
+        return res.data;
+    } catch (error) {
+        console.error(
+            "Error fetching data:",
+            error.response ? error.response.data : error.message
+        );
+        throw error;
+    }
+};
