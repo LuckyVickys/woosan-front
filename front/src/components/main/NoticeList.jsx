@@ -13,12 +13,20 @@ const NoticeList = () => {
         });
     }, []);
 
+    const slicedTitle = (str, maxLength) => {
+        if (str.length > maxLength) {
+            return str.slice(0, maxLength) + '...';
+        } else {
+            return str;
+        }
+    };
+
     return (
         <div className='noticelist'>
             {notices.map(notice => (
                 <div key={notice.id} className="noticelist-post">
                     <div className="noticelist-category">{notice.categoryName}</div>
-                    <div className="noticelist-title">{notice.title}</div>
+                    <div className="noticelist-title">{slicedTitle(notice.title, 15)}</div>
                     <div className="noticelist-date">{new Date(notice.regDate).toLocaleDateString()}</div>
                 </div>
             ))}
