@@ -19,7 +19,7 @@ export const getReportList = async (pageParam) => {
 };
 
 export const getReport = async (id) => {
-    console.log("Fetching data for ID:", id);
+    console.log("Fetching data for report:", id);
     try {
         const res = await axios.get(`${prefix}/report/${id}`);
         return res.data;
