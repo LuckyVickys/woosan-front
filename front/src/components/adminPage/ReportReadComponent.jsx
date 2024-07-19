@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import useCustomMove from "../../hooks/useCustomMove";
 import { useParams } from "react-router-dom";
 import { getReport } from "../../api/adminApi";
+import { formatDate } from "../../util/DateUtil";
 import "../../assets/styles/App.scss";
 
 const initState = {
@@ -22,6 +24,7 @@ const ReportReadComponent = () => {
     const { id } = useParams();
     const [report, setReport] = useState(initState);
     const [reportType, setReportType] = useState(null);
+    const { moveToRead } = useCustomMove();
 
     useEffect(() => {
         getReport(id).then((data) => {
@@ -37,14 +40,24 @@ const ReportReadComponent = () => {
         }
     }, [report]);
 
+    const handleLinkClick = (targetId) => {
+        const id = targetId;
+        moveToRead(id, "/board");
+    };
+
     return (
         <div className="read-report-component">
             <div className="report-type-link">
+                <label>신고 유형</label>
                 <div className="report-type">
-                    <label>신고 유형</label>
                     <div className="report-text">{reportType}</div>
+                    <div
+                        className="report-link-button"
+                        onClick={() => handleLinkClick(report.targetId)}
+                    >
+                        바로가기
+                    </div>
                 </div>
-                <div className="report-link">바로가기</div>
             </div>
             <div className="report-member-target">
                 <div className="report-member">
@@ -54,7 +67,7 @@ const ReportReadComponent = () => {
                     </div>
                 </div>
                 <div className="report-target">
-                    <label>신고 대상</label>
+                    <label>신고 글</label>
                     <div className="report-text">{report.targetId}</div>
                 </div>
             </div>
@@ -66,7 +79,9 @@ const ReportReadComponent = () => {
                 </div>
                 <div className="report-ragDate">
                     <label>신고 날짜</label>
-                    <div className="report-text">{report.regDate}</div>
+                    <div className="report-text">
+                        {formatDate(report.regDate)}
+                    </div>
                 </div>
             </div>
             <div className="report-content">
@@ -75,9 +90,23 @@ const ReportReadComponent = () => {
                     {report.complaintReason}
                 </div>
             </div>
-            <div className="form-buttons">
-                <button className="save-button">저장</button>
-                <button className="cancel-button">취소</button>
+            <div className="report-image">
+                <label>첨부 파일</label>
+                <div className="image-container">
+                    {report.filePathUrl.map((url, index) => (
+                        <img
+                            key={index}
+                            src={url}
+                            alt={`image-${index}`}
+                            className="image"
+                        />
+                    ))}
+                </div>
+            </div>
+            <div className="report-buttons">
+                <button className="secession-button">신고 대상자 탈퇴</button>
+                <button className="remove-button">신고 글 삭제</button>
+                <button className="finish-button">처리 완료</button>
             </div>
         </div>
     );
