@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getReportList } from "../../api/adminApi";
-import useCustomMove from "../../hooks/useCustomMove";
+import useCustomReportMove from "../../hooks/useCustomReportMove";
 import ListPageComponent from "../adminPage/element/ListPageComponent";
 import TableRowComponent from "../adminPage/element/TableRowComponent";
 import "../../assets/styles/App.scss";
@@ -22,7 +22,8 @@ const initState = {
 };
 
 const ReportListComponent = () => {
-    const { page, size, moveToList, moveToRead, refresh } = useCustomMove();
+    const { page, size, moveToList, moveToRead, refresh } =
+        useCustomReportMove();
     const [reportData, setReportData] = useState(initState);
 
     useEffect(() => {
@@ -68,15 +69,7 @@ const ReportListComponent = () => {
                     </table>
                     <ListPageComponent
                         reportData={reportData}
-                        movePage={(page) =>
-                            setReportData({
-                                ...reportData,
-                                pageRequestDTO: {
-                                    ...reportData.pageRequestDTO,
-                                    page,
-                                },
-                            })
-                        }
+                        movePage={moveToList}
                     />
                 </div>
             ) : (
