@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { useParams } from "react-router-dom";
 import { getReport } from "../../api/adminApi";
+import { deleteBoard } from "../../api/boardApi";
+import { deleteReply } from "../../api/replyApi";
 import { formatDate } from "../../util/DateUtil";
+import Swal from "sweetalert2";
 import "../../assets/styles/App.scss";
 
 const initState = {
@@ -26,6 +29,8 @@ const ReportReadComponent = () => {
     const [reportType, setReportType] = useState(null);
     const { moveToRead } = useCustomMove();
 
+    const [result, setResult] = useState(false);
+
     useEffect(() => {
         getReport(id).then((data) => {
             setReport(data);
@@ -41,8 +46,80 @@ const ReportReadComponent = () => {
     }, [report]);
 
     const handleLinkClick = (targetId) => {
-        const id = targetId;
-        moveToRead(id, "/board");
+        if (report.type === "board") {
+            moveToRead(targetId, "/board");
+        } else if (report.type === "reply") {
+            moveToRead(targetId, "/board");
+        }
+    };
+
+    const handleRemoveTarget = async () => {
+        const removeDTO = {
+            id: report.targetId,
+            writerId: report.reporteredMemberId,
+        };
+
+        const result = await Swal.fire({
+            title: "삭제 확인",
+            text: "정말로 삭제하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+        });
+
+        if (result.isConfirmed) {
+            try {
+                if (report.type === "board") {
+                    await deleteBoard(removeDTO);
+                } else if (report.type === "reply") {
+                    await deleteReply(removeDTO);
+                }
+                Swal.fire({
+                    title: "삭제 완료",
+                    text: "신고된 글이 삭제되었습니다.",
+                    icon: "success",
+                    confirmButtonText: "확인",
+                });
+            } catch (error) {
+                Swal.fire({
+                    title: "삭제 실패",
+                    text: `삭제 중 오류가 발생했습니다: ${error.message}`,
+                    icon: "error",
+                    confirmButtonText: "확인",
+                });
+            }
+        }
+    };
+
+    const handleReportResult = async () => {
+        const result = await Swal.fire({
+            title: "삭제 확인",
+            text: "정말로 삭제하시겠습니까?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+        });
+
+        if (result.isConfirmed) {
+            try {
+                setResult(true);
+                Swal.fire({
+                    title: "처리 완료",
+                    text: "신고 상세 조회 페이지로 돌아갑니다.",
+                    icon: "success",
+                    confirmButtonText: "확인",
+                });
+            } catch (error) {
+                Swal.fire({
+                    title: "삭제 실패",
+                    text: `삭제 중 오류가 발생했습니다: ${error.message}`,
+                    icon: "error",
+                    confirmButtonText: "확인",
+                });
+            }
+        }
     };
 
     return (
@@ -105,8 +182,12 @@ const ReportReadComponent = () => {
             </div>
             <div className="report-buttons">
                 <button className="secession-button">신고 대상자 탈퇴</button>
-                <button className="remove-button">신고 글 삭제</button>
-                <button className="finish-button">처리 완료</button>
+                <button className="remove-button" onClick={handleRemoveTarget}>
+                    신고 글 삭제
+                </button>
+                <button className="finish-button" onClick={handleReportResult}>
+                    처리 완료
+                </button>
             </div>
         </div>
     );
