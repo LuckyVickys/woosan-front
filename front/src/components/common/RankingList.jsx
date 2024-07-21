@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getRankingChanges } from "../../api/boardApi";
-import { FaSortUp, FaSortDown } from "react-icons/fa";
+import { ImArrowUp, ImArrowDown } from "react-icons/im";
+import { CgLoadbar } from "react-icons/cg";
 import '../../assets/styles/App.scss';
 
 const RankingList = () => {
@@ -22,9 +23,9 @@ const RankingList = () => {
                     {rankings.map((item, index) => (
                         <div key={index} className="ranking-item">
                             <span className="rank-number">{item.rank}</span> {item.keyword}
-                            {item.change === "+" && <FaSortUp className="icon-up" />}
-                            {item.change === "-" && <FaSortDown className="icon-down" />}
-                            {item.change === " " && " "}
+                            {item.change === "+" && <ImArrowUp className="icon-up" />}
+                            {item.change === "-" && <ImArrowDown className="icon-down" />}
+                            {item.change === "_" && <CgLoadbar className="icon-non" />}
                         </div>
                     ))}
                 </div>

@@ -321,7 +321,7 @@ nav {
         .slide {
             display: flex;
             flex-direction: column;
-            animation: slide 10s linear infinite;
+            animation: slide 15s linear infinite;
         }
 
         .ranking-item {
@@ -331,10 +331,16 @@ nav {
             z-index: 1;
 
             .rank-number {
-                display: inline-block;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
                 width: 20px;
+                height: 20px;
+                border-radius: 10%;
+                background-color: #00b207; // 배경색을 원하는 색상으로 변경
+                color: #fff; // 텍스트 색상
                 font-weight: bold;
-                color: #00b207; // 순위 번호 색상
+                margin-right: 10px; // 텍스트와의 간격
             }
 
             .icon-up {
@@ -344,6 +350,11 @@ nav {
 
             .icon-down {
                 color: #ea4b48;
+                margin-left: 10px;
+            }
+
+            .icon-non {
+                color: #555b61;
                 margin-left: 10px;
             }
         }

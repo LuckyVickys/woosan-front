@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import replyArrow from "../../assets/image/reply_arrow.png";
 import "../../assets/styles/App.scss";
-import { getList, addReply } from "../../api/replyApi";
+import { getList, createReply } from "../../api/replyApi";
 import ReplyDropDown from "./element/ReplyDropDown.jsx";
 import { formatRelativeTime } from "../../util/DateUtil.jsx";
 import ListPageComponent from "../../components/board/element/ListPageComponent";
@@ -85,16 +85,16 @@ const ReplyComponent = () => {
         }
     }, [loginState.id]);
 
-    useEffect(() => {
-        const getReplies = async (page = 1) => {
-            try {
-                const data = await getList(id, page);
-                setReplies(data);
-            } catch (error) {
-                console.error("Error fetching replies:", error);
-            }
-        };
+    const getReplies = async (page = 1) => {
+        try {
+            const data = await getList(id, page);
+            setReplies(data);
+        } catch (error) {
+            console.error("Error fetching replies:", error);
+        }
+    };
 
+    useEffect(() => {
         getReplies();
     }, [id]);
 
@@ -174,18 +174,15 @@ const ReplyComponent = () => {
 
     const handleReplySubmit = async () => {
         try {
-            const newReply = await addReply({
+            await createReply({
                 writerId: userId,
                 content: replyContent,
                 parentId: null,
                 boardId: id,
             });
             setReplyContent(""); // Input 비우기
-            setReplies((prevReplies) => ({
-                ...prevReplies,
-                dtoList: [newReply, ...prevReplies.dtoList],
-            }));
-            window.location.reload(); // 페이지 새로고침
+            getReplies(); // 댓글 목록 다시 불러오기
+            // window.location.reload(); // 페이지 새로고침
         } catch (error) {
             console.error("Error adding reply:", error);
         }
@@ -193,28 +190,14 @@ const ReplyComponent = () => {
 
     const handleChildReplySubmit = async (replyId) => {
         try {
-            const newChildReply = await addReply({
+            await createReply({
                 writerId: userId,
                 content: childReplyContent[replyId],
                 parentId: replyId,
                 boardId: id,
             });
             setChildReplyContent((prev) => ({ ...prev, [replyId]: "" })); // Input 비우기
-            setReplies((prevReplies) => ({
-                ...prevReplies,
-                dtoList: prevReplies.dtoList.map((reply) =>
-                    reply.id === replyId
-                        ? {
-                              ...reply,
-                              children: [
-                                  newChildReply,
-                                  ...(reply.children || []),
-                              ],
-                          }
-                        : reply
-                ),
-            }));
-            window.location.reload(); // 페이지 새로고침
+            getReplies(); // 댓글 목록 다시 불러오기
         } catch (error) {
             console.error("Error adding child reply:", error);
         }
@@ -269,6 +252,7 @@ const ReplyComponent = () => {
                                         showMsgButton={userId !== reply.writerId}
                                         showDeleteButton={userId === reply.writerId}
                                         onDeleteSuccess={handleDeleteSuccess}
+                                        getReplies={getReplies}
                                     />
                                 </div>
                             )}

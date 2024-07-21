@@ -34,10 +34,10 @@ export const getList = async (pageParam) => {
     }
 };
 
-export const addBoard = async (formData) => {
+export const createBoard = async (formData) => {
     try {
         const header = { headers: { "Content-Type": "multipart/form-data" } };
-        const res = await axios.post(`${prefix}/add`, formData, header);
+        const res = await axios.post(`${prefix}`, formData, header);
         return res.data;
     } catch (error) {
         console.error(
@@ -51,7 +51,7 @@ export const addBoard = async (formData) => {
 export const getOne = async (id) => {
     console.log("Fetching data for ID:", id);
     try {
-        const res = await axios.get(`${prefix}/modify/${id}`);
+        const res = await axios.get(`${prefix}/${id}/modify`);
         return res.data;
     } catch (error) {
         console.error(
@@ -62,10 +62,9 @@ export const getOne = async (id) => {
     }
 };
 
-export const modifyBoard = async (id, formData) => {
+export const updateBoard = async (formData, header) => {
     try {
-        const header = { headers: { "Content-Type": "multipart/form-data" } };
-        const res = await axios.patch(`${prefix}/${id}`, formData, header);
+        const res = await axios.patch(`${prefix}`, formData, header);
         return res.data;
     } catch (error) {
         console.error(

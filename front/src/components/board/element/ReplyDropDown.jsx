@@ -16,6 +16,7 @@ const ReplyDropDown = ({
     showMsgButton,
     showDeleteButton,
     onDeleteSuccess,
+    getReplies,
 }) => {
     const [openReportModal, setOpenReportModal] = useState(false);
     const [openMsgModal, setOpenMsgModal] = useState(false);
@@ -52,9 +53,9 @@ const ReplyDropDown = ({
                             "삭제 완료",
                             `${replyId}가 삭제되었습니다.`,
                             "success"
-                        ).then(() => {
-                            onDeleteSuccess(replyId); // 여기에서 상태 업데이트를 호출합니다
-                        });
+                        );
+                        onDeleteSuccess(replyId);
+                        getReplies(); // 댓글 목록 다시 불러오기
                     })
                     .catch((error) => {
                         Swal.fire(
