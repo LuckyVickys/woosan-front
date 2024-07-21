@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { delSendMessage } from "../../api/myPageApi";
 import MsgModal from "../board/element/MsgModal";
+import ReportModal from "../board/element/ReportModal.jsx";
 
 const initState = {
     dtoList: [],
@@ -27,11 +28,17 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
     const loginState = useSelector((state) => state.loginSlice);
     const [msgData, setMsgData] = useState(initState);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [openReportModal, setOpenReportModal] = useState(false);
+    const type = "message";
     const navigate = useNavigate();
 
     const handleMsgSend = (id) => {
         setIsModalOpen(true);
     }
+
+    const openReport = () => {
+        setOpenReportModal(true);
+      };
 
     const handleMsgDelete = () => {
         Swal.fire({
@@ -93,7 +100,7 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
                 <div className="right">
                     <button className="report-button">
                         <div className='report-icon'></div>
-                        <div className='report-text'>신고</div>
+                        <div className='report-text' onClick={openReport}>신고</div>
                     </button>
                 </div>
             </div>
@@ -109,6 +116,14 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
                     senderId={loginState.id} 
                     receiver={selectedMsg.nickname} 
                     onClose={() => setIsModalOpen(false)} 
+                />
+            )}
+            {openReportModal && (
+                <ReportModal
+                type={type}
+                targetId={selectedMsg.id}
+                reporterId={loginState.id}
+                onClose={() => setOpenReportModal(false)} 
                 />
             )}
         </>

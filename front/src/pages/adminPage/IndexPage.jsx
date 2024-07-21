@@ -8,6 +8,8 @@ import PageTitle from "../../components/common/PageTitle";
 const getSubTitle = (pathname) => {
     if (pathname.startsWith("/adminPage/report")) {
         return "신고 관리";
+    } if (pathname.startsWith("/adminPage/message")) {
+        return "쪽지";
     }
     switch (pathname) {
         case "/adminPage/upload":
