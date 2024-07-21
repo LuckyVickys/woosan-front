@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import BasicLayout from "../../layouts/BasicLayout";
 import SideBar from "../../components/common/SideBar";
 import PageTitle from "../../components/common/PageTitle";
+import TopButton from "../../components/common/TopButton";
 
 const IndexPage = () => {
     const location = useLocation();
@@ -43,15 +44,18 @@ const IndexPage = () => {
     };
 
     return (
-        <BasicLayout>
-            <SideBar pageType="matching" />
-            <div className="contents">
-                {!shouldHideTopBar(location.pathname) && (
-                    <PageTitle main="모임" sub={sub} info={info} />
-                )}
-                <Outlet />
-            </div>
-        </BasicLayout>
+        <>
+            <BasicLayout>
+                <SideBar pageType="matching" />
+                <div className="contents">
+                    {!shouldHideTopBar(location.pathname) && (
+                        <PageTitle main="모임" sub={sub} info={info} />
+                    )}
+                    <Outlet />
+                </div>
+            </BasicLayout>
+            <TopButton />
+        </>
     );
 }
 

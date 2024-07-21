@@ -1,9 +1,9 @@
 import React from "react";
-import { Outlet, useLocation } from "react-router-dom"; // 현재 경로 가져오기
-
+import { Outlet, useLocation } from "react-router-dom";
 import BasicLayout from "../../layouts/BasicLayout";
 import SideBar from "../../components/common/SideBar";
 import PageTitle from "../../components/common/PageTitle";
+import TopButton from "../../components/common/TopButton";
 
 const IndexPage = () => {
     const location = useLocation();
@@ -36,15 +36,18 @@ const IndexPage = () => {
     };
 
     return (
-        <BasicLayout>
-            <SideBar pageType="cs" />
-            <div className="contents">
-                {!shouldHideSubAndInfo(location.pathname) && (
-                    <PageTitle main="고객지원" sub={sub} />
-                )}
-                <Outlet />
-            </div>
-        </BasicLayout>
+        <>
+            <BasicLayout>
+                <SideBar pageType="cs" />
+                <div className="contents">
+                    {!shouldHideSubAndInfo(location.pathname) && (
+                        <PageTitle main="고객지원" sub={sub} />
+                    )}
+                    <Outlet />
+                </div>
+            </BasicLayout>
+            <TopButton/>
+        </>
     );
 };
 

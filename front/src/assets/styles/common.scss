@@ -621,6 +621,18 @@ footer {
     }
 }
 
+// 위로 가기 버튼
+.move-to-top{
+    position: absolute;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: url("../image/topButton.svg");
+    background-size: contain;
+    z-index: 200;
+}
+
 // Link 밑줄 제거, hover
 a {
     text-decoration: none;

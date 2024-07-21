@@ -4,6 +4,7 @@ import BasicLayout from "../../layouts/BasicLayout";
 import SideBar from "../../components/common/SideBar";
 import PageTitle from "../../components/common/PageTitle";
 import SearchBar from "../../components/common/SearchBar";
+import TopButton from "../../components/common/TopButton";
 
 const IndexPage = () => {
     const location = useLocation();
@@ -92,18 +93,21 @@ const IndexPage = () => {
     };
 
     return (
-        <BasicLayout>
-            <SideBar pageType="board" />
-            <div className="contents">
-                {!shouldHideSubAndInfo(location.pathname) && (
-                    <PageTitle main="꿀팁" sub={sub} info={info} />
-                )}
-                {!shouldHideSearchBar(location.pathname) && (
-                    <SearchBar categories={categories} filters={filters} />
-                )}
-                <Outlet />
-            </div>
-        </BasicLayout>
+        <>
+            <BasicLayout>
+                <SideBar pageType="board" />
+                <div className="contents">
+                    {!shouldHideSubAndInfo(location.pathname) && (
+                        <PageTitle main="꿀팁" sub={sub} info={info} />
+                    )}
+                    {!shouldHideSearchBar(location.pathname) && (
+                        <SearchBar categories={categories} filters={filters} />
+                    )}
+                    <Outlet />
+                </div>
+            </BasicLayout>
+            <TopButton />
+        </>
     );
 }
 
