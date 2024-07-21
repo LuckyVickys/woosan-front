@@ -1,4 +1,4 @@
-import "../../../assets/styles/board2.scss";
+import "../../../assets/styles/App.scss";
 
 const ReportListPageComponent = ({ reportData, movePage }) => {
     if (!reportData || !reportData.pageNumList) {
