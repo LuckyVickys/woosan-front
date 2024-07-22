@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getBannerList } from '../../api/adminApi';
-import '../../assets/styles/banner.scss';
+import "../../assets/styles/App.scss";
 
 const Banner = () => {
     const [banners, setBanners] = useState([]);
