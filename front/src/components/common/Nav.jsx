@@ -1,12 +1,26 @@
-import { NavLink } from "react-router-dom";
+// Nav.jsx
+import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
 import '../../assets/styles/App.scss';
 import RankingList from "./RankingList";
 import { useSelector } from "react-redux";
+import useCustomLogin from "../../hooks/useCustomLogin";
+import LoginModal from "../../components/member/LoginModal"; // LoginModal import 추가
 
 const Nav = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberType = loginState.memberType;
+    const { moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin(); // 상태와 함수 가져오기
+    const navigate = useNavigate();
+
+    const handleMyPageClick = (e) => {
+        e.preventDefault();
+        if (!memberType) {
+            moveToLoginReturn();
+        } else if (memberType === "USER") {
+            navigate("/myPage");
+        }
+    }
 
     return (
         <nav id='navbar' className="nav poppins-medium">
@@ -32,15 +46,19 @@ const Nav = () => {
                             관리자페이지
                         </NavLink>
                     ) : (
-                        <NavLink to={'/myPage/'} className={({ isActive }) => isActive ? "active" : ""}>
+                        <NavLink to={'/myPage/'}
+                            className={({ isActive }) => isActive ? "active" : ""}
+                            onClick={handleMyPageClick}
+                            style={{ cursor: 'pointer' }}
+                        >
                             마이페이지
                         </NavLink>
                     )}
-                    
                 </div>
             </div>
-
+            
             <RankingList />
+            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />} {/* 로그인 모달 조건부 렌더링 */}
         </nav>
     );
 }
