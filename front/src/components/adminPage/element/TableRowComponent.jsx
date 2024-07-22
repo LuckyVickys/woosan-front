@@ -8,6 +8,8 @@ const TableRowComponent = ({ item, onClick }) => {
             setReportType("게시글");
         } else if (item.type === "reply") {
             setReportType("댓글");
+        } else if (item.type === "message") {
+            setReportType("쪽지");
         }
     }, [item]);
     return (

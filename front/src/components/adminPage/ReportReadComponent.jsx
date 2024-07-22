@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { useParams } from "react-router-dom";
-import { getReport, getTarget, checkReport  } from "../../api/adminApi";
+import { getReport, getTarget, checkReport } from "../../api/adminApi";
+import { getMessage } from "../../api/myPageApi";
 import { deleteBoard } from "../../api/boardApi";
 import { deleteReply } from "../../api/replyApi";
 import { formatDate } from "../../util/DateUtil";
+import MsgModal from "../../components/board/element/MsgModal";
 import Swal from "sweetalert2";
 import "../../assets/styles/App.scss";
 
@@ -27,6 +29,8 @@ const ReportReadComponent = () => {
     const { id } = useParams();
     const [report, setReport] = useState(initState);
     const [reportType, setReportType] = useState(null);
+    // const [openMsgModal, setOpenMsgModal] = useState(false);
+    // const [selectedMsg, setSelectedMsg] = useState(null);
     const { moveToRead } = useCustomMove();
 
     const [result, setResult] = useState(false);
@@ -42,12 +46,40 @@ const ReportReadComponent = () => {
             setReportType("게시글");
         } else if (report.type === "reply") {
             setReportType("댓글");
+        } else if (report.type === "message") {
+            setReportType("쪽지");
         }
     }, [report]);
 
+    // useEffect(() => {
+    //     const fetchMessage = async () => {
+    //         try {
+    //             const messageData = await getMessage(id);
+
+    //                 setSelectedMsg({
+    //                     ...messageData,
+    //                 });
+    //             } else {
+    //                 console.error(
+    //                     "loginState or loginState.nickname is undefined"
+    //                 );
+    //             }
+    //         } catch (error) {
+    //             console.error("Error fetching message:", error);
+    //         }
+    //     };
+
+    //     fetchMessage();
+    // }, [id]);
+
     const handleLinkClick = async (report) => {
-        const boardId = await getTarget(report.id)
-        moveToRead(boardId, "/board");
+        const target = await getTarget(report.id, report.type);
+        if (report.type === "board" || report.type === "reply") {
+            moveToRead(target.targetId, "/board");
+        } else if (report.type === "message") {
+            console.log("쪽지 열림", target.targetId);
+            // setOpenMsgModal(true);
+        }
     };
 
     const handleRemoveTarget = async () => {
@@ -121,73 +153,92 @@ const ReportReadComponent = () => {
     };
 
     return (
-        <div className="read-report-component">
-            <div className="report-type-link">
-                <label>신고 유형</label>
-                <div className="report-type">
-                    <div className="report-text">{reportType}</div>
-                    <div
-                        className="report-link-button"
-                        onClick={() => handleLinkClick(report)}
+        <>
+            <div className="read-report-component">
+                <div className="report-type-link">
+                    <label>신고 유형</label>
+                    <div className="report-type">
+                        <div className="report-text">{reportType}</div>
+                        <div
+                            className="report-link-button"
+                            onClick={() => handleLinkClick(report)}
+                        >
+                            바로가기
+                        </div>
+                    </div>
+                </div>
+                <div className="report-member-target">
+                    <div className="report-member">
+                        <label>신고 대상자</label>
+                        <div className="report-text">
+                            {report.reporteredMemberNickname}
+                        </div>
+                    </div>
+                    <div className="report-target">
+                        <label>신고 글</label>
+                        <div className="report-text">{report.targetId}</div>
+                    </div>
+                </div>
+                <div className="horizonLine"></div>
+                <div className="report-reporter-ragDate">
+                    <div className="report-reporter">
+                        <label>신고자</label>
+                        <div className="report-text">
+                            {report.reporterNickname}
+                        </div>
+                    </div>
+                    <div className="report-ragDate">
+                        <label>신고 날짜</label>
+                        <div className="report-text">
+                            {formatDate(report.regDate)}
+                        </div>
+                    </div>
+                </div>
+                <div className="report-content">
+                    <label>신고 내용</label>
+                    <div className="report-content-text">
+                        {report.complaintReason}
+                    </div>
+                </div>
+                <div className="report-image">
+                    <label>첨부 파일</label>
+                    <div className="image-container">
+                        {report.filePathUrl.map((url, index) => (
+                            <img
+                                key={index}
+                                src={url}
+                                alt={`image-${index}`}
+                                className="image"
+                            />
+                        ))}
+                    </div>
+                </div>
+                <div className="report-buttons">
+                    <button className="secession-button">
+                        신고 대상자 탈퇴
+                    </button>
+                    <button
+                        className="remove-button"
+                        onClick={handleRemoveTarget}
                     >
-                        바로가기
-                    </div>
+                        신고 글 삭제
+                    </button>
+                    <button
+                        className="finish-button"
+                        onClick={handleReportResult}
+                    >
+                        처리 완료
+                    </button>
                 </div>
             </div>
-            <div className="report-member-target">
-                <div className="report-member">
-                    <label>신고 대상자</label>
-                    <div className="report-text">
-                        {report.reporteredMemberNickname}
-                    </div>
-                </div>
-                <div className="report-target">
-                    <label>신고 글</label>
-                    <div className="report-text">{report.targetId}</div>
-                </div>
-            </div>
-            <div className="horizonLine"></div>
-            <div className="report-reporter-ragDate">
-                <div className="report-reporter">
-                    <label>신고자</label>
-                    <div className="report-text">{report.reporterNickname}</div>
-                </div>
-                <div className="report-ragDate">
-                    <label>신고 날짜</label>
-                    <div className="report-text">
-                        {formatDate(report.regDate)}
-                    </div>
-                </div>
-            </div>
-            <div className="report-content">
-                <label>신고 내용</label>
-                <div className="report-content-text">
-                    {report.complaintReason}
-                </div>
-            </div>
-            <div className="report-image">
-                <label>첨부 파일</label>
-                <div className="image-container">
-                    {report.filePathUrl.map((url, index) => (
-                        <img
-                            key={index}
-                            src={url}
-                            alt={`image-${index}`}
-                            className="image"
-                        />
-                    ))}
-                </div>
-            </div>
-            <div className="report-buttons">
-                <button className="secession-button">신고 대상자 탈퇴</button>
-                <button className="remove-button" onClick={handleRemoveTarget}>
-                    신고 글 삭제
-                </button>
-                <button className="finish-button" onClick={handleReportResult}>
-                    처리 완료
-                </button>
-            </div>
-        </div>
+            {/* {openMsgModal && (
+                <MsgModal
+                    senderId={userId}
+                    receiver={board.nickname}
+                    onClose={() => setOpenMsgModal(false)}
+                />
+            )} */}
+        </>
     );
 };
 
