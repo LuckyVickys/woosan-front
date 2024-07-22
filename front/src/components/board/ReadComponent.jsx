@@ -5,7 +5,7 @@ import "../../assets/styles/App.scss";
 import { getBoard, translate } from "../../api/boardApi";
 import { summary } from "../../api/summaryApi";
 import BoardDropDown from "../../components/board/element/BoardDropDown.jsx";
-import PageComponent from "../../components/board/element/PageComponent.jsx";
+import ListButton from "../../components/board/element/ListButton.jsx";
 import { formatDate } from "../../util/DateUtil.jsx";
 import LikeButton from "../../components/common/LikeButton";
 import { FaComment } from "react-icons/fa";
@@ -239,7 +239,7 @@ const ReadComponent = () => {
           ))}
         </div>
       </div>
-      <PageComponent />
+      <ListButton />
       {openMsgModal && (
         <MsgModal
           senderId={userId}

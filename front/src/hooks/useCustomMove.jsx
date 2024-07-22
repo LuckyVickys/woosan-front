@@ -51,7 +51,12 @@ const useCustomMove = (defaultPath = "/board") => {
         });
     };
 
-    return { moveToList, moveToModify, moveToRead, page, size, categoryName, refresh };
+    const goBack = () => {
+        navigate(-1); // 뒤로 가기
+    };
+
+
+    return { moveToList, moveToModify, moveToRead, page, size, categoryName, refresh, goBack };
 };
 
 export default useCustomMove;

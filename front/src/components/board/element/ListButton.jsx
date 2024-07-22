@@ -3,7 +3,7 @@ import "../../../assets/styles/App.scss";
 
 import useCustomMove from "../../../hooks/useCustomMove";
 
-const PageComponent = ({ serverData }) => {
+const ListButton = ({ serverData }) => {
 
     const { moveToList } = useCustomMove();
 
@@ -17,4 +17,4 @@ const PageComponent = ({ serverData }) => {
     );
 };
 
-export default PageComponent;
+export default ListButton;
