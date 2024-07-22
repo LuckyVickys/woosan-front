@@ -43,10 +43,12 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
             selectedType = "게시글";
         } else if (type === "reply") {
             selectedType = "댓글";
+        } else if (type === "message") {
+            selectedType = "쪽지";
         }
 
-        setSelectedType(selectedType); // selectType을 설정
-        return selectedType; // 선택된 타입을 반환
+        setSelectedType(selectedType); 
+        return selectedType; 
     };
 
     const handleFileChange = (e) => {
