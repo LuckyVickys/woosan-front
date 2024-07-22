@@ -1,10 +1,12 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import "../../assets/styles/App.scss"
+import { useNavigate } from 'react-router-dom';
 import { getNotices } from '../../api/mainApi';
+import TableRowComponent from './element/TableRowComponent';
 
 const NoticeList = () => {
-
     const [notices, setNotices] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getNotices().then(data => {
@@ -13,25 +15,38 @@ const NoticeList = () => {
         });
     }, []);
 
+
     const slicedTitle = (str, maxLength) => {
         if (str.length > maxLength) {
             return str.slice(0, maxLength) + '...';
         } else {
             return str;
         }
+    }
+    const handleRowClick = (id) => {
+        navigate(`/board/${id}`);
+
     };
 
     return (
         <div className='noticelist'>
-            {notices.map(notice => (
-                <div key={notice.id} className="noticelist-post">
-                    <div className="noticelist-category">{notice.categoryName}</div>
-                    <div className="noticelist-title">{slicedTitle(notice.title, 15)}</div>
-                    <div className="noticelist-date">{new Date(notice.regDate).toLocaleDateString()}</div>
-                </div>
-            ))}
+
+
+            <table>
+                <tbody>
+                    {notices.map(notice => (
+                        <TableRowComponent
+                            key={notice.id}
+                            item={notice}
+                            onClick={handleRowClick}
+                            isNotice={true}
+                            className="noticelist-post" // 추가된 부분
+                        />
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
-}
+};
 
 export default NoticeList;
