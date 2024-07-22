@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { modifyBoard, getOne, deleteBoard } from "../../api/boardApi";
+import { updateBoard, getOne, deleteBoard } from "../../api/boardApi";
 import "../../assets/styles/App.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -125,7 +125,8 @@ const ModifyComponent = ({ titleBarText, category }) => {
         }
 
         try {
-            await modifyBoard(id, formData);
+            const header = { headers: { "Content-Type": "multipart/form-data" } };
+            await updateBoard(formData, header);
             console.log("수정 성공");
             navigate(`/board/${id}`);
         } catch (error) {

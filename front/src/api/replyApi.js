@@ -15,9 +15,9 @@ export const getList = async (boardId, page = 1, size = 10) => {
     }
 };
 
-export const addReply = async (ReplyDTO) => {
+export const createReply = async (ReplyDTO) => {
     try {
-        const res = await axios.post(`${host}/add`, ReplyDTO);
+        const res = await axios.post(`${host}`, ReplyDTO);
         return res.data;
     } catch (error) {
         console.error("Error adding reply:", error);
@@ -27,7 +27,15 @@ export const addReply = async (ReplyDTO) => {
 
 export const deleteReply = async (removeDTO) => {
     try {
-        const res = await axios.delete(`${host}`, removeDTO);
+        console.log(removeDTO);
+        const res = await axios.request({
+            url: host,
+            method: 'delete',
+            data: removeDTO,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
         return res.data;
     } catch (error) {
         console.error("Error deleting reply:", error);

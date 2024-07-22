@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { addBoard } from "../../api/boardApi"; // API 모듈에서 호출
+import { createBoard } from "../../api/boardApi"; // API 모듈에서 호출
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux"; // Redux의 useSelector 훅 사용
 import "../../assets/styles/App.scss";
@@ -87,7 +87,7 @@ const AddComponent = ({ titleBarText, category }) => {
         }
 
         try {
-            const response = await addBoard(formData);
+            const response = await createBoard(formData);
             console.log("저장 성공", response);
             navigate("/board");
         } catch (error) {
