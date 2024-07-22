@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { API_SERVER_HOST } from './boardApi.js';
 
-// const host = `${API_SERVER_HOST}/api/my`;
-const host = `http://localhost:80/api/my`;
+const host = `${API_SERVER_HOST}/api/my`;
+// const host = `http://localhost:80/api/my`;
 
 // 마이페이지 댓글 목록
 export const getMyReplies = async (params) => {
