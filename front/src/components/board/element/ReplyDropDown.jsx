@@ -6,6 +6,8 @@ import { deleteReply } from "../../../api/replyApi"; // Import deleteReply funct
 import { useSelector } from "react-redux";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 import "../../../assets/styles/App.scss";
+import useCustomLogin from '../../../hooks/useCustomLogin';        // 혜리 추가
+import LoginModal from '../../../components/member/LoginModal';    // 혜리 추가
 
 const ReplyDropDown = ({
     onSelect,
@@ -21,6 +23,9 @@ const ReplyDropDown = ({
     const [openReportModal, setOpenReportModal] = useState(false);
     const [openMsgModal, setOpenMsgModal] = useState(false);
     const loginState = useSelector((state) => state.loginSlice);
+
+    // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
     const handleReport = () => {
         openReport();
@@ -102,6 +107,7 @@ const ReplyDropDown = ({
             {/* {openMsgModal && (
                 <MsgModal onClose={() => setOpenMsgModal(false)} />
             )} */}
+            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
         </>
     );
 };
