@@ -11,7 +11,7 @@
 
     .popular-post{
         margin-left: 20px;
-        width: 655px;
+        width: auto;
         height: 350px;
         border-radius: 10px;
         border-left: 2px solid #E5E5E5;
@@ -109,10 +109,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 15px;
+    margin: 15px 0;
+
     width: 100%;
     .main-notice{
-        width: 600px;
+        width: auto;
         height: 220px;
         border-radius: 10px;
         border-left: 2px solid #E5E5E5;
