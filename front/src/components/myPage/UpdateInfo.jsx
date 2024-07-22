@@ -4,6 +4,8 @@ import "../../assets/styles/App.scss";
 import { getMember, modifyProfile } from "../../api/memberProfileApi";
 import { checkNickname } from "../../api/memberApi";
 import defaultProfile from "../../assets/image/profile.png";
+import Swal from "sweetalert2";
+
 const UpdateInfo = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id; // 로그인된 회원의 ID를 가져옴
@@ -110,8 +112,13 @@ const UpdateInfo = () => {
 
             await modifyProfile(memberId, profileUpdateDTO);
             console.log("Information updated successfully");
-            alert("프로필을 수정했습니다.");
-            window.location.reload(); // 현재 페이지 리다이렉트
+            Swal.fire(
+                "프로필 수정 완료",
+                "원래 화면으로 돌아갑니다.",
+                "success"
+            ).then(() => {
+                window.location.reload(); // 현재 페이지 리다이렉트
+            });
         } catch (error) {
             console.error("Error updating information:", error);
             alert("프로필 수정에 실패했습니다."); // 에러 발생 시 알림창
@@ -291,9 +298,9 @@ const UpdateInfo = () => {
                     </div>
                     <div className="update-profile">
                         <div className="user-profile">
-                            <img 
-                                src={formData.fileImgURL || defaultProfile} 
-                                alt="Profile" 
+                            <img
+                                src={formData.fileImgURL || defaultProfile}
+                                alt="Profile"
                             />
                         </div>
                         <input
