@@ -10,10 +10,13 @@ export const getNoticeList = async (pageParam) => {
         const res = await axios.get(`${prefix}/notices`, { params });
         return res.data;
     } catch (error) {
-        console.error('Error fetching list:', error.response ? error.response.data : error.message);
+        console.error(
+            "Error fetching list:",
+            error.response ? error.response.data : error.message
+        );
         throw error;
     }
-}
+};
 
 export const createNotice = async (formData) => {
     try {
@@ -28,7 +31,6 @@ export const createNotice = async (formData) => {
         throw error;
     }
 };
-
 
 export const getOne = async (id) => {
     console.log("Fetching data for ID:", id);
@@ -56,7 +58,6 @@ export const updateNotice = async (formData, header) => {
         throw error;
     }
 };
-
 
 export const deleteNotice = async (removeDTO) => {
     try {
@@ -100,12 +101,12 @@ export const getReport = async (id) => {
     }
 };
 
-export const getTarget = async (id) => {
-    console.log("Target for report:", id);
+export const getTarget = async (id, type) => {
+    console.log("Target for report:", id, type);
     try {
         const res = await axios.get(`${prefix}/report/target`, {
-            params: { id: id }
-    });
+            params: { id: id, type: type },
+        });
         return res.data;
     } catch (error) {
         console.error(
@@ -155,8 +156,8 @@ export const updateBanner = async (fileUpdateDTO) => {
 
         const res = await axios.post(`${prefix}/myBanner/modify`, formData, {
             headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+                "Content-Type": "multipart/form-data",
+            },
         });
         return res.data;
     } catch (error) {
