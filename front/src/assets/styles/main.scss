@@ -14,7 +14,7 @@
         align-items: center;
         width: 100%;
         background: url('../image/main-banner.svg') no-repeat;
-        background-size: contain;
+        background-size: cover;
         border-radius: 10px;
         .banner-slider-left{
             margin-left: 20px;
@@ -48,21 +48,24 @@
             padding: 4px 15px;
             font-family: 'Pretendard-Regular', sans-serif;
             font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+            
             .likelist-category{
-                margin-right: 10px;
                 color:#00B207;
                 font-weight: 800;
             }
             .likelist-title{
-                margin-right: auto;
+                margin: 0 10px;
+                width: 100%;
                 font-weight: 400;
             }
             .likelist-like{
                 display: flex;
                 align-items: center;
                 font-weight: 400;
+                
                 .likelist-like-icon{
-                    margin-right: 5px;
                     width: 20px;
                     height: 20px;
                     background: url('../image/heart-icon.svg') no-repeat;
@@ -77,7 +80,7 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
-    width: 100%;
+    padding: 0 40px;
     height: 74px;
     border-radius: 10px;
     box-shadow: 6px 3px 10px 3px rgb(0, 0, 0, 0.1);
@@ -85,7 +88,6 @@
     .info{
         display: flex;
         align-items: center;
-        padding: 0px 40px;
         .info-icon1{
             margin-right: 10px;
             width: 40px;
@@ -115,6 +117,7 @@
             background-size: contain;
         }
         .info-text{
+            white-space: nowrap;
             h1{
                 margin-bottom: 0px;
                 font-size: 16px;
@@ -147,12 +150,16 @@
             padding: 6px 15px;
             font-family: 'Pretendard-Regular', sans-serif;
             font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+
             .noticelist-catagory{
                 color:#EA4B48;
                 font-weight: 800;
             }
             .noticelist-title{
-                width: 65%;
+                margin: 0 10px;
+                width: 100%;
                 font-weight: 400;
             }
             .noticelist-like{

@@ -1,30 +1,28 @@
-
-import {NavLink} from "react-router-dom";
+import React from 'react';
+import { NavLink } from "react-router-dom";
 import '../../assets/styles/App.scss';
-
+    
 import BasicLayout from "../../layouts/BasicLayout";
 import LikeList from "../../components/main/LikeList";
 import NoticeList from "../../components/main/NoticeList";
-import NewMatchingList from "../../components/main/NewMatchingList"
+import NewMatchingList from "../../components/main/NewMatchingList";
+import Banner from '../../components/main/Banner';
 
 const MainPage = () => {
     return (
         <BasicLayout>
-           <div className="main-contents">
+            <div className="main-contents">
                 <div className="banner">
-                    <div className="main-banner">
-                        <button className="banner-slider-left" />
-                        <button className="banner-slider-right" />
-                    </div>
+                    <Banner />
                     <div className="popular-post">
                         <div className='popular-post-header'>
                             <div className="header-title">인기글</div>
-                            <NavLink to={'/board/'}>View All ➔</NavLink>    
+                            <NavLink to={'/board/'}>View All ➔</NavLink>
                         </div>
                         <LikeList />
                     </div>
                 </div>
-                 <div className="main-info">
+                <div className="main-info">
                     <div className="info">
                         <div className='info-icon1'></div>
                         <div className='info-text'>
@@ -58,14 +56,14 @@ const MainPage = () => {
                     <div className="main-notice">
                         <div className='main-notice-header'>
                             <div className="header-title">공지사항</div>
-                            <NavLink to={'/cs/'}>View All ➔</NavLink>    
+                            <NavLink to={'/cs/'}>View All ➔</NavLink>
                         </div>
                         <NoticeList />
                     </div>
                     <div className="main-matching">
                         <div className='main-matching-header'>
                             <div className="header-title">New 모임</div>
-                            <NavLink to={'/matching/'}>View All ➔</NavLink> 
+                            <NavLink to={'/matching/'}>View All ➔</NavLink>
                         </div>
                         <NewMatchingList />
                     </div>

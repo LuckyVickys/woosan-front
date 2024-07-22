@@ -13,6 +13,14 @@ const LikeList = () => {
         });
     }, []);
 
+    const slicedTitle = (str, maxLength) => {
+        if (str.length > maxLength) {
+            return str.slice(0, maxLength) + '...';
+        } else {
+            return str;
+        }
+    };
+
     return (
         <div className='likelist'>
             {best.map(likeItem => (
@@ -21,7 +29,7 @@ const LikeList = () => {
                         {likeItem.categoryName}
                     </div>
                     <div className="likelist-title">
-                        {likeItem.title}
+                        {slicedTitle(likeItem.title, 15)}
                     </div>
                     <div className="likelist-like">
                         <div className='likelist-like-icon'></div>
