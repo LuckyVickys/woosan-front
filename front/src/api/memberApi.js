@@ -16,7 +16,6 @@ export const loginPost = async (loginParam, token) => {
         password: loginParam.password,
       },
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     });

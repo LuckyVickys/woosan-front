@@ -29,9 +29,10 @@ const loadMemberCookie = () => {
 }
 
 export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => {
-  const loginState = useSelector((state) => state.loginSlice);
-  const token = loginState.accessToken;
-  return loginPost(param, token);
+  // const loginState = useSelector((state) => state.loginSlice);
+  // const token = loginState.accessToken;
+  // return loginPost(param, token);
+  return loginPost(param);
 })
 
 const loginSlice = createSlice({
