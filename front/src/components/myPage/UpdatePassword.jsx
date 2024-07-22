@@ -13,6 +13,7 @@ const initState = {
 
 const UpdatePassword = () => {
     const loginState = useSelector((state) => state.loginSlice);
+    const token = loginState.accessToken;
 
     const [updateData, setUpdateData] = useState({
         ...initState,
@@ -79,7 +80,7 @@ const UpdatePassword = () => {
         if (valid) {
             console.log(loginState.email);
             try {
-                const updateResponse = await updatePassword(updateData);
+                const updateResponse = await updatePassword(updateData, token);
                 console.log("비밀번호 변경 완료:", updateResponse);
                 setUpdatePW(true);
 

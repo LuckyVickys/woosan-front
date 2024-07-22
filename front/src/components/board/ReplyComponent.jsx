@@ -53,7 +53,7 @@ const ReplyComponent = () => {
             if (loginState.email) {
                 try {
                     console.log("Reply Fetching user data...");
-                    const userData = await getMemberWithEmail(loginState.email);
+                    const userData = await getMemberWithEmail(loginState.email, loginState.accessToken);
                     console.log("Reply data fetched: ", userData);
                     setUserData(userData);
 

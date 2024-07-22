@@ -9,7 +9,6 @@ import { MdSunny } from "react-icons/md";
 import { FaMoon } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { logout } from "../../slices/loginSlice";
-import { getMemberWithEmail } from "../../api/memberApi";
 
 const ProfileDropdown = ({userData}) => {
     const loginState = useSelector((state) => state.loginSlice);

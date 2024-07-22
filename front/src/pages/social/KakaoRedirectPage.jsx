@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getAccessToken, getKakaoMemberWithAccessToken } from "../../api/kakaoApi";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from "../../slices/loginSlice";
 import useCustomLogin from "../../hooks/useCustomLogin";
 import { getMemberWithEmail } from "../../api/memberApi";
 import Swal from "sweetalert2";
 
 const KakaoRedirectPage = () => {
+    const loginState = useSelector((state) => state.loginSlice);
+    const token = loginState.accessToken;
 
     const [searchParams] = useSearchParams();
     const {moveToPath} = useCustomLogin();
@@ -17,14 +19,12 @@ const KakaoRedirectPage = () => {
     useEffect(() => {
         
         getAccessToken(authCode).then(accessToken => {
-            console.log(accessToken);
-
             getKakaoMemberWithAccessToken(accessToken).then(userInfo => {
 
                 console.log("--------------------");
                 console.log(userInfo);
 
-                getMemberWithEmail(userInfo.email).then(memberInfo => {
+                getMemberWithEmail(userInfo.email, accessToken).then(memberInfo => {
                     const {level, point, nextPoint} = memberInfo;
                     dispatch(login({ ...userInfo, level, point, nextPoint, accessToken, isKakao: true }));
 

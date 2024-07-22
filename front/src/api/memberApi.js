@@ -3,21 +3,23 @@ import axios from "axios";
 import { API_SERVER_HOST } from "./boardApi.js";
 
 const host = `${API_SERVER_HOST}/api`;
+// const host = `http://localhost:80/api`;
 
 // 로그인
-export const loginPost = async (loginParam) => {
-  const header = { headers: { "Content-Type": "application/json" } };
-  const data = {
-    email: loginParam.email,
-    password: loginParam.password,
-  };
+export const loginPost = async (loginParam, token) => {
   try {
-    const res = await axios.post(
-      `${host}/auth/login`, 
-      // `http://localhost:80/api/auth/login`,
-      data, 
-      header
-    );
+    const res = await axios({
+      method: 'POST',
+      url: `${host}/auth/login`,
+      data: {
+        email: loginParam.email,
+        password: loginParam.password,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
     return res.data;
   } catch (error) {
     throw error;
@@ -25,10 +27,17 @@ export const loginPost = async (loginParam) => {
 };
 
 // 이메일 중복 체크
-export const checkEmail = async (email) => {
+export const checkEmail = async (email, token) => {
   console.log("Checking email:", email);
   try {
-    const response = await axios.get(`${host}/member/email/${email}`);
+    const response = await axios({
+      method: 'GET',
+      url: `${host}/member/email/${email}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
     return response.data;
   } catch (error) {
     console.error(
@@ -40,9 +49,16 @@ export const checkEmail = async (email) => {
 };
 
 // 닉네임 중복 체크
-export const checkNickname = async (nickname) => {
+export const checkNickname = async (nickname, token) => {
   try {
-    const response = await axios.get(`${host}/member/nickname/${nickname}`);
+    const response = await axios({
+      method: 'GET',
+      url: `${host}/member/nickname/${nickname}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
     return response.data;
   } catch (error) {
     console.error(
@@ -54,15 +70,18 @@ export const checkNickname = async (nickname) => {
 };
 
 // 회원가입
-export const signUp = async (signupData) => {
+export const signUp = async (signupData, token) => {
   console.log("Signing up with:", signupData);
-  const header = { headers: { "Content-Type": "application/json" } };
   try {
-    const response = await axios.post(
-      `${host}/member/signUp`,
-      signupData,
-      header
-    );
+    const response = await axios({
+      method: 'POST',
+      url: `${host}/member/signUp`,
+      data: signupData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
     return response.data;
   } catch (error) {
     console.error(
@@ -74,12 +93,16 @@ export const signUp = async (signupData) => {
 };
 
 // 임시비밀번호 메일 전송
-export const sendEmail = async (email) => {
+export const sendEmail = async (email, token) => {
   try {
-    const response = await axios.post(
-      `${host}/member/sendEmail?email=${email}`
-      // `http://localhost:80/api/member/sendEmail?email=${email}`
-    );
+    const response = await axios({
+      method: 'POST',
+      url: `${host}/member/sendEmail?email=${email}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -92,13 +115,18 @@ export const sendEmail = async (email) => {
 };
 
 // 비밀번호 변경
-export const updatePassword = async (updateData) => {
+export const updatePassword = async (updateData, token) => {
   console.log("Checking Password:", updateData);
   try {
-    const response = await axios.put(
-      `${host}/member/updatePw`, updateData
-      // `http://localhost:80/api/member/updatePw`, updateData
-    );
+    const response = await axios({
+      method: 'PUT',
+      url: `${host}/member/updatePw`,
+      data: updateData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
     return response.data;
   } catch (error) {
     console.error(
@@ -110,17 +138,21 @@ export const updatePassword = async (updateData) => {
 };
 
 // 멤버 정보 요청
-export const getMemberWithEmail = async (email) => {
+export const getMemberWithEmail = async (email, token) => {
   try {
-    const res = await axios.get(`${host}/member/info`, {
-      params: {
-        email: email,
-      },
+    const res = await axios({
+      method: 'GET',
+      url: `${host}/member/info`,
+      params: { email },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
     });
     console.log(res.data);
     return res.data;
   } catch (error) {
-    console.error(
+      console.error(
       "Error fetching data:",
       error.res ? error.res.data : error.message
     );

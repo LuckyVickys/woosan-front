@@ -4,6 +4,7 @@ import { sendEmail, updatePassword } from "../../api/memberApi";
 import Swal from "sweetalert2";
 import TogglePassword from "./TogglePassword";
 import "../../assets/styles/App.scss";
+import { useSelector } from "react-redux";
 
 const initState = {
   email: "",
@@ -12,6 +13,8 @@ const initState = {
 };
 
 const FinePWModal = ({ onClose }) => {
+  const loginState = useSelector((state) => state.loginSlice);
+  const token = loginState.accessToken;
   const [updateData, setUpdateData] = useState({ ...initState });
 
   const [emailAvailable, setEmailAvailable] = useState(false);
@@ -74,7 +77,7 @@ const FinePWModal = ({ onClose }) => {
     }
 
     try {
-      const emailResponse = await sendEmail(updateData.email);
+      const emailResponse = await sendEmail(updateData.email, token);
       console.log(emailResponse);
 
       if (emailResponse === "메일 전송 완료") {
@@ -127,7 +130,7 @@ const FinePWModal = ({ onClose }) => {
 
     if (valid) {
       try {
-        const updateResponse = await updatePassword(updateData);
+        const updateResponse = await updatePassword(updateData, token);
         console.log("비밀번호 변경 완료:", updateResponse);
         setUpdatePW(true);
 
