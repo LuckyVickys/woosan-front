@@ -14,6 +14,8 @@ import MsgModal from "../../components/board/element/MsgModal";
 import { convertLineBreaks } from "../../util/convertUtil";
 import defaultProfile from "../../assets/image/profile.png";
 import Swal from "sweetalert2";
+import useCustomLogin from "../../hooks/useCustomLogin.jsx";
+import LoginModal from "../member/LoginModal.jsx";
 
 const initState = {
   id: 0,
@@ -42,6 +44,9 @@ const ReadComponent = () => {
   const [openMsgModal, setOpenMsgModal] = useState(false);
   const boardMenuRef = useRef(null);
   const type = "board";
+
+  // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+  const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
   useEffect(() => {
     if (loginState.id) {
@@ -106,7 +111,21 @@ const ReadComponent = () => {
   };
 
   const handleBoardMenuSelect = () => {
-    setShowBoardMenu(!showBoardMenu);
+    if(!isLogin) {
+      Swal.fire({
+        title: "로그인이 필요한 서비스입니다.",
+        icon: "error",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#3085d6",
+      }).then((result) => {
+        if(result.isConfirmed) {
+          moveToLoginReturn();
+        }
+      })
+      setShowBoardMenu(showBoardMenu);
+    } else {
+      setShowBoardMenu(!showBoardMenu);
+    }
   };
 
   const openReport = () => {
@@ -255,6 +274,7 @@ const ReadComponent = () => {
           onClose={closeReport}
         />
       )}
+      {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
     </>
   );
 };
