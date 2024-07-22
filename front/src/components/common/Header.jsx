@@ -60,7 +60,7 @@ const Header = () => {
       }
     };
     fetchData();
-  }, [loginState.email, loginState.accessToken, loginState.isKakao]);
+  }, []);
 
   useEffect(() => {
     if (isProfileDropdownOpen) {
@@ -128,7 +128,7 @@ const Header = () => {
                 onClick={toggleProfileDropdown}
               />
               )}
-              {isProfileDropdownOpen && <ProfileDropdown />}
+              {isProfileDropdownOpen && <ProfileDropdown userData={userData} />}
             </div>
           ) : (
             <div className="profile-box" id="loginProfile">
