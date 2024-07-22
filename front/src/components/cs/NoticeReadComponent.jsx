@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import "../../assets/styles/App.scss";
 import { getNotice, translateNotice } from "../../api/csApi";
 import BoardDropDown from "../../components/board/element/BoardDropDown.jsx";
-import PageComponent from "../../components/board/element/PageComponent.jsx";
+import BackButton from "../../components/common/BackButton.jsx";
 import { formatDate } from "../../util/DateUtil.jsx";
 import LikeButton from "../../components/common/LikeButton";
 import { FaComment } from "react-icons/fa";
@@ -38,8 +38,7 @@ const NoticeReadComponent = () => {
     const [showBoardMenu, setShowBoardMenu] = useState(false);
     const [openMsgModal, setOpenMsgModal] = useState(false);
     const boardMenuRef = useRef(null);
-    const [board, setBoard] = useState(initState);
-  const [summarizedBoard, setSummarizedBoard] = useState(null);
+    const [summarizedBoard, setSummarizedBoard] = useState(null);
 
     useEffect(() => {
         if (loginState.id) {
@@ -50,8 +49,8 @@ const NoticeReadComponent = () => {
     useEffect(() => {
         getNotice(id)
             .then((data) => {
-                console.log(data);
-                setNotice(data);
+                const contentWithLineBreaks = convertLineBreaks(data.content);
+                setNotice({ ...data, content: contentWithLineBreaks });
             })
             .catch((err) => {
                 console.error("Failed to fetch notice data:", err);
@@ -76,29 +75,29 @@ const NoticeReadComponent = () => {
 
     const handleClovaSummary = async () => {
         try {
-          const summarized = await summary(id, {
-            title: board.title,
-            content: board.content,
-          });
-          setSummarizedBoard({ content: summarized });
-          Swal.fire({
-            icon: "success",
-            title: "요약 완료",
-            html: `게시글 요약이 완료되었습니다. <br> 게시글 하단을 확인해주세요.`,
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "확인",
-          })
+            const summarized = await summary(id, {
+                title: notice.title,
+                content: notice.content,
+            });
+            setSummarizedBoard({ content: summarized });
+            Swal.fire({
+                icon: "success",
+                title: "요약 완료",
+                html: `게시글 요약이 완료되었습니다. <br> 게시글 하단을 확인해주세요.`,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "확인",
+            });
         } catch (error) {
-          Swal.fire({
-            icon: "error",
-            title: "요약 실패",
-            text: "요약할 수 없는 게시글입니다.",
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "확인",
-          });
-          console.error("요약 중 오류 발생:", error);
+            Swal.fire({
+                icon: "error",
+                title: "요약 실패",
+                text: "요약할 수 없는 게시글입니다.",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "확인",
+            });
+            console.error("요약 중 오류 발생:", error);
         }
-      };
+    };
 
     const handleBoardMenuSelect = () => {
         setShowBoardMenu(!showBoardMenu);
@@ -116,10 +115,7 @@ const NoticeReadComponent = () => {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (
-                boardMenuRef.current &&
-                !boardMenuRef.current.contains(event.target)
-            ) {
+            if (boardMenuRef.current && !boardMenuRef.current.contains(event.target)) {
                 setShowBoardMenu(false);
             }
         };
@@ -133,6 +129,7 @@ const NoticeReadComponent = () => {
     if (!notice.title) {
         return <div>로딩 중...</div>;
     }
+
     const profileSrc =
         notice.writerProfile && notice.writerProfile.length > 0
             ? notice.writerProfile
@@ -147,23 +144,15 @@ const NoticeReadComponent = () => {
                         className="papago-button"
                         onClick={handlePapagoTranslate}
                     ></button>
-                    <button className="clova-button"
-                    onClick={handleClovaSummary}
-                    ></button>
+                    <button className="clova-button" onClick={handleClovaSummary}></button>
                 </div>
             </div>
             <div className="board-header">
                 <div className="left">
-                    <img
-                        src={profileSrc}
-                        alt="프로필"
-                        className="profile-image"
-                    />
+                    <img src={profileSrc} alt="프로필" className="profile-image" />
                     <div className="author-info">
                         <p className="post-author">
-                            {notice.nickname} | &nbsp; 조회수 {notice.views} |
-                            댓글 {notice.replyCount} |{" "}
-                            {formatDate(notice.regDate)}
+                            {notice.nickname} | &nbsp; 조회수 {notice.views} | 댓글 {notice.replyCount} | {formatDate(notice.regDate)}
                         </p>
                     </div>
                 </div>
@@ -182,30 +171,37 @@ const NoticeReadComponent = () => {
                         ref={boardMenuRef}
                     >
                         ⋮
-                        {showBoardMenu && <BoardDropDown id={id} onSelect={handleBoardMenuSelect} openMsg={openMsg} showReportButton={false} showMsgButton={userId !== notice.writerId} showModifyButton={userId === notice.writerId} />}
+                        {showBoardMenu && (
+                            <BoardDropDown
+                                id={id}
+                                onSelect={handleBoardMenuSelect}
+                                openMsg={openMsg}
+                                showReportButton={false}
+                                showMsgButton={userId !== notice.writerId}
+                                showModifyButton={userId === notice.writerId}
+                            />
+                        )}
                     </button>
                 </div>
             </div>
-            <div className="post-content">
-                {notice.content}
-                <div className="image-container">
-                    {notice.filePathUrl.map((url, index) => (
-                        <img
-                            key={index}
-                            src={url}
-                            alt={`image-${index}`}
-                            className="image"
-                        />
-                    ))}
-                </div>
+            <div
+                className="post-content"
+                dangerouslySetInnerHTML={{ __html: notice.content }}
+            ></div>
+            <div className="image-container">
+                {notice.filePathUrl.map((url, index) => (
+                    <img key={index} src={url} alt={`image-${index}`} className="image" />
+                ))}
             </div>
-            <PageComponent />
+            <BackButton />
             {openMsgModal && (
-                <MsgModal
-                    senderId={userId}
-                    receiver={notice.nickname}
-                    onClose={closeMsg}
-                />
+                <MsgModal senderId={userId} receiver={notice.nickname} onClose={closeMsg} />
+            )}
+            {summarizedBoard && (
+                <div className="summarized-content">
+                    <h2>게시글 요약</h2>
+                    <p>{summarizedBoard.content}</p>
+                </div>
             )}
         </>
     );
