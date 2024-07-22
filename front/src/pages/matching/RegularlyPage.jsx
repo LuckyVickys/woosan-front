@@ -4,14 +4,24 @@ import MatchingPageTemplate from './MatchingPageTemplate';
 import MatchingList from '../../components/matching/MatchingList';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../assets/styles/matching/RegularlyPage.module.scss';
+import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
+import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
 
 const RegularlyPage = () => {
     const { regularly, loading, error } = useRegularly();
     const navigate = useNavigate();
 
+    // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+
     // 모임 만들기 버튼 클릭 시 호출되는 함수
     const handleCreateButtonClick = () => {
-        navigate('/matching/CreateMatching');
+        // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+        if(!isLogin) {
+            moveToLoginReturn();
+        } else {
+            navigate('/matching/CreateMatching');
+        }
     };
 
     if (loading) {
@@ -25,16 +35,19 @@ const RegularlyPage = () => {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <button className={styles.createButton} onClick={handleCreateButtonClick}>모임 만들기</button>
+        <>
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <button className={styles.createButton} onClick={handleCreateButtonClick}>모임 만들기</button>
+                </div>
+                <MatchingPageTemplate
+                    items={regularly}
+                    ListComponent={MatchingList}
+                    gridColumns={2}
+                />
             </div>
-            <MatchingPageTemplate
-                items={regularly}
-                ListComponent={MatchingList}
-                gridColumns={2}
-            />
-        </div>
+            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
+        </>
     );
 };
 

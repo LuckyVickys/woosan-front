@@ -8,6 +8,7 @@ const useCustomLogin = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const loginState = useSelector(state => state.loginSlice);
+    const isLogin = loginState.email ? true : false;
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     const doLogin = async (loginParam) => {
@@ -47,7 +48,7 @@ const useCustomLogin = () => {
         openLoginModal();
     }
 
-    return { loginState, doLogin, doLogout, moveToPath, openLoginModal, closeLoginModal, isLoginModalOpen, moveToLoginReturn };
+    return { isLogin, loginState, doLogin, doLogout, moveToPath, openLoginModal, closeLoginModal, isLoginModalOpen, moveToLoginReturn };
 }
 
 export default useCustomLogin;

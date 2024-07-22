@@ -7,8 +7,8 @@ import MatchingModal from '../../components/matching/MatchingModal';
 import Pagination from '../../components/matching/Pagination';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../assets/styles/matching/MatchingPage.module.scss';
-// import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
-// import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
+import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
+import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
 
 const MatchingPage = () => {
     const { regularly, loading: loadingRegularly, error: errorRegularly } = useRegularly();
@@ -20,7 +20,7 @@ const MatchingPage = () => {
     const navigate = useNavigate();
 
     // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
-    // const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
     /**
      * 정기모임, 번개, 셀프 소개팅 데이터를 병합하여 페이지별로 나누는 함수
@@ -89,11 +89,11 @@ const MatchingPage = () => {
     const handleCreateButtonClick = () => {
 
     // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
-        // if(!isLogin) {
-        //     moveToLoginReturn();
-        // } else {
+        if(!isLogin) {
+            moveToLoginReturn();
+        } else {
             navigate('/matching/CreateMatching');
-        // }
+        }
     };
 
     // 로딩 중일 때 표시할 내용
@@ -109,6 +109,7 @@ const MatchingPage = () => {
     }
 
     return (
+        <>
         <div className={styles.container}>
             <div className={styles.header}>
                 <button className={styles.createButton} onClick={handleCreateButtonClick}>모임 만들기</button>
@@ -128,6 +129,8 @@ const MatchingPage = () => {
             />
             {/* {isLoginModalOpen && <LoginModal onClose={closeLoginModal}/>} // 혜리 추가 */}
         </div>
+        {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
+        </>
     );
 };
 
