@@ -10,12 +10,12 @@ import LoginModal from "../../components/member/LoginModal"; // LoginModal impor
 const Nav = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberType = loginState.memberType;
-    const { moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin(); // 상태와 함수 가져오기
+    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
     const navigate = useNavigate();
 
     const handleMyPageClick = (e) => {
         e.preventDefault();
-        if (!memberType) {
+        if (!isLogin) {
             moveToLoginReturn();
         } else if (memberType === "USER") {
             navigate("/myPage");

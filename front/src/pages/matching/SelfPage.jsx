@@ -4,6 +4,8 @@ import MatchingItem from '../../components/matching/MatchingItem';
 import MatchingModal from '../../components/matching/MatchingModal';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../assets/styles/matching/SelfPage.module.scss';
+import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
+import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
 
 const SelfPage = ({ userGender }) => {
     const { self, loading, error } = useSelf();
@@ -14,6 +16,9 @@ const SelfPage = ({ userGender }) => {
     const [dismissedIds, setDismissedIds] = useState([]);
     const [view, setView] = useState('default'); // 'default', 'sentHearts', 'receivedHearts'
     const navigate = useNavigate();
+
+    // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
     useEffect(() => {
         if (self) {
@@ -59,7 +64,12 @@ const SelfPage = ({ userGender }) => {
     };
 
     const handleCreateButtonClick = () => {
-        navigate('/matching/CreateMatching');
+        // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
+        if(!isLogin) {
+            moveToLoginReturn();
+        } else {
+            navigate('/matching/CreateMatching');
+        }
     };
 
     const renderDefaultView = () => (
@@ -115,22 +125,25 @@ const SelfPage = ({ userGender }) => {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <button className={styles.createButton} onClick={handleCreateButtonClick}>모임 만들기</button>
+        <>
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <button className={styles.createButton} onClick={handleCreateButtonClick}>모임 만들기</button>
+                </div>
+                <div className={styles.navButtons}>
+                    <button className={styles.headerButton} onClick={() => setView('default')}>새로운 매칭</button>
+                    <button className={styles.headerButton} onClick={() => setView('sentHearts')}>내가 보낸 하트</button>
+                    <button className={styles.headerButton} onClick={() => setView('receivedHearts')}>내가 받은 하트</button>
+                </div>
+                {view === 'default' && renderDefaultView()}
+                {view === 'sentHearts' && renderSentHeartsView()}
+                {view === 'receivedHearts' && renderReceivedHeartsView()}
+                {selectedItem && (
+                    <MatchingModal item={selectedItem} onClose={() => setSelectedItem(null)} />
+                )}
             </div>
-            <div className={styles.navButtons}>
-                <button className={styles.headerButton} onClick={() => setView('default')}>새로운 매칭</button>
-                <button className={styles.headerButton} onClick={() => setView('sentHearts')}>내가 보낸 하트</button>
-                <button className={styles.headerButton} onClick={() => setView('receivedHearts')}>내가 받은 하트</button>
-            </div>
-            {view === 'default' && renderDefaultView()}
-            {view === 'sentHearts' && renderSentHeartsView()}
-            {view === 'receivedHearts' && renderReceivedHeartsView()}
-            {selectedItem && (
-                <MatchingModal item={selectedItem} onClose={() => setSelectedItem(null)} />
-            )}
-        </div>
+            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
+        </>
     );
 };
 
