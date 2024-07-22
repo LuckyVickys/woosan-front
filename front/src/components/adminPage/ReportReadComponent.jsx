@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { useParams } from "react-router-dom";
-import { getReport } from "../../api/adminApi";
+import { getReport, getTarget, checkReport  } from "../../api/adminApi";
 import { deleteBoard } from "../../api/boardApi";
 import { deleteReply } from "../../api/replyApi";
 import { formatDate } from "../../util/DateUtil";
@@ -45,12 +45,9 @@ const ReportReadComponent = () => {
         }
     }, [report]);
 
-    const handleLinkClick = (targetId) => {
-        if (report.type === "board") {
-            moveToRead(targetId, "/board");
-        } else if (report.type === "reply") {
-            moveToRead(targetId, "/board");
-        }
+    const handleLinkClick = async (report) => {
+        const boardId = await getTarget(report.id)
+        moveToRead(boardId, "/board");
     };
 
     const handleRemoveTarget = async () => {
@@ -94,8 +91,8 @@ const ReportReadComponent = () => {
 
     const handleReportResult = async () => {
         const result = await Swal.fire({
-            title: "삭제 확인",
-            text: "정말로 삭제하시겠습니까?",
+            title: "신고 처리",
+            text: "신고 완료 처리하시겠습니까?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "확인",
@@ -104,6 +101,7 @@ const ReportReadComponent = () => {
 
         if (result.isConfirmed) {
             try {
+                await checkReport(id);
                 setResult(true);
                 Swal.fire({
                     title: "처리 완료",
@@ -113,8 +111,8 @@ const ReportReadComponent = () => {
                 });
             } catch (error) {
                 Swal.fire({
-                    title: "삭제 실패",
-                    text: `삭제 중 오류가 발생했습니다: ${error.message}`,
+                    title: "처리 실패",
+                    text: `신고 처리 중 오류가 발생했습니다: ${error.message}`,
                     icon: "error",
                     confirmButtonText: "확인",
                 });
@@ -130,7 +128,7 @@ const ReportReadComponent = () => {
                     <div className="report-text">{reportType}</div>
                     <div
                         className="report-link-button"
-                        onClick={() => handleLinkClick(report.targetId)}
+                        onClick={() => handleLinkClick(report)}
                     >
                         바로가기
                     </div>
