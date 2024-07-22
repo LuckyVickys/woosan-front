@@ -22,6 +22,7 @@ const UpdateInfo = () => {
         age: "",
         height: "",
         mbti: "",
+        introduce: "",
         point: loginState.point || 0, // 초기 point 값을 loginState에서 가져옴
         nextPoint: loginState.nextPoint || 0, // 초기 nextPoint 값을 loginState에서 가져옴
         fileImg: null, // 초기 fileImg 값을 null로 설정
@@ -41,6 +42,7 @@ const UpdateInfo = () => {
                     age: memberData.age || "",
                     height: memberData.height || "",
                     mbti: memberData.mbti || "",
+                    introduce: memberData.introduce || "",
                     point: memberData.point || loginState.point || 0,
                     nextPoint:
                         memberData.nextPoint || loginState.nextPoint || 0,
@@ -99,6 +101,7 @@ const UpdateInfo = () => {
                 age: formData.age,
                 height: formData.height,
                 mbti: formData.mbti,
+                introduce: formData.introduce,
                 point: formData.point,
                 nextPoint: formData.nextPoint,
             };
@@ -287,6 +290,16 @@ const UpdateInfo = () => {
                                 <option value="ESTP">ESTP</option>
                                 <option value="ESFP">ESFP</option>
                             </select>
+                        </div>
+                        <div className="form-group">
+                            <label>소개</label>
+                            <input
+                                type="text"
+                                name="introduce"
+                                value={formData.introduce}
+                                placeholder="입력해주세요"
+                                onChange={handleChange}
+                            />
                         </div>
                     </div>
                     <div className="update-profile">
