@@ -40,6 +40,7 @@ header {
 
         a {
             color: #000;
+            white-space: nowrap;
         }
     }
 }
@@ -96,15 +97,6 @@ header {
             }
         }
 
-        // .user-profile {
-        //   width: 45px;
-        //   height: 45px;
-        //   background: url("../image/clova.png") no-repeat;
-        //   background-size: contain;
-        //   border-radius: 50%;
-        //   cursor: pointer;
-        //   position: relative;
-        // }
         .user-profile {
             width: 45px;
             height: 45px;

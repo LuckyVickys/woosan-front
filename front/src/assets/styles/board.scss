@@ -18,6 +18,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
   margin-bottom: 10px;
   border-bottom: 2px solid $secondary-color;
   font-family: $font-family;
+  white-space: nowrap;
 
   .post-title-text{
     font-size: 20px;
@@ -57,6 +58,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
   align-items: center;
   margin-bottom: 10px;
   font-family: $font-family;
+  white-space: nowrap;
 
   .left {
     display: flex;
@@ -125,6 +127,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
   border-radius: 5px;
   margin: 10px 0 20px;
   font-family: $font-family;
+  white-space: nowrap;
 }
 
 .post-content {
@@ -136,6 +139,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
   border-radius: 10px;
   padding: 15px;
   font-family: $font-family;
+  white-space: nowrap;
 
   .summary-content{
     padding: 10px;
@@ -170,6 +174,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
   margin-top: 20px;
   font-weight: 800px;
   font-family: $font-family;
+  white-space: nowrap;
 
   .prevPostButton,
   .nextPostButton {
@@ -198,6 +203,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
 .board-dropdown-wrapper,
 .comment-dropdown-wrapper{
   position: relative;
+  white-space: nowrap;
 
   .board-dropdown-list,
   .comment-dropdown-list {
