@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { useParams } from "react-router-dom";
 import { getReport, getTarget, checkReport } from "../../api/adminApi";
-import { getMessage } from "../../api/myPageApi";
+import {
+    getMessage,
+    delReceiveMessage,
+    delSendMessage,
+} from "../../api/myPageApi";
 import { deleteBoard } from "../../api/boardApi";
 import { deleteReply } from "../../api/replyApi";
 import { formatDate } from "../../util/DateUtil";
@@ -29,10 +33,10 @@ const ReportReadComponent = () => {
     const { id } = useParams();
     const [report, setReport] = useState(initState);
     const [reportType, setReportType] = useState(null);
-    // const [openMsgModal, setOpenMsgModal] = useState(false);
-    // const [selectedMsg, setSelectedMsg] = useState(null);
+    const [openMsgModal, setOpenMsgModal] = useState(false);
+    const [selectedMsg, setSelectedMsg] = useState(null);
+    const [messageId, setMessageId] = useState("");
     const { moveToRead } = useCustomMove();
-
     const [result, setResult] = useState(false);
 
     useEffect(() => {
@@ -51,34 +55,28 @@ const ReportReadComponent = () => {
         }
     }, [report]);
 
-    // useEffect(() => {
-    //     const fetchMessage = async () => {
-    //         try {
-    //             const messageData = await getMessage(id);
+    useEffect(() => {
+        const fetchMessage = async () => {
+            try {
+                const messageData = await getMessage(report.targetId);
+                setSelectedMsg(messageData);
+            } catch (error) {
+                console.error("Error fetching message:", error);
+            }
+        };
 
-    //                 setSelectedMsg({
-    //                     ...messageData,
-    //                 });
-    //             } else {
-    //                 console.error(
-    //                     "loginState or loginState.nickname is undefined"
-    //                 );
-    //             }
-    //         } catch (error) {
-    //             console.error("Error fetching message:", error);
-    //         }
-    //     };
-
-    //     fetchMessage();
-    // }, [id]);
+        if (report.type === "message") {
+            fetchMessage();
+        }
+    }, [report]);
 
     const handleLinkClick = async (report) => {
         const target = await getTarget(report.id, report.type);
         if (report.type === "board" || report.type === "reply") {
             moveToRead(target.targetId, "/board");
         } else if (report.type === "message") {
-            console.log("쪽지 열림", target.targetId);
-            // setOpenMsgModal(true);
+            console.log("쪽지 열림", selectedMsg.id);
+            setOpenMsgModal(true);
         }
     };
 
@@ -103,6 +101,9 @@ const ReportReadComponent = () => {
                     await deleteBoard(removeDTO);
                 } else if (report.type === "reply") {
                     await deleteReply(removeDTO);
+                } else if (report.type === "message") {
+                    await delReceiveMessage(selectedMsg.id);
+                    await delSendMessage(selectedMsg.id);
                 }
                 Swal.fire({
                     title: "삭제 완료",
@@ -231,13 +232,14 @@ const ReportReadComponent = () => {
                     </button>
                 </div>
             </div>
-            {/* {openMsgModal && (
+            {openMsgModal && (
                 <MsgModal
-                    senderId={userId}
-                    receiver={board.nickname}
+                    selectedMsg={selectedMsg}
+                    reporter={report.reporterNickname}
+                    reporteredMember={report.reporteredMemberNickname}
                     onClose={() => setOpenMsgModal(false)}
                 />
-            )} */}
+            )}
         </>
     );
 };

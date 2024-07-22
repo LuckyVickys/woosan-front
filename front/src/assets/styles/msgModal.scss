@@ -1,9 +1,12 @@
 .msg-modal-background {
     position: fixed;
-    top:0; left: 0; bottom: 0; right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     background: rgba(0, 0, 0, 0.3);
     z-index: 100;
-    font-family: 'Pretendard-Regular', sans-serif;
+    font-family: "Pretendard-Regular", sans-serif;
 }
 
 .msg-modal {
@@ -25,18 +28,18 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #E6E6E6;
+    border-bottom: 1px solid #e6e6e6;
     height: 50px;
 }
 
 .msg-modal-title {
-    color: #00B207;
+    color: #00b207;
     font-weight: 900;
     font-size: 20px;
 }
 
 .delete-icon {
-    color: #EA4B48;
+    color: #ea4b48;
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -50,20 +53,26 @@
     padding: 25px 0;
 }
 
+.msg-reporteredMember-reporter {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
 .msg-input {
     margin: 10px 0;
-    border: 1px solid #E6E6E6;
+    border: 1px solid #e6e6e6;
     border-radius: 6px;
     font-size: 16px;
     padding: 15px;
     outline: none;
-    font-family: 'Pretendard-Regular', sans-serif;
+    font-family: "Pretendard-Regular", sans-serif;
 
     &.receiver-input {
         width: 230px;
         margin-bottom: 20px;
     }
-    
+
     &.message-input {
         width: 820px;
         height: 210px;
@@ -86,17 +95,17 @@
         font-weight: 900;
 
         &.msg-save-button {
-            background-color: #2388FF;
+            background-color: #2388ff;
             margin-right: 10px;
         }
 
         &.msg-remove-button {
-            background-color: #EA4B48;
+            background-color: #ea4b48;
             margin-right: 10px;
         }
 
         &.msg-cancel-button {
-            background-color: #EA4B48;
+            background-color: #ea4b48;
             margin-right: 10px;
         }
     }
