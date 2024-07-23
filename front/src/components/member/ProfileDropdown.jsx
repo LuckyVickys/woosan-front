@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/styles/App.scss";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,13 +9,13 @@ import { MdSunny } from "react-icons/md";
 import { FaMoon } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { logout } from "../../slices/loginSlice";
+import { getMemberWithEmail } from "../../api/memberApi";
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({userData}) => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberType = loginState.memberType;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const navToMypage = () => {
@@ -65,7 +65,7 @@ const ProfileDropdown = () => {
     };
 
     const pointPercent =
-        ((loginState.point / loginState.nextPoint) * 100).toFixed(1) + "%";
+        ((userData.point / userData.nextPoint) * 100).toFixed(1) + "%";
 
     return (
         <>
@@ -74,15 +74,15 @@ const ProfileDropdown = () => {
                 <div className="profile-contents">
                     <div className="profile-info-wrapper">
                         <div className="profile-nickname">
-                            {loginState.nickname}
+                            {userData.nickname}
                         </div>
-                        <div className="profile-email">{loginState.email}</div>
+                        <div className="profile-email">{userData.email}</div>
                     </div>
                     <hr />
                     {memberType === "USER" && (
                         <>
                             <div className="profile-level-point">
-                            <div className="profile-level">{loginState.level}</div>
+                            <div className="profile-level">{userData.level}</div>
                             <div className="profile-point-bar-wrapper">
                                 <div
                                     className="profile-point-bar point-bar"
@@ -93,11 +93,11 @@ const ProfileDropdown = () => {
                             <div className="profile-point-info">
                                 <div className="profile-point-wrapper">
                                     <div className="profile-point">
-                                        {loginState.point}
+                                        {userData.point}
                                     </div>{" "}
                                     /
                                     <div className="profile-nextpoint">
-                                        {loginState.nextPoint} P
+                                        {userData.nextPoint} P
                                     </div>
                                 </div>
                                 <div className="profile-point-percent">

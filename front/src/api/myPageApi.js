@@ -62,7 +62,7 @@ export const getReceiveMessage = async (params) => {
 // 보낸 쪽지 삭제
 export const delSendMessage = async (id) => {
     try {
-        const response = await axios.post(`${host}/message/del/send?id=${id}`);
+        const response = await axios.put(`${host}/message/del/send?id=${id}`);
         console.log(response.data);
         return response.data;
     } catch(error) {
