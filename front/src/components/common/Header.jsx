@@ -41,7 +41,7 @@ const Header = () => {
     const fetchData = async () => {
       if (loginState.email) {
         try {
-          const userData = await getMemberWithEmail(loginState.email);
+          const userData = await getMemberWithEmail(loginState.email, loginState.accessToken);
           setUserData(userData);
 
           if (loginState.isKakao) {

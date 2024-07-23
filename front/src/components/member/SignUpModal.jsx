@@ -4,6 +4,7 @@ import { checkEmail, checkNickname, signUp } from "../../api/memberApi";
 import Swal from "sweetalert2";
 import TogglePassword from "./TogglePassword";
 import "../../assets/styles/App.scss";
+import { useSelector } from "react-redux";
 
 const initState = {
   email: "",
@@ -12,6 +13,8 @@ const initState = {
 };
 
 const SignUpModal = ({ onClose }) => {
+  const loginState = useSelector((state) => state.loginSlice);
+  const token = loginState.accessToken;
   const [signupData, setSignupData] = useState({ ...initState });
 
   const [emailAvailable, setEmailAvailable] = useState(false);
@@ -77,7 +80,7 @@ const SignUpModal = ({ onClose }) => {
     }
 
     try {
-      const emailResponse = await checkEmail(signupData.email);
+      const emailResponse = await checkEmail(signupData.email, signupData.accessToken);
       if (emailResponse === false) {
         setEmailError("사용 가능한 이메일입니다.");
         setEmailAvailable(true);
@@ -157,7 +160,7 @@ const SignUpModal = ({ onClose }) => {
 
     if (valid) {
       try {
-        const signUpResponse = await signUp(signupData);
+        const signUpResponse = await signUp(signupData, token);
         console.log("회원가입 완료:", signUpResponse);
         setSignedUp(true);
 

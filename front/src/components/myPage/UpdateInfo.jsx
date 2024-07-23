@@ -7,6 +7,7 @@ import defaultProfile from "../../assets/image/profile.png";
 const UpdateInfo = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id; // 로그인된 회원의 ID를 가져옴
+    const token = loginState.accessToken;
 
     const [updateNickname, setUpdateNickname] = useState(false);
     const [nicknameAvailable, setNicknameAvailable] = useState(false);
@@ -139,7 +140,7 @@ const UpdateInfo = () => {
         }
 
         try {
-            const nicknameResponse = await checkNickname(formData.nickname);
+            const nicknameResponse = await checkNickname(formData.nickname, token);
             if (nicknameResponse === false) {
                 setNicknameError("사용 가능한 닉네임입니다.");
                 setNicknameAvailable(true);

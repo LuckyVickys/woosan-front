@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loginPost } from "../api/memberApi";
 import { getCookie, removeCookie, setCookie } from "../util/cookieUtil";
+import { useSelector } from "react-redux";
 
 const initState = {
   id: '',
@@ -28,6 +29,9 @@ const loadMemberCookie = () => {
 }
 
 export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => {
+  // const loginState = useSelector((state) => state.loginSlice);
+  // const token = loginState.accessToken;
+  // return loginPost(param, token);
   return loginPost(param);
 })
 
