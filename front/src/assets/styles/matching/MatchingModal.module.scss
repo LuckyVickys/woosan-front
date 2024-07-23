@@ -96,10 +96,12 @@
 }
 
 .closeButton {
-    background: none;
+    background: red;
     border: none;
-    font-size: 24px;
+    border-radius: 50%;
+    font-size: 20px;
     cursor: pointer;
+    color: white;
 }
 
 .infoContainer {

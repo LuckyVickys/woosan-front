@@ -41,7 +41,7 @@
     .matchingItemContent {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-around;
         width: calc(100% - 165px); // 이미지 공간 확보
 
         .matchingItemHeader {

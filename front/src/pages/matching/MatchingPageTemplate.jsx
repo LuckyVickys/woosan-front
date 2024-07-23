@@ -18,23 +18,27 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
 
     const categories = useMemo(() => ({
         all: '전체',
-        romance: ['연애', '사랑'],
-        sports: ['운동', '스포츠'],
-        food: ['푸드', '드링크'],
-        culture: ['문화', '예술'],
-        neighborhood: ['동네', '또래'],
-        study_class: ['스터디', '클래스']
+        romance: '연애&사랑',
+        sports: '운동&스포츠',
+        food: '푸드&드링크',
+        culture: '문화&예술',
+        neighborhood: '동네&또래',
+        study_class: '스터디&클래스'
     }), []);
 
     const filterItemsByCategory = useCallback((category, items) => {
         if (!items) return [];
         if (category === 'all') return items;
-        return items.filter(item => 
-            item.tag && Object.entries(item.tag).some(([tag, categoryValue]) => 
-                categories[category].includes(categoryValue)
-            )
-        );
-    }, [categories]);
+        return items.filter(item => {
+            try {
+                const parsedTag = JSON.parse(item.tag);
+                return Object.values(parsedTag).includes(category);
+            } catch (e) {
+                console.error('태그 파싱 중 오류 발생:', e);
+                return false;
+            }
+        });
+    }, []);
 
     const getSortedItems = (items) => {
         return [...items].sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
@@ -102,7 +106,7 @@ MatchingPageTemplate.propTypes = {
         locationY: PropTypes.number.isRequired,
         address: PropTypes.string.isRequired,
         meetDate: PropTypes.string.isRequired,
-        tag: PropTypes.object.isRequired, // tag를 객체로 받도록 수정
+        tag: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired, // tag를 객체로 받도록 수정
         headCount: PropTypes.number.isRequired,
         location: PropTypes.string,
         introduce: PropTypes.string,

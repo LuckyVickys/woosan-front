@@ -11,9 +11,7 @@
 .comment, .reply {
     padding: 10px;
     border-top: 1px solid #ddd;
-    // border-bottom: 1px solid #ddd;
     position: relative;
-   
 }
 
 .reply {
@@ -38,6 +36,14 @@
 .replyContentContainer {
     flex: 1;
     margin-left: 20px; /* 답글 들여쓰기 */
+}
+
+.depth-1 .replyContentContainer {
+    margin-left: 20px;
+}
+
+.depth-2 .replyContentContainer {
+    margin-left: 0;
 }
 
 .commentHeader, .replyHeader {

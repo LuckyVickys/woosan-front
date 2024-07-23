@@ -6,8 +6,8 @@ const UpdateInfoPage = () => {
 
     return (
         <div className="contents">
-            <UpdatePassword />
             <UpdateInfo />
+            <UpdatePassword />
         </div>
     );
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import "../../assets/styles/App.scss";
 import { getMember, modifyProfile } from "../../api/memberProfileApi";
-import { checkNickname } from "../../api/memberApi";
+import { checkNickname, getMemberWithEmail } from "../../api/memberApi";
 import defaultProfile from "../../assets/image/profile.png";
 import Swal from "sweetalert2";
 
@@ -10,7 +10,7 @@ const UpdateInfo = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id; // 로그인된 회원의 ID를 가져옴
     const token = loginState.accessToken;
-
+    const [userData, setUserData] = useState(null);
     const [updateNickname, setUpdateNickname] = useState(false);
     const [nicknameAvailable, setNicknameAvailable] = useState(false);
     const [nicknameError, setNicknameError] = useState("");
@@ -19,7 +19,7 @@ const UpdateInfo = () => {
     const [checkNickName, setCheckNickName] = useState(true); // checkNickName을 상태로 변경
 
     const [formData, setFormData] = useState({
-        nickname: "카카시",
+        nickname: "",
         region: "",
         gender: "",
         age: "",
@@ -34,33 +34,48 @@ const UpdateInfo = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const memberData = await getMember(memberId);
-                console.log("Fetched member data:", memberData); // 콘솔에 데이터 출력
-                setFormData((prevData) => ({
-                    ...prevData,
-                    nickname: memberData.nickname || "",
-                    region: memberData.location || "",
-                    gender: memberData.gender || "",
-                    age: memberData.age || "",
-                    height: memberData.height || "",
-                    mbti: memberData.mbti || "",
-                    introduce: memberData.introduce || "",
-                    point: memberData.point || loginState.point || 0,
-                    nextPoint:
-                        memberData.nextPoint || loginState.nextPoint || 0,
-                    fileImg: null, // fileImg 값을 null로 설정
-                    fileImgURL: memberData.fileImg?.[0] || "", // 이미지 URL 설정
-                }));
-            } catch (error) {
-                console.error("Error fetching member data:", error);
+            if (loginState.email) {
+                try {
+                    console.log("Reply Fetching user data...");
+                    const userData = await getMemberWithEmail(loginState.email, loginState.accessToken);
+                    console.log("Reply data fetched: ", userData);
+                    setUserData(userData);
+
+                    const memberData = await getMember(userData.id);
+                    console.log("Fetched member data:", memberData); // 콘솔에 데이터 출력
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        nickname: memberData.nickname || "",
+                        region: memberData.location || "",
+                        gender: memberData.gender || "",
+                        age: memberData.age || "",
+                        height: memberData.height || "",
+                        mbti: memberData.mbti || "",
+                        introduce: memberData.introduce || "",
+                        point: memberData.point || loginState.point || 0,
+                        nextPoint: memberData.nextPoint || loginState.nextPoint || 0,
+                        fileImg: null, // fileImg 값을 null로 설정
+                        fileImgURL: memberData.fileImg?.[0] || "", // 이미지 URL 설정
+                    }));
+                } catch (error) {
+                    Swal.fire({
+                        title: `로그인 에러`,
+                        text: `다시 시도해주세요.`,
+                        icon: "error",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "확인",
+                    });
+                    console.error("Error fetching user data: ", error);
+                }
+            } else {
+                console.log("loginState.email is not set");
             }
         };
 
         if (memberId) {
             fetchData();
         }
-    }, [memberId, loginState.point, loginState.nextPoint]);
+    }, [memberId, loginState.email, loginState.accessToken, loginState.point, loginState.nextPoint]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -109,13 +124,16 @@ const UpdateInfo = () => {
                 nextPoint: formData.nextPoint,
             };
 
-            // 이미지 파일이 선택된 경우에만 profileUpdateDTO에 image 필드 추가
+            const formDataObj = new FormData();
+            formDataObj.append('profileUpdateDTO', new Blob([JSON.stringify(profileUpdateDTO)], { type: "application/json" }));
+
             if (formData.fileImg) {
-                profileUpdateDTO.image = [formData.fileImg];
+                formDataObj.append('images', formData.fileImg);
             }
 
-            await modifyProfile(memberId, profileUpdateDTO);
-            console.log("Information updated successfully");
+            const res = await modifyProfile(formDataObj);
+
+            console.log("Information updated successfully", res.data);
             Swal.fire(
                 "프로필 수정 완료",
                 "원래 화면으로 돌아갑니다.",
@@ -129,10 +147,7 @@ const UpdateInfo = () => {
         }
     };
 
-    const progressBarWidth =
-        formData.nextPoint > 0
-            ? `${(formData.point / formData.nextPoint) * 100}%`
-            : "0%";
+    const progressBarWidth = formData.nextPoint > 0 ? `${(formData.point / formData.nextPoint) * 100}%` : "0%";
 
     const isValidNickname = (nickname) => {
         // 한글 자모음 제외, 특수문자 제외 1~8자
@@ -173,6 +188,7 @@ const UpdateInfo = () => {
             handleCheckNickname();
         }
     };
+
 
     return (
         <div className="update-info">
@@ -300,7 +316,7 @@ const UpdateInfo = () => {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label>소개</label>
+                            <label>한줄 자기소개</label>
                             <input
                                 type="text"
                                 name="introduce"

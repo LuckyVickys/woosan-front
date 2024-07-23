@@ -1,23 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { updateBoard, getOne, deleteBoard } from "../../api/boardApi";
-import { getMemberWithEmail } from "../../api/memberApi";
 import "../../assets/styles/App.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import useCustomMove from "../../hooks/useCustomMove";
-import Swal from 'sweetalert2';
+import useCustomNoticetMove from "../../hooks/useCustomNoticeMove";
 import { validateBoardInputs } from "../../util/validationUtil";
-
-const categories = [
-    "선택",
-    "맛집",
-    "청소",
-    "요리",
-    "재테크",
-    "인테리어",
-    "정책",
-    "기타",
-];
 
 const initState = {
     id: 0,
@@ -33,39 +20,14 @@ const initState = {
     filePathUrl: [],
 };
 
-const ModifyComponent = () => {
+const NoticeModifyComponent = () => {
     const { id } = useParams();
     const loginState = useSelector((state) => state.loginSlice);
     const [board, setBoard] = useState(initState);
-    const [showDropdown, setShowDropdown] = useState(false); // 드롭다운 상태 관리
-    const [files, setFiles] = useState([]); // 파일 상태 관리
-    const [errors, setErrors] = useState({}); // 오류 메시지 상태 관리
+    const [files, setFiles] = useState([]);
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
-    const { moveToList } = useCustomMove();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (loginState.email) {
-                try {
-                    const userData = await getMemberWithEmail(loginState.email, loginState.accessToken);
-                    setBoard((prevBoard) => ({
-                        ...prevBoard,
-                        writerId: userData.id,
-                    }));
-
-                } catch (error) {
-                    Swal.fire({
-                        title: `로그인 에러`,
-                        text: `다시 시도해주세요.`,
-                        icon: "error",
-                        confirmButtonColor: "#3085d6",
-                        confirmButtonText: "확인",
-                    });
-                }
-            }
-        };
-        fetchData();
-    }, [loginState.email, loginState.accessToken]);
+    const { moveToList } = useCustomNoticetMove();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -101,17 +63,7 @@ const ModifyComponent = () => {
             [name]: value,
         }));
 
-        // 입력값 변경 시 해당 오류 메시지 초기화
         setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
-    };
-
-    const handleCategorySelect = (categoryName) => {
-        setBoard((prevBoard) => ({
-            ...prevBoard,
-            categoryName: categoryName,
-        }));
-        setShowDropdown(false); // 카테고리를 선택한 후 드롭다운 닫기
-        setErrors((prevErrors) => ({ ...prevErrors, categoryName: "" })); // 카테고리 선택 시 오류 메시지 초기화
     };
 
     const handleFileChange = (e) => {
@@ -159,7 +111,7 @@ const ModifyComponent = () => {
             };
             await updateBoard(formData, header);
             console.log("수정 성공");
-            navigate(`/board/${id}`);
+            navigate(`/cs/notices/${id}`);
         } catch (error) {
             console.error("수정 실패", error);
         }
@@ -183,32 +135,15 @@ const ModifyComponent = () => {
         <div className="modify-component">
             <div className="title-bar">
                 <div className="title-bar-line"></div>
-                <div className="title-bar-text">게시글 수정</div>
+                <div className="title-bar-text">공지사항 수정</div>
             </div>
             <div className="form">
                 <div className="form-group">
                     <label>카테고리</label>
-                    <div
-                        className="dropdown"
-                        onClick={() => setShowDropdown(!showDropdown)}
-                    >
+                    <div className="dropdown">
                         <button className="dropdown-button">
                             {board.categoryName}
                         </button>
-                        {showDropdown && (
-                            <ul className="dropdown-list">
-                                {categories.map((category, index) => (
-                                    <li
-                                        key={index}
-                                        onClick={() =>
-                                            handleCategorySelect(category)
-                                        }
-                                    >
-                                        {category}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
                     </div>
                     {errors.categoryName && (
                         <div className="error-message">
@@ -279,4 +214,4 @@ const ModifyComponent = () => {
     );
 };
 
-export default ModifyComponent;
+export default NoticeModifyComponent;

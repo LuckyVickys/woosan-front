@@ -14,7 +14,6 @@ const TableRowComponent = ({ item, onClick, className, isNotice = false, isPopul
     <tr
         className={`${className} ${isNotice ? "notice-row" : isPopular ? "popular-row" : "board-row"}`}
         onClick={() => onClick(item.id)}
-        style={{ cursor: "pointer" }} // 클릭 가능한 커서 스타일 추가
     >
         {isNotice ? (
             <>

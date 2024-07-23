@@ -45,6 +45,10 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
             selectedType = "댓글";
         } else if (type === "message") {
             selectedType = "쪽지";
+        } else if (type ==="matching"){
+            selectedType = "모임";
+        } else if (type === "matchingReply"){
+            selectedType = "모임댓글";
         }
 
         setSelectedType(selectedType); 

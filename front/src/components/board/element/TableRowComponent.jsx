@@ -21,7 +21,7 @@ const TableRowComponent = ({
         }
         onClick={() => onClick(item.id)}
     >
-        <td>{isNotice ? "공지" : item.categoryName}</td>
+        <td>{isNotice ? "공지사항" : item.categoryName}</td>
         <td>
             {isPopular && <span className="best-label">BEST</span>}
             {slicedText(item.title, 20)}
