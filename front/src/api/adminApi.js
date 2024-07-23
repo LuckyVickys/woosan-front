@@ -18,9 +18,8 @@ export const getNoticeList = async (pageParam) => {
     }
 };
 
-export const createNotice = async (formData) => {
+export const createNotice = async (formData, header) => {
     try {
-        const header = { headers: { "Content-Type": "multipart/form-data" } };
         const res = await axios.post(`${prefix}/notices`, formData, header);
         return res.data;
     } catch (error) {
