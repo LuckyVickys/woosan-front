@@ -411,10 +411,12 @@ nav {
     .move-to-top {
         display: flex;
         align-items: center;
-        position: fix;
+        position: fixed;
+        right: 10px;
+        bottom: 90px;
         margin: auto 10px 10px;
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         border: none;
         background-color: #00b207;
         border-radius: 50%;
@@ -429,9 +431,9 @@ nav {
             visibility: visible;
         }
 
-        .topbutton {
-            width: 20px;
-            height: 20px;
+        .topbutton{
+            width: 25px;
+            height: 25px;
         }
     }
 }
