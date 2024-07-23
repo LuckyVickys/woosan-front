@@ -5,7 +5,7 @@ import { getReplies, saveReply } from '../../api/matchingBoardReplyApi';
 import MatchingReplyDropDown from '../matching/element/MatchingReplyDropDown';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import styles from '../../assets/styles/matching/ReplySection.module.scss';
-import Pagination from '../../components/matching/Pagination.jsx';
+import ReplyPagination from './ReplyPagination';
 import defaultProfile from '../../assets/image/profile.png';
 import { formatRelativeTime } from "../../util/DateUtil.jsx";
 import MsgModal from "../board/element/MsgModal.jsx";
@@ -27,6 +27,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const dropdownRef = useRef({});
+    const replyInputRef = useRef({});
 
     // 댓글 및 답글을 가져오는 함수
     useEffect(() => {
@@ -37,20 +38,53 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
         try {
             const res = await getReplies(matchingId, { page: currentPage - 1, size: 10 });
             console.log("API 응답 데이터:", res);  // 디버깅용 로그
-            setComments(res.content);
+            const commentTree = buildCommentTree(res.content);
+            setComments(commentTree);
             setTotalPages(res.totalPages);
-            onCommentCountChange(res.totalElements);
+            const totalCount = res.content.length; // 단순히 댓글 개수로 변경
+            onCommentCountChange(totalCount);
         } catch (error) {
             console.error("댓글을 가져오는 중 오류 발생:", error);
         }
     };
 
-    // 드롭다운 외부 클릭 시 드롭다운 닫기
+    // 댓글 트리를 빌드하는 함수
+    const buildCommentTree = (comments) => {
+        const map = {};
+        const roots = [];
+
+        comments.forEach(comment => {
+            map[comment.id] = { ...comment, childReplies: [] };
+        });
+
+        comments.forEach(comment => {
+            if (comment.parentId) {
+                if (map[comment.parentId]) {
+                    map[comment.parentId].childReplies.push(map[comment.id]);
+                }
+            } else {
+                roots.push(map[comment.id]);
+            }
+        });
+
+        return roots;
+    };
+
+    // 드롭다운 및 입력창 외부 클릭 시 닫기
     useEffect(() => {
         const handleClickOutside = (event) => {
             Object.keys(dropdownRef.current).forEach((key) => {
                 if (dropdownRef.current[key] && !dropdownRef.current[key].contains(event.target)) {
                     setIsDropdownOpen((prev) => ({
+                        ...prev,
+                        [key]: false,
+                    }));
+                }
+            });
+
+            Object.keys(replyInputRef.current).forEach((key) => {
+                if (replyInputRef.current[key] && !replyInputRef.current[key].contains(event.target)) {
+                    setShowReplyInput((prev) => ({
                         ...prev,
                         [key]: false,
                     }));
@@ -81,7 +115,6 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
         try {
             await saveReply(requestDTO);
             setNewComment('');
-            // 댓글을 새로고침하여 업데이트
             fetchComments();
             if (onReplyAdded) onReplyAdded();
         } catch (error) {
@@ -113,7 +146,6 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                 ...replyInputs,
                 [commentId]: ''
             });
-            // 답글을 새로고침하여 업데이트
             fetchComments();
             if (onReplyAdded) onReplyAdded();
         } catch (error) {
@@ -160,10 +192,14 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
     };
 
     // 답글 렌더링 함수
-    const renderReplies = (replies) => {
-        console.log("렌더링 중인 답글 데이터:", replies); // 디버깅용 로그 추가
+    const renderReplies = (replies, parentCommentId = null) => {
         return replies.map(reply => (
-            <div key={reply.id} className={styles.reply}>
+            <div key={reply.id} className={`${styles.reply} ${parentCommentId ? styles.childReply : ''}`}>
+                {parentCommentId && (
+                    <div className={styles.replyArrowContainer}>
+                        <img src={replyArrow} alt="Reply Arrow" className={styles.replyArrow} />
+                    </div>
+                )}
                 <div className={styles.replyContentContainer}>
                     <div className={styles.replyHeader}>
                         <div className={styles.replyWriterInfo}>
@@ -187,6 +223,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                                             openMsg={() => openMsg(reply.nickname)}
                                             onDeleteSuccess={handleReplyAdded}
                                             showDeleteButton={memberId === reply.writerId}
+                                            writerId={reply.writerId}
                                         />
                                     </div>
                                 )}
@@ -201,7 +238,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                         답글 달기
                     </button>
                     {showReplyInput[reply.id] && (
-                        <div className={styles.replyInputContainer}>
+                        <div className={styles.replyInputContainer} ref={el => replyInputRef.current[reply.id] = el}>
                             <img src={loginState.profileImage || defaultProfile} alt="프로필" className={styles.profileImage} />
                             <textarea
                                 className={styles.replyInput}
@@ -217,7 +254,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                             </button>
                         </div>
                     )}
-                    {reply.childReplies && reply.childReplies.length > 0 && renderReplies(reply.childReplies)}
+                    {reply.childReplies && reply.childReplies.length > 0 && renderReplies(reply.childReplies, reply.id)}
                 </div>
             </div>
         ));
@@ -250,6 +287,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                                         openMsg={() => openMsg(comment.nickname)}
                                         onDeleteSuccess={handleReplyAdded}
                                         showDeleteButton={memberId === comment.writerId}
+                                        writerId={comment.writerId}
                                     />
                                 </div>
                             )}
@@ -264,11 +302,11 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                     답글 달기
                 </button>
                 {showReplyInput[comment.id] && (
-                    <div className={styles.replyInputContainer}>
+                    <div className={styles.replyInputContainer} ref={el => replyInputRef.current[comment.id] = el}>
                         <img src={loginState.profileImage || defaultProfile} alt="프로필" className={styles.profileImage} />
                         <textarea
                             className={styles.replyInput}
-                            placeholder="댓글은 또 다른 나입니다. 바르고 고운말로 작성해주세요."
+                            placeholder="답글은 또 다른 나입니다. 바르고 고운말로 작성해주세요."
                             value={replyInputs[comment.id] || ''}
                             onChange={(e) => handleReplyChange(comment.id, e)}
                         ></textarea>
@@ -280,7 +318,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                         </button>
                     </div>
                 )}
-                {comment.childReplies && comment.childReplies.length > 0 && renderReplies(comment.childReplies)}
+                {comment.childReplies && comment.childReplies.length > 0 && renderReplies(comment.childReplies, comment.id)}
             </div>
         ));
     };
@@ -308,14 +346,14 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             )}
             {isReportModalOpen && (
                 <ReportModal
-                    type="matching"
+                    type="matchingReply"
                     targetId={matchingId}
                     reporterId={memberId}
                     onClose={() => setIsReportModalOpen(false)}
                 />
             )}
             {totalPages > 1 && (
-                <Pagination
+                <ReplyPagination
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}

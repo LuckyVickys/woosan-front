@@ -316,7 +316,7 @@ const UpdateInfo = () => {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label>소개</label>
+                            <label>한줄 자기소개</label>
                             <input
                                 type="text"
                                 name="introduce"
