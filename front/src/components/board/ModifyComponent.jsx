@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { updateBoard, getOne, deleteBoard } from "../../api/boardApi";
+import { getMemberWithEmail } from "../../api/memberApi";
 import "../../assets/styles/App.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useCustomMove from "../../hooks/useCustomMove";
+import Swal from 'sweetalert2';
 import { validateBoardInputs } from "../../util/validationUtil";
 
 const categories = [
@@ -16,6 +18,7 @@ const categories = [
     "정책",
     "기타",
 ];
+
 const initState = {
     id: 0,
     writerId: 0,
@@ -42,6 +45,30 @@ const ModifyComponent = ({ titleBarText, category }) => {
     const [errors, setErrors] = useState({}); // 오류 메시지 상태 관리
     const navigate = useNavigate();
     const { moveToList } = useCustomMove();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (loginState.email) {
+                try {
+                    const userData = await getMemberWithEmail(loginState.email, loginState.accessToken);
+                    setBoard((prevBoard) => ({
+                        ...prevBoard,
+                        writerId: userData.id,
+                    }));
+
+                } catch (error) {
+                    Swal.fire({
+                        title: `로그인 에러`,
+                        text: `다시 시도해주세요.`,
+                        icon: "error",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "확인",
+                    });
+                }
+            }
+        };
+        fetchData();
+    }, [loginState.email, loginState.accessToken]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -128,8 +155,6 @@ const ModifyComponent = ({ titleBarText, category }) => {
             console.error("수정 실패", error);
         }
     };
-
-
 
     const handleRemove = async () => {
         try {

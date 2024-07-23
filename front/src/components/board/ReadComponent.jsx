@@ -46,7 +46,8 @@ const ReadComponent = () => {
   const type = "board";
 
   // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
-  const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+  const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } =
+    useCustomLogin();
 
   useEffect(() => {
     if (loginState.id) {
@@ -78,7 +79,7 @@ const ReadComponent = () => {
         text: `게시글 번역이 완료되었습니다.`,
         confirmButtonColor: "#3085d6",
         confirmButtonText: "확인",
-      })
+      });
     } catch (error) {
       console.error("번역 중 오류 발생:", error);
     }
@@ -97,7 +98,7 @@ const ReadComponent = () => {
         html: `게시글 요약이 완료되었습니다. <br> 게시글 하단을 확인해주세요.`,
         confirmButtonColor: "#3085d6",
         confirmButtonText: "확인",
-      })
+      });
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -111,17 +112,17 @@ const ReadComponent = () => {
   };
 
   const handleBoardMenuSelect = () => {
-    if(!isLogin) {
+    if (!isLogin) {
       Swal.fire({
         title: "로그인이 필요한 서비스입니다.",
         icon: "error",
         confirmButtonText: "확인",
         confirmButtonColor: "#3085d6",
       }).then((result) => {
-        if(result.isConfirmed) {
+        if (result.isConfirmed) {
           moveToLoginReturn();
         }
-      })
+      });
       setShowBoardMenu(showBoardMenu);
     } else {
       setShowBoardMenu(!showBoardMenu);
