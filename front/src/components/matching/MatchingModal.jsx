@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import { applyMatching, cancelMatchingRequest, leaveMatching, getMembers, getPendingRequestsByBoardId } from '../../api/memberMatchingApi';
+import { increaseViewCount } from '../../api/matchingBoardApi'; // 조회수 증가 API를 가져옵니다.
 import ReplySection from './ReplySection';
 import MatchingDropDown from '../matching/element/MatchingDropDown.jsx';
 import styles from '../../assets/styles/matching/MatchingModal.module.scss';
@@ -14,7 +15,6 @@ import MsgModal from "../board/element/MsgModal.jsx";
 import { useNavigate } from 'react-router-dom';
 import { PiGenderIntersexFill } from "react-icons/pi";
 
-
 const MatchingModal = ({ item = {}, onClose }) => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id;
@@ -25,6 +25,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
     const [isManager, setIsManager] = useState(false);
     const [membersCount, setMembersCount] = useState(0);
     const [commentCount, setCommentCount] = useState(0);
+    const [views, setViews] = useState(item.views || 0); // 조회수 상태 추가
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -54,9 +55,24 @@ const MatchingModal = ({ item = {}, onClose }) => {
         }
     }, [item.id, memberId]);
 
+    // 게시글 조회수를 증가시키는 함수
+    const handleIncreaseViewCount = async (boardId, memberId, writerId) => {
+        try {
+            await increaseViewCount(boardId, memberId, writerId);
+            setViews(prevViews => prevViews + 1); // 조회수 상태 업데이트
+            console.log('조회수가 성공적으로 증가했습니다.');
+        } catch (error) {
+            console.error('조회수 증가 중 오류 발생:', error);
+        }
+    };
+
     // 매칭 상태를 컴포넌트가 처음 마운트될 때 가져옴
     useEffect(() => {
         fetchMatchingStatus();
+
+        // 조회수 증가
+        handleIncreaseViewCount(item.id, memberId, item.memberId);
+
     }, [item.id, memberId, fetchMatchingStatus]);
 
     // 매칭 상태가 변경될 때마다 재로드
@@ -212,6 +228,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
             </div>
         </div>
     );
+
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modal}>
@@ -237,7 +254,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
                             )}
                             <span className={styles.nickname}>{item.nickname || ''}</span>
                         </span>
-                        <span className={styles.views}>조회수: {item.views || ''}</span>
+                        <span className={styles.views}>조회수: {views || 0}</span>
                         <span className={styles.commentCount}>댓글수: {commentCount}</span>
                         <span className={styles.date}>작성 날짜: {formatDate(item.regDate)}</span>
                     </div>
@@ -251,7 +268,8 @@ const MatchingModal = ({ item = {}, onClose }) => {
                                 id={item.id} 
                                 openReport={openReport}
                                 openMsg={openMsg}
-                                showModifyButton={isManager} 
+                                showModifyButton={isManager}
+                                memberId={item.memberId}  
                             />
                         )}
                     </div>

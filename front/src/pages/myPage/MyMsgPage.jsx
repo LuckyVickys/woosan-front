@@ -13,10 +13,9 @@ const MyMsgPage = () => {
         const fetchMessage = async () => {
             try {
                 const messageData = await getMessage(id);
-
                 if (loginState && loginState.nickname) {
                     const role = loginState.nickname === messageData.senderNickname ? "발신자" : "수신자";
-                    const nickname = role === "발신자" ? messageData.receiverNickname : messageData.senderNickname;
+                    const nickname = (role === "발신자" ? messageData.receiverNickname : messageData.senderNickname);
                     setSelectedMsg({
                         ...messageData,
                         role,
@@ -31,6 +30,7 @@ const MyMsgPage = () => {
         };
 
         fetchMessage();
+
     }, [id, loginState]);
 
     if (!selectedMsg) {

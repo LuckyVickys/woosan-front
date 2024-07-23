@@ -5,8 +5,9 @@ import Swal from 'sweetalert2';
 import { deleteReply } from '../../../api/matchingBoardReplyApi';
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 
-const MatchingReplyDropDown = ({ replyId, openReport, openMsg, onDeleteSuccess, showDeleteButton }) => {
+const MatchingReplyDropDown = ({ replyId, openReport, openMsg, onDeleteSuccess, showDeleteButton, writerId }) => {
     const loginState = useSelector((state) => state.loginSlice);
+    const loggedInUserId = loginState.id;
 
     // 댓글 삭제 핸들러
     const handleDelete = () => {
@@ -21,7 +22,7 @@ const MatchingReplyDropDown = ({ replyId, openReport, openMsg, onDeleteSuccess, 
             cancelButtonText: '취소'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteReply(replyId, loginState.id)
+                deleteReply(replyId, loggedInUserId)
                     .then(() => {
                         Swal.fire('삭제 완료', `${replyId}가 삭제되었습니다.`, 'success').then(() => {
                             onDeleteSuccess(replyId); // 상태 업데이트를 호출합니다
@@ -48,19 +49,24 @@ const MatchingReplyDropDown = ({ replyId, openReport, openMsg, onDeleteSuccess, 
     return (
         <div className="comment-dropdown-wrapper">
             <div className="comment-dropdown-list">
-                <div className="comment-dropdown" onClick={handleOpenReport}>
-                    <div className="comment-report-icon"></div>
-                    <div className="comment-report-text">신고하기</div>
-                </div>
-                <div className="comment-dropdown" onClick={handleOpenMsg}>
-                    <MdOutlineLocalPostOffice className="board-msg-icon" />
-                    <div className="comment-msg-text">쪽지 전송</div>
-                </div>
-                {showDeleteButton && (
-                    <div className="comment-dropdown" onClick={handleDelete}>
-                        <div className="comment-delete-icon"></div>
-                        <div className="comment-delete-text">삭제하기</div>
-                    </div>
+                {loggedInUserId === writerId ? (
+                    showDeleteButton && (
+                        <div className="comment-dropdown" onClick={handleDelete}>
+                            <div className="comment-delete-icon"></div>
+                            <div className="comment-delete-text">삭제하기</div>
+                        </div>
+                    )
+                ) : (
+                    <>
+                        <div className="comment-dropdown" onClick={handleOpenReport}>
+                            <div className="comment-report-icon"></div>
+                            <div className="comment-report-text">신고하기</div>
+                        </div>
+                        <div className="comment-dropdown" onClick={handleOpenMsg}>
+                            <MdOutlineLocalPostOffice className="board-msg-icon" />
+                            <div className="comment-msg-text">쪽지 전송</div>
+                        </div>
+                    </>
                 )}
             </div>
         </div>
@@ -72,7 +78,8 @@ MatchingReplyDropDown.propTypes = {
     openReport: PropTypes.func.isRequired,
     openMsg: PropTypes.func.isRequired,
     onDeleteSuccess: PropTypes.func.isRequired,
-    showDeleteButton: PropTypes.bool.isRequired
+    showDeleteButton: PropTypes.bool.isRequired,
+    writerId: PropTypes.number.isRequired
 };
 
 export default MatchingReplyDropDown;
