@@ -36,7 +36,7 @@ export const getList = async (pageParam) => {
 
 export const createBoard = async (formData, header) => {
     try {
-        const res = await axios.post(`${prefix}`, formData, header);
+        const res = await axios.post(`${prefix}/add`, formData, header);
         return res.data;
     } catch (error) {
         console.error(
@@ -63,7 +63,7 @@ export const getOne = async (id) => {
 
 export const updateBoard = async (formData, header) => {
     try {
-        const res = await axios.patch(`${prefix}`, formData, header);
+        const res = await axios.patch(`${prefix}/modify`, formData, header);
         return res.data;
     } catch (error) {
         console.error(
