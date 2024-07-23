@@ -1,6 +1,7 @@
 import axios from "axios";
+import { API_SERVER_HOST } from "./boardApi";
 
-export const API_SERVER_HOST = "http://223.130.139.24:7777";
+// export const API_SERVER_HOST = "http://223.130.139.24:7777";
 
 const prefix = `${API_SERVER_HOST}/api/message`;
 
