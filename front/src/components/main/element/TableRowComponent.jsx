@@ -28,10 +28,10 @@ const TableRowComponent = ({ item, onClick, className, isNotice = false, isPopul
                 <td className="likelist-title">
                     {slicedTitle(item.title, 15)}
                 </td>
-                <div className="likelist-like">
+                <td className="likelist-like">
                     <div className='likelist-like-icon'></div>
                     {item.likesCount}
-                </div>
+                </td>
             </>
         )}
     </tr>

@@ -112,7 +112,7 @@ const SearchListComponent = ({ category, filter, keyword }) => {
             </table>
             <SearchListPageComponent serverData={standardResult} movePage={moveStandardPage} />
 
-            <h2>유의/동의어 검색 결과</h2>
+            <h2>연관 검색 결과</h2>
             <table className="list-table">
                 <thead>
                     <tr>

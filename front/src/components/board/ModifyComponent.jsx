@@ -108,18 +108,13 @@ const ModifyComponent = ({ titleBarText, category }) => {
             return;
         }
 
+        const updatedBoard = { ...board, id, writerId: loginState.id, filePathUrl: files.filter(file => typeof file === "string") };
+
         const formData = new FormData();
-        formData.append("id", id);
-        formData.append("categoryName", board.categoryName);
-        formData.append("title", board.title);
-        formData.append("content", board.content);
-        formData.append("writerId", loginState.id); // 로그인된 사용자의 ID 사용
+        formData.append("boardDTO", new Blob([JSON.stringify(updatedBoard)], { type: "application/json" }));
 
         for (let i = 0; i < files.length; i++) {
-            // 파일이 이미 업로드된 URL인지 확인하여 적절히 처리
-            if (typeof files[i] === "string") {
-                formData.append("filePathUrl", files[i]);
-            } else {
+            if (typeof files[i] !== "string") {
                 formData.append("images", files[i]);
             }
         }
@@ -133,6 +128,8 @@ const ModifyComponent = ({ titleBarText, category }) => {
             console.error("수정 실패", error);
         }
     };
+
+
 
     const handleRemove = async () => {
         try {

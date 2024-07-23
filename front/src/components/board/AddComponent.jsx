@@ -77,18 +77,16 @@ const AddComponent = ({ titleBarText, category }) => {
         }
 
         const formData = new FormData();
-        formData.append("writerId", board.writerId);
-        formData.append("categoryName", board.categoryName);
-        formData.append("title", board.title);
-        formData.append("content", board.content);
+        formData.append("boardDTO", new Blob([JSON.stringify(board)], { type: "application/json" }));
 
         for (let i = 0; i < files.length; i++) {
             formData.append("images", files[i]);
         }
 
         try {
-            const response = await createBoard(formData);
-            console.log("저장 성공", response);
+            const header = { headers: { "Content-Type": "multipart/form-data" } };
+            await createBoard(formData, header);
+            console.log("저장 성공");
             navigate("/board");
         } catch (error) {
             console.error("저장 실패", error);
