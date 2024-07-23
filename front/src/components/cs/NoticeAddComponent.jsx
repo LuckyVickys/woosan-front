@@ -5,31 +5,20 @@ import { useSelector } from "react-redux"; // Redux의 useSelector 훅 사용
 import "../../assets/styles/App.scss";
 import { validateBoardInputs } from "../../util/validationUtil";
 
-const categories = [
-    "선택",
-    "맛집",
-    "청소",
-    "요리",
-    "재테크",
-    "인테리어",
-    "정책",
-    "기타",
-];
-
 const initState = {
-    writerId: null, // 초기 상태를 null로 설정
-    categoryName: "선택",
+    writerId: null,
+    categoryName: "공지사항",
     title: "",
     content: "",
-    files: [], // 빈 파일 리스트 초기화
+    files: [],
 };
 
-const AddComponent = () => {
+const NoticeAddComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const [board, setBoard] = useState({ ...initState });
-    const [showDropdown, setShowDropdown] = useState(false); // 드롭다운 상태 관리
-    const [files, setFiles] = useState([]); // 파일 상태 관리
-    const [errors, setErrors] = useState({}); // 오류 메시지 상태 관리
+    const [board, setBoard] = useState(initState);
+
+    const [files, setFiles] = useState([]);
+    const [errors, setErrors] = useState({});
     const uploadRef = useRef();
     const navigate = useNavigate();
 
@@ -49,17 +38,7 @@ const AddComponent = () => {
             [name]: value,
         }));
 
-        // 입력값 변경 시 해당 오류 메시지 초기화
         setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
-    };
-
-    const handleCategorySelect = (categoryName) => {
-        setBoard((prevBoard) => ({
-            ...prevBoard,
-            categoryName: categoryName,
-        }));
-        setShowDropdown(false); // 카테고리를 선택한 후 드롭다운 닫기
-        setErrors((prevErrors) => ({ ...prevErrors, categoryName: "" })); // 카테고리 선택 시 오류 메시지 초기화
     };
 
     const handleFileChange = (e) => {
@@ -89,7 +68,7 @@ const AddComponent = () => {
             };
             await createBoard(formData, header);
             console.log("저장 성공");
-            navigate("/board");
+            navigate("/adminPage/notice");
         } catch (error) {
             console.error("저장 실패", error);
         }
@@ -103,32 +82,15 @@ const AddComponent = () => {
         <div className="add-component">
             <div className="title-bar">
                 <div className="title-bar-line"></div>
-                <div className="title-bar-text">게시글 작성</div>
+                <div className="title-bar-text">공지사항 작성</div>
             </div>
             <div className="form">
                 <div className="form-group">
                     <label>카테고리</label>
-                    <div
-                        className="dropdown"
-                        onClick={() => setShowDropdown(!showDropdown)}
-                    >
-                        <button className="dropdown-button">
+                    <div className="dropdown">
+                        <div className="dropdown-button">
                             {board.categoryName}
-                        </button>
-                        {showDropdown && (
-                            <ul className="dropdown-list">
-                                {categories.map((category, index) => (
-                                    <li
-                                        key={index}
-                                        onClick={() =>
-                                            handleCategorySelect(category)
-                                        }
-                                    >
-                                        {category}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
+                        </div>
                     </div>
                     {errors.categoryName && (
                         <div className="error-message">
@@ -185,4 +147,4 @@ const AddComponent = () => {
     );
 };
 
-export default AddComponent;
+export default NoticeAddComponent;
