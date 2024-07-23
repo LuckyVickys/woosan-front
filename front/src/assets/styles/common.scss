@@ -1,5 +1,7 @@
 $shadow: #e5e5e5;
 $font-family: "Pretendard-Regular", sans-serif;
+$headerHeight: auto;
+$navHeight: 23px;
 
 body {
     margin: 0;
@@ -18,7 +20,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: auto;
+    height: $headerHeight;
     padding: 20px;
     border-bottom: 2px solid $shadow;
 }
@@ -266,7 +268,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 23px;
+    height: $navHeight;
     padding: 20px 0px;
 
     .category {
@@ -402,16 +404,42 @@ nav {
 .area {
     display: flex;
     align-items: left;
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - $headerHeight - $navHeight - 60px);
     padding-bottom: 60px;
+
+    // 위로 가기 버튼
+    .move-to-top{
+        display: flex;
+        align-items: center;
+        position: fix;
+        margin: auto 10px 10px ;
+        width: 30px;
+        height: 30px;
+        border: none;
+        background-color: #00b207;
+        border-radius: 50%;
+        color: #fff;
+        z-index: 1000;
+        opacity: 0; 
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+
+        &.visible {
+            opacity: 1; 
+            visibility: visible;
+        }
+
+        .topbutton{
+            width: 20px;
+            height: 20px;
+        }
+    }
 }
 
 // BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
 .contents {
     flex: 1;
     display: flex;
-    // width: 100%;
-    // height: 100%;
     flex-direction: column;
 }
 
