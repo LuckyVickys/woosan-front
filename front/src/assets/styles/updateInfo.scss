@@ -44,6 +44,11 @@ $font-family: "Pretendard-Regular", sans-serif;
         }
     }
 
+    .info-button-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
     .update-button {
         width: 115px;
         padding: 10px;
@@ -53,6 +58,14 @@ $font-family: "Pretendard-Regular", sans-serif;
         border-radius: 43px;
         font-family: $font-family;
         cursor: pointer;
+    }
+
+    .delete-member-wrapper {
+        color: #e6e6e6;
+        text-decoration: underline;
+        cursor: pointer;
+        display: flex;
+        align-items: end;
     }
 
     // UpdatePassword
