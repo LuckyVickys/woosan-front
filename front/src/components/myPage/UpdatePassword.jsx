@@ -89,6 +89,7 @@ const UpdatePassword = () => {
                     "원래 화면으로 돌아갑니다.",
                     "success"
                 );
+                window.location.reload();
             } catch (error) {
                 console.error(
                     "비밀번호 변경 실패:",

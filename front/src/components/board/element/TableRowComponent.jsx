@@ -1,13 +1,30 @@
-
 import React from "react";
 import { formatDate } from "../../../util/DateUtil";
 
-const TableRowComponent = ({ item, onClick, isNotice = false, isPopular = false }) => (
-    <tr className={isNotice ? "notice-row" : isPopular ? "popular-row" : "board-row"} onClick={() => onClick(item.id)}>
+const slicedText = (str, maxLength) => {
+    if (str.length > maxLength) {
+        return str.slice(0, maxLength) + "...";
+    } else {
+        return str;
+    }
+};
+
+const TableRowComponent = ({
+    item,
+    onClick,
+    isNotice = false,
+    isPopular = false,
+}) => (
+    <tr
+        className={
+            isNotice ? "notice-row" : isPopular ? "popular-row" : "board-row"
+        }
+        onClick={() => onClick(item.id)}
+    >
         <td>{isNotice ? "공지" : item.categoryName}</td>
         <td>
             {isPopular && <span className="best-label">BEST</span>}
-            {item.title}
+            {slicedText(item.title, 20)}
             <span className="replyCount">({item.replyCount})</span>
         </td>
         <td>{item.nickname}</td>
