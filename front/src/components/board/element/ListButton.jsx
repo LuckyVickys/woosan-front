@@ -4,9 +4,7 @@ import "../../../assets/styles/App.scss";
 import useCustomMove from "../../../hooks/useCustomMove";
 
 const ListButton = ({ serverData }) => {
-
     const { moveToList } = useCustomMove();
-
 
     return (
         <div className="movePostButton">

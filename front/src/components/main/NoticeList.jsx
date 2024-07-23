@@ -10,7 +10,6 @@ const NoticeList = () => {
 
     useEffect(() => {
         getNotices().then(data => {
-            console.log(data)
             setNotices(data)
         });
     }, []);

@@ -6,7 +6,6 @@ export const API_SERVER_HOST = "http://223.130.147.56:7777";
 const prefix = `${API_SERVER_HOST}/api/board`;
 
 export const getBoard = async (id) => {
-    console.log("Fetching data for ID:", id);
     try {
         const res = await axios.get(`${prefix}/${id}`);
         return res.data;
@@ -48,7 +47,6 @@ export const createBoard = async (formData, header) => {
 };
 
 export const getOne = async (id) => {
-    console.log("Fetching data for ID:", id);
     try {
         const res = await axios.get(`${prefix}/${id}/modify`);
         return res.data;
@@ -105,12 +103,10 @@ export const translate = async (id, boardDTO) => {
 
 export const autocomplete = async (keyword, searchType, category) => {
     const url = `${prefix}/autocomplete`;
-    console.log(`Autocomplete request URL: ${url}`);
     try {
         const response = await axios.get(url, {
             params: { keyword, searchType, category },
         });
-        console.log("Autocomplete API response:", response.data);
         return response.data;
     } catch (error) {
         console.error(
@@ -144,7 +140,6 @@ export const combinedSearch = async (
 ) => {
     try {
         const params = { category, filter, keyword, page, rpage, size };
-        console.log("Search Params:", params); // 확인용 로그
         const res = await axios.get(`${prefix}/search`, { params });
         return res.data;
     } catch (error) {
