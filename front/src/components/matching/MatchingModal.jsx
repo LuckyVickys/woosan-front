@@ -1,3 +1,4 @@
+import defaultProfile from '../../assets/image/profile.png';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
@@ -8,35 +9,42 @@ import styles from '../../assets/styles/matching/MatchingModal.module.scss';
 import { formatDate } from "../../util/DateUtil.jsx";
 import { useSelector } from 'react-redux';
 import { BsThreeDotsVertical } from "react-icons/bs";
-import ReportModal from "../board/element/ReportModal.jsx"; // 리포트 모달 컴포넌트 임포트
-import MsgModal from "../board/element/MsgModal.jsx"; // 메시지 모달 컴포넌트 임포트
+import ReportModal from "../board/element/ReportModal.jsx";
+import MsgModal from "../board/element/MsgModal.jsx";
 import { useNavigate } from 'react-router-dom';
+import { PiGenderIntersexFill } from "react-icons/pi";
 
-const MatchingModal = ({ item, onClose }) => {
-    const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기
-    const memberId = loginState.id; // 로그인된 회원 ID
-    const navigate = useNavigate(); // useNavigate 설정
 
-    const [isApplied, setIsApplied] = useState(false); // 가입 신청 상태
-    const [isMember, setIsMember] = useState(false); // 가입 완료 상태
-    const [isManager, setIsManager] = useState(false); // 매니저 여부
-    const [membersCount, setMembersCount] = useState(0); // 멤버 수
+const MatchingModal = ({ item = {}, onClose }) => {
+    const loginState = useSelector((state) => state.loginSlice);
+    const memberId = loginState.id;
+    const navigate = useNavigate();
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태 관리
-    const [isReportModalOpen, setIsReportModalOpen] = useState(false); // 리포트 모달 상태 관리
-    const [isMsgModalOpen, setIsMsgModalOpen] = useState(false); // 메시지 모달 상태 관리
+    const [isApplied, setIsApplied] = useState(false);
+    const [isMember, setIsMember] = useState(false);
+    const [isManager, setIsManager] = useState(false);
+    const [membersCount, setMembersCount] = useState(0);
+    const [commentCount, setCommentCount] = useState(0);
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+    const [isMsgModalOpen, setIsMsgModalOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     // 매칭 상태를 가져오는 함수
     const fetchMatchingStatus = useCallback(async () => {
+        if (!item.id) return;
+        
         try {
             const members = await getMembers(item.id);
             const pendingRequests = await getPendingRequestsByBoardId(item.id);
 
+            const acceptedMembersCount = members.filter(member => member.isAccepted).length;
+
             setIsApplied(pendingRequests.some(request => request.memberId === memberId));
-            setIsMember(members.some(member => member.id === memberId));
-            setIsManager(item.memberId === memberId); // 매니저 여부 확인
-            setMembersCount(members.length); // 멤버 수 설정
+            setIsMember(members.some(member => member.memberId === memberId && member.isAccepted));
+            setIsManager(item.memberId === memberId);
+            setMembersCount(acceptedMembersCount);
 
             console.log('매칭 상태를 성공적으로 가져왔습니다:', { members, pendingRequests, isApplied, isMember, isManager });
             console.log('로그인된 회원 ID:', memberId);
@@ -74,14 +82,29 @@ const MatchingModal = ({ item, onClose }) => {
 
     // 가입 신청 핸들러
     const handleApply = async () => {
+        if (membersCount >= item.headCount) {
+            Swal.fire('실패', '모집 인원이 이미 꽉 찼습니다.', 'error');
+            return;
+        }
+
         const requestDTO = {
             memberId: memberId,
             matchingId: item.id
         };
+
         try {
+            const members = await getMembers(item.id);
+            const currentUser = members.find(member => member.memberId === memberId);
+
+            if (currentUser && currentUser.isAccepted === false) {
+                Swal.fire('실패', '가입이 거절된 모임입니다.', 'error');
+                return;
+            }
+
             await applyMatching(requestDTO);
             Swal.fire('성공', '가입 신청이 성공적으로 완료되었습니다.', 'success');
             setIsApplied(true);
+            fetchMatchingStatus(); // 상태 갱신
         } catch (error) {
             console.error("가입 신청 중 오류 발생:", error);
             Swal.fire('실패', '가입 신청 중 오류가 발생했습니다.', 'error');
@@ -98,6 +121,7 @@ const MatchingModal = ({ item, onClose }) => {
             await cancelMatchingRequest(requestDTO.matchingId, requestDTO.memberId);
             Swal.fire('성공', '가입 신청이 취소되었습니다.', 'success');
             setIsApplied(false);
+            fetchMatchingStatus(); // 상태 갱신
         } catch (error) {
             console.error("가입 신청 취소 중 오류 발생:", error);
             Swal.fire('실패', '가입 신청 취소 중 오류가 발생했습니다.', 'error');
@@ -114,6 +138,7 @@ const MatchingModal = ({ item, onClose }) => {
             await leaveMatching(requestDTO.matchingId, requestDTO.memberId);
             Swal.fire('성공', '모임에서 탈퇴했습니다.', 'success');
             setIsMember(false);
+            fetchMatchingStatus(); // 상태 갱신
         } catch (error) {
             console.error("모임 탈퇴 중 오류 발생:", error);
             Swal.fire('실패', '모임 탈퇴 중 오류가 발생했습니다.', 'error');
@@ -160,6 +185,33 @@ const MatchingModal = ({ item, onClose }) => {
         navigate(`/matching/modify/${item.id}`);
     };
 
+    // 댓글 수를 갱신하는 핸들러
+    const handleCommentCountChange = (count) => {
+        setCommentCount(count);
+    };
+
+    // 셀프 소개팅 정보 렌더링
+    const renderSelfIntroduction = (item) => (
+        <div className={styles.selfIntroductionContainer}>
+            <div className={styles.selfIntroductionRow}>
+                <div className={styles.selfIntroductionItem}>
+                    <span className={styles.locationIcon}></span> {item.location || ''}
+                </div>
+                <div className={styles.selfIntroductionItem}>
+                    <span className={styles.genderIcon}><PiGenderIntersexFill /></span> {item.gender || ''}
+                </div>
+                <div className={styles.selfIntroductionItem}>
+                    <span className={styles.ageIcon}></span> {item.age ? `${item.age}세` : ''}
+                </div>
+                <div className={styles.selfIntroductionItem}>
+                    <span className={styles.heightIcon}></span> {item.height ? `${item.height}cm` : ''}
+                </div>
+            </div>
+            <div className={styles.selfIntroductionRow}>
+                <div className={styles.selfIntroductionItem}>한줄 소개: {item.introduce || ''}</div>
+            </div>
+        </div>
+    );
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modal}>
@@ -170,7 +222,7 @@ const MatchingModal = ({ item, onClose }) => {
                             <span className={`${styles.matchingType} ${styles[getTypeLabel(item.matchingType)]}`}>
                                 {item.matchingType === 1 ? '정기모임' : item.matchingType === 2 ? '번개' : '셀프소개팅'}
                             </span>
-                            <span className={styles.tag}>{renderTag(item.tag)}</span>
+                            {item.matchingType === 3 ? <span className={styles.tag}>{item.mbti}</span> : <span className={styles.tag}>{renderTag(item.tag)}</span>}
                         </div>
                     </div>
                     <button className={styles.closeButton} onClick={onClose}>&times;</button>
@@ -178,12 +230,15 @@ const MatchingModal = ({ item, onClose }) => {
                 <div className={styles.infoContainer}>
                     <div className={styles.leftInfo}>
                         <span className={styles.memberInfo}>
-                            {item.profileImageUrl && item.profileImageUrl.length > 0 && (
+                            {item.profileImageUrl && item.profileImageUrl.length > 0 ? (
                                 <img src={item.profileImageUrl[0]} alt="프로필 이미지" className={styles.profileImage} />
+                            ) : (
+                                <img src={defaultProfile} alt="디폴트 프로필 이미지" className={styles.profileImage} />
                             )}
-                            <span className={styles.nickname}>{item.nickname}</span>
+                            <span className={styles.nickname}>{item.nickname || ''}</span>
                         </span>
-                        <span className={styles.views}>조회수: {item.views}</span>
+                        <span className={styles.views}>조회수: {item.views || ''}</span>
+                        <span className={styles.commentCount}>댓글수: {commentCount}</span>
                         <span className={styles.date}>작성 날짜: {formatDate(item.regDate)}</span>
                     </div>
                     <div className={styles.dropdownWrapper} ref={dropdownRef}>
@@ -201,7 +256,10 @@ const MatchingModal = ({ item, onClose }) => {
                         )}
                     </div>
                 </div>
-                <div>※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수 있습니다.</div>
+                {item.matchingType === 3 && renderSelfIntroduction(item)}
+                <div className={styles.warningMessage}>
+                    ※ 상대방을 향한 욕설과 비난은 게시판 이용에 있어서 불이익을 받을 수 있습니다.
+                </div>
                 <div className={styles.buttonContainer}>
                     {isManager ? (
                         <button className={styles.managerButton} onClick={handleMyMatching}>모임 관리</button>
@@ -210,7 +268,7 @@ const MatchingModal = ({ item, onClose }) => {
                     ) : isApplied ? (
                         <button className={styles.cancelButton} onClick={handleCancelApply}>신청 취소</button>
                     ) : (
-                        <button className={styles.applyButton} onClick={handleApply}>가입 신청</button>
+                        <button className={styles.applyButton} onClick={handleApply} disabled={membersCount >= item.headCount}>가입 신청</button>
                     )}
                 </div>
                 <div className={styles.detailsContainer}>
@@ -236,7 +294,7 @@ const MatchingModal = ({ item, onClose }) => {
                         )}
                     </div>
                 </div>
-                <ReplySection matchingId={item.id} />
+                <ReplySection matchingId={item.id} onCommentCountChange={handleCommentCountChange} />
                 {isMsgModalOpen && (
                     <MsgModal
                         senderId={memberId}
@@ -259,33 +317,39 @@ const MatchingModal = ({ item, onClose }) => {
 
 MatchingModal.propTypes = {
     item: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-        placeName: PropTypes.string.isRequired,
-        meetDate: PropTypes.string.isRequired,
-        address: PropTypes.string.isRequired,
-        headCount: PropTypes.number.isRequired,
-        memberId: PropTypes.number.isRequired,
+        id: PropTypes.number,
+        title: PropTypes.string,
+        placeName: PropTypes.string,
+        meetDate: PropTypes.string,
+        address: PropTypes.string,
+        headCount: PropTypes.number,
+        memberId: PropTypes.number,
         category: PropTypes.string,
-        views: PropTypes.number.isRequired,
+        views: PropTypes.number,
         likes: PropTypes.number,
         description: PropTypes.string,
-        filePathUrl: PropTypes.arrayOf(PropTypes.string), // 이미지 경로 배열
-        content: PropTypes.string.isRequired,
-        regDate: PropTypes.string.isRequired,
+        filePathUrl: PropTypes.arrayOf(PropTypes.string),
+        content: PropTypes.string,
+        regDate: PropTypes.string,
         tag: PropTypes.oneOfType([
             PropTypes.string,
             PropTypes.object
         ]),
         comments: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            writer: PropTypes.string.isRequired,
-            date: PropTypes.string.isRequired,
-            content: PropTypes.string.isRequired,
+            id: PropTypes.number,
+            writer: PropTypes.string,
+            date: PropTypes.string,
+            content: PropTypes.string,
         })),
-        nickname: PropTypes.string.isRequired,
-        profileImageUrl: PropTypes.arrayOf(PropTypes.string) // 프로필 이미지 경로 배열
-    }).isRequired,
+        nickname: PropTypes.string,
+        profileImageUrl: PropTypes.arrayOf(PropTypes.string),
+        mbti: PropTypes.string,
+        region: PropTypes.string,
+        gender: PropTypes.string,
+        age: PropTypes.number,
+        height: PropTypes.number,
+        introduction: PropTypes.string
+    }),
     onClose: PropTypes.func.isRequired
 };
 

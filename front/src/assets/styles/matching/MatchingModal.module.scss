@@ -1,5 +1,9 @@
 @import '../Font.scss';
 
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
 .modalOverlay {
     position: fixed;
     top: 0;
@@ -66,6 +70,16 @@
 }
 
 .tag {
+    padding: 5px 10px;
+    background-color: #00B207;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    margin-left: 10px;
+}
+
+.mbti {
     padding: 5px 10px;
     background-color: #00B207;
     border-radius: 4px;
@@ -146,87 +160,87 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+}
 
-    .detailBox {
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        margin-right: 10px;
+.detailBox {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
 
-        &:last-child {
-            margin-right: 0;
-        }
+.detailBox:last-child {
+    margin-right: 0;
+}
 
-        p {
-            margin: 0;
-        }
-    }
+.detailBox p {
+    margin: 0;
 }
 
 .contentContainer {
     font-size: 14px;
     line-height: 1.5;
     margin-bottom: 20px;
+}
 
-    .contentBox {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
+.contentBox {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
 
-    .imagesContainer {
-        display: flex;
-        gap: 10px;
-        overflow-x: auto;
-        margin-top: 10px;
-        justify-content: center; /* 중앙 정렬 */
-    }
+.imagesContainer {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    margin-top: 10px;
+    justify-content: center; /* 중앙 정렬 */
+}
 
-    .image {
-        width: 295px;
-        height: 250px;
-        object-fit: cover;
-        border-radius: 5px;
-    }
+.image {
+    width: 295px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 .commentsContainer {
     font-size: 14px;
     line-height: 1.5;
     margin-bottom: 20px;
+}
 
-    .commentBox {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        margin-bottom: 10px;
-    }
+.commentBox {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
 
-    .replyBox {
-        padding-left: 20px;
-        margin-top: 10px;
-    }
+.replyBox {
+    padding-left: 20px;
+    margin-top: 10px;
 }
 
 .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+}
 
-    .pageButton {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        margin: 0 5px;
-        cursor: pointer;
-        background-color: #fff;
-    }
+.pageButton {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 5px;
+    cursor: pointer;
+    background-color: #fff;
+}
 
-    .active {
-        background-color: #2388FF;
-        color: white;
-    }
+.active {
+    background-color: #2388FF;
+    color: white;
 }
 
 .memberInfo {
@@ -239,4 +253,72 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.warningMessage {
+    background-color: #E6E6E6; /* 배경 색상 */
+    color: red; /* 글씨 색상 */
+    width: 100%; /* 너비 100% */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.selfIntroductionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.selfIntroductionRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.selfIntroductionItem {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    flex: 1;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center; /* 아이콘과 텍스트 중앙 정렬 */
+}
+
+.selfIntroductionItem:last-child {
+    margin-right: 0;
+}
+
+.locationIcon {
+    background: url('../../image/icon-location.svg') no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.ageIcon {
+    background: url('../../image//icon-fire.svg') no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+    background-size: contain;
+}
+
+.heightIcon {
+    background: url('../../image/icon-person.svg') no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.genderIcon {
+    color: #00B207;
+    font-size: 20px;  // 성별 아이콘 폰트 크기 설정
+    margin-right: 5px;  // 아이콘과 텍스트 간격 설정
+    display: inline-block;
 }

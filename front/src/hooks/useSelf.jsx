@@ -1,34 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getSelf } from '../api/matchingBoardApi';
+import { useSelector } from 'react-redux';
 
 /**
  * 셀프 소개팅 데이터를 가져오는 커스텀 훅
  * @returns {object} self - 셀프 소개팅 데이터 배열
  * @returns {boolean} loading - 로딩 상태
  * @returns {string|null} error - 에러 메시지
+ * @returns {Function} fetchMore - 더 많은 데이터를 가져오는 함수
+ * @returns {boolean} hasMore - 더 많은 데이터가 있는지 여부
  */
 const useSelf = () => {
     const [self, setSelf] = useState([]); // 셀프 소개팅 데이터를 저장하는 상태
     const [loading, setLoading] = useState(true); // 로딩 상태를 관리하는 상태
     const [error, setError] = useState(null); // 에러 메시지를 저장하는 상태
+    const [page, setPage] = useState(1); // 현재 페이지 번호
+    const [hasMore, setHasMore] = useState(true); // 더 많은 데이터가 있는지 여부
+    const loginState = useSelector((state) => state.loginSlice); // 로그인 상태 가져오기
+
+    const fetchSelf = useCallback(async (page) => {
+        try {
+            const data = await getSelf(page);
+            if (data.length === 0) {
+                setHasMore(false);
+            } else {
+                // 내가 만든 셀프 소개팅을 맨 위에 오도록 정렬
+                const mySelf = data.filter(item => item.memberId === loginState.id);
+                const otherSelf = data.filter(item => item.memberId !== loginState.id);
+                setSelf(prev => [...prev, ...mySelf, ...otherSelf]);
+            }
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }, [loginState.id]);
 
     useEffect(() => {
-        const fetchSelf = async () => {
-            try {
-                // 셀프 소개팅 데이터를 API에서 가져옴
-                const data = await getSelf();
-                setSelf(data); // 가져온 데이터를 상태에 저장
-            } catch (error) {
-                setError(error.message); // 에러가 발생하면 에러 메시지를 상태에 저장
-            } finally {
-                setLoading(false); // 데이터를 다 가져오면 로딩 상태를 false로 변경
-            }
-        };
+        fetchSelf(page);
+    }, [page, fetchSelf]);
 
-        fetchSelf(); // 데이터 가져오는 함수 호출
-    }, []); // 컴포넌트가 마운트될 때 한 번만 실행
+    const fetchMore = () => {
+        if (hasMore && !loading) {
+            setPage(prevPage => prevPage + 1);
+        }
+    };
 
-    return { self, loading, error }; // 셀프 소개팅 데이터, 로딩 상태, 에러 메시지를 반환
+    return { self, loading, error, fetchMore, hasMore };
 };
 
 export default useSelf;

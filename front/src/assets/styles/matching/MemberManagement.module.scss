@@ -1,14 +1,15 @@
 @import '../Font.scss';
 
 .container {
-    padding: 20px;
+    padding: 0px;
     border: 1px solid #ddd;
     border-radius: 10px;
     background-color: white;
     width: 340px;
     height: 300px;
-    overflow-y: auto; /* 세로 스크롤 활성화 */
     position: relative; /* 제목 상단 고정용 */
+    display: flex;
+    flex-direction: column;
 }
 
 h3 {
@@ -19,20 +20,21 @@ h3 {
     text-align: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    box-sizing: border-box;
+    flex-shrink: 0;
+    
 }
 
 .content {
-    padding-top: 40px; /* 제목 공간 확보 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    margin-top: 10px; /* 제목과 내용 간격 조정 */
+    flex-grow: 1;
+    
 }
 
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .memberItem {
@@ -67,7 +69,7 @@ ul {
 }
 
 .acceptButton {
-    background-color: #4caf50;
+    background-color: #2388FF;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -76,7 +78,7 @@ ul {
 }
 
 .acceptButton:hover {
-    background-color: #45a049;
+    background-color: #1d6fe0;
 }
 
 .rejectButton {
@@ -108,4 +110,10 @@ ul {
 
 .kickButton:hover:not([disabled]) {
     background-color: #e53935;
+}
+
+.profileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }

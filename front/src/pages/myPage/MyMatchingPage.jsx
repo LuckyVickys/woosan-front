@@ -30,7 +30,7 @@ const MyMatchingPage = () => {
 
     return (
         <div className="my-matching-page">
-            <MatchingList items={myMatchings} onItemClick={handleMatchingClick} gridColumns={3} />
+            <MatchingList items={myMatchings} onItemClick={handleMatchingClick} gridColumns={2} />
         </div>
     );
 };
