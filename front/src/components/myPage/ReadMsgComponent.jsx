@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../../assets/styles/App.scss";
 import { useSelector } from "react-redux";
 import { formatDate } from "../../util/DateUtil";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { delSendMessage } from "../../api/myPageApi";
+import { delSendMessage, delReceiveMessage } from "../../api/myPageApi";
 import MsgModal from "../board/element/MsgModal";
 import ReportModal from "../board/element/ReportModal.jsx";
 
@@ -52,7 +52,8 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
             cancelButtonText: '취소',
         }).then((result) => {
             if (result.isConfirmed) {
-                delSendMessage(selectedMsg.id).then(() => {
+                const deleteFunc = selectedMsg.role === "발신자" ? delSendMessage : delReceiveMessage;
+                deleteFunc(selectedMsg.id).then(() => {
                     Swal.fire({
                         title: '삭제가 완료되었습니다.',
                         icon: "success",
@@ -60,7 +61,11 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
                         confirmButtonText: '확인',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            navigate("/myPage/send-message");
+                            if(selectedMsg.role === "발신자") {
+                                navigate("/myPage/send-message");
+                            } else {
+                                navigate("/myPage/receive-message");
+                            }
                         }
                     });
                     setMsgData((prevData) => ({
