@@ -18,14 +18,17 @@ const SignUpModal = ({ onClose }) => {
   const [signupData, setSignupData] = useState({ ...initState });
 
   const [emailAvailable, setEmailAvailable] = useState(false);
+  const [codeAvailable, setCodeAvailable] = useState(false);
   const [nicknameAvailable, setNicknameAvailable] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPwCheck, setShowPwCheck] = useState(false);
 
+  const [codeCheck, setCodeCheck] = useState("");
   const [pwCheck, setPwCheck] = useState("");
 
   const [emailError, setEmailError] = useState("");
+  const [codeError, setCodeError]= useState("");
   const [nicknameError, setNicknameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [pwCheckError, setPwCheckError] = useState("");
@@ -91,6 +94,25 @@ const SignUpModal = ({ onClose }) => {
     }
   };
 
+  const handleCheckCode = async () => {
+    if (!codeCheck) {
+      setCodeError("필수 입력 사항입니다.");
+    } else if (signupData.password !== codeCheck) {
+      setCodeError("인증 코드가 일치하지 않습니다.");
+    }
+
+    // try {
+    //   const codeResponse = await checkCode();
+    //   if (codeResponse === false) {
+    //     setCodeError("인증 번호가 일치합니다.");
+    //     setCodeAvailable(true);
+    //   }
+    // } catch (error) {
+    //   setCodeError("인증 번호가 일치하지 않습니다.");
+    //   setCodeAvailable(false);
+    // }
+  };
+
   const handleCheckNickname = async () => {
     if (!signupData.nickname) {
       setNicknameError("필수 입력 사항입니다.");
@@ -122,6 +144,14 @@ const SignUpModal = ({ onClose }) => {
       valid = false;
     } else if (!isValidEmail(signupData.email)) {
       setEmailError("이메일 형식이 올바르지 않습니다.");
+      valid = false;
+    }
+
+    if (!codeCheck) {
+      setCodeError("필수 입력 사항입니다.");
+      valid = false;
+    } else if (signupData.password !== codeCheck) {
+      setCodeError("인증 코드가 일치하지 않습니다.");
       valid = false;
     }
 
@@ -219,6 +249,30 @@ const SignUpModal = ({ onClose }) => {
             {emailError && (
               <p className={`input-error ${emailAvailable ? "available" : ""}`}>
                 {emailError}
+              </p>
+            )}
+          </div>
+          <div className="input-box">
+            <p className="input-info">인증 코드</p>
+            <div className="input-button-container">
+              <input
+                className="code-input"
+                type="text"
+                placeholder="인증 코드를 입력해주세요"
+                value={codeCheck}
+                onChange={(e) => setCodeCheck(e.target.value)}
+              />
+              <button
+                type="button"
+                className="check-button"
+                onClick={handleCheckCode}
+              >
+                인증확인
+              </button>
+            </div>
+            {codeError && (
+              <p className={`input-error ${codeAvailable ? "available" : ""}`}>
+                {codeError}
               </p>
             )}
           </div>
