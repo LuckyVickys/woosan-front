@@ -125,7 +125,7 @@ const UpdateInfo = () => {
             });
         } catch (error) {
             console.error("Error updating information:", error);
-            alert("프로필 수정에 실패했습니다."); // 에러 발생 시 알림창
+            Swal.fire("프로필 수정 실패", `다시 시도해주세요.`, "error");
         }
     };
 

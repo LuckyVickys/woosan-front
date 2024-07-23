@@ -3,6 +3,7 @@ import LoginModal from "./LoginModal";
 import { checkEmail, checkNickname, signUp } from "../../api/memberApi";
 import Swal from "sweetalert2";
 import TogglePassword from "./TogglePassword";
+import CodeTimer from "./CodeTimer";
 import "../../assets/styles/App.scss";
 import { useSelector } from "react-redux";
 
@@ -20,6 +21,9 @@ const SignUpModal = ({ onClose }) => {
   const [emailAvailable, setEmailAvailable] = useState(false);
   const [codeAvailable, setCodeAvailable] = useState(false);
   const [nicknameAvailable, setNicknameAvailable] = useState(false);
+  
+  const [showCode, setShowCode] = useState(false);
+  const [timerActive, setTimerActive] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPwCheck, setShowPwCheck] = useState(false);
@@ -48,6 +52,12 @@ const SignUpModal = ({ onClose }) => {
     }
   }, [isClosing, onClose]);
 
+  useEffect(() => {
+    if (!showCode) {
+      resetTimer();
+    }
+  }, [showCode]);
+
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -73,6 +83,12 @@ const SignUpModal = ({ onClose }) => {
     );
   };
 
+  const resetTimer = () => {
+    setTimerActive(false);
+    setSignupData({ ...signupData, email: "" });
+    setEmailError("");
+  };
+
   const handleCheckEmail = async () => {
     if (!signupData.email) {
       setEmailError("필수 입력 사항입니다.");
@@ -80,13 +96,16 @@ const SignUpModal = ({ onClose }) => {
     } else if (!isValidEmail(signupData.email)) {
       setEmailError("이메일 형식이 올바르지 않습니다.");
       return;
-    }
+    }setCodeError("필수 입력 사항입니다.");
 
     try {
       const emailResponse = await checkEmail(signupData.email, signupData.accessToken);
       if (emailResponse === false) {
-        setEmailError("사용 가능한 이메일입니다.");
+        setEmailError("작성해주신 이메일로 인증 코드를 전송했습니다.");
         setEmailAvailable(true);
+        setShowCode(true)
+        setTimerActive(true);
+        setCodeError("");
       }
     } catch (error) {
       setEmailError("이미 가입된 이메일입니다.");
@@ -182,6 +201,7 @@ const SignUpModal = ({ onClose }) => {
     if (!agreeTerms) {
       Swal.fire("회원가입 실패", "필수 약관에 동의해주세요.", "error");
       setEmailError("");
+      setCodeError("");
       setNicknameError("");
       setPasswordError("");
       setPwCheckError("");
@@ -252,30 +272,37 @@ const SignUpModal = ({ onClose }) => {
               </p>
             )}
           </div>
-          <div className="input-box">
-            <p className="input-info">인증 코드</p>
-            <div className="input-button-container">
-              <input
-                className="code-input"
-                type="text"
-                placeholder="인증 코드를 입력해주세요"
-                value={codeCheck}
-                onChange={(e) => setCodeCheck(e.target.value)}
-              />
-              <button
-                type="button"
-                className="check-button"
-                onClick={handleCheckCode}
-              >
-                인증확인
-              </button>
+          {showCode && (
+            <div className="input-box">
+              <p className="input-info">인증 코드</p>
+              <div className="input-button-container">
+                <input
+                  className="code-input"
+                  type="text"
+                  placeholder="인증 코드를 입력해주세요"
+                  value={codeCheck}
+                  onChange={(e) => setCodeCheck(e.target.value)}
+                />
+                <CodeTimer
+                  timerActive={timerActive}
+                  resetTimer={resetTimer}
+                  setShowCode={setShowCode}
+                />
+                <button
+                  type="button"
+                  className="check-button"
+                  onClick={handleCheckCode}
+                >
+                  확인
+                </button>
+              </div>
+              {codeError && (
+                <p className={`input-error ${codeAvailable ? "available" : ""}`}>
+                  {codeError}
+                </p>
+              )}
             </div>
-            {codeError && (
-              <p className={`input-error ${codeAvailable ? "available" : ""}`}>
-                {codeError}
-              </p>
-            )}
-          </div>
+          )}
           <div className="input-box">
             <p className="input-info">닉네임</p>
             <div className="input-button-container">
