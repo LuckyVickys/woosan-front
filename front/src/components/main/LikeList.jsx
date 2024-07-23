@@ -31,22 +31,23 @@ const LikeList = () => {
     };
 
     return (
-        <div className='likelist'>
-            <table>
-                <tbody>
-                    {best.map(likeItem => (
-                        <TableRowComponent
-                            key={likeItem.id}
-                            item={likeItem}
-                            onClick={handleRowClick}
-                            isPopular={true}
-                            className="likelist-post" // 추가된 부분
-                        />
-                    ))}
-                </tbody>
-            </table>
-
-        </div>
+        <>
+            <div className='likelist'>
+                <table>
+                    <tbody>
+                        {best.map(likeItem => (
+                            <TableRowComponent
+                                key={likeItem.id}
+                                item={likeItem}
+                                onClick={handleRowClick}
+                                isPopular={true}
+                                className="likelist-post" // 추가된 부분
+                            />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 };
 

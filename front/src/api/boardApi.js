@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// export const API_SERVER_HOST = "http://localhost:80";
-export const API_SERVER_HOST = "http://223.130.147.56:7777";
+export const API_SERVER_HOST = "http://localhost:80";
+// export const API_SERVER_HOST = "http://223.130.147.56:7777";
 
 const prefix = `${API_SERVER_HOST}/api/board`;
 
@@ -34,9 +34,8 @@ export const getList = async (pageParam) => {
     }
 };
 
-export const createBoard = async (formData) => {
+export const createBoard = async (formData, header) => {
     try {
-        const header = { headers: { "Content-Type": "multipart/form-data" } };
         const res = await axios.post(`${prefix}`, formData, header);
         return res.data;
     } catch (error) {
@@ -145,6 +144,7 @@ export const combinedSearch = async (
 ) => {
     try {
         const params = { category, filter, keyword, page, rpage, size };
+        console.log("Search Params:", params); // 확인용 로그
         const res = await axios.get(`${prefix}/search`, { params });
         return res.data;
     } catch (error) {
