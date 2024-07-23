@@ -115,7 +115,10 @@ const NoticeReadComponent = () => {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (boardMenuRef.current && !boardMenuRef.current.contains(event.target)) {
+            if (
+                boardMenuRef.current &&
+                !boardMenuRef.current.contains(event.target)
+            ) {
                 setShowBoardMenu(false);
             }
         };
@@ -144,15 +147,24 @@ const NoticeReadComponent = () => {
                         className="papago-button"
                         onClick={handlePapagoTranslate}
                     ></button>
-                    <button className="clova-button" onClick={handleClovaSummary}></button>
+                    <button
+                        className="clova-button"
+                        onClick={handleClovaSummary}
+                    ></button>
                 </div>
             </div>
             <div className="board-header">
                 <div className="left">
-                    <img src={profileSrc} alt="프로필" className="profile-image" />
+                    <img
+                        src={profileSrc}
+                        alt="프로필"
+                        className="profile-image"
+                    />
                     <div className="author-info">
                         <p className="post-author">
-                            {notice.nickname} | &nbsp; 조회수 {notice.views} | 댓글 {notice.replyCount} | {formatDate(notice.regDate)}
+                            {notice.nickname} | &nbsp; 조회수 {notice.views} |
+                            댓글 {notice.replyCount} |{" "}
+                            {formatDate(notice.regDate)}
                         </p>
                     </div>
                 </div>
@@ -184,18 +196,26 @@ const NoticeReadComponent = () => {
                     </button>
                 </div>
             </div>
-            <div
-                className="post-content"
-                dangerouslySetInnerHTML={{ __html: notice.content }}
-            ></div>
-            <div className="image-container">
-                {notice.filePathUrl.map((url, index) => (
-                    <img key={index} src={url} alt={`image-${index}`} className="image" />
-                ))}
+            <div className="post-content">
+                <div dangerouslySetInnerHTML={{ __html: notice.content }}></div>
+                <div className="image-container">
+                    {notice.filePathUrl.map((url, index) => (
+                        <img
+                            key={index}
+                            src={url}
+                            alt={`image-${index}`}
+                            className="image"
+                        />
+                    ))}
+                </div>
             </div>
             <BackButton />
             {openMsgModal && (
-                <MsgModal senderId={userId} receiver={notice.nickname} onClose={closeMsg} />
+                <MsgModal
+                    senderId={userId}
+                    receiver={notice.nickname}
+                    onClose={closeMsg}
+                />
             )}
             {summarizedBoard && (
                 <div className="summarized-content">

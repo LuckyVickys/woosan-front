@@ -404,15 +404,15 @@ nav {
 .area {
     display: flex;
     align-items: left;
-    min-height: calc(100vh - $headerHeight - $navHeight - 60px);
+    min-height: calc(100vh - 60px);
     padding-bottom: 60px;
 
     // 위로 가기 버튼
-    .move-to-top{
+    .move-to-top {
         display: flex;
         align-items: center;
         position: fix;
-        margin: auto 10px 10px ;
+        margin: auto 10px 10px;
         width: 30px;
         height: 30px;
         border: none;
@@ -420,16 +420,16 @@ nav {
         border-radius: 50%;
         color: #fff;
         z-index: 1000;
-        opacity: 0; 
+        opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
 
         &.visible {
-            opacity: 1; 
+            opacity: 1;
             visibility: visible;
         }
 
-        .topbutton{
+        .topbutton {
             width: 20px;
             height: 20px;
         }
