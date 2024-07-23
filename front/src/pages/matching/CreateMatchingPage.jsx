@@ -35,8 +35,8 @@ const CreateMatching = () => {
                 Swal.fire('성공!', '셀프 소개팅이 성공적으로 생성되었습니다.', 'success');
             }
 
-            // 매칭 보드가 성공적으로 생성된 후 페이지 이동
-            navigate('/matching');
+            // 매칭 보드가 성공적으로 생성된 후 이전 페이지로 이동
+            navigate(-1);
 
         } catch (error) {
             console.error('모임 생성 중 오류 발생:', error); // 디버깅을 위한 콘솔 로그

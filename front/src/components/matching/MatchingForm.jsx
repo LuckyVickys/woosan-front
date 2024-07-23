@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import LocationField from './LocationField';
 import styles from '../../assets/styles/matching/MatchingForm.module.scss';
 import { useSelector } from 'react-redux';
+import { getMember } from '../../api/memberProfileApi'; // 사용자 데이터를 불러오는 API
 
-const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
+const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
     const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기
     const navigate = useNavigate();
     const [title, setTitle] = useState(initialValues.title || '');
@@ -19,8 +20,41 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
     const [tags, setTags] = useState({});
     const [headCount, setHeadCount] = useState(initialValues.headCount || '');
     const [errors, setErrors] = useState({});
-    const [files, setFiles] = useState([]); // 파일 상태 관리
+    const [files, setFiles] = useState(initialValues.filePathUrl || []); // 파일 상태 관리
+    const [loading, setLoading] = useState(true);
     const uploadRef = useRef();
+
+    // 셀프 소개팅에 필요한 상태들
+    const [location, setLocation] = useState(initialValues.location || '');
+    const [introduce, setIntroduce] = useState(initialValues.introduce || '');
+    const [mbti, setMbti] = useState(initialValues.mbti || '');
+    const [gender, setGender] = useState(initialValues.gender || '');
+    const [age, setAge] = useState(initialValues.age || '');
+    const [height, setHeight] = useState(initialValues.height || '');
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const userData = await getMember(loginState.id); // 사용자 데이터 불러오기
+                setLocation(userData.location || '');
+                setIntroduce(userData.introduce || '');
+                setMbti(userData.mbti || '');
+                setGender(userData.gender || '');
+                setAge(userData.age || '');
+                setHeight(userData.height || '');
+            } catch (error) {
+                console.error('Failed to fetch user data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (matchingType === 3 && !initialValues.introduce) {
+            fetchUserData();
+        } else {
+            setLoading(false);
+        }
+    }, [loginState.id, matchingType, initialValues]);
 
     useEffect(() => {
         if (initialValues.tag) {
@@ -40,14 +74,6 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
         neighborhood: '동네&또래',
         study_class: '스터디&클래스'
     };
-
-    // 셀프 소개팅에 필요한 상태들
-    const [location, setLocation] = useState(initialValues.location || '');
-    const [introduce, setIntroduce] = useState(initialValues.introduce || '');
-    const [mbti, setMbti] = useState(initialValues.mbti || '');
-    const [gender, setGender] = useState(initialValues.gender || '');
-    const [age, setAge] = useState(initialValues.age || '');
-    const [height, setHeight] = useState(initialValues.height || '');
 
     // 폼 유효성 검사 함수
     const validateForm = () => {
@@ -88,9 +114,16 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
         formData.append('meetDate', meetDate);
         formData.append('tag', JSON.stringify(tags)); // tags를 JSON 문자열로 변환하여 tag 필드에 저장
         formData.append('headCount', headCount);
-        for (let i = 0; i < files.length; i++) {
-            formData.append('images', files[i]);
-        }
+
+        // 파일 처리
+        files.forEach((file) => {
+            if (typeof file === 'string') {
+                formData.append('existingFiles', file);
+            } else {
+                formData.append('images', file);
+            }
+        });
+
         formData.append('matchingType', matchingType);
 
         if (matchingType === 3) {
@@ -148,6 +181,10 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
             return newTags;
         });
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -262,7 +299,7 @@ const MatchingForm = ({ onSubmit, initialValues, matchingType }) => {
                 <div className={styles.fileList}>
                     {files.map((file, index) => (
                         <div key={index} className={styles.fileItem}>
-                            <span>{file.name}</span>
+                            <span>{file.name || file}</span>
                             <button type="button" onClick={() => handleRemoveFile(index)} className={styles.deleteButton}>
                                 X
                             </button>

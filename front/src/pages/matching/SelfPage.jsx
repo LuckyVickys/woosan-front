@@ -1,120 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useSelf from '../../hooks/useSelf';
 import MatchingItem from '../../components/matching/MatchingItem';
 import MatchingModal from '../../components/matching/MatchingModal';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../assets/styles/matching/SelfPage.module.scss';
-import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
-import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
+import useCustomLogin from '../../hooks/useCustomLogin';
+import LoginModal from '../../components/member/LoginModal';
 
 const SelfPage = ({ userGender }) => {
-    const { self, loading, error } = useSelf();
-    const [displayedItems, setDisplayedItems] = useState([]);
+    const { self, loading, error, fetchMore, hasMore } = useSelf();
     const [selectedItem, setSelectedItem] = useState(null);
-    const [sentHearts, setSentHearts] = useState([]);
-    const [receivedHearts, setReceivedHearts] = useState([]);
-    const [dismissedIds, setDismissedIds] = useState([]);
-    const [view, setView] = useState('default'); // 'default', 'sentHearts', 'receivedHearts'
     const navigate = useNavigate();
+    const observer = useRef();
 
-    // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
     const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
+    const lastItemRef = useRef();
     useEffect(() => {
-        if (self) {
-            const filteredItems = self.filter(item => item.gender !== userGender && !dismissedIds.includes(item.id));
-            setDisplayedItems(filteredItems.slice(0, 3));
-        }
-    }, [self, userGender, dismissedIds]);
+        if (loading) return;
 
-    const handleHeartClick = (id) => {
-        const updatedItems = displayedItems.filter(item => item.id !== id);
-        setDisplayedItems(updatedItems);
-        setSentHearts([...sentHearts, id]);
-        // 매칭 요청 처리 로직 추가
-    };
+        if (observer.current) observer.current.disconnect();
 
-    const handleXClick = (id) => {
-        const updatedItems = displayedItems.filter(item => item.id !== id);
-        setDisplayedItems(updatedItems);
-        setDismissedIds([...dismissedIds, id]);
-    };
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && hasMore) {
+                fetchMore();
+            }
+        });
 
-    const handleNewMatchingClick = () => {
-        const newItems = self.filter(item => item.gender !== userGender && !displayedItems.includes(item) && !dismissedIds.includes(item.id)).slice(0, 3);
-        setDisplayedItems(newItems);
-    };
-
-    const handleCancelSentHeart = (id) => {
-        const updatedSentHearts = sentHearts.filter(heartId => heartId !== id);
-        setSentHearts(updatedSentHearts);
-        // 매칭 요청 취소 로직 추가
-    };
-
-    const handleAcceptReceivedHeart = (id) => {
-        const updatedReceivedHearts = receivedHearts.filter(heartId => heartId !== id);
-        setReceivedHearts(updatedReceivedHearts);
-        // 매칭 요청 수락 로직 추가
-    };
-
-    const handleRejectReceivedHeart = (id) => {
-        const updatedReceivedHearts = receivedHearts.filter(heartId => heartId !== id);
-        setReceivedHearts(updatedReceivedHearts);
-        // 매칭 요청 거절 로직 추가
-    };
+        if (lastItemRef.current) observer.current.observe(lastItemRef.current);
+    }, [loading, hasMore, fetchMore]);
 
     const handleCreateButtonClick = () => {
-        // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
-        if(!isLogin) {
+        if (!isLogin) {
             moveToLoginReturn();
         } else {
             navigate('/matching/CreateMatching');
         }
     };
 
-    const renderDefaultView = () => (
-        <>
-            <div className={styles.matchingList}>
-                {displayedItems.map(item => (
-                    <div key={item.id} className={styles.matchingItem}>
-                        <MatchingItem {...item} onClick={() => setSelectedItem(item)} />
-                        <div className={styles.buttons}>
-                            <button className={styles.heartButton} onClick={() => handleHeartClick(item.id)}>❤️보내기</button>
-                            <button className={styles.xButton} onClick={() => handleXClick(item.id)}>❌</button>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <button className={styles.newMatchingButton} onClick={handleNewMatchingClick}>
-                New Matching
-            </button>
-        </>
-    );
-
-    const renderSentHeartsView = () => (
-        <div className={styles.heartsList}>
-            {sentHearts.map(id => (
-                <div key={id} className={styles.heartItem}>
-                    <MatchingItem {...self.find(item => item.id === id)} />
-                    <button className={styles.cancelButton} onClick={() => handleCancelSentHeart(id)}>취소</button>
-                </div>
-            ))}
-        </div>
-    );
-
-    const renderReceivedHeartsView = () => (
-        <div className={styles.heartsList}>
-            {receivedHearts.map(id => (
-                <div key={id} className={styles.heartItem}>
-                    <MatchingItem {...self.find(item => item.id === id)} />
-                    <button className={styles.acceptButton} onClick={() => handleAcceptReceivedHeart(id)}>수락</button>
-                    <button className={styles.rejectButton} onClick={() => handleRejectReceivedHeart(id)}>거절</button>
-                </div>
-            ))}
-        </div>
-    );
-
-    if (loading) {
+    if (loading && self.length === 0) {
         console.log('로딩 중...');
         return <div className={styles.loading}>Loading...</div>;
     }
@@ -130,14 +54,16 @@ const SelfPage = ({ userGender }) => {
                 <div className={styles.header}>
                     <button className={styles.createButton} onClick={handleCreateButtonClick}>모임 만들기</button>
                 </div>
-                <div className={styles.navButtons}>
-                    <button className={styles.headerButton} onClick={() => setView('default')}>새로운 매칭</button>
-                    <button className={styles.headerButton} onClick={() => setView('sentHearts')}>내가 보낸 하트</button>
-                    <button className={styles.headerButton} onClick={() => setView('receivedHearts')}>내가 받은 하트</button>
+                <div className={styles.matchingListContainer}>
+                    {self.map((item, index) => (
+                        <MatchingItem
+                            key={item.id}
+                            {...item}
+                            onClick={() => setSelectedItem(item)}
+                            ref={index === self.length - 1 ? lastItemRef : null}
+                        />
+                    ))}
                 </div>
-                {view === 'default' && renderDefaultView()}
-                {view === 'sentHearts' && renderSentHeartsView()}
-                {view === 'receivedHearts' && renderReceivedHeartsView()}
                 {selectedItem && (
                     <MatchingModal item={selectedItem} onClose={() => setSelectedItem(null)} />
                 )}

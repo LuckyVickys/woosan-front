@@ -1,24 +1,49 @@
+@import '../Font.scss';
+
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
 .commentSection {
     margin-top: 20px;
 }
 
 .comment, .reply {
-    margin-bottom: 20px;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border-top: 1px solid #ddd;
+    // border-bottom: 1px solid #ddd;
     position: relative;
+   
 }
 
 .reply {
-    margin-left: 20px;
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.replyArrowContainer {
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.replyArrow {
+    width: 100%;
+}
+
+.replyContentContainer {
+    flex: 1;
+    margin-left: 20px; /* 답글 들여쓰기 */
 }
 
 .commentHeader, .replyHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 14px;
 }
 
 .commentWriterInfo, .replyWriterInfo {
@@ -26,18 +51,33 @@
     align-items: center;
 }
 
+.profileImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.commentMeta, .replyMeta {
+    display: flex;
+    flex-direction: row; /* 가로로 나란히 표시 */
+}
+
 .commentWriter, .replyWriter {
     font-weight: bold;
+    font-size: 14px;
 }
 
 .commentDate, .replyDate {
     font-size: 12px;
     color: gray;
+    margin: 1px;
 }
 
 .commentContent, .replyContent {
-    margin-top: 5px;
-    font-size: 14px;
+    margin-left: 60px;
+    margin-top: 1px;
+    font-size: 12px;
 }
 
 .commentInputContainer, .replyInputContainer {
@@ -55,10 +95,10 @@
 
 .commentButton, .replyButton {
     padding: 10px 20px;
-    background-color: #00B207;
-    color: white;
-    border: none;
-    border-radius: 4px;
+    background-color: white;
+    color: #00B207;
+    border: 1px solid #00B207;
+    border-radius: 20px;
     cursor: pointer;
 }
 
@@ -71,10 +111,16 @@
     margin-top: 10px;
 }
 
+.dropdownWrapper {
+    position: relative;
+}
 
-.profileImage {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
+.commentDropdownList, .replyDropdownList {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 10;
 }

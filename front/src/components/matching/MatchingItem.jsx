@@ -96,7 +96,7 @@ const MatchingItem = ({
                 <div className={styles.matchingItemHeader}>
                     <span className={`${styles.typeLabel} ${getTypeStyle(matchingType)}`}>{typeLabel}</span>
                     {matchingType !== 3 && <span className={styles.tag}>{renderTag(tag)}</span>}
-                    {matchingType === 3 && <span className={styles.tag}>{mbti}</span>}
+                    {matchingType === 3 && <span className={styles.tag}>{mbti || ''}</span>}
                 </div>
                 <div className={styles.matchingItemBody}>
                     <span className={styles.title}>{title}</span>
@@ -111,9 +111,9 @@ const MatchingItem = ({
                         )}
                         {matchingType === 3 && (
                             <>
-                                <div className={styles.detailItem}><strong><PiGenderIntersexFill className={styles.gender} /></strong> {gender}</div>
+                                <div className={styles.detailItem}><strong><PiGenderIntersexFill className={styles.gender} /></strong> {gender || ''}</div>
                                 <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
-                                <div className={styles.detailItem}><strong><span className={styles.age}></span></strong> {age}세</div>
+                                <div className={styles.detailItem}><strong><span className={styles.age}></span></strong> {age ? `${age}세` : ''}</div>
                             </>
                         )}
                     </div>

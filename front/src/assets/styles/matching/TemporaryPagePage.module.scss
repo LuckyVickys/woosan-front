@@ -1,5 +1,9 @@
 @import '../Font.scss';
 
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -40,3 +44,55 @@
     color: #333;
 }
 
+.timeBarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.scrollButton {
+    background-color: #f0f0f0;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.scrollButton:hover {
+    background-color: #e0e0e0;
+}
+
+.timeBar {
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 5px; // 좌우 스크롤 버튼을 고려한 패딩
+}
+
+.timeButton {
+    background-color: #f0f0f0;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.timeButton:hover {
+    background-color: #e0e0e0;
+}
+
+.selected {
+    background-color: #2388FF;
+    color: white;
+}
