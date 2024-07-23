@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getReportList } from "../../api/adminApi";
 import useCustomReportMove from "../../hooks/useCustomReportMove";
-import ListPageComponent from "../adminPage/element/ListPageComponent";
+import ReportListPageComponent from "../adminPage/element/ReportListPageComponent";
 import TableRowComponent from "../adminPage/element/TableRowComponent";
 import "../../assets/styles/App.scss";
 
@@ -67,7 +67,7 @@ const ReportListComponent = () => {
                             ))}
                         </tbody>
                     </table>
-                    <ListPageComponent
+                    <ReportListPageComponent
                         reportData={reportData}
                         movePage={moveToList}
                     />

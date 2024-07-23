@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getNoticeList } from "../../api/csApi";
-import useCustomMove from "../../hooks/useCustomMove";
+import useCustomNoticeMove from "../../hooks/useCustomNoticeMove";
 import "../../assets/styles/App.scss";
-import ListPageComponent from "../../components/board/element/ListPageComponent";
+import NoticeListPageComponent from "../../components/adminPage/element/NoticeListPageComponent";
 import TableRowComponent from "../../components/board/element/TableRowComponent";
 
 const initState = {
@@ -22,15 +22,17 @@ const initState = {
 };
 
 const NoticeListComponent = () => {
-    const { page, size, moveToList, moveToRead } = useCustomMove("/cs/notices");
+    const { page, size, moveToList, moveToRead } = useCustomNoticeMove();
     const [noticePage, setNoticePage] = useState(initState);
 
     useEffect(() => {
-        getNoticeList({ page, size }).then((data) => {
-            setNoticePage(data);
-        }).catch(err => {
-            console.error("Failed to fetch data:", err);
-        });
+        getNoticeList({ page, size })
+            .then((data) => {
+                setNoticePage(data);
+            })
+            .catch((err) => {
+                console.error("Failed to fetch data:", err);
+            });
     }, [page, size]);
 
     const handleRowClick = (id) => {
@@ -51,16 +53,20 @@ const NoticeListComponent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {noticePage.dtoList && noticePage.dtoList.map((item) => (
-                        <TableRowComponent
-                            key={item.id}
-                            item={item}
-                            onClick={() => handleRowClick(item.id)}
-                        />
-                    ))}
+                    {noticePage.dtoList &&
+                        noticePage.dtoList.map((item) => (
+                            <TableRowComponent
+                                key={item.id}
+                                item={item}
+                                onClick={() => handleRowClick(item.id)}
+                            />
+                        ))}
                 </tbody>
             </table>
-            <ListPageComponent serverData={noticePage} movePage={moveToList} />
+            <NoticeListPageComponent
+                noticeData={noticePage}
+                movePage={moveToList}
+            />
         </div>
     );
 };
