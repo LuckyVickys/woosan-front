@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { API_SERVER_HOST } from "./boardApi.js";
+import { getCookie } from '../util/cookieUtil.jsx';
 
 const host = `${API_SERVER_HOST}/api`;
 // const host = `http://localhost:80/api`;
@@ -158,3 +159,24 @@ export const getMemberWithEmail = async (email, token) => {
     throw error;
   }
 };
+
+// 회원 탈퇴
+export const deleteMember = async (data, token) => {
+  try {
+      const response = await axios({
+          method: 'PUT',
+          url: `${host}/member/delete`,
+          data: data,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Refresh: getCookie("member").refreshToken,
+            'Content-Type': 'application/json'
+          }
+        });
+      console.log(response.data);
+      return response.data;
+  } catch(error) {
+      console.log('Error deleting member: ', error.response ? error.response.data : error.message)
+      throw error;
+  }
+}
