@@ -31,7 +31,7 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     locationY={item.locationY}
                     address={item.address}
                     meetDate={item.meetDate}
-                    tag={item.tag} // tag를 객체로 전달
+                    tag={item.tag} // tag를 문자열로 전달
                     headCount={item.headCount}
                     location={item.location}
                     introduce={item.introduce}
@@ -40,7 +40,7 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     age={item.age}
                     height={item.height}
                     filePathUrl={item.filePathUrl}
-                    onClick={onItemClick}
+                    onClick={() => onItemClick(item.id)}
                     nickname={item.nickname} // nickname 추가
                     profileImageUrl={item.profileImageUrl} // profileImageUrl 추가
                 />
@@ -64,7 +64,7 @@ MatchingList.propTypes = {
         locationY: PropTypes.number.isRequired,
         address: PropTypes.string.isRequired,
         meetDate: PropTypes.string.isRequired,
-        tag: PropTypes.object, // tag를 객체로 변경
+        tag: PropTypes.string, // tag를 문자열로 받도록 수정
         headCount: PropTypes.number.isRequired,
         location: PropTypes.string,
         introduce: PropTypes.string,

@@ -8,7 +8,6 @@ const MatchingItem = ({
     location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
 }) => {
 
-    // 디버깅 로그 추가
     console.log('MatchingItem props:', {
         id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag, headCount,
         location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
@@ -16,7 +15,6 @@ const MatchingItem = ({
 
     const typeLabel = getTypeLabel(matchingType);
 
-    // 매칭 타입에 따른 라벨을 반환하는 함수
     function getTypeLabel(type) {
         switch (type) {
             case 1:
@@ -30,7 +28,6 @@ const MatchingItem = ({
         }
     }
 
-    // 매칭 타입에 따른 스타일을 반환하는 함수
     function getTypeStyle(type) {
         switch (type) {
             case 1:
@@ -44,7 +41,6 @@ const MatchingItem = ({
         }
     }
 
-    // 태그를 문자열로 변환하여 키값만 반환하는 함수
     const renderTag = (tag) => {
         try {
             console.log('Parsing tag:', tag);
@@ -56,7 +52,6 @@ const MatchingItem = ({
         }
     };
 
-    // 날짜 포맷팅 함수
     const formatDateMinWithoutYear = (dateString) => {
         const date = new Date(dateString);
         const month = String(date.getMonth() + 1).padStart(2, '');
@@ -69,22 +64,20 @@ const MatchingItem = ({
 
     const formatDateTime = (dateString, type) => {
         if (type === 2) {
-            return formatDateMinWithoutYear(dateString);  // 번개의 경우 날짜와 시간을 포맷팅, 연도 제외
+            return formatDateMinWithoutYear(dateString);
         } else {
-            return new Date(dateString).toLocaleDateString('ko-KR');  // 그 외의 경우 날짜만 포맷팅
+            return new Date(dateString).toLocaleDateString('ko-KR');
         }
     };
 
-    // filePathUrl이 제대로 전달되는지 확인
     console.log("파일 경로 리스트:", filePathUrl);
 
     const imageUrl = filePathUrl && filePathUrl.length > 0 ? filePathUrl[0] : "";
 
-    // 이미지 URL이 제대로 설정되었는지 확인
     console.log("이미지 URL:", imageUrl);
 
     return (
-        <div className={styles.matchingItemCard} onClick={() => onClick(id)}>
+        <div className={styles.matchingItemCard} onClick={onClick}>
             <div className={styles.imagePlaceholder}>
                 {imageUrl ? (
                     <img src={imageUrl} alt="매칭 썸네일" className={styles.matchingImage} />
@@ -137,7 +130,7 @@ MatchingItem.propTypes = {
     locationY: PropTypes.number.isRequired,
     address: PropTypes.string.isRequired,
     meetDate: PropTypes.string.isRequired,
-    tag: PropTypes.string, // tag를 문자열로 받도록 수정
+    tag: PropTypes.string,
     headCount: PropTypes.number.isRequired,
     location: PropTypes.string,
     introduce: PropTypes.string,

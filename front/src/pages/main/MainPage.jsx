@@ -1,14 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom";
 import '../../assets/styles/App.scss';
-    
 import BasicLayout from "../../layouts/BasicLayout";
 import LikeList from "../../components/main/LikeList";
 import NoticeList from "../../components/main/NoticeList";
 import NewMatchingList from "../../components/main/NewMatchingList";
+import MatchingModal from '../../components/matching/MatchingModal';
 import Banner from '../../components/main/Banner';
+import { getAllMatching } from '../../api/matchingBoardApi';
 
 const MainPage = () => {
+    const [items, setItems] = useState([]);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getAllMatching();
+                if (Array.isArray(response)) {
+                    setItems(response);
+                } else {
+                    console.error('Invalid response format:', response);
+                    setItems([]); // 오류 발생 시 빈 배열로 설정
+                }
+            } catch (error) {
+                console.error('Error fetching matchings:', error);
+                setItems([]); // 오류 발생 시 빈 배열로 설정
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const handleItemClick = (id) => {
+        const item = items.find(item => item.id === id);
+        setSelectedItem(item);
+        console.log(`아이템 클릭됨: ${id}`);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedItem(null);
+        console.log('모달 창 닫기');
+    };
+
     return (
         <BasicLayout>
             <div className="main-contents">
@@ -65,9 +99,12 @@ const MainPage = () => {
                             <div className="header-title">New 모임</div>
                             <NavLink to={'/matching/'}>View All ➔</NavLink>
                         </div>
-                        <NewMatchingList />
+                        <NewMatchingList items={items} onItemClick={handleItemClick} />
                     </div>
                 </div>
+                {selectedItem && (
+                    <MatchingModal item={selectedItem} onClose={handleCloseModal} />
+                )}
             </div>
         </BasicLayout>
     );
