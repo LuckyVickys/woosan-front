@@ -153,16 +153,8 @@ const LoginModal = ({ onClose }) => {
             </div>
             {passwordError && <p className="input-error">{passwordError}</p>}
           </div>
-          <div className="add-fucntion">
-            <div className="agree-checkbox">
-              <input className="checkbox" type="checkbox" id="keepLoggedIn" />
-              <div className="checkbox-text">로그인 상태 유지</div>
-            </div>
-            <div>
-              <a className="forgotPW" onClick={openFinePWModal}>
-                비밀번호 찾기
-              </a>
-            </div>
+          <div className="forgotPW" onClick={openFinePWModal}>
+              비밀번호 찾기
           </div>
           <button className="login-button" onClick={handleLogin}>
             로그인

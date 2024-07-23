@@ -178,12 +178,16 @@
           align-items: center;
         }
       }
-      .forgotPW {
+    }
+    .forgotPW {
+        text-align: end;
+        margin: 10px 0 0 0;
+        font-size: 12px;
+        font-weight: 400;
         color: #666666;
         text-decoration: none;
         font-size: 12px;
         cursor: pointer;
-      }
     }
 
     .login-button,
