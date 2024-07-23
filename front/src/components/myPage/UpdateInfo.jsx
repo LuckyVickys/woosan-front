@@ -109,13 +109,16 @@ const UpdateInfo = () => {
                 nextPoint: formData.nextPoint,
             };
 
-            // 이미지 파일이 선택된 경우에만 profileUpdateDTO에 image 필드 추가
+            const formDataObj = new FormData();
+            formDataObj.append('profileUpdateDTO', new Blob([JSON.stringify(profileUpdateDTO)], { type: "application/json" }));
+
             if (formData.fileImg) {
-                profileUpdateDTO.image = [formData.fileImg];
+                formDataObj.append('images', formData.fileImg);
             }
 
-            await modifyProfile(memberId, profileUpdateDTO);
-            console.log("Information updated successfully");
+            const res = await modifyProfile(formDataObj);
+
+            console.log("Information updated successfully", res.data);
             Swal.fire(
                 "프로필 수정 완료",
                 "원래 화면으로 돌아갑니다.",
