@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LoginModal from "./LoginModal";
-import { checkEmail, checkNickname, signUp } from "../../api/memberApi";
+import { checkEmail, checkJoinCode, checkNickname, createJoinCodeMail, signUp } from "../../api/memberApi";
 import Swal from "sweetalert2";
 import TogglePassword from "./TogglePassword";
 import CodeTimer from "./CodeTimer";
@@ -16,6 +16,7 @@ const initState = {
 const SignUpModal = ({ onClose }) => {
   const loginState = useSelector((state) => state.loginSlice);
   const [signupData, setSignupData] = useState({ ...initState });
+  const [joinCode, setJoinCode] = useState("");
 
   const [emailAvailable, setEmailAvailable] = useState(false);
   const [codeAvailable, setCodeAvailable] = useState(false);
@@ -27,7 +28,6 @@ const SignUpModal = ({ onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPwCheck, setShowPwCheck] = useState(false);
 
-  const [codeCheck, setCodeCheck] = useState("");
   const [pwCheck, setPwCheck] = useState("");
 
   const [emailError, setEmailError] = useState("");
@@ -99,8 +99,9 @@ const SignUpModal = ({ onClose }) => {
 
     try {
       const emailResponse = await checkEmail(signupData.email);
-      if (emailResponse === false) {
-        setEmailError("작성해주신 이메일로 인증 코드를 전송했습니다.");
+      const codeMailResponse = await createJoinCodeMail(signupData.email);
+      if (emailResponse === false && codeMailResponse === "메일 전송 완료") {
+        setEmailError("이메일로 인증 코드를 전송했습니다.");
         setEmailAvailable(true);
         setShowCode(true)
         setTimerActive(true);
@@ -113,22 +114,22 @@ const SignUpModal = ({ onClose }) => {
   };
 
   const handleCheckCode = async () => {
-    if (!codeCheck) {
+    if (!joinCode) {
       setCodeError("필수 입력 사항입니다.");
-    } else if (signupData.password !== codeCheck) {
+    } else if (signupData.password !== joinCode) {
       setCodeError("인증 코드가 일치하지 않습니다.");
     }
 
-    // try {
-    //   const codeResponse = await checkCode();
-    //   if (codeResponse === false) {
-    //     setCodeError("인증 번호가 일치합니다.");
-    //     setCodeAvailable(true);
-    //   }
-    // } catch (error) {
-    //   setCodeError("인증 번호가 일치하지 않습니다.");
-    //   setCodeAvailable(false);
-    // }
+    try {
+      const codeResponse = await checkJoinCode(joinCode);
+      if (codeResponse === true) {
+        setCodeError("인증 번호가 일치합니다.");
+        setCodeAvailable(true);
+      }
+    } catch (error) {
+      setCodeError("인증 번호가 일치하지 않습니다.");
+      setCodeAvailable(false);
+    }
   };
 
   const handleCheckNickname = async () => {
@@ -156,6 +157,7 @@ const SignUpModal = ({ onClose }) => {
     e.preventDefault();
 
     let valid = true;
+    const codeResponse = await checkJoinCode(joinCode);
 
     if (!signupData.email) {
       setEmailError("필수 입력 사항입니다.");
@@ -165,10 +167,10 @@ const SignUpModal = ({ onClose }) => {
       valid = false;
     }
 
-    if (!codeCheck) {
+    if (!joinCode) {
       setCodeError("필수 입력 사항입니다.");
       valid = false;
-    } else if (signupData.password !== codeCheck) {
+    } else if (codeResponse === false) {
       setCodeError("인증 코드가 일치하지 않습니다.");
       valid = false;
     }
@@ -198,7 +200,13 @@ const SignUpModal = ({ onClose }) => {
     }
 
     if (!agreeTerms) {
-      Swal.fire("회원가입 실패", "필수 약관에 동의해주세요.", "error");
+      Swal.fire({
+        title: "회원가입 실패", 
+        text: "필수 약관에 동의해주세요.", 
+        icon: "error",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#3085d6"
+      });
       setEmailError("");
       setCodeError("");
       setNicknameError("");
@@ -213,7 +221,13 @@ const SignUpModal = ({ onClose }) => {
         console.log("회원가입 완료:", signUpResponse);
         setSignedUp(true);
 
-        Swal.fire("회원가입 완료", `로그인 창으로 전환됩니다.`, "success").then(
+        Swal.fire({
+          title: "회원가입 완료", 
+          text: `로그인 창으로 전환됩니다.`, 
+          icon: "success",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#3085d6"
+        }).then(
           () => {
             onClose();
           }
@@ -223,7 +237,13 @@ const SignUpModal = ({ onClose }) => {
           "회원가입 실패:",
           error.response ? error.response.data : error.message
         );
-        Swal.fire("회원가입 실패", `다시 시도해주세요.`, "error");
+        Swal.fire({
+          title: "회원가입 실패", 
+          text: `다시 시도해주세요.`, 
+          icon: "error",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#3085d6"
+        });
       }
     }
   };
@@ -279,8 +299,8 @@ const SignUpModal = ({ onClose }) => {
                   className="code-input"
                   type="text"
                   placeholder="인증 코드를 입력해주세요"
-                  value={codeCheck}
-                  onChange={(e) => setCodeCheck(e.target.value)}
+                  value={joinCode}
+                  onChange={(e) => setJoinCode(e.target.value)}
                 />
                 <CodeTimer
                   timerActive={timerActive}
