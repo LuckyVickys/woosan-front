@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux"; // Redux의 useSelector 훅 사용
+import { useSelector } from "react-redux";
 import likeNoIcon from "../../assets/image/heart_no.svg";
 import likeIcon from "../../assets/image/heart_yes.svg";
 import { toggleLike, getLikes } from "../../api/likesApi";

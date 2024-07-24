@@ -36,8 +36,6 @@ const MsgModal = ({
     }, [isClosing, onClose]);
 
     const handleClickMsgAdd = async (e) => {
-        console.log("Receiver :", receiver);
-        console.log("Sender :", senderId);
         e.preventDefault();
 
         if (message.content.trim() === "") {

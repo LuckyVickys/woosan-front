@@ -26,7 +26,7 @@ const initState = {
     categoryName: "",
     images: null,
     filePathUrl: [],
-    replyCount: 0, // 댓글 수 추가
+    replyCount: 0,
 };
 
 const NoticeReadComponent = () => {

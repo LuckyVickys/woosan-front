@@ -32,7 +32,7 @@ const LikeList = () => {
                                 item={likeItem}
                                 onClick={handleRowClick}
                                 isPopular={true}
-                                className="likelist-post" // 추가된 부분
+                                className="likelist-post"
                             />
                         ))}
                     </tbody>

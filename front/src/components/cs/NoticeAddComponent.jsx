@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
-import { createBoard } from "../../api/boardApi"; // API 모듈에서 호출
+import { createBoard } from "../../api/boardApi";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux"; // Redux의 useSelector 훅 사용
+import { useSelector } from "react-redux";
 import "../../assets/styles/App.scss";
 import { validateBoardInputs } from "../../util/validationUtil";
 

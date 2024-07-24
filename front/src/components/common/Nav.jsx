@@ -5,7 +5,7 @@ import '../../assets/styles/App.scss';
 import RankingList from "./RankingList";
 import { useSelector } from "react-redux";
 import useCustomLogin from "../../hooks/useCustomLogin";
-import LoginModal from "../../components/member/LoginModal"; // LoginModal import 추가
+import LoginModal from "../../components/member/LoginModal";
 
 const Nav = () => {
     const loginState = useSelector((state) => state.loginSlice);
@@ -58,7 +58,7 @@ const Nav = () => {
             </div>
             
             <RankingList />
-            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />} {/* 로그인 모달 조건부 렌더링 */}
+            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
         </nav>
     );
 }

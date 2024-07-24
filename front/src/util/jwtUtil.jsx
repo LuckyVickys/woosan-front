@@ -6,21 +6,14 @@ const jwtAxios = axios.create();
 
 const refreshJWT = async (accessToken, refreshToken) => {
     
-    // const host = API_SERVER_HOST;
-    // const host = `http://localhost:3000`;
     const host = `http://110.165.19.87:3000`;
     const header = {headers: {"Authorization":`Bearer ${accessToken}`}};
     const res = await axios.post(`${host}/api/auth/refresh`, {refreshToken}, header);
-
-    console.log("--------------------");
-    console.log(res.data);
-
     return res.data;
 }
 
 // before request
 const beforeReq = (config) => {
-    console.log("before request..........");
     const userInfo = getCookie("member");
 
     if(!userInfo) {
@@ -36,7 +29,6 @@ const beforeReq = (config) => {
 
     const {accessToken} = userInfo;
 
-    // Authorization 헤더 처리
     config.headers.Authorization = `Bearer ${accessToken}`;
 
     return config;

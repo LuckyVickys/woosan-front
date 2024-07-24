@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loginPost } from "../api/memberApi";
 import { getCookie, removeCookie, setCookie } from "../util/cookieUtil";
-import { useSelector } from "react-redux";
 
 const initState = {
   id: '',
@@ -43,7 +42,7 @@ export const loginPostAsync = createAsyncThunk('loginPostAsync', async (param, {
 
 const loginSlice = createSlice({
   name: 'LoginSlice',
-  initialState: loadMemberCookie() || initState, // 쿠키가 없다면 초기값 사용
+  initialState: loadMemberCookie() || initState,
   reducers: {
     login: (state, action) => {
       console.log("login.....");
@@ -53,7 +52,7 @@ const loginSlice = createSlice({
         ...payload,
         profile: JSON.stringify(payload.profile)
       };
-      setCookie("member", JSON.stringify(payloadWithProfileString), 1); // 1일
+      setCookie("member", JSON.stringify(payloadWithProfileString), 1);
       return payload;
     },
     logout: (state, action) => {
@@ -68,12 +67,11 @@ const loginSlice = createSlice({
       const payload = action.payload;
 
       if (!payload.error) {
-        // profile 배열을 JSON 문자열로 변환하여 저장
         const payloadWithProfileString = {
           ...payload,
           profile: JSON.stringify(payload.profile)
         };
-        setCookie("member", JSON.stringify(payloadWithProfileString), 1); // 1일
+        setCookie("member", JSON.stringify(payloadWithProfileString), 1);
       }
       return payload;
     })

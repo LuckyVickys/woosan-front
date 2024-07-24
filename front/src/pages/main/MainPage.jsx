@@ -21,11 +21,11 @@ const MainPage = () => {
                     setItems(response);
                 } else {
                     console.error('Invalid response format:', response);
-                    setItems([]); // 오류 발생 시 빈 배열로 설정
+                    setItems([]);
                 }
             } catch (error) {
                 console.error('Error fetching matchings:', error);
-                setItems([]); // 오류 발생 시 빈 배열로 설정
+                setItems([]);
             }
         };
 
@@ -35,12 +35,10 @@ const MainPage = () => {
     const handleItemClick = (id) => {
         const item = items.find(item => item.id === id);
         setSelectedItem(item);
-        console.log(`아이템 클릭됨: ${id}`);
     };
 
     const handleCloseModal = () => {
         setSelectedItem(null);
-        console.log('모달 창 닫기');
     };
 
     return (

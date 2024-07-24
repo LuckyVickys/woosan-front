@@ -11,7 +11,6 @@ import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
 import defaultProfile from "../../assets/image/profile.png";
 import { useSelector } from "react-redux";
-import { getKakaoUserData } from "../../api/kakaoApi";
 import Swal from "sweetalert2";
 import { getMemberWithEmail } from "../../api/memberApi";
 
@@ -112,10 +111,6 @@ const ReplyComponent = () => {
   const handleDropDownClick = (id) => {
     setOpenReplyDropDown((prev) => (prev === id ? null : id));
     setReportReplyId(id);
-  };
-
-  const handleDropDownMenu = (menu, id) => {
-    // 추가 기능 구현
   };
 
   const openReport = () => {
@@ -231,7 +226,6 @@ const ReplyComponent = () => {
               {openReplyDropDown === reply.id && (
                 <div>
                   <ReplyDropDown
-                    onSelect={handleDropDownMenu}
                     replyId={reply.id}
                     openReport={openReport}
                     openMsg={openMsg}

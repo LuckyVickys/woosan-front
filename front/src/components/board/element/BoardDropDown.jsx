@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
-import useCustomLogin from '../../../hooks/useCustomLogin';        // 혜리 추가
-import LoginModal from '../../../components/member/LoginModal';    // 혜리 추가
 
 const BoardDropDown = ({
     id,
@@ -14,10 +12,7 @@ const BoardDropDown = ({
 }) => {
     const navigate = useNavigate();
     const location = useLocation();
-
-    // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
-    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
-
+    
     useEffect(() => {
         const params = new URLSearchParams(location.search);
     }, [location.search]);

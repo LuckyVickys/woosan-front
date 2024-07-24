@@ -14,7 +14,6 @@ const initState = {
 };
 
 const SignUpModal = ({ onClose }) => {
-  const loginState = useSelector((state) => state.loginSlice);
   const [signupData, setSignupData] = useState({ ...initState });
   const [joinCode, setJoinCode] = useState("");
 

@@ -30,8 +30,8 @@ const FinePWModal = ({ onClose }) => {
   const [newPasswordError, setNewPasswordError] = useState("");
   const [pwCheckError, setPwCheckError] = useState("");
 
-  const [updatePW, setUpdatePW] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
+  const [setUpdatePW] = useState(false);
+  const [isClosing] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
 
   useEffect(() => {

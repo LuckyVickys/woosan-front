@@ -36,7 +36,7 @@ const useCustomMsgMove = () => {
             search: queryStr
         });
 
-        setRefresh(!refresh);  // 강제로 리렌더링
+        setRefresh(!refresh);
     };
     
     const moveToReceiveList = (pageParam) => {
@@ -52,7 +52,7 @@ const useCustomMsgMove = () => {
             search: queryStr
         });
 
-        setRefresh(!refresh);  // 강제로 리렌더링
+        setRefresh(!refresh);
     };
 
     const moveToRead = (num, customPath) => {

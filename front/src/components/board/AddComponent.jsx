@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
-import { createBoard } from "../../api/boardApi"; // API 모듈에서 호출
+import { createBoard } from "../../api/boardApi";
 import { getMemberWithEmail } from "../../api/memberApi";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux"; // Redux의 useSelector 훅 사용
+import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import "../../assets/styles/App.scss";
 import { validateBoardInputs } from "../../util/validationUtil";
@@ -19,11 +19,11 @@ const categories = [
 ];
 
 const initState = {
-  writerId: null, // 초기 상태를 null로 설정
+  writerId: null,
   categoryName: "선택",
   title: "",
   content: "",
-  files: [], // 빈 파일 리스트 초기화
+  files: [],
 };
 
 const AddComponent = ({ titleBarText, category }) => {
@@ -32,9 +32,9 @@ const AddComponent = ({ titleBarText, category }) => {
     ...initState,
     categoryName: category ? category : "선택",
   });
-  const [showDropdown, setShowDropdown] = useState(false); // 드롭다운 상태 관리
-  const [files, setFiles] = useState([]); // 파일 상태 관리
-  const [errors, setErrors] = useState({}); // 오류 메시지 상태 관리
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [errors, setErrors] = useState({});
   const uploadRef = useRef();
   const navigate = useNavigate();
 
@@ -70,9 +70,7 @@ const AddComponent = ({ titleBarText, category }) => {
       ...prevBoard,
       [name]: value,
     }));
-
-    // 입력값 변경 시 해당 오류 메시지 초기화
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));   // 입력값 변경 시 해당 오류 메시지 초기화
   };
 
   const handleCategorySelect = (categoryName) => {
@@ -80,7 +78,7 @@ const AddComponent = ({ titleBarText, category }) => {
       ...prevBoard,
       categoryName: categoryName,
     }));
-    setShowDropdown(false); // 카테고리를 선택한 후 드롭다운 닫기
+    setShowDropdown(false);
     setErrors((prevErrors) => ({ ...prevErrors, categoryName: "" })); // 카테고리 선택 시 오류 메시지 초기화
   };
 
