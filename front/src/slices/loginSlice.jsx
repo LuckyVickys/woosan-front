@@ -9,12 +9,13 @@ const initState = {
   nickname: '',
   point: '',
   nextPoint: '',
-  memberType: '',
+  memberType: 'USER',
   level: '',
   accessToken: '',
   refreshToken: '',
   isKakao: false,
-  profile: []
+  profile: [],
+  isActive: true
 };
 
 const loadMemberCookie = () => {
@@ -28,12 +29,17 @@ const loadMemberCookie = () => {
   return userInfo;
 }
 
-export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => {
-  // const loginState = useSelector((state) => state.loginSlice);
-  // const token = loginState.accessToken;
-  // return loginPost(param, token);
-  return loginPost(param);
-})
+export const loginPostAsync = createAsyncThunk('loginPostAsync', async (param, { rejectWithValue }) => {
+  try {
+    const response = await loginPost(param);
+    if (!response.isActive) {
+      return rejectWithValue("탈퇴한 회원입니다.");
+    }
+    return response;
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
 
 const loginSlice = createSlice({
   name: 'LoginSlice',

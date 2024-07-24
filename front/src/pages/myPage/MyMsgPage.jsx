@@ -12,7 +12,7 @@ const MyMsgPage = () => {
     useEffect(() => {
         const fetchMessage = async () => {
             try {
-                const messageData = await getMessage(id);
+                const messageData = await getMessage(id, loginState.accessToken);
                 if (loginState && loginState.nickname) {
                     const role = loginState.nickname === messageData.senderNickname ? "발신자" : "수신자";
                     const nickname = (role === "발신자" ? messageData.receiverNickname : messageData.senderNickname);

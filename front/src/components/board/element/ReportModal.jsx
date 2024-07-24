@@ -45,14 +45,14 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
             selectedType = "댓글";
         } else if (type === "message") {
             selectedType = "쪽지";
-        } else if (type ==="matching"){
+        } else if (type === "matching") {
             selectedType = "모임";
-        } else if (type === "matchingReply"){
+        } else if (type === "matchingReply") {
             selectedType = "모임댓글";
         }
 
-        setSelectedType(selectedType); 
-        return selectedType; 
+        setSelectedType(selectedType);
+        return selectedType;
     };
 
     const handleFileChange = (e) => {
@@ -60,8 +60,6 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
     };
 
     const handleClickReportAdd = async (e) => {
-        console.log("type :", type, targetId);
-        console.log("reportId :", reporterId);
         e.preventDefault();
 
         if (!report.complaintReason) {

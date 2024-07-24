@@ -72,24 +72,25 @@ const LoginModal = ({ onClose }) => {
       try {
         const data = await doLogin(loginParam);
         if (data) {
+          console.log('data:', data);
           dispatch(login(data));
           Swal.fire({
             icon: 'success',
-            title: '로그인 되었습니다.',
+            title: '로그인 완료',
             text: '오늘도 즐거운 자취생활 되세요!',
             confirmButtonColor: '#3085d6',
-            confirmButtonText: '확인'
-          })
+            confirmButtonText: '확인',
+          });
           onClose();
-        } else {
-          Swal.fire(
-            "로그인 실패",
-            "아이디와 비밀번호를 확인해주세요.",
-            "error"
-          );
         }
       } catch (error) {
-        Swal.fire("로그인 실패", "서버 오류가 발생했습니다.", "error");
+        console.error('Error message:', error.message);
+        Swal.fire({
+          icon: 'error',
+          title: '로그인 실패',
+          text: error.message === '탈퇴한 회원입니다.' ? '탈퇴한 회원입니다.' : '로그인 할 수 없습니다.',
+          confirmButtonColor: '#3085d6',
+        });
       }
     }
   };

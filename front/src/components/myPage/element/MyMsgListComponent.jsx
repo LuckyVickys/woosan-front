@@ -1,4 +1,3 @@
-// MessageListComponent.jsx
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import ListPageComponent from "../../board/element/ListPageComponent";
@@ -6,6 +5,7 @@ import "../../../assets/styles/App.scss";
 import { formatDate } from "../../../util/DateUtil";
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector } from "react-redux";
+import useCustomMsgMove from "../../../hooks/useCustomMsgMove";
 
 const initState = {
     dtoList: [],
@@ -35,17 +35,17 @@ const MessageListComponent = ({
     fetchMessages,
     deleteMessage,
     moveToRead,
+    moveToList,
     columnHeaders,
     role,
 }) => {
+    const {page, size, refresh} = useCustomMsgMove();
     const [msgData, setMsgData] = useState(initState);
     const loginState = useSelector((state) => state.loginSlice);
     const memberType = loginState.memberType;
 
     useEffect(() => {
-        const currentPage = msgData.pageRequestDTO.page || 1;
-        const currentSize = msgData.pageRequestDTO.size || 10;
-        fetchMessages({ page: currentPage, size: currentSize })
+        fetchMessages({ page, size })
             .then((data) => {
                 setMsgData(data);
             })
@@ -54,8 +54,9 @@ const MessageListComponent = ({
             });
     }, [
         fetchMessages,
-        msgData.pageRequestDTO.page,
-        msgData.pageRequestDTO.size,
+        page,
+        size,
+        refresh
     ]);
 
     const handleMsgClick = (id) => {
@@ -170,15 +171,7 @@ const MessageListComponent = ({
                             totalPage,
                             current,
                         }}
-                        movePage={(page) =>
-                            setMsgData({
-                                ...msgData,
-                                pageRequestDTO: {
-                                    ...msgData.pageRequestDTO,
-                                    page,
-                                },
-                            })
-                        }
+                        movePage={moveToList}
                     />
                 </div>
             ) : (
