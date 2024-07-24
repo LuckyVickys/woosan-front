@@ -62,9 +62,9 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             if(selectedMsg.role === "발신자") {
-                                navigate("/myPage/send-message");
+                                navigate("/mypage/send-message");
                             } else {
-                                navigate("/myPage/receive-message");
+                                navigate("/mypage/receive-message");
                             }
                         }
                     });

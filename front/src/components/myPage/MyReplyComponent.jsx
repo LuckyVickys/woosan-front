@@ -24,7 +24,7 @@ const initState = {
 
 const MyReplyComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/myPage/reply");
+    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/mypage/reply");
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {

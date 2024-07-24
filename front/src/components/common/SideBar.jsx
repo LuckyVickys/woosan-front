@@ -34,11 +34,11 @@ const SideBar = ({ pageType }) => {
             navigate(`/board?page=1&size=10&categoryName=${categoryName}`);
         } else if (pageType === "cs") {
             navigate(`/cs/${categoryName}`);
-        } else if (pageType === "myPage") {
-            navigate(`/myPage/${categoryName}`);
+        } else if (pageType === "mypage") {
+            navigate(`/mypage/${categoryName}`);
         } else if (pageType === "matching") {
             navigate(`/matching/${categoryName}`);
-        } else if (pageType === "adminPage") {
+        } else if (pageType === "admin") {
             navigate(`/adminPage/${categoryName}`);
         }
     };
@@ -391,7 +391,7 @@ const SideBar = ({ pageType }) => {
                         </div>
                     </>
                 )}
-                {pageType === "myPage" && (
+                {pageType === "mypage" && (
                     <>
                         <div className="category-title">마이페이지</div>
                         <div

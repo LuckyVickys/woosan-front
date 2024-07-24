@@ -6,8 +6,6 @@ import myPageRouter from "./myPageRouter";
 import adminPageRouter from "./adminPageRouter";
 
 import { createBrowserRouter } from "react-router-dom";
-import KakaoRedirectPage from "../pages/social/KakaoRedirectPage";
-// const {createBrowserRouter} = require("react-router-dom");
 
 const Loading = <div>Loading....</div>
 
@@ -46,7 +44,7 @@ const root = createBrowserRouter([
         children: csRouter()
     },
     {
-        path: "myPage",
+        path: "mypage",
         element: <Suspense fallback={Loading}><MyPage /></Suspense>,
         children: myPageRouter()
     },

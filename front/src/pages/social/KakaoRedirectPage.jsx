@@ -35,7 +35,7 @@ const KakaoRedirectPage = () => {
                         confirmButtonText: "확인",
                     }).then((result) => {
                         if(result.isConfirmed) {
-                            moveToPath("/myPage/info");
+                            moveToPath("/mypage/info");
                         }
                     });
                 }).catch(error => {
