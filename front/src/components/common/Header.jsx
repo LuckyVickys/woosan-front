@@ -95,7 +95,7 @@ const Header = () => {
           </Link>
         </div>
         <div className="logoTitle">
-          <Link to="/">우리는 함께 산다</Link>
+          <Link to="/" className="logoTitle-text">우리는 함께 산다</Link>
         </div>
       </div>
       {loginState.email ? (
