@@ -166,8 +166,6 @@ const LoginModal = ({ onClose }) => {
           <Link to={link}>
             <div className="kakao-icon"></div>
           </Link>
-          <div className="naver-icon"></div>
-          <div className="google-icon"></div>
         </div>
         <p className="signup-text">
           아직 회원이 아니신가요?{" "}
