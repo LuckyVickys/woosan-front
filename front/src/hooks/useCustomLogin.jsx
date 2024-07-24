@@ -13,7 +13,12 @@ const useCustomLogin = () => {
 
     const doLogin = async (loginParam) => {
         const action = await dispatch(loginPostAsync(loginParam));
-        return action.payload;
+        if (loginPostAsync.fulfilled.match(action)) {
+            return action.payload;
+        } else if (loginPostAsync.rejected.match(action)) {
+            console.error("Rejected with payload:", action.payload);  // 추가된 디버깅 코드
+            throw new Error(action.payload || "로그인 실패");
+        }
     }
 
     const doLogout = () => {

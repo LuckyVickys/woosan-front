@@ -22,7 +22,11 @@ export const loginPost = async (loginParam) => {
     });
     return res.data;
   } catch (error) {
-    throw error;
+    if (error.response && error.response.data) {
+      throw new Error(error.response.data.message || '서버 오류가 발생했습니다.');
+    } else {
+      throw new Error('서버 오류가 발생했습니다.');
+    }
   }
 };
 
@@ -163,7 +167,7 @@ export const createJoinCodeMail = async (email) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: `${host}/member/sendJoinCode?email${email}`,
+      url: `${host}/member/sendJoinCode?email=${email}`,
       headers: {
         'Content-Type': 'application/json'
       }
