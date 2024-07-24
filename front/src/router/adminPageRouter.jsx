@@ -10,19 +10,16 @@ const ReportReadPage = lazy(() => import("../pages/adminPage/ReportReadPage"));
 
 const NoticePage = lazy(() => import("../pages/adminPage/NoticePage"));
 const AddNoticePage = lazy(() => import("../pages/adminPage/AddNoticePage"));
-const ModifyNoticePage = lazy(() =>
-    import("../pages/adminPage/ModifyNoticePage")
-);
+const ModifyNoticePage = lazy(() => import("../pages/adminPage/ModifyNoticePage"));
 
 const MySendMsgPage = lazy(() => import("../pages/myPage/MySendMsgPage"));
 const MyReceiveMsgPage = lazy(() => import("../pages/myPage/MyReceiveMsgPage"));
-const MsgPage = lazy(() => import("../pages/adminPage/MsgPage"));
 
 const adminPageRouter = () => {
     return [
         {
             path: "",
-            element: <Navigate replace to="/adminPage/upload" />,
+            element: <Navigate replace to="/admin/upload" />,
         },
         {
             path: "upload",

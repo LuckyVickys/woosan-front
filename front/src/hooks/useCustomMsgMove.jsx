@@ -14,7 +14,7 @@ const useCustomMsgMove = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const userRole = loginState.role;
 
-    const defaultPath = userRole === "ADMIN" ? "/adminPage/message" : "/myPage/message";
+    const defaultPath = userRole === "ADMIN" ? "/admin/message" : "/myPage/message";
 
     const page = getNum(queryParams.get('page'), 1);
     const size = getNum(queryParams.get('size'), 10);

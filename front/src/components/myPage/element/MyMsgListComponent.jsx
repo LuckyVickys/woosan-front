@@ -61,7 +61,7 @@ const MessageListComponent = ({
     const handleMsgClick = (id) => {
         moveToRead(
             id,
-            memberType === "ADMIN" ? "/adminPage/message" : "/myPage/message"
+            memberType === "ADMIN" ? "/admin/message" : "/myPage/message"
         );
     };
 

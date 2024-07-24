@@ -19,13 +19,13 @@ const ProfileDropdown = ({userData}) => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const navToMypage = () => {
-        navigate(memberType === "ADMIN" ? "/adminPage" : "/myPage");
+        navigate(memberType === "ADMIN" ? "/admin" : "/myPage");
     };
 
     const navToMessages = () => {
         navigate(
             memberType === "ADMIN"
-                ? "/adminPage/send-message"
+                ? "/admin/send-message"
                 : "/myPage/send-message"
         );
     };

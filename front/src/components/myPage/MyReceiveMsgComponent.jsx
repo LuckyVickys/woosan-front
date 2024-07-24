@@ -8,7 +8,7 @@ import MyMsgListComponent from "./element/MyMsgListComponent";
 const MyReceiveMsgComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const userRole = loginState.role;
-    const { moveToRead } = useCustomMsgMove(userRole === "ADMIN" ? "/adminPage/receive-message" : "/myPage/receive-message");
+    const { moveToRead } = useCustomMsgMove(userRole === "ADMIN" ? "/admin/receive-message" : "/myPage/receive-message");
 
     const fetchMessages = ({ page, size }) => {
         const params = {

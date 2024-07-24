@@ -10,7 +10,7 @@ const getNum = (param, defaultValue) => {
     return isNaN(num) ? defaultValue : num;
 };
 
-const useCustomReportMove = (defaultPath = "/adminPage/report") => {
+const useCustomReportMove = (defaultPath = "/admin/report") => {
     const navigate = useNavigate();
     const [refresh, setRefresh] = useState(false);
     const [queryParams] = useSearchParams();

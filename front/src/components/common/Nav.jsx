@@ -42,7 +42,7 @@ const Nav = () => {
                 </div>
                 <div className="myPage">
                     {memberType === "ADMIN" ? (
-                        <NavLink to={'/adminPage/'} className={({ isActive }) => isActive ? "active" : ""}>
+                        <NavLink to={'/admin/'} className={({ isActive }) => isActive ? "active" : ""}>
                             관리자페이지
                         </NavLink>
                     ) : (
