@@ -131,14 +131,6 @@ $font-family: "Pretendard-Regular", sans-serif;
     .likeIcon {
         margin-right: 10px;
     }
-
-    // &.liked {
-    //   // border-color: #EA4B48;
-    // }
-
-    // &.not-liked {
-    //   // border-color: #B0B0B0;
-    // }
 }
 
 .replyIcon {
@@ -180,6 +172,7 @@ $font-family: "Pretendard-Regular", sans-serif;
     border: 1px solid #e5e5e5;
     border-radius: 20px;
     margin-right: 10px;
+    outline: none;
 }
 
 .full-width-reply-input-field {
@@ -191,6 +184,7 @@ $font-family: "Pretendard-Regular", sans-serif;
     margin-right: 10px;
     width: 100%;
     font-family: $font-family;
+    outline: none;
 }
 
 .submit-button {
