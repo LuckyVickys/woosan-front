@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getReportList } from "../../api/adminApi";
 import useCustomReportMove from "../../hooks/useCustomReportMove";
 import ReportListPageComponent from "../adminPage/element/ReportListPageComponent";
-import TableRowComponent from "../adminPage/element/TableRowComponent";
+import ReportTableRowComponent from "../adminPage/element/ReportTableRowComponent";
 import "../../assets/styles/App.scss";
 
 const initState = {
@@ -59,7 +59,7 @@ const ReportListComponent = () => {
                         </thead>
                         <tbody>
                             {reportData.dtoList.map((item) => (
-                                <TableRowComponent
+                                <ReportTableRowComponent
                                     key={item.id}
                                     item={item}
                                     onClick={() => handleReportClick(item.id)}
