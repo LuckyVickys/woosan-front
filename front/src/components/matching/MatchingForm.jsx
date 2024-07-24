@@ -82,7 +82,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
         if (!content) newErrors.content = '모임 소개를 입력해주세요';
         if (!placeName) newErrors.placeName = '모임 장소를 입력해주세요';
         if (!meetDate) newErrors.meetDate = '모임 날짜 / 시간을 입력해주세요';
-        if (Object.keys(tags).length === 0) newErrors.tags = '태그를 입력해주세요';
+        if (Object.keys(tags).length === 0) newErrors.tags = '모임 태그를 입력해주세요';
         if (!headCount) newErrors.headCount = '모집 인원을 입력해주세요';
 
         if (matchingType === 3) {
@@ -146,8 +146,38 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
     };
 
     const handleInputChange = (setter) => (e) => {
-        setter(e.target.value);
-        setErrors((prevErrors) => ({ ...prevErrors, [e.target.id]: '' }));
+        const { id, value } = e.target;
+        if (id === 'tagInput' && value.length > 6) return;
+        if (id === 'title' && value.length > 30) return;
+        
+        setter(value);
+        setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
+
+        if (id === 'tagInput') {
+            if (value.length < 2 || value.length > 6) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    tagInput: '태그는 2글자에서 최대 6글자까지 입력 가능합니다'
+                }));
+            } else {
+                setErrors((prevErrors) => {
+                    const { tagInput, ...rest } = prevErrors;
+                    return rest;
+                });
+            }
+        } else if (id === 'title') {
+            if (value.length < 2 || value.length > 30) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    title: '모임명은 2글자에서 최대 30글자까지 입력 가능합니다'
+                }));
+            } else {
+                setErrors((prevErrors) => {
+                    const { title, ...rest } = prevErrors;
+                    return rest;
+                });
+            }
+        }
     };
 
     const handleFileChange = (e) => {
@@ -167,10 +197,27 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
 
     const handleTagSubmit = (e) => {
         e.preventDefault();
-        if (tagInput && selectedCategory) {
-            setTags((prevTags) => ({ ...prevTags, [tagInput]: selectedCategory }));
+        if (!selectedCategory) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                category: '모임 태그를 선택해주세요'
+            }));
+            return;
+        }
+        if (tagInput.length >= 2 && tagInput.length <= 6) {
+            setTags({ [tagInput]: selectedCategory });
             setTagInput('');
             setSelectedCategory('');
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                tagInput: '',
+                category: ''
+            }));
+        } else {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                tagInput: '태그는 2글자에서 6글자 사이여야 합니다'
+            }));
         }
     };
 
@@ -188,127 +235,36 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.row}>
-                <div className={styles.formGroup}>
-                    <label htmlFor="category">카테고리</label>
-                    <select
-                        id="category"
-                        value={selectedCategory}
-                        onChange={handleInputChange(setSelectedCategory)}
-                        className={`${styles.categorySelect} ${styles.short}`}
-                    >
-                        <option value="">카테고리를 선택하세요</option>
-                        <option value="romance">연애&사랑</option>
-                        <option value="sports">운동&스포츠</option>
-                        <option value="food">푸드&드링크</option>
-                        <option value="culture">문화&예술</option>
-                        <option value="neighborhood">동네&또래</option>
-                        <option value="study_class">스터디&클래스</option>
-                    </select>
-                    {errors.category && <div className={styles.error}>{errors.category}</div>}
-                    <input
-                        id="tagInput"
-                        value={tagInput}
-                        onChange={handleInputChange(setTagInput)}
-                        placeholder="태그를 입력해주세요"
-                        className={`${styles.tagInput} ${styles.short}`}
-                    />
-                    {errors.tags && <div className={styles.error}>{errors.tags}</div>}
-                    <button onClick={handleTagSubmit} className={styles.addButton}>추가</button>
-                    <div className={styles.tagContainer}>
-                        {Object.keys(tags).map((tag) => (
-                            <div key={tag} className={styles.tag}>
-                                {categoryLabels[tags[tag]]}: {tag}
-                                <button type="button" onClick={() => handleTagRemove(tag)} className={styles.deleteButton}>
-                                    X
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className={`${styles.formGroup} ${styles.short}`}>
-                    <label htmlFor="meetDate">모임 날짜 / 시간</label>
-                    <input
-                        id="meetDate"
-                        type="datetime-local"
-                        value={meetDate}
-                        onChange={handleInputChange(setMeetDate)}
-                        required
-                        placeholder="2024-07-10 00:00"
-                    />
-                    {errors.meetDate && <div className={styles.error}>{errors.meetDate}</div>}
-                </div>
-                <div className={`${styles.formGroup} ${styles.short}`}>
-                    <label htmlFor="headCount">모집 인원</label>
-                    <input
-                        id="headCount"
-                        type="number"
-                        value={headCount}
-                        onChange={handleInputChange(setHeadCount)}
-                        required
-                        placeholder="인원을 입력하세요"
-                    />
-                    {errors.headCount && <div className={styles.error}>{errors.headCount}</div>}
-                </div>
-            </div>
-            <div className={styles.formGroup}>
-                <label htmlFor="title">모임명</label>
-                <input
-                    id="title"
-                    value={title}
-                    onChange={handleInputChange(setTitle)}
-                    required
-                    placeholder="모임명을 입력해주세요"
-                />
-                {errors.title && <div className={styles.error}>{errors.title}</div>}
-            </div>
-            <div className={styles.formGroup}>
-                <label htmlFor="content">모임 소개</label>
-                <textarea
-                    id="content"
-                    value={content}
-                    onChange={handleInputChange(setContent)}
-                    required
-                    placeholder="모임 소개를 입력해주세요"
-                    style={{ height: '210px' }}
-                />
-                {errors.content && <div className={styles.error}>{errors.content}</div>}
-            </div>
-            <LocationField
-                placeName={placeName}
-                setPlaceName={setPlaceName}
-                locationX={locationX}
-                setLocationX={setLocationX}
-                locationY={locationY}
-                setLocationY={setLocationY}
-                address={address}
-                setAddress={setAddress}
-            />
-            {errors.placeName && <div className={styles.error}>{errors.placeName}</div>}
-            <div className={styles.formGroup}>
-                <label htmlFor="fileUpload" className={styles.label}>첨부파일</label>
-                <input
-                    id="fileUpload"
-                    name="fileUpload"
-                    type="file"
-                    ref={uploadRef}
-                    multiple
-                    onChange={handleFileChange}
-                    className={styles.input}
-                />
-                <div className={styles.fileList}>
-                    {files.map((file, index) => (
-                        <div key={index} className={styles.fileItem}>
-                            <span>{file.name || file}</span>
-                            <button type="button" onClick={() => handleRemoveFile(index)} className={styles.deleteButton}>
-                                X
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            {matchingType === 3 && (
+            {matchingType === 3 ? (
                 <>
+                    <div className={styles.inlineFormGroup}>
+                        <div className={`${styles.formGroup} ${styles.inline}`}>
+                            <label htmlFor="location">지역</label>
+                            <input
+                                id="location"
+                                value={location}
+                                onChange={handleInputChange(setLocation)}
+                                className="locationInput" /* 지역 입력창 */
+                                placeholder="지역을 입력해주세요 ex)강남구"
+                            />
+                            {errors.location && <div className={styles.error}>{errors.location}</div>}
+                        </div>
+                        <div className={`${styles.formGroup} ${styles.inline}`}>
+                            <label htmlFor="mbti">MBTI</label>
+                            <select
+                                id="mbti"
+                                value={mbti}
+                                onChange={handleInputChange(setMbti)}
+                                className="mbtiInput" /* MBTI 입력창 */
+                            >
+                                <option value="">MBTI를 선택해주세요</option>
+                                {Object.values(MBTI).map(mbtiType => (
+                                    <option key={mbtiType} value={mbtiType}>{mbtiType}</option>
+                                ))}
+                            </select>
+                            {errors.mbti && <div className={styles.error}>{errors.mbti}</div>}
+                        </div>
+                    </div>
                     <div className={styles.inlineFormGroup}>
                         <div className={`${styles.formGroup} ${styles.inline}`}>
                             <label>성별</label>
@@ -343,7 +299,6 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 type="number"
                                 value={age}
                                 onChange={handleInputChange(setAge)}
-                                required
                                 placeholder="나이를 입력해주세요"
                             />
                             {errors.age && <div className={styles.error}>{errors.age}</div>}
@@ -355,38 +310,9 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 type="number"
                                 value={height}
                                 onChange={handleInputChange(setHeight)}
-                                required
                                 placeholder="키를 입력해주세요"
                             />
                             {errors.height && <div className={styles.error}>{errors.height}</div>}
-                        </div>
-                    </div>
-                    <div className={styles.inlineFormGroup}>
-                        <div className={`${styles.formGroup} ${styles.inline}`}>
-                            <label htmlFor="mbti">MBTI</label>
-                            <select
-                                id="mbti"
-                                value={mbti}
-                                onChange={handleInputChange(setMbti)}
-                                required
-                            >
-                                <option value="">MBTI를 선택해주세요</option>
-                                {Object.values(MBTI).map(mbtiType => (
-                                    <option key={mbtiType} value={mbtiType}>{mbtiType}</option>
-                                ))}
-                            </select>
-                            {errors.mbti && <div className={styles.error}>{errors.mbti}</div>}
-                        </div>
-                        <div className={`${styles.formGroup} ${styles.inline}`}>
-                            <label htmlFor="location">지역</label>
-                            <input
-                                id="location"
-                                value={location}
-                                onChange={handleInputChange(setLocation)}
-                                required
-                                placeholder="지역을 입력해주세요 ex)강남구"
-                            />
-                            {errors.location && <div className={styles.error}>{errors.location}</div>}
                         </div>
                     </div>
                     <div className={styles.formGroup}>
@@ -395,13 +321,200 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                             id="introduce"
                             value={introduce}
                             onChange={handleInputChange(setIntroduce)}
-                            required
                             placeholder="소개를 입력해주세요 ex) 런닝과 맛집을 좋아합니다"
                         />
                         {errors.introduce && <div className={styles.error}>{errors.introduce}</div>}
                     </div>
+                    <div className={styles.inlineFormGroup}>
+                        <div className={`${styles.formGroup} ${styles.short}`}>
+                            <label htmlFor="category">모임 태그</label>
+                            <select
+                                id="category"
+                                value={selectedCategory}
+                                onChange={handleInputChange(setSelectedCategory)}
+                                className="categorySelect" /* 모임 태그 선택창 */
+                            >
+                                <option value="">모임 태그를 선택하세요</option>
+                                <option value="romance">연애&사랑</option>
+                                <option value="sports">운동&스포츠</option>
+                                <option value="food">푸드&드링크</option>
+                                <option value="culture">문화&예술</option>
+                                <option value="neighborhood">동네&또래</option>
+                                <option value="study_class">스터디&클래스</option>
+                            </select>
+                            {errors.category && <div className={styles.error}>{errors.category}</div>}
+                            <input
+                                id="tagInput"
+                                value={tagInput}
+                                onChange={handleInputChange(setTagInput)}
+                                className="tagInput" /* 태그 입력창 */
+                                placeholder="상세 태그를 입력해주세요"
+                                maxLength="6"
+                            />
+                            {errors.tagInput && <div className={styles.error}>{errors.tagInput}</div>}
+                            <button onClick={handleTagSubmit} className={styles.addButton}>추가</button>
+                            <div className={styles.tagContainer}>
+                                {Object.keys(tags).map((tag) => (
+                                    <div key={tag} className={styles.tag}>
+                                        {categoryLabels[tags[tag]]}: {tag}
+                                        <button type="button" onClick={() => handleTagRemove(tag)} className={styles.deleteButton}>
+                                            X
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                            {errors.tags && <div className={styles.error}>{errors.tags}</div>}
+                        </div>
+                        <div className={`${styles.formGroup} ${styles.short}`}>
+                            <label htmlFor="meetDate">모임 날짜 / 시간</label>
+                            <input
+                                id="meetDate"
+                                type="datetime-local"
+                                value={meetDate}
+                                onChange={handleInputChange(setMeetDate)}
+                                className="meetDateInput" /* 모임 날짜 입력창 */
+                                placeholder="2024-07-10 00:00"
+                            />
+                            {errors.meetDate && <div className={styles.error}>{errors.meetDate}</div>}
+                        </div>
+                        <div className={`${styles.formGroup} ${styles.short}`}>
+                            <label htmlFor="headCount">모집 인원</label>
+                            <input
+                                id="headCount"
+                                type="number"
+                                value={headCount}
+                                onChange={handleInputChange(setHeadCount)}
+                                className="headCountInput" /* 모집 인원 입력창 */
+                                placeholder="인원을 입력하세요"
+                            />
+                            {errors.headCount && <div className={styles.error}>{errors.headCount}</div>}
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className={styles.inlineFormGroup}>
+                        <div className={`${styles.formGroup} ${styles.short}`}>
+                            <label htmlFor="category">모임 태그</label>
+                            <select
+                                id="category"
+                                value={selectedCategory}
+                                onChange={handleInputChange(setSelectedCategory)}
+                                className="categorySelect" /* 모임 태그 선택창 */
+                            >
+                                <option value="">모임 태그를 선택하세요</option>
+                                <option value="romance">연애&사랑</option>
+                                <option value="sports">운동&스포츠</option>
+                                <option value="food">푸드&드링크</option>
+                                <option value="culture">문화&예술</option>
+                                <option value="neighborhood">동네&또래</option>
+                                <option value="study_class">스터디&클래스</option>
+                            </select>
+                            {errors.category && <div className={styles.error}>{errors.category}</div>}
+                            <input
+                                id="tagInput"
+                                value={tagInput}
+                                onChange={handleInputChange(setTagInput)}
+                                className="tagInput" /* 태그 입력창 */
+                                placeholder="상세 태그를 입력해주세요"
+                                maxLength="6"
+                            />
+                            {errors.tagInput && <div className={styles.error}>{errors.tagInput}</div>}
+                            <button onClick={handleTagSubmit} className={styles.addButton}>추가</button>
+                            <div className={styles.tagContainer}>
+                                {Object.keys(tags).map((tag) => (
+                                    <div key={tag} className={styles.tag}>
+                                        {categoryLabels[tags[tag]]}: {tag}
+                                        <button type="button" onClick={() => handleTagRemove(tag)} className={styles.deleteButton}>
+                                            X
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                            {errors.tags && <div className={styles.error}>{errors.tags}</div>}
+                        </div>
+                        <div className={`${styles.formGroup} ${styles.short}`}>
+                            <label htmlFor="meetDate">모임 날짜 / 시간</label>
+                            <input
+                                id="meetDate"
+                                type="datetime-local"
+                                value={meetDate}
+                                onChange={handleInputChange(setMeetDate)}
+                                className="meetDateInput" /* 모임 날짜 입력창 */
+                                placeholder="2024-07-10 00:00"
+                            />
+                            {errors.meetDate && <div className={styles.error}>{errors.meetDate}</div>}
+                        </div>
+                        <div className={`${styles.formGroup} ${styles.short}`}>
+                            <label htmlFor="headCount">모집 인원</label>
+                            <input
+                                id="headCount"
+                                type="number"
+                                value={headCount}
+                                onChange={handleInputChange(setHeadCount)}
+                                className="headCountInput" /* 모집 인원 입력창 */
+                                placeholder="인원을 입력하세요"
+                            />
+                            {errors.headCount && <div className={styles.error}>{errors.headCount}</div>}
+                        </div>
+                    </div>
                 </>
             )}
+            <div className={styles.formGroup}>
+                <label htmlFor="title">모임명</label>
+                <input
+                    id="title"
+                    value={title}
+                    onChange={handleInputChange(setTitle)}
+                    className="titleInput" /* 모임명 입력창 */
+                    placeholder="모임명을 입력해주세요"
+                    maxLength="30"
+                />
+                {errors.title && <div className={styles.error}>{errors.title}</div>}
+            </div>
+            <div className={styles.formGroup}>
+                <label htmlFor="content">모임 소개</label>
+                <textarea
+                    id="content"
+                    value={content}
+                    onChange={handleInputChange(setContent)}
+                    className="contentInput" /* 모임 소개 입력창 */
+                    placeholder="모임 소개를 입력해주세요"
+                    style={{ height: '210px' }}
+                />
+                {errors.content && <div className={styles.error}>{errors.content}</div>}
+            </div>
+            <LocationField
+                placeName={placeName}
+                setPlaceName={setPlaceName}
+                setLocationX={setLocationX}
+                setLocationY={setLocationY}
+                address={address}
+                setAddress={setAddress}
+            />
+            {errors.placeName && <div className={styles.error}>{errors.placeName}</div>}
+            <div className={styles.formGroup}>
+                <label htmlFor="fileUpload" className={styles.label}>첨부파일</label>
+                <input
+                    id="fileUpload"
+                    name="fileUpload"
+                    type="file"
+                    ref={uploadRef}
+                    multiple
+                    onChange={handleFileChange}
+                    className="fileUploadInput" /* 파일 업로드 입력창 */
+                />
+                <div className={styles.fileList}>
+                    {files.map((file, index) => (
+                        <div key={index} className={styles.fileItem}>
+                            <span>{file.name || file}</span>
+                            <button type="button" onClick={() => handleRemoveFile(index)} className={styles.deleteButton}>
+                                X
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </div>
             <div className={styles.formButtons}>
                 <button type="submit" className={styles.submitButton}>
                     저장

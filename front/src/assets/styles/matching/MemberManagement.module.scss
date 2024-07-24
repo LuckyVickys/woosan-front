@@ -1,5 +1,10 @@
 @import '../Font.scss';
 
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+
 .container {
     padding: 0px;
     border: 1px solid #ddd;
@@ -10,6 +15,12 @@
     position: relative; /* 제목 상단 고정용 */
     display: flex;
     flex-direction: column;
+
+    .emptyMessage {
+        text-align: center;
+        color: #888;
+        padding: 20px;
+    }
 }
 
 h3 {

@@ -77,7 +77,7 @@
 }
 
 .timeButton {
-    background-color: #f0f0f0;
+    background-color: #fff;
     color: black;
     border: 1px solid #ccc;
     padding: 10px 20px;
@@ -86,13 +86,15 @@
     cursor: pointer;
     flex: 0 0 auto;
     white-space: nowrap;
-}
+    transition: background-color 0.3s, color 0.3s;
 
-.timeButton:hover {
-    background-color: #e0e0e0;
-}
+    &.selected {
+        background-color: #2388FF;
+        color: white;
+    }
 
-.selected {
-    background-color: #2388FF;
-    color: white;
+    &:hover {
+        background-color: #00B207;
+        color: white;
+    }
 }

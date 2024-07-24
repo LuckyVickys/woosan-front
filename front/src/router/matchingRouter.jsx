@@ -30,7 +30,7 @@ const matchingRouter = ()=> {
             element: <Suspense fallback={Loading}><SelfPage/></Suspense>
         },
         {
-            path: "createMatching",
+            path: "create",
             element: <Suspense fallback={Loading}><CreateMatchingPage/></Suspense>
         },
         {

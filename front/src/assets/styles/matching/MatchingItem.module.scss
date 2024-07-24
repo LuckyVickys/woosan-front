@@ -1,5 +1,10 @@
 @import '../Font.scss';
 
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+
 .matchingItemCard {
     width: 460px;  // 카드 넓이
     height: auto;  // 카드 높이
@@ -56,6 +61,7 @@
                 white-space: nowrap;  // 텍스트가 한 줄에 표시되도록 함
                 overflow: hidden;  // 넘치는 텍스트를 숨김
                 text-overflow: ellipsis;  // 넘치는 텍스트를 ...로 표시
+                max-width: 80px; // 최대 너비 제한
             }
 
             .tag {
@@ -67,6 +73,7 @@
                 white-space: nowrap;  // 텍스트가 한 줄에 표시되도록 함
                 overflow: hidden;  // 넘치는 텍스트를 숨김
                 text-overflow: ellipsis;  // 넘치는 텍스트를 ...로 표시
+                max-width: 100px; // 최대 너비 제한
             }
         }
 
@@ -77,6 +84,10 @@
             white-space: nowrap;  // 텍스트가 한 줄에 표시되도록 함
             overflow: hidden;  // 넘치는 텍스트를 숨김
             text-overflow: ellipsis;  // 넘치는 텍스트를 ...로 표시
+            max-width: 300px; // 최대 너비 제한
+            display: -webkit-box;
+            -webkit-line-clamp: 1; // 최대 1줄 표시
+            -webkit-box-orient: vertical;
         }
 
         .details {
@@ -91,8 +102,9 @@
                 display: flex;
                 align-items: center;
                 white-space: nowrap;  // 텍스트가 한 줄에 표시되도록 함
-                overflow: hidden;  // 넘치는 텍스트를 숨김
+                overflow:hidden;  // 넘치는 텍스트를 숨김
                 text-overflow: ellipsis;  // 넘치는 텍스트를 ...로 표시
+                max-width: 140px; // 최대 너비 제한
 
                 strong {
                     display: flex;
@@ -109,6 +121,11 @@
                     height: 20px;
                     display: inline-block;
                     background-size: contain;
+                }
+
+                .location {
+                    max-width: 100px; // 주소의 최대 너비 제한
+                    
                 }
 
                 .gender {

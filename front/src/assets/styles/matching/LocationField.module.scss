@@ -1,5 +1,10 @@
 @import '../Font.scss';
 
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+
 .formGroup {
     display: flex;
     flex-direction: column; /* 수평 수직 정렬로 변경 */

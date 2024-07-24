@@ -34,7 +34,7 @@ const SelfPage = ({ userGender }) => {
         if (!isLogin) {
             moveToLoginReturn();
         } else {
-            navigate('/matching/CreateMatching');
+            navigate('/matching/create');
         }
     };
 
