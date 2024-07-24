@@ -32,7 +32,6 @@ export const createNotice = async (formData, header) => {
 };
 
 export const getOne = async (id) => {
-    console.log("Fetching data for ID:", id);
     try {
         const res = await axios.get(`${prefix}/notices/${id}/modify`);
         return res.data;
@@ -87,7 +86,6 @@ export const getReportList = async (pageParam) => {
 };
 
 export const getReport = async (id) => {
-    console.log("Fetching data for report:", id);
     try {
         const res = await axios.get(`${prefix}/report/${id}`);
         return res.data;
@@ -101,7 +99,6 @@ export const getReport = async (id) => {
 };
 
 export const getTarget = async (id, type) => {
-    console.log("Target for report:", id, type);
     try {
         const res = await axios.get(`${prefix}/report/target`, {
             params: { id: id, type: type },
@@ -117,7 +114,6 @@ export const getTarget = async (id, type) => {
 };
 
 export const checkReport = async (id) => {
-    console.log("Checking data for report:", id);
     try {
         const res = await axios.post(`${prefix}/report/${id}`);
         return res.data;

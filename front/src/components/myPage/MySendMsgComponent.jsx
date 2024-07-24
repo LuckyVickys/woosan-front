@@ -1,4 +1,3 @@
-// MySendMsgComponent.jsx
 import React from "react";
 import { useSelector } from "react-redux";
 import useCustomMsgMove from "../../hooks/useCustomMsgMove";

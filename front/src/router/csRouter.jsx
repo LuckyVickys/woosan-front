@@ -5,7 +5,6 @@ const Loading = <div>Loading....</div>
 
 const Notices = lazy(() => import("../pages/cs/notices/ListPage"))
 const ReadPage = lazy(() => import("../pages/cs/notices/ReadPage"))
-const Event = lazy(() => import("../pages/cs/EventPage"))
 
 const csRouter = () => {
     return [
@@ -17,12 +16,6 @@ const csRouter = () => {
             path: "notices",
             element: <Suspense fallback={Loading}><Notices /></Suspense>
         },
-        {
-            path: "event",
-            element: <Suspense fallback={Loading}><Event /></Suspense>
-        },
-
-
         {
             path: "notices/:id",
             element: <Suspense fallback={Loading}><ReadPage /></Suspense>

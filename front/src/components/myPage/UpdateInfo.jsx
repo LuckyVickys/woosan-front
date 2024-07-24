@@ -8,15 +8,15 @@ import Swal from "sweetalert2";
 
 const UpdateInfo = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const memberId = loginState.id; // 로그인된 회원의 ID를 가져옴
+    const memberId = loginState.id;
     const token = loginState.accessToken;
     const [userData, setUserData] = useState(null);
     const [updateNickname, setUpdateNickname] = useState(false);
     const [nicknameAvailable, setNicknameAvailable] = useState(false);
     const [nicknameError, setNicknameError] = useState("");
-    const [nicknameChecked, setNicknameChecked] = useState(false); // 닉네임 중복 체크 여부를 관리하는 상태
+    const [nicknameChecked, setNicknameChecked] = useState(false);
 
-    const [checkNickName, setCheckNickName] = useState(true); // checkNickName을 상태로 변경
+    const [checkNickName, setCheckNickName] = useState(true);
 
     const [formData, setFormData] = useState({
         nickname: "",
@@ -26,10 +26,10 @@ const UpdateInfo = () => {
         height: "",
         mbti: "",
         introduce: "",
-        point: loginState.point || 0, // 초기 point 값을 loginState에서 가져옴
-        nextPoint: loginState.nextPoint || 0, // 초기 nextPoint 값을 loginState에서 가져옴
-        fileImg: null, // 초기 fileImg 값을 null로 설정
-        fileImgURL: "", // 이미지 URL을 저장하기 위한 필드
+        point: loginState.point || 0,
+        nextPoint: loginState.nextPoint || 0,
+        fileImg: null,
+        fileImgURL: "",
     });
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const UpdateInfo = () => {
                     setUserData(userData);
 
                     const memberData = await getMember(userData.id);
-                    console.log("Fetched member data:", memberData); // 콘솔에 데이터 출력
+                    console.log("Fetched member data:", memberData);
                     setFormData((prevData) => ({
                         ...prevData,
                         nickname: memberData.nickname || "",
@@ -54,8 +54,8 @@ const UpdateInfo = () => {
                         introduce: memberData.introduce || "",
                         point: memberData.point || loginState.point || 0,
                         nextPoint: memberData.nextPoint || loginState.nextPoint || 0,
-                        fileImg: null, // fileImg 값을 null로 설정
-                        fileImgURL: memberData.fileImg?.[0] || "", // 이미지 URL 설정
+                        fileImg: null,
+                        fileImgURL: memberData.fileImg?.[0] || "",
                     }));
                 } catch (error) {
                     Swal.fire({
@@ -84,7 +84,6 @@ const UpdateInfo = () => {
             [name]: value,
         }));
 
-        // 닉네임 입력 중에는 에러 메시지 초기화
         if (name === "nickname") {
             setNicknameError("");
             setNicknameAvailable(false);
@@ -98,8 +97,8 @@ const UpdateInfo = () => {
             const fileURL = URL.createObjectURL(file);
             setFormData((prevData) => ({
                 ...prevData,
-                fileImg: file, // 파일 객체 저장
-                fileImgURL: fileURL, // 이미지 URL 설정
+                fileImg: file,
+                fileImgURL: fileURL,
             }));
         }
     };
@@ -139,7 +138,7 @@ const UpdateInfo = () => {
                 "원래 화면으로 돌아갑니다.",
                 "success"
             ).then(() => {
-                window.location.reload(); // 현재 페이지 리다이렉트
+                window.location.reload();
             });
         } catch (error) {
             console.error("Error updating information:", error);
@@ -150,11 +149,9 @@ const UpdateInfo = () => {
     const progressBarWidth = formData.nextPoint > 0 ? `${(formData.point / formData.nextPoint) * 100}%` : "0%";
 
     const isValidNickname = (nickname) => {
-        // 한글 자모음 제외, 특수문자 제외 1~8자
         return /^[가-힣a-zA-Z0-9]{1,8}$/.test(nickname);
     };
 
-    // 닉네임 중복 체크
     const handleCheckNickname = async () => {
         if (!formData.nickname) {
             setNicknameError("필수 입력 사항입니다.");
@@ -169,19 +166,19 @@ const UpdateInfo = () => {
             if (nicknameResponse === false) {
                 setNicknameError("사용 가능한 닉네임입니다.");
                 setNicknameAvailable(true);
-                setCheckNickName(true); // 닉네임 체크 통과
+                setCheckNickName(true);
             }
         } catch (error) {
             setNicknameError("이미 존재하는 닉네임입니다.");
             setNicknameAvailable(false);
-            setCheckNickName(false); // 닉네임 체크 실패
+            setCheckNickName(false);
         } finally {
-            setNicknameChecked(true); // 중복 체크 완료 상태 설정
+            setNicknameChecked(true);
         }
     };
 
     const handleNicknameChange = () => {
-        setCheckNickName(false); // 닉네임 변경 시 중복 체크 다시 필요
+        setCheckNickName(false);
         if (!updateNickname) {
             setUpdateNickname(true);
         } else {

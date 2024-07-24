@@ -2,8 +2,7 @@ import axios from 'axios';
 import { API_SERVER_HOST } from './boardApi.js';
 import { getCookie } from '../util/cookieUtil.jsx';
 
-// const host = `${API_SERVER_HOST}/api/my`;
-const host = `http://localhost:80/api/my`;
+const host = `${API_SERVER_HOST}/api/my`;
 
 // 마이페이지 댓글 목록
 export const getMyReplies = async (params) => {
@@ -90,8 +89,6 @@ export const delSendMessage = async (id, token) => {
               'Content-Type': 'application/json'
             }
           });
-        // const response = await axios.put(`${host}/message/del/send?id=${id}`);
-        console.log(response.data);
         return response.data;
     } catch(error) {
         console.error('Error fetching my receive messages: ', error.response ? error.response.data : error.message);
@@ -111,7 +108,6 @@ export const delReceiveMessage = async (id, token) => {
               'Content-Type': 'application/json'
             }
           });
-        console.log(response.data);
         return response.data;
     } catch(error) {
         console.error('Error deleting my receive messsage: ', error.response ? error.response.data : error.message);
@@ -131,10 +127,9 @@ export const getMessage = async (id, token) => {
               'Content-Type': 'application/json'
             }
           });
-        console.log(response.data);
         return response.data;
     } catch(error) {
-        console.log('Error fetching my message: ', error.response ? error.response.data : error.message)
+        console.error('Error fetching my message: ', error.response ? error.response.data : error.message)
         throw error;
     }
 }

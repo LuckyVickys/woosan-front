@@ -16,10 +16,6 @@ const IndexPage = () => {
             sub = "공지사항";
             info = "우리는 함께 산다에서 알려드립니다.";
             break;
-        case "/cs/event/":
-            sub = "이벤트";
-            info = "포인트를 받을 수 있는 기회!";
-            break;
         default:
             sub = "공지사항";
             info = "우리는 함께 산다에서 알려드립니다.";

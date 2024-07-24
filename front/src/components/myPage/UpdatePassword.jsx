@@ -35,7 +35,6 @@ const UpdatePassword = () => {
     const [updatePW, setUpdatePW] = useState(false);
 
     const isValidPassword = (password) => {
-        // 특수문자 ('~', '^', ',')를 제외하고, 영문, 숫자, 특수문자 조합하여 8~16자
         return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,16}$/.test(
             password
         );
@@ -144,7 +143,6 @@ const UpdatePassword = () => {
                             title: "회원 탈퇴 성공",
                             text: "회원 탈퇴가 완료되었습니다."
                         }).then(() => {
-                            // 회원 탈퇴 후 처리
                             dispatch(logout());
                         });
                     } catch(error) {

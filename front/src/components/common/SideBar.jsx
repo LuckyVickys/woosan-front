@@ -368,27 +368,6 @@ const SideBar = ({ pageType }) => {
                                 공지사항
                             </button>
                         </div>
-                        <div
-                            className={`sub-category ${
-                                activeCategory === "event" ? "active" : ""
-                            }`}
-                        >
-                            <button
-                                onClick={() => handleNavigation("event")}
-                                className={
-                                    activeCategory === "event" ? "active" : ""
-                                }
-                            >
-                                <FaGift
-                                    className={`icon ${
-                                        activeCategory === "event"
-                                            ? "active"
-                                            : ""
-                                    }`}
-                                />
-                                이벤트
-                            </button>
-                        </div>
                     </>
                 )}
                 {pageType === "mypage" && (
