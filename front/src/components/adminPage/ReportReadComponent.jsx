@@ -72,7 +72,6 @@ const ReportReadComponent = () => {
         if (report.type === "board" || report.type === "reply") {
             moveToRead(target.targetId, "/board");
         } else if (report.type === "message") {
-            console.log("쪽지 열림", selectedMsg.id);
             setOpenMsgModal(true);
         }
     };

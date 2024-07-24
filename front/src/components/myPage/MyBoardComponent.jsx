@@ -31,9 +31,6 @@ const MyBoardComponent = () => {
     useEffect(() => {
         const currentPage = page || 1;
         const currentSize = size || 10;
-        console.log(
-            `Fetching data with page: ${currentPage}, size: ${currentSize}`
-        );
         const params = {
             memberId: loginState.id,
             pageRequestDTO: {
@@ -43,7 +40,6 @@ const MyBoardComponent = () => {
         };
         getMyBoard(params)
             .then((data) => {
-                console.log("Fetched data:", data);
                 setServerData(data);
             })
             .catch((err) => {

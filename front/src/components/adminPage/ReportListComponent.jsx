@@ -29,7 +29,6 @@ const ReportListComponent = () => {
     useEffect(() => {
         getReportList({ page, size })
             .then((data) => {
-                console.log("Fetched data:", data);
                 setReportData(data);
             })
             .catch((err) => {
@@ -39,7 +38,6 @@ const ReportListComponent = () => {
 
     const handleReportClick = (id) => {
         moveToRead(id);
-        console.log("HandleRowClick:", reportData);
     };
 
     return (
