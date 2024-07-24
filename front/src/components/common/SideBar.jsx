@@ -25,7 +25,7 @@ const SideBar = ({ pageType }) => {
         const pathSegments = location.pathname.split("/"); // URL에서 categoryName 추출
         const categoryName = pathSegments[2];
         setActiveCategory(categoryName || "");
-    }, [location]);
+    }, [location.pathname]);
 
     // 카테고리 클릭 시 URL을 변경하고 activeCategory 상태를 업데이트
     const handleNavigation = (categoryName) => {
