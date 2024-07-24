@@ -266,6 +266,7 @@ header {
     }
 }
 
+// Nav
 nav {
     display: flex;
     justify-content: space-between;
@@ -332,10 +333,10 @@ nav {
                 width: 20px;
                 height: 20px;
                 border-radius: 10%;
-                background-color: #00b207; // 배경색을 원하는 색상으로 변경
-                color: #fff; // 텍스트 색상
+                background-color: #00b207;
+                color: #fff; 
                 font-weight: bold;
-                margin-right: 10px; // 텍스트와의 간격
+                margin-right: 10px;
             }
 
             .icon-up {
@@ -669,13 +670,10 @@ a {
 .notFound-container {
     display: flex;
     flex-direction: column;
-    /* 세로 방향 정렬 */
     justify-content: center;
     align-items: center;
     height: auto;
-    /* 화면 높이 전체를 사용 */
     background-color: #f0f0f0;
-    /* 필요에 따라 배경색을 설정 */
 }
 
 .notFound {
@@ -687,12 +685,10 @@ a {
 
 .notFoundBtn {
     margin-top: 20px;
-    /* 버튼과 이미지 사이에 간격을 줍니다 */
     padding: 10px 20px;
     font-size: 16px;
     color: white;
     background-color: #9bcc66;
-    /* 버튼 배경색을 9BCC66으로 변경 */
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -702,5 +698,4 @@ a {
 
 .notFoundBtn:hover {
     background-color: #7faf4e;
-    /* 버튼 hover 시 색깔을 약간 어둡게 설정 */
 }

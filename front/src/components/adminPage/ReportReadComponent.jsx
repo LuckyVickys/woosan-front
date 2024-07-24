@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { useParams } from "react-router-dom";
 import { getReport, getTarget, checkReport } from "../../api/adminApi";
-import {
-    getMessage,
-    delReceiveMessage,
-    delSendMessage,
-} from "../../api/myPageApi";
+import { getMessage, delReceiveMessage, delSendMessage } from "../../api/myPageApi";
 import { deleteBoard } from "../../api/boardApi";
 import { deleteReply } from "../../api/replyApi";
 import { formatDate } from "../../util/DateUtil";
@@ -35,7 +31,6 @@ const ReportReadComponent = () => {
     const [reportType, setReportType] = useState(null);
     const [openMsgModal, setOpenMsgModal] = useState(false);
     const [selectedMsg, setSelectedMsg] = useState(null);
-    const [messageId, setMessageId] = useState("");
     const { moveToRead } = useCustomMove();
     const [result, setResult] = useState(false);
 

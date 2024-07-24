@@ -4,7 +4,6 @@ import { API_SERVER_HOST } from "./boardApi.js";
 import { getCookie } from '../util/cookieUtil.jsx';
 
 const host = `${API_SERVER_HOST}/api`;
-// const host = `http://localhost:80/api`;
 
 // 로그인 ==================================================
 export const loginPost = async (loginParam) => {
@@ -28,7 +27,6 @@ export const loginPost = async (loginParam) => {
 
 // 이메일 중복 체크 ==================================================
 export const checkEmail = async (email) => {
-  console.log("Checking email:", email);
   try {
     const response = await axios({
       method: 'GET',
@@ -70,7 +68,6 @@ export const checkNickname = async (nickname, token) => {
 
 // 회원가입 ==================================================
 export const signUp = async (signupData) => {
-  console.log("Signing up with:", signupData);
   try {
     const response = await axios({
       method: 'POST',
@@ -101,7 +98,6 @@ export const sendEmail = async (email, token) => {
         'Content-Type': 'application/json'
       }
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(
@@ -114,7 +110,6 @@ export const sendEmail = async (email, token) => {
 
 // 비밀번호 변경 ==================================================
 export const updatePassword = async (updateData, token) => {
-  console.log("Checking Password:", updateData);
   try {
     const response = await axios({
       method: 'PUT',
@@ -147,7 +142,6 @@ export const getMemberWithEmail = async (email, token) => {
         'Content-Type': 'application/json'
       }
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
       console.error(
@@ -168,7 +162,6 @@ export const createJoinCodeMail = async (email) => {
         'Content-Type': 'application/json'
       }
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(
@@ -212,7 +205,6 @@ export const deleteMember = async (data, token) => {
             'Content-Type': 'application/json'
           }
         });
-      console.log(response.data);
       return response.data;
   } catch(error) {
       console.log('Error deleting member: ', error.response ? error.response.data : error.message)

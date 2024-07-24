@@ -18,12 +18,6 @@ const csRouter = () => {
             element: <Suspense fallback={Loading}><Notices /></Suspense>
         },
         {
-            path: "event",
-            element: <Suspense fallback={Loading}><Event /></Suspense>
-        },
-
-
-        {
             path: "notices/:id",
             element: <Suspense fallback={Loading}><ReadPage /></Suspense>
         },

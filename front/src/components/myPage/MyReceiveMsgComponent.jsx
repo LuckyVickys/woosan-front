@@ -1,5 +1,4 @@
-// MyReceiveMsgComponent.jsx
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import useCustomMsgMove from "../../hooks/useCustomMsgMove";
 import { delReceiveMessage, getReceiveMessage } from "../../api/myPageApi";

@@ -52,7 +52,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
   }
 }
 
-.board-header { /* Updated from .header */
+.board-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -98,8 +98,6 @@ $font-family: 'Pretendard-Regular', sans-serif;
       align-items: center;
       padding: 5px 10px;
       background-color: transparent;
-      // border: 1px solid $secondary-color;
-      // border-radius: 5px;
       cursor: pointer;
       margin-right: 10px;
 

@@ -4,7 +4,6 @@ import { API_SERVER_HOST } from "./boardApi.js";
 const host = `${API_SERVER_HOST}/api/memberprofile`;
 
 export const getMember = async (id) => {
-  console.log("Fetching data for ID:", id);
   try {
     const res = await axios.get(`${host}/${id}`);
     return res.data;

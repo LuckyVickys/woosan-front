@@ -12,9 +12,3 @@ export const getBest = async () => {
     const res = await axios.get(`${host}/board/best`);
     return res.data;
 }
-
-// 모임 API 부분 주석 처리
-// export const getNewMatching = async () => {
-//     const res = await axios.get(`${host}/matching/`);
-//     return res.data;
-// }
