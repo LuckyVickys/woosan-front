@@ -108,7 +108,6 @@ const AddComponent = ({ titleBarText, category }) => {
     try {
       const header = { headers: { "Content-Type": "multipart/form-data" } };
       await createBoard(formData, header);
-      console.log("저장 성공");
       navigate("/board");
     } catch (error) {
       console.error("저장 실패", error);

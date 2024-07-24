@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import '../../assets/styles/App.scss';
-import useCustomLogin from '../../hooks/useCustomLogin';        // 혜리 추가
-import LoginModal from '../../components/member/LoginModal';    // 혜리 추가
+import React, { useState, useRef, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import "../../assets/styles/App.scss";
+import useCustomLogin from "../../hooks/useCustomLogin"; // 혜리 추가
+import LoginModal from "../../components/member/LoginModal"; // 혜리 추가
 
 import { autocomplete, saveSearchKeyword } from "../../api/boardApi";
 
@@ -11,7 +11,7 @@ const AutocompleteDropdown = ({ suggestions, onSelect, highlightedIndex }) => (
     {suggestions.map((suggestion, index) => (
       <li
         key={index}
-        className={index === highlightedIndex ? 'highlighted' : ''}
+        className={index === highlightedIndex ? "highlighted" : ""}
         onMouseDown={() => onSelect(suggestion)}
       >
         {suggestion}
@@ -23,7 +23,9 @@ const AutocompleteDropdown = ({ suggestions, onSelect, highlightedIndex }) => (
 const CategoryDropdown = ({ categories, onSelect }) => (
   <ul className="dropdown-list">
     {categories.map((category, index) => (
-      <li key={index} onClick={() => onSelect(category.value)}>{category.label}</li>
+      <li key={index} onClick={() => onSelect(category.value)}>
+        {category.label}
+      </li>
     ))}
   </ul>
 );
@@ -31,7 +33,9 @@ const CategoryDropdown = ({ categories, onSelect }) => (
 const FilterDropdown = ({ filters, onSelect }) => (
   <ul className="dropdown-list">
     {filters.map((filter, index) => (
-      <li key={index} onClick={() => onSelect(filter.value)}>{filter.label}</li>
+      <li key={index} onClick={() => onSelect(filter.value)}>
+        {filter.label}
+      </li>
     ))}
   </ul>
 );
@@ -45,15 +49,16 @@ const SearchBar = ({ categories, filters }) => {
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
-  const [selectedCategory, setSelectedCategory] = useState('전체');
-  const [selectedFilter, setSelectedFilter] = useState('title');
-  const [keyword, setKeyword] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("전체");
+  const [selectedFilter, setSelectedFilter] = useState("title");
+  const [keyword, setKeyword] = useState("");
 
   const categoryRef = useRef(null);
   const filterRef = useRef(null);
   const inputRef = useRef(null);
 
-  const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+  const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } =
+    useCustomLogin();
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -80,15 +85,15 @@ const SearchBar = ({ categories, filters }) => {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
+    document.addEventListener("mousedown", handleClick);
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener("mousedown", handleClick);
     };
   }, []);
 
   useEffect(() => {
-    setSelectedCategory('전체');
-    setSelectedFilter('title');
+    setSelectedCategory("전체");
+    setSelectedFilter("title");
     setShowCategoryDropdown(false);
     setShowFilterDropdown(false);
     setAutocompleteSuggestions([]);
@@ -101,14 +106,16 @@ const SearchBar = ({ categories, filters }) => {
       return;
     }
 
-    navigate(`/board/search?category=${selectedCategory}&filter=${selectedFilter}&keyword=${keyword}`);
+    navigate(
+      `/board/search?category=${selectedCategory}&filter=${selectedFilter}&keyword=${keyword}`
+    );
   };
 
   const handleWriteButtonClick = () => {
     if (!isLogin) {
       return moveToLoginReturn();
     } else {
-      navigate('/board/add'); // AddPage 경로로 이동
+      navigate("/board/add"); // AddPage 경로로 이동
     }
   };
 
@@ -119,9 +126,11 @@ const SearchBar = ({ categories, filters }) => {
 
     if (value && selectedCategory && selectedFilter) {
       try {
-        console.log(`Requesting autocomplete for keyword: ${value}, category: ${selectedCategory}, searchType: ${selectedFilter}`);
-        const data = await autocomplete(value, selectedFilter, selectedCategory);
-        console.log("Autocomplete response:", data);
+        const data = await autocomplete(
+          value,
+          selectedFilter,
+          selectedCategory
+        );
         setAutocompleteSuggestions(data.slice(0, 5));
       } catch (error) {
         console.error("Error fetching autocomplete data:", error);
@@ -142,17 +151,17 @@ const SearchBar = ({ categories, filters }) => {
 
   const handleKeyDown = (event) => {
     if (autocompleteSuggestions.length > 0) {
-      if (event.key === 'ArrowDown') {
+      if (event.key === "ArrowDown") {
         event.preventDefault();
         setHighlightedIndex((prevIndex) =>
           prevIndex === autocompleteSuggestions.length - 1 ? 0 : prevIndex + 1
         );
-      } else if (event.key === 'ArrowUp') {
+      } else if (event.key === "ArrowUp") {
         event.preventDefault();
         setHighlightedIndex((prevIndex) =>
           prevIndex === 0 ? autocompleteSuggestions.length - 1 : prevIndex - 1
         );
-      } else if (event.key === 'Enter' && highlightedIndex >= 0) {
+      } else if (event.key === "Enter" && highlightedIndex >= 0) {
         event.preventDefault();
         handleAutocompleteSelect(autocompleteSuggestions[highlightedIndex]);
       }
@@ -163,16 +172,33 @@ const SearchBar = ({ categories, filters }) => {
     <>
       <div className="search-bar">
         <div className="category-dropdown" ref={categoryRef}>
-          {selectedCategory ? categories.find(c => c.value === selectedCategory).label : '전체'}
-          <div className="dropdown" onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}></div>
-          {showCategoryDropdown && <CategoryDropdown categories={categories} onSelect={handleCategorySelect} />}
-          <div className='dropdown-arrow'></div>
+          {selectedCategory
+            ? categories.find((c) => c.value === selectedCategory).label
+            : "전체"}
+          <div
+            className="dropdown"
+            onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+          ></div>
+          {showCategoryDropdown && (
+            <CategoryDropdown
+              categories={categories}
+              onSelect={handleCategorySelect}
+            />
+          )}
+          <div className="dropdown-arrow"></div>
         </div>
         <div className="filter-dropdown" ref={filterRef}>
-          {selectedFilter ? filters.find(f => f.value === selectedFilter).label : '제목'}
-          <div className="dropdown" onClick={() => setShowFilterDropdown(!showFilterDropdown)}></div>
-          {showFilterDropdown && <FilterDropdown filters={filters} onSelect={handleFilterSelect} />}
-          <div className='dropdown-arrow'></div>
+          {selectedFilter
+            ? filters.find((f) => f.value === selectedFilter).label
+            : "제목"}
+          <div
+            className="dropdown"
+            onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+          ></div>
+          {showFilterDropdown && (
+            <FilterDropdown filters={filters} onSelect={handleFilterSelect} />
+          )}
+          <div className="dropdown-arrow"></div>
         </div>
         <form className="search-box" onSubmit={handleSearch}>
           <input
@@ -186,7 +212,11 @@ const SearchBar = ({ categories, filters }) => {
             autoComplete="off"
             ref={inputRef}
           />
-          <button className="search-button" type="submit" disabled={!keyword.trim()}></button>
+          <button
+            className="search-button"
+            type="submit"
+            disabled={!keyword.trim()}
+          ></button>
           {autocompleteSuggestions.length > 0 && (
             <AutocompleteDropdown
               suggestions={autocompleteSuggestions}
@@ -195,11 +225,13 @@ const SearchBar = ({ categories, filters }) => {
             />
           )}
         </form>
-        <button className='write-button' onClick={handleWriteButtonClick}>글 쓰기</button>
+        <button className="write-button" onClick={handleWriteButtonClick}>
+          글 쓰기
+        </button>
       </div>
       {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
     </>
   );
-}
+};
 
 export default SearchBar;

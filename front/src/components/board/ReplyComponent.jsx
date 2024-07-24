@@ -44,7 +44,7 @@ const ReplyComponent = () => {
   const [childReplyContent, setChildReplyContent] = useState({});
   const [openReportModal, setOpenReportModal] = useState(false);
   const [openMsgModal, setOpenMsgModal] = useState(false);
-  const [reportReplyId, setReportReplyId] = useState(null); // 신고할 댓글의 ID를 저장
+  const [reportReplyId, setReportReplyId] = useState(null);
   const dropDownRefs = useRef([]);
   const type = "reply";
 
@@ -52,12 +52,10 @@ const ReplyComponent = () => {
     const fetchData = async () => {
       if (loginState.email) {
         try {
-          console.log("Reply Fetching user data...");
           const userData = await getMemberWithEmail(
             loginState.email,
             loginState.accessToken
           );
-          console.log("Reply data fetched: ", userData);
           setUserData(userData);
         } catch (error) {
           Swal.fire({
@@ -69,8 +67,6 @@ const ReplyComponent = () => {
           });
           console.error("Error fetching user data: ", error);
         }
-      } else {
-        console.log("loginState.email is not set");
       }
     };
     fetchData();
@@ -114,18 +110,15 @@ const ReplyComponent = () => {
   };
 
   const handleDropDownClick = (id) => {
-    console.log("Reply ID:", id);
     setOpenReplyDropDown((prev) => (prev === id ? null : id));
-    setReportReplyId(id); // 신고할 댓글의 ID를 설정
+    setReportReplyId(id);
   };
 
   const handleDropDownMenu = (menu, id) => {
-    console.log("Selected Menu:", menu, "on reply ID:", id);
     // 추가 기능 구현
   };
 
   const openReport = () => {
-    console.log("Report Reply ID:", reportReplyId); // reportReplyId가 신고할 댓글의 ID
     setOpenReportModal(true);
     setOpenMsgModal(false);
     setOpenReplyDropDown(false);
