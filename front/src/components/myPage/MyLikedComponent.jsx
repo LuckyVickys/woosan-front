@@ -24,7 +24,7 @@ const initState = {
 
 const MyLikedComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
-    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/myPage/like");
+    const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/mypage/like");
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {

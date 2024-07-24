@@ -25,7 +25,7 @@ const initState = {
 const MyBoardComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const { page, size, moveToList, moveToRead, refresh } =
-        useCustomMove("/myPage/board");
+        useCustomMove("/mypage/board");
     const [serverData, setServerData] = useState(initState);
 
     useEffect(() => {

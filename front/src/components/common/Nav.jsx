@@ -18,7 +18,7 @@ const Nav = () => {
         if (!isLogin) {
             moveToLoginReturn();
         } else if (memberType === "USER") {
-            navigate("/myPage");
+            navigate("/mypage");
         }
     }
 
@@ -40,13 +40,13 @@ const Nav = () => {
                         고객 지원
                     </NavLink>
                 </div>
-                <div className="myPage">
+                <div className="mypage">
                     {memberType === "ADMIN" ? (
                         <NavLink to={'/admin/'} className={({ isActive }) => isActive ? "active" : ""}>
                             관리자페이지
                         </NavLink>
                     ) : (
-                        <NavLink to={'/myPage/'}
+                        <NavLink to={'/mypage/'}
                             className={({ isActive }) => isActive ? "active" : ""}
                             onClick={handleMyPageClick}
                             style={{ cursor: 'pointer' }}

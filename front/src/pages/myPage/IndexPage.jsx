@@ -11,25 +11,25 @@ const IndexPage = () => {
     let sub = "";
 
     switch (location.pathname) {
-        case "/myPage/info":
+        case "/mypage/info":
             sub = "회원 정보 수정";
             break;
-        case "/myPage/board":
+        case "/mypage/board":
             sub = "작성한 게시글 조회";
             break;
-        case "/myPage/reply":
+        case "/mypage/reply":
             sub = "작성한 댓글 조회";
             break;
-        case "/myPage/like":
+        case "/mypage/like":
             sub = "추천 게시글";
             break;
-        case "/myPage/matching":
+        case "/mypage/matching":
             sub = "모임 조회";
             break;
-        case "/myPage/send-message":
+        case "/mypage/send-message":
             sub = "보낸 쪽지함";
             break;
-        case "/myPage/receive-message":
+        case "/mypage/receive-message":
             sub = "받은 쪽지함";
             break;
         default:
@@ -37,7 +37,7 @@ const IndexPage = () => {
             break;
     }
 
-    const hideSubPaths = ["/myPage/message/:id"];
+    const hideSubPaths = ["/mypage/message/:id"];
 
     const shouldHideSub = (pathname) => {
         return hideSubPaths.some((path) => {
@@ -48,7 +48,7 @@ const IndexPage = () => {
 
     return (
         <BasicLayout>
-            <SideBar pageType="myPage" />
+            <SideBar pageType="mypage" />
             <div className="contents">
                 {!shouldHideSub(location.pathname) && (
                     <PageTitle main="마이페이지" sub={sub} />
