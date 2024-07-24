@@ -14,10 +14,10 @@ const initState = {
 
 const ReportModal = ({ type, targetId, reporterId, onClose }) => {
     const [report, setReport] = useState({ ...initState });
-    const [images, setImages] = useState([]); // 파일 상태 관리
+    const [images, setImages] = useState([]);
     const uploadRef = useRef();
     const [isClosing, setIsClosing] = useState(false);
-    const [selectedType, setSelectedType] = useState(null); // 신고 유형
+    const [selectedType, setSelectedType] = useState(null);
 
     useEffect(() => {
         setReport({ ...initState });
@@ -45,14 +45,14 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
             selectedType = "댓글";
         } else if (type === "message") {
             selectedType = "쪽지";
-        } else if (type ==="matching"){
+        } else if (type === "matching") {
             selectedType = "모임";
-        } else if (type === "matchingReply"){
+        } else if (type === "matchingReply") {
             selectedType = "모임댓글";
         }
 
-        setSelectedType(selectedType); 
-        return selectedType; 
+        setSelectedType(selectedType);
+        return selectedType;
     };
 
     const handleFileChange = (e) => {
@@ -60,8 +60,6 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
     };
 
     const handleClickReportAdd = async (e) => {
-        console.log("type :", type, targetId);
-        console.log("reportId :", reporterId);
         e.preventDefault();
 
         if (!images || images.length === 0) {
@@ -97,7 +95,7 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
                 try {
                     const response = await addReport(formData);
 
-                    if (response) {
+                    if (response && response.status === 201) {
                         Swal.fire(
                             "신고 완료",
                             `${selectedType}에 대한 신고가 접수되었습니다.`,
