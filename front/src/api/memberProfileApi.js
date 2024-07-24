@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_SERVER_HOST } from "./boardApi.js";
 
-const host = `${API_SERVER_HOST}/api/memberprofile`;
+const host = `${API_SERVER_HOST}/api/member-profile`;
 
 export const getMember = async (id) => {
   console.log("Fetching data for ID:", id);
@@ -19,7 +19,7 @@ export const getMember = async (id) => {
 
 export const modifyProfile = async (formDataObj) => {
     try {
-      const res = await axios.patch(`${host}`, formDataObj, {
+      const res = await axios.patch(`${host}/modify`, formDataObj, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

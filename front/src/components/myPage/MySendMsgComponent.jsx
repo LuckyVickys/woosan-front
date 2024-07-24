@@ -8,21 +8,21 @@ import MyMsgListComponent from "./element/MyMsgListComponent";
 const MySendMsgComponent = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberType = loginState.memberType;
-    const { moveToRead } = useCustomMsgMove(memberType === "ADMIN" ? "/admin/send-message" : "/myPage/send-message");
+    const { moveToRead, moveToSendList } = useCustomMsgMove();
 
     const fetchMessages = ({ page, size }) => {
         const params = {
             memberId: loginState.id,
             pageRequestDTO: {
-                page,
-                size
+                page: page,
+                size: size
             }
         };
-        return getSendMessage(params);
+        return getSendMessage(params, loginState.accessToken);
     };
 
     const deleteMessage = (id) => {
-        return delSendMessage(id);
+        return delSendMessage(id, loginState.accessToken);
     };
 
     return (
@@ -30,6 +30,7 @@ const MySendMsgComponent = () => {
             fetchMessages={fetchMessages} 
             deleteMessage={deleteMessage} 
             moveToRead={moveToRead} 
+            moveToList={moveToSendList}
             columnHeaders={["번호", "수신자", "내용", "작성 날짜"]} 
             role="send"
         />

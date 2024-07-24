@@ -13,6 +13,7 @@ import { formatDate } from "../../util/DateUtil";
 import MsgModal from "../../components/board/element/MsgModal";
 import Swal from "sweetalert2";
 import "../../assets/styles/App.scss";
+import { useSelector } from "react-redux";
 
 const initState = {
     id: 0,
@@ -38,6 +39,7 @@ const ReportReadComponent = () => {
     const [messageId, setMessageId] = useState("");
     const { moveToRead } = useCustomMove();
     const [result, setResult] = useState(false);
+    const loginState = useSelector((state) => state.loginSlice);
 
     useEffect(() => {
         getReport(id).then((data) => {
@@ -58,7 +60,7 @@ const ReportReadComponent = () => {
     useEffect(() => {
         const fetchMessage = async () => {
             try {
-                const messageData = await getMessage(report.targetId);
+                const messageData = await getMessage(report.targetId, loginState.accessToken);
                 setSelectedMsg(messageData);
             } catch (error) {
                 console.error("Error fetching message:", error);
@@ -102,8 +104,8 @@ const ReportReadComponent = () => {
                 } else if (report.type === "reply") {
                     await deleteReply(removeDTO);
                 } else if (report.type === "message") {
-                    await delReceiveMessage(selectedMsg.id);
-                    await delSendMessage(selectedMsg.id);
+                    await delReceiveMessage(selectedMsg.id, loginState.accessToken);
+                    await delSendMessage(selectedMsg.id, loginState.accessToken);
                 }
                 Swal.fire({
                     title: "삭제 완료",

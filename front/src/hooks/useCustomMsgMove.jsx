@@ -12,25 +12,43 @@ const useCustomMsgMove = () => {
     const [refresh, setRefresh] = useState(false);
     const [queryParams] = useSearchParams();
     const loginState = useSelector((state) => state.loginSlice);
-    const userRole = loginState.role;
+    const userRole = loginState.memberType;
 
-    const defaultPath = userRole === "ADMIN" ? "/admin/message" : "/myPage/message";
+    const defaultPath = userRole === "ADMIN" ? "/adminPage/message" : "/myPage/message";
+    const sendListPath = userRole === "ADMIN" ? "/adminPage/send-message" : "/myPage/send-message";
+    const receiveListPath = userRole === "ADMIN" ? "/adminPage/receive-message" : "/myPage/receive-message";
 
     const page = getNum(queryParams.get('page'), 1);
     const size = getNum(queryParams.get('size'), 10);
 
     const queryDefault = createSearchParams({ page, size }).toString();
 
-    const moveToList = (pageParam) => {
+    const moveToSendList = (pageParam) => {
         const pageNum = getNum(pageParam?.page, page);
         const sizeNum = getNum(pageParam?.size, size);
 
         const queryStr = createSearchParams({ page: pageNum, size: sizeNum }).toString();
 
-        console.log(`Navigating to ${defaultPath} with query: ${queryStr}`);
+        console.log(`Navigating to ${sendListPath} with query: ${queryStr}`);
 
         navigate({
-            pathname: defaultPath,
+            pathname: sendListPath,
+            search: queryStr
+        });
+
+        setRefresh(!refresh);  // 강제로 리렌더링
+    };
+    
+    const moveToReceiveList = (pageParam) => {
+        const pageNum = getNum(pageParam?.page, page);
+        const sizeNum = getNum(pageParam?.size, size);
+
+        const queryStr = createSearchParams({ page: pageNum, size: sizeNum }).toString();
+
+        console.log(`Navigating to ${receiveListPath} with query: ${queryStr}`);
+
+        navigate({
+            pathname: receiveListPath,
             search: queryStr
         });
 
@@ -46,7 +64,7 @@ const useCustomMsgMove = () => {
         });
     };
 
-    return { moveToList, moveToRead, page, size, refresh };
+    return { moveToSendList, moveToReceiveList, moveToRead, page, size, refresh };
 };
 
 export default useCustomMsgMove;
