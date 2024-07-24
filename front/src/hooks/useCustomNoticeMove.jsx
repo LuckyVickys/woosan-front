@@ -12,8 +12,8 @@ const useCustomNoticeMove = () => {
     const [refresh, setRefresh] = useState(false);
     const [queryParams] = useSearchParams();
 
-    const defaultPath = location.pathname.startsWith("/adminPage")
-        ? "/adminPage/notice"
+    const defaultPath = location.pathname.startsWith("/admin")
+        ? "/admin/notice"
         : "/cs/notices";
 
     const page = getNum(queryParams.get("page"), 1);

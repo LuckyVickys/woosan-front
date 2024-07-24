@@ -26,7 +26,7 @@ const BoardDropDown = ({
         if (location.pathname.includes("/board/")) {
             navigate(`/board/modify/${id}`);
         } else if (location.pathname.includes("/cs/notices/")) {
-            navigate(`/adminPage/notice/modify/${id}`);
+            navigate(`/admin/notice/modify/${id}`);
         }
     };
 

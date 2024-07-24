@@ -67,7 +67,7 @@ const NoticeAddComponent = () => {
                 headers: { "Content-Type": "multipart/form-data" },
             };
             await createBoard(formData, header);
-            navigate("/adminPage/notice");
+            navigate("/admin/notice");
         } catch (error) {
             console.error("저장 실패", error);
         }

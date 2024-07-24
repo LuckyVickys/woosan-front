@@ -15,8 +15,8 @@ const MyMsgPage = lazy(()=> import("../pages/myPage/MyMsgPage"))
 const myPageRouter = ()=> {
     return [
         {
-            path: "/myPage",
-            element: <Navigate replace to="/myPage/info"/>
+            path: "/mypage",
+            element: <Navigate replace to="/mypage/info"/>
         },
         {
             path: "info",
