@@ -1,19 +1,36 @@
+@import '../Font.scss';
+
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
 .filterBar {
     display: flex;
-    justify-content: space-between; /* 간격을 좁게 하기 위해 space-around에서 space-between으로 변경 */
+    justify-content: space-between; /* 간격을 일정하게 유지 */
     margin-bottom: 20px;
-
+    min-height: 50px; /* 필터바의 최소 높이 설정 */
+    flex-wrap: wrap; /* 버튼들이 한 줄에 다 들어가지 않으면 다음 줄로 넘기기 */
 }
 
 .filterButton {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px 15px; /* 패딩을 줄여 버튼 간격을 좁게 함 */
+    padding: 10px 20px; /* 일정한 패딩 설정 */
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     margin-right: 10px;
-    
+    flex: 1; /* 버튼의 크기를 일정하게 유지 */
+    max-width: calc(100% / 7 - 10px); /* 최대 너비를 설정하여 7개의 버튼이 균등하게 분할되도록 */
+    min-width: 150px; /* 최소 너비 설정 */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+    overflow: hidden; /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 생략 기호로 표시 */
 
     &.active {
         background-color: #00B207;
@@ -23,5 +40,10 @@
     &:hover {
         background-color: #00B207;
         color: #fff;
+    }
+
+    svg {
+        margin-right: 5px; /* 아이콘과 텍스트 사이의 간격 설정 */
+        font-size: 20px;
     }
 }

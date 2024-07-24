@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import MatchingModal from '../../components/matching/MatchingModal';
 import FilterBar from '../../components/matching/FilterBar';
@@ -16,16 +16,6 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
     const [page, setPage] = useState(1);
     const itemsPerPage = 6;
 
-    const categories = useMemo(() => ({
-        all: '전체',
-        romance: '연애&사랑',
-        sports: '운동&스포츠',
-        food: '푸드&드링크',
-        culture: '문화&예술',
-        neighborhood: '동네&또래',
-        study_class: '스터디&클래스'
-    }), []);
-
     const filterItemsByCategory = useCallback((category, items) => {
         if (!items) return [];
         if (category === 'all') return items;
@@ -34,7 +24,6 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
                 const parsedTag = JSON.parse(item.tag);
                 return Object.values(parsedTag).includes(category);
             } catch (e) {
-                console.error('태그 파싱 중 오류 발생:', e);
                 return false;
             }
         });
@@ -64,12 +53,10 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
     const handleItemClick = (id) => {
         const item = displayedItems.find(item => item.id === id);
         setSelectedItem(item);
-        console.log(`아이템 클릭됨: ${id}`);
     };
 
     const handleCloseModal = () => {
         setSelectedItem(null);
-        console.log('모달 창 닫기');
     };
 
     const handleCategoryChange = (category) => {
@@ -77,7 +64,6 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
         setPage(1);
         const sortedItems = getSortedItems(items);
         setDisplayedItems(filterItemsByCategory(category, sortedItems).slice(0, itemsPerPage));
-        console.log(`카테고리 변경됨: ${category}`);
     };
 
     return (
@@ -106,7 +92,7 @@ MatchingPageTemplate.propTypes = {
         locationY: PropTypes.number.isRequired,
         address: PropTypes.string.isRequired,
         meetDate: PropTypes.string.isRequired,
-        tag: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired, // tag를 객체로 받도록 수정
+        tag: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
         headCount: PropTypes.number.isRequired,
         location: PropTypes.string,
         introduce: PropTypes.string,

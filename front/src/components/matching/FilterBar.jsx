@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaHeart, FaRunning, FaUtensils, FaPalette, FaHome, FaBook } from 'react-icons/fa';
 import styles from '../../assets/styles/matching/FilterBar.module.scss';
 
 /**
@@ -10,13 +11,13 @@ import styles from '../../assets/styles/matching/FilterBar.module.scss';
  */
 const FilterBar = ({ activeCategory, onCategoryChange }) => {
     const categories = [
-        { key: 'all', label: '전체' },
-        { key: 'romance', label: '연애&사랑' },
-        { key: 'sports', label: '운동&스포츠' },
-        { key: 'food', label: '푸드&드링크' },
-        { key: 'culture', label: '문화&예술' },
-        { key: 'neighborhood', label: '동네&또래' },
-        { key: 'study_class', label: '스터디&클래스' }
+        { key: 'all', label: '전체', icon: <FaHome /> },
+        { key: 'romance', label: '연애 · 사랑', icon: <FaHeart /> },
+        { key: 'sports', label: '운동 · 스포츠', icon: <FaRunning /> },
+        { key: 'food', label: '푸드 · 드링크', icon: <FaUtensils /> },
+        { key: 'culture', label: '문화 · 예술', icon: <FaPalette /> },
+        { key: 'neighborhood', label: '동네 · 또래', icon: <FaHome /> },
+        { key: 'study_class', label: '스터디 · 클래스', icon: <FaBook /> }
     ];
 
     return (
@@ -27,6 +28,7 @@ const FilterBar = ({ activeCategory, onCategoryChange }) => {
                     className={`${styles.filterButton} ${activeCategory === category.key ? styles.active : ''}`}
                     onClick={() => onCategoryChange(category.key)}
                 >
+                    {category.icon}
                     {category.label}
                 </button>
             ))}

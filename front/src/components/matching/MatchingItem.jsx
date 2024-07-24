@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import styles from '../../assets/styles/matching/MatchingItem.module.scss';
 import { PiGenderIntersexFill } from "react-icons/pi";
 
+// 문자열 길이를 제한하고 "..."을 추가하는 함수
+const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+        return text.slice(0, maxLength) + '...';
+    }
+    return text;
+};
+
 const MatchingItem = ({
     id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag = '{}', headCount,
-    location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
+    currentMemberCount, location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
 }) => {
-
-    console.log('MatchingItem props:', {
-        id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag, headCount,
-        location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
-    });
-
-    const typeLabel = getTypeLabel(matchingType);
-
+    // 매칭 타입에 따라 라벨을 반환하는 함수
     function getTypeLabel(type) {
         switch (type) {
             case 1:
@@ -28,6 +29,7 @@ const MatchingItem = ({
         }
     }
 
+    // 매칭 타입에 따라 스타일을 반환하는 함수
     function getTypeStyle(type) {
         switch (type) {
             case 1:
@@ -41,9 +43,9 @@ const MatchingItem = ({
         }
     }
 
+    // 태그 문자열을 파싱하여 화면에 표시하는 함수
     const renderTag = (tag) => {
         try {
-            console.log('Parsing tag:', tag);
             const parsedTag = JSON.parse(tag);
             return Object.keys(parsedTag).join(', ');
         } catch (e) {
@@ -52,6 +54,7 @@ const MatchingItem = ({
         }
     };
 
+    // 날짜와 시간을 특정 형식으로 포맷하는 함수
     const formatDateMinWithoutYear = (dateString) => {
         const date = new Date(dateString);
         const month = String(date.getMonth() + 1).padStart(2, '');
@@ -62,6 +65,7 @@ const MatchingItem = ({
         return `${month}. ${day}. ${hours}:${minutes}`;
     };
 
+    // 매칭 타입에 따라 날짜와 시간을 포맷하는 함수
     const formatDateTime = (dateString, type) => {
         if (type === 2) {
             return formatDateMinWithoutYear(dateString);
@@ -70,11 +74,7 @@ const MatchingItem = ({
         }
     };
 
-    console.log("파일 경로 리스트:", filePathUrl);
-
     const imageUrl = filePathUrl && filePathUrl.length > 0 ? filePathUrl[0] : "";
-
-    console.log("이미지 URL:", imageUrl);
 
     return (
         <div className={styles.matchingItemCard} onClick={onClick}>
@@ -87,19 +87,19 @@ const MatchingItem = ({
             </div>
             <div className={styles.matchingItemContent}>
                 <div className={styles.matchingItemHeader}>
-                    <span className={`${styles.typeLabel} ${getTypeStyle(matchingType)}`}>{typeLabel}</span>
+                    <span className={`${styles.typeLabel} ${getTypeStyle(matchingType)}`}>{getTypeLabel(matchingType)}</span>
                     {matchingType !== 3 && <span className={styles.tag}>{renderTag(tag)}</span>}
                     {matchingType === 3 && <span className={styles.tag}>{mbti || ''}</span>}
                 </div>
                 <div className={styles.matchingItemBody}>
-                    <span className={styles.title}>{title}</span>
+                    <span className={styles.title}>{truncateText(title, 30)}</span>
                     <div className={styles.details}>
-                        <div className={styles.detailItem}><strong><span className={styles.location}></span></strong> {placeName}</div>
+                        <div className={styles.detailItem}><strong><span className={styles.location}></span></strong> {truncateText(placeName, 8)}</div>
                         {matchingType !== 3 && (
                             <>
                                 <div className={styles.detailItem}><strong><span className={styles.date}></span></strong> {formatDateTime(meetDate, matchingType)}</div>
                                 <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
-                                <div className={styles.detailItem}><strong><span className={styles.headCount}></span></strong> {headCount}</div>
+                                <div className={styles.detailItem}><strong><span className={styles.headCount}></span></strong> {currentMemberCount}/{headCount}</div>
                             </>
                         )}
                         {matchingType === 3 && (
@@ -132,6 +132,7 @@ MatchingItem.propTypes = {
     meetDate: PropTypes.string.isRequired,
     tag: PropTypes.string,
     headCount: PropTypes.number.isRequired,
+    currentMemberCount: PropTypes.number.isRequired,
     location: PropTypes.string,
     introduce: PropTypes.string,
     mbti: PropTypes.string,

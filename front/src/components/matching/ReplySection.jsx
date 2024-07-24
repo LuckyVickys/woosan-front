@@ -37,14 +37,13 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
     const fetchComments = async () => {
         try {
             const res = await getReplies(matchingId, { page: currentPage - 1, size: 10 });
-            console.log("API 응답 데이터:", res);  // 디버깅용 로그
             const commentTree = buildCommentTree(res.content);
             setComments(commentTree);
             setTotalPages(res.totalPages);
             const totalCount = res.content.length; // 단순히 댓글 개수로 변경
             onCommentCountChange(totalCount);
         } catch (error) {
-            console.error("댓글을 가져오는 중 오류 발생:", error);
+            Swal.fire('오류!', '댓글을 가져오는 중 오류가 발생했습니다.', 'error');
         }
     };
 
@@ -111,15 +110,13 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             content: newComment,
             parentId: parentId
         };
-        console.log("댓글 작성 요청 DTO:", requestDTO); // 디버깅용 로그 추가
         try {
             await saveReply(requestDTO);
             setNewComment('');
             fetchComments();
             if (onReplyAdded) onReplyAdded();
         } catch (error) {
-            console.error("댓글 저장 중 오류 발생:", error);
-            Swal.fire('오류!', error.response ? error.response.data : error.message, 'error');
+            Swal.fire('오류!', '댓글 저장 중 오류가 발생했습니다.', 'error');
         }
     };
 
@@ -139,18 +136,20 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             content: replyInputs[commentId],
             parentId: commentId
         };
-        console.log("답글 작성 요청 DTO:", requestDTO); // 디버깅용 로그 추가
         try {
             await saveReply(requestDTO);
             setReplyInputs({
                 ...replyInputs,
                 [commentId]: ''
             });
+            setShowReplyInput({
+                ...showReplyInput,
+                [commentId]: false
+            });
             fetchComments();
             if (onReplyAdded) onReplyAdded();
         } catch (error) {
-            console.error("답글 저장 중 오류 발생:", error);
-            Swal.fire('오류!', error.response ? error.response.data : error.message, 'error');
+            Swal.fire('오류!', '답글 저장 중 오류가 발생했습니다.', 'error');
         }
     };
 
@@ -262,7 +261,6 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
 
     // 댓글 및 답글 렌더링 함수
     const renderComments = (comments) => {
-        console.log("렌더링 중인 댓글 데이터:", comments); // 디버깅용 로그 추가
         return comments.map(comment => (
             <div key={comment.id} className={styles.comment}>
                 <div className={styles.commentHeader}>

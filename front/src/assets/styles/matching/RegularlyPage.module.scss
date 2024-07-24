@@ -1,5 +1,9 @@
 @import '../Font.scss';
 
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
 .container {
     display: flex;
     flex-direction: column;

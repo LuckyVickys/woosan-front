@@ -5,6 +5,14 @@ import styles from '../../assets/styles/matching/MemberManagement.module.scss'; 
 import defaultProfile from '../../assets/image/profile.png'; // 기본 프로필 이미지 경로
 import Swal from 'sweetalert2';
 
+/**
+ * 멤버 관리 컴포넌트
+ * @param {Object} props - 컴포넌트 속성
+ * @param {number} props.matchingId - 매칭 ID
+ * @param {string} props.type - 멤버 타입 (pending 또는 approved)
+ * @param {Function} props.onMemberUpdate - 멤버 업데이트 콜백 함수
+ * @param {Array} props.members - 멤버 목록
+ */
 const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
     const [localMembers, setLocalMembers] = useState([]);
     const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기
@@ -19,7 +27,6 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
 
                 // 현재 사용자가 매니저인지 확인
                 const managerStatus = approvedMembers.some(member => member.memberId === currentUserId && member.isManaged);
-                console.log("현재 사용자의 매니저 여부:", managerStatus); // 디버깅 로그 추가
                 setIsManager(managerStatus);
 
                 if (type === 'pending') {
@@ -29,7 +36,7 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
                     setLocalMembers(filteredApprovedMembers);
                 }
             } catch (error) {
-                console.error("멤버 데이터 가져오기 중 오류 발생:", error);
+                // 멤버 데이터 가져오기 중 오류 발생 시 처리
             }
         };
 
@@ -42,6 +49,10 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
         }
     }, [members]);
 
+    /**
+     * 가입 요청을 승인하는 함수
+     * @param {number} id - 멤버 ID
+     */
     const handleAccept = async (id) => {
         const result = await Swal.fire({
             title: '승인 확인',
@@ -55,17 +66,19 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
         if (result.isConfirmed) {
             try {
                 await updateMatching(id, true);
-                // 승인된 회원을 멤버 목록에서 제거하고 화면을 업데이트합니다.
                 setLocalMembers((prev) => prev.filter((member) => member.id !== id));
                 Swal.fire('승인 완료', '가입 요청을 승인하였습니다.', 'success');
                 onMemberUpdate(); // 회원 상태가 변경되었음을 상위 컴포넌트에 알림
             } catch (error) {
-                console.error('매칭 요청 수락 중 오류 발생:', error);
                 Swal.fire('오류', '가입 요청 승인 중 오류가 발생했습니다.', 'error');
             }
         }
     };
 
+    /**
+     * 가입 요청을 거절하는 함수
+     * @param {number} id - 멤버 ID
+     */
     const handleReject = async (id) => {
         const result = await Swal.fire({
             title: '거절 확인',
@@ -79,17 +92,19 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
         if (result.isConfirmed) {
             try {
                 await updateMatching(id, false); // isAccepted를 false로 업데이트
-                // 거절된 회원을 멤버 목록에서 제거하고 화면을 업데이트합니다.
                 setLocalMembers((prev) => prev.filter((member) => member.id !== id));
                 Swal.fire('거절 완료', '가입 요청을 거절하였습니다.', 'success');
                 onMemberUpdate(); // 회원 상태가 변경되었음을 상위 컴포넌트에 알림
             } catch (error) {
-                console.error('매칭 요청 거절 중 오류 발생:', error);
                 Swal.fire('오류', '가입 요청 거절 중 오류가 발생했습니다.', 'error');
             }
         }
     };
 
+    /**
+     * 회원을 강퇴하는 함수
+     * @param {number} memberId - 멤버 ID
+     */
     const handleKick = async (memberId) => {
         const result = await Swal.fire({
             title: '강퇴 확인',
@@ -107,58 +122,56 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
                 Swal.fire('강퇴 완료', '회원을 강퇴하였습니다.', 'success');
                 onMemberUpdate(); // 회원 상태가 변경되었음을 상위 컴포넌트에 알림
             } catch (error) {
-                console.error('회원 강퇴 중 오류 발생:', error);
                 Swal.fire('오류', '회원 강퇴 중 오류가 발생했습니다.', 'error');
             }
         }
     };
 
-    if (localMembers.length === 0) {
-        return <div>{type === 'pending' ? '가입 신청이 없습니다.' : '모임원이 없습니다.'}</div>;
-    }
-
-    // 모임장 멤버를 가장 상단에 위치하도록 정렬
     const sortedMembers = [...localMembers].sort((a, b) => b.isManaged - a.isManaged);
 
     return (
         <div className={styles.container}>
             <h3>{type === 'pending' ? '가입 신청 관리' : '모임원 관리'}</h3>
             <div className={styles.content}>
-                <ul>
-                    {sortedMembers.map((member) => (
-                        <li key={member.id} className={styles.memberItem}>
-                            <div className={styles.memberInfo}>
-                                <img src={member.profileImageUrl || defaultProfile} alt={member.nickname} className={styles.profileImage} />
-                                <span>{member.nickname}</span>
-                            </div>
-                            {isManager && (
-                                type === 'pending' ? (
-                                    <div className={styles.actions}>
-                                        <button onClick={() => handleAccept(member.id)} className={styles.acceptButton}>
-                                            승인
-                                        </button>
-                                        <button onClick={() => handleReject(member.id)} className={styles.rejectButton}>
-                                            거절
-                                        </button>
-                                    </div>
-                                ) : (
-                                    member.isManaged ? (
-                                        <button className={styles.kickButton} disabled>
-                                            모임장
-                                        </button>
+                {localMembers.length === 0 ? (
+                    <div className={styles.emptyMessage}>가입 신청이 없습니다.</div>
+                ) : (
+                    <ul>
+                        {sortedMembers.map((member) => (
+                            <li key={member.id} className={styles.memberItem}>
+                                <div className={styles.memberInfo}>
+                                    <img src={member.profileImageUrl || defaultProfile} alt={member.nickname} className={styles.profileImage} />
+                                    <span>{member.nickname}</span>
+                                </div>
+                                {isManager && (
+                                    type === 'pending' ? (
+                                        <div className={styles.actions}>
+                                            <button onClick={() => handleAccept(member.id)} className={styles.acceptButton}>
+                                                승인
+                                            </button>
+                                            <button onClick={() => handleReject(member.id)} className={styles.rejectButton}>
+                                                거절
+                                            </button>
+                                        </div>
                                     ) : (
-                                        <button
-                                            onClick={() => handleKick(member.memberId)}
-                                            className={styles.kickButton}
-                                        >
-                                            강퇴
-                                        </button>
+                                        member.isManaged ? (
+                                            <button className={styles.kickButton} disabled>
+                                                모임장
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={() => handleKick(member.memberId)}
+                                                className={styles.kickButton}
+                                            >
+                                                강퇴
+                                            </button>
+                                        )
                                     )
-                                )
-                            )}
-                        </li>
-                    ))}
-                </ul>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
         </div>
     );

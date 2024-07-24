@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MatchingItem from './MatchingItem';
+import { getMembers } from '../../api/memberMatchingApi';
 import styles from '../../assets/styles/matching/MatchingList.module.scss';
 
 /**
@@ -10,12 +11,24 @@ import styles from '../../assets/styles/matching/MatchingList.module.scss';
  * @param {number} gridColumns - 그리드 컬럼 수
  */
 const MatchingList = ({ items, onItemClick, gridColumns }) => {
-    // 아이템 데이터 디버깅 로그
-    console.log('매칭 리스트 아이템들:', items);
+    const [itemsWithMemberCount, setItemsWithMemberCount] = useState([]);
+
+    useEffect(() => {
+        const fetchMemberCounts = async () => {
+            const updatedItems = await Promise.all(items.map(async (item) => {
+                const members = await getMembers(item.id);
+                const currentMemberCount = members.filter(member => member.isAccepted).length;
+                return { ...item, currentMemberCount };
+            }));
+            setItemsWithMemberCount(updatedItems);
+        };
+
+        fetchMemberCounts();
+    }, [items]);
 
     return (
         <div className={styles.itemsGrid} style={{ gridTemplateColumns: `repeat(${gridColumns}, 1fr)` }}>
-            {items.map(item => (
+            {itemsWithMemberCount.map(item => (
                 <MatchingItem 
                     key={item.id} 
                     id={item.id}
@@ -33,6 +46,7 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     meetDate={item.meetDate}
                     tag={item.tag} // tag를 문자열로 전달
                     headCount={item.headCount}
+                    currentMemberCount={item.currentMemberCount}
                     location={item.location}
                     introduce={item.introduce}
                     mbti={item.mbti}
@@ -41,8 +55,8 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     height={item.height}
                     filePathUrl={item.filePathUrl}
                     onClick={() => onItemClick(item.id)}
-                    nickname={item.nickname} // nickname 추가
-                    profileImageUrl={item.profileImageUrl} // profileImageUrl 추가
+                    nickname={item.nickname} 
+                    profileImageUrl={item.profileImageUrl} 
                 />
             ))}
         </div>
@@ -73,8 +87,8 @@ MatchingList.propTypes = {
         age: PropTypes.number,
         height: PropTypes.number,
         filePathUrl: PropTypes.arrayOf(PropTypes.string),
-        nickname: PropTypes.string, // nickname 추가
-        profileImageUrl: PropTypes.arrayOf(PropTypes.string) // profileImageUrl 추가
+        nickname: PropTypes.string, 
+        profileImageUrl: PropTypes.arrayOf(PropTypes.string) 
     })).isRequired,
     onItemClick: PropTypes.func.isRequired,
     gridColumns: PropTypes.number.isRequired,
