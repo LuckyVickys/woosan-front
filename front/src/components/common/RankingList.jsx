@@ -9,7 +9,6 @@ const RankingList = () => {
 
     useEffect(() => {
         getRankingChanges().then(data => {
-            console.log(data);
             setRankings(data);
         }).catch(err => {
             console.error("Failed to fetch rankings:", err);

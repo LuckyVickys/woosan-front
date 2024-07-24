@@ -16,7 +16,6 @@ export const getNoticeList = async (pageParam) => {
 }
 
 export const getNotice = async (id) => {
-    console.log("Fetching data for ID:", id);
     try {
         const res = await axios.get(`${host}/board/${id}`);
         return res.data;

@@ -24,8 +24,6 @@ const useCustomMove = (defaultPath = "/board") => {
 
         const queryStr = createSearchParams({ page: pageNum, size: sizeNum, categoryName: category }).toString();
 
-        console.log(`Navigating to ${defaultPath} with query: ${queryStr}`);
-
         navigate({
             pathname: defaultPath,
             search: queryStr
@@ -35,7 +33,6 @@ const useCustomMove = (defaultPath = "/board") => {
     };
 
     const moveToModify = (num) => {
-        console.log(`Navigating to ${defaultPath}/modify/${num}`);
         navigate({
             pathname: `${defaultPath}/modify/${num}`,
             search: queryDefault
@@ -44,7 +41,6 @@ const useCustomMove = (defaultPath = "/board") => {
 
     const moveToRead = (num, customPath) => {
         const path = customPath || defaultPath;
-        console.log(`Navigating to ${path}/${num}`);
         navigate({
             pathname: `${path}/${num}`,
             search: queryDefault

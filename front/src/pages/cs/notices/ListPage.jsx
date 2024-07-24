@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ListComponent from "../../../components/cs/NoticeListComponent";
 
 const ListPage = () => {

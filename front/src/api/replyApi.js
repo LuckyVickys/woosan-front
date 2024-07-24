@@ -27,7 +27,6 @@ export const createReply = async (ReplyDTO) => {
 
 export const deleteReply = async (removeDTO) => {
     try {
-        console.log(removeDTO);
         const url = `${host}/delete`;
         const res = await axios.request({
             url: url,

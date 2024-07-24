@@ -110,7 +110,6 @@ const NoticeModifyComponent = () => {
                 headers: { "Content-Type": "multipart/form-data" },
             };
             await updateBoard(formData, header);
-            console.log("수정 성공");
             navigate(`/cs/notices/${id}`);
         } catch (error) {
             console.error("수정 실패", error);
@@ -124,7 +123,6 @@ const NoticeModifyComponent = () => {
                 writerId: loginState.id,
             };
             await deleteBoard(removeDTO);
-            console.log("삭제 성공");
             moveToList();
         } catch (error) {
             console.error("삭제 실패", error);

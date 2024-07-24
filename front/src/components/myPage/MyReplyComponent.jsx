@@ -30,7 +30,6 @@ const MyReplyComponent = () => {
     useEffect(() => {
         const currentPage = page || 1;
         const currentSize = size || 10;
-        console.log(`Fetching replies with page: ${page}, size: ${size}`);
         const params = {
             memberId: loginState.id,
             pageRequestDTO: {
@@ -40,7 +39,6 @@ const MyReplyComponent = () => {
         };
         getMyReplies(params)
             .then((data) => {
-                console.log("Fetched data:", data);
                 setServerData(data);
             })
             .catch((err) => {
