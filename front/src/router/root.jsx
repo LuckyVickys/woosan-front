@@ -49,7 +49,7 @@ const root = createBrowserRouter([
         children: myPageRouter()
     },
     {
-        path: "adminPage",
+        path: "admin",
         element: <Suspense fallback={Loading}><AdminPage/></Suspense>,
         children: adminPageRouter()
     },

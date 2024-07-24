@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const NoticePage = () => {
     const navigate = useNavigate();
     const handleWriteButtonClick = () => {
-        navigate("/adminPage/notice/add");
+        navigate("/admin/notice/add");
     };
     return (
         <div className="">

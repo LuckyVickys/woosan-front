@@ -1,19 +1,20 @@
 import { useState } from "react";
-import {
-    createSearchParams,
-    useNavigate,
-    useSearchParams,
-} from "react-router-dom";
+import { createSearchParams, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 
 const getNum = (param, defaultValue) => {
     const num = parseInt(param, 10);
     return isNaN(num) ? defaultValue : num;
 };
 
-const useCustomNoticeMove = (defaultPath = "/adminPage/notice") => {
+const useCustomNoticeMove = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [refresh, setRefresh] = useState(false);
     const [queryParams] = useSearchParams();
+
+    const defaultPath = location.pathname.startsWith("/admin")
+        ? "/admin/notice"
+        : "/cs/notices";
 
     const page = getNum(queryParams.get("page"), 1);
     const size = getNum(queryParams.get("size"), 10);

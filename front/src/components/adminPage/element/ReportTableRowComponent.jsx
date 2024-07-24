@@ -9,7 +9,7 @@ const slicedText = (str, maxLength) => {
     }
 };
 
-const TableRowComponent = ({ item, onClick }) => {
+const ReportTableRowComponent = ({ item, onClick }) => {
     const [reportType, setReportType] = useState(null);
     useEffect(() => {
         if (item.type === "board") {
@@ -31,4 +31,4 @@ const TableRowComponent = ({ item, onClick }) => {
         </tr>
     );
 };
-export default TableRowComponent;
+export default ReportTableRowComponent;

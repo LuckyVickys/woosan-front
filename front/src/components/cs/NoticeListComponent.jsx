@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getNoticeList } from "../../api/csApi";
 import useCustomNoticeMove from "../../hooks/useCustomNoticeMove";
 import "../../assets/styles/App.scss";
-import NoticeListPageComponent from "../../components/adminPage/element/NoticeListPageComponent";
+import NoticeListPageComponent from "../../components/cs/NoticeListPageComponent";
 import TableRowComponent from "../../components/board/element/TableRowComponent";
 
 const initState = {
@@ -22,18 +22,18 @@ const initState = {
 };
 
 const NoticeListComponent = () => {
-    const { page, size, moveToList, moveToRead } = useCustomNoticeMove();
-    const [noticePage, setNoticePage] = useState(initState);
+    const { page, size, moveToList, moveToRead, refresh } = useCustomNoticeMove();
+    const [noticeData, setNoticeData] = useState(initState);
 
     useEffect(() => {
         getNoticeList({ page, size })
             .then((data) => {
-                setNoticePage(data);
+                setNoticeData(data);
             })
             .catch((err) => {
                 console.error("Failed to fetch data:", err);
             });
-    }, [page, size]);
+    }, [page, size, refresh]);
 
     const handleRowClick = (id) => {
         moveToRead(id, "/cs/notices");
@@ -53,8 +53,8 @@ const NoticeListComponent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {noticePage.dtoList &&
-                        noticePage.dtoList.map((item) => (
+                    {noticeData.dtoList &&
+                        noticeData.dtoList.map((item) => (
                             <TableRowComponent
                                 key={item.id}
                                 item={item}
@@ -64,7 +64,7 @@ const NoticeListComponent = () => {
                 </tbody>
             </table>
             <NoticeListPageComponent
-                noticeData={noticePage}
+                noticeData={noticeData}
                 movePage={moveToList}
             />
         </div>

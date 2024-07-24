@@ -56,12 +56,10 @@ const FinePWModal = ({ onClose }) => {
   };
 
   const isValidEmail = (email) => {
-    // '@', .이 포함되어야 함
     return /\S+@\S+\.\S+/.test(email);
   };
 
   const isValidPassword = (password) => {
-    // 특수문자 ('~', '^', ',')를 제외하고, 영문, 숫자, 특수문자 조합하여 8~16자
     return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,16}$/.test(
       password
     );
@@ -88,7 +86,13 @@ const FinePWModal = ({ onClose }) => {
       }
     } catch (error) {
       console.log(error);
-      Swal.fire("이메일 전송 실패", `다시 시도해주세요.`, "error");
+      Swal.fire({
+        title: "이메일 전송 실패", 
+        text: "다시 시도해주세요.", 
+        icon: "error",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#3085d6"
+      });
       setEmailError("");
       setEmailAvailable(false);
     }
@@ -134,19 +138,24 @@ const FinePWModal = ({ onClose }) => {
         console.log("비밀번호 변경 완료:", updateResponse);
         setUpdatePW(true);
 
-        Swal.fire(
-          "비밀번호 변경 완료",
-          `로그인 창으로 전환됩니다.`,
-          "success"
-        ).then(() => {
+        Swal.fire({
+          title: "비밀번호 변경 완료", 
+          text: `로그인 창으로 전환됩니다.`, 
+          icon: "success",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#3085d6"
+        }).then(() => {
           onClose();
         });
       } catch (error) {
-        console.error(
-          "비밀번호 변경 실패:",
-          error.response ? error.response.data : error.message
-        );
-        Swal.fire("비밀번호 변경 실패", `다시 시도해주세요.`, "error");
+        console.error("비밀번호 변경 실패:", error.response ? error.response.data : error.message);
+        Swal.fire({
+          title: "비밀번호 변경 실패", 
+          text: `다시 시도해주세요.`, 
+          icon: "error",
+          confirmButtonText: "확인",
+          confirmButtonColor: "#3085d6"
+        });
         setEmailError("");
         setPasswordError("");
         setNewPasswordError("");

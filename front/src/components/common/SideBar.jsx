@@ -39,7 +39,7 @@ const SideBar = ({ pageType }) => {
         } else if (pageType === "matching") {
             navigate(`/matching/${categoryName}`);
         } else if (pageType === "admin") {
-            navigate(`/adminPage/${categoryName}`);
+            navigate(`/admin/${categoryName}`);
         }
     };
 
@@ -71,7 +71,7 @@ const SideBar = ({ pageType }) => {
     };
 
     return (
-        <aside className={`sidebar ${pageType === "adminPage" ? "admin" : ""}`}>
+        <aside className={`sidebar ${pageType === "admin" ? "admin" : ""}`}>
             <div className="category">
                 {pageType === "board" && (
                     <>
@@ -562,7 +562,7 @@ const SideBar = ({ pageType }) => {
                         </div>
                     </>
                 )}
-                {pageType === "adminPage" && (
+                {pageType === "admin" && (
                     <>
                         <div className="category-title">관리자 페이지</div>
                         <div

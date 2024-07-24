@@ -6,21 +6,21 @@ import SideBar from "../../components/common/SideBar";
 import PageTitle from "../../components/common/PageTitle";
 
 const getSubTitle = (pathname) => {
-    if (pathname.startsWith("/adminPage/report")) {
+    if (pathname.startsWith("/admin/report")) {
         return "신고 관리";
-    } if (pathname.startsWith("/adminPage/message")) {
+    } if (pathname.startsWith("/admin/message")) {
         return "쪽지";
     }
     switch (pathname) {
-        case "/adminPage/upload":
+        case "/admin/upload":
             return "배너 관리";
-        case "/adminPage/report":
+        case "/admin/report":
             return "신고 관리";
-        case "/adminPage/notice":
+        case "/admin/notice":
             return "공지사항 관리";
-        case "/adminPage/send-message":
+        case "/admin/send-message":
             return "보낸 쪽지함";
-        case "/adminPage/receive-message":
+        case "/admin/receive-message":
             return "받은 쪽지함";
         default:
             return "배너 관리";
@@ -32,8 +32,8 @@ const IndexPage = () => {
     const sub = getSubTitle(location.pathname);
 
     const hideSubAndInfoPaths = [
-        "/adminPage/notice/add",
-        "/adminPage/notice/modify/:id",
+        "/admin/notice/add",
+        "/admin/notice/modify/:id",
     ];
 
     const shouldHideSubAndInfo = (pathname) => {
@@ -45,7 +45,7 @@ const IndexPage = () => {
 
     return (
         <BasicLayout>
-            <SideBar pageType="adminPage" />
+            <SideBar pageType="admin" />
             <div className="contents">
                 {!shouldHideSubAndInfo(location.pathname) && (
                     <PageTitle main="관리자 페이지" sub={sub} />
