@@ -16,7 +16,7 @@ const useCustomLogin = () => {
         if (loginPostAsync.fulfilled.match(action)) {
             return action.payload;
         } else if (loginPostAsync.rejected.match(action)) {
-            console.error("Rejected with payload:", action.payload);  // 추가된 디버깅 코드
+            console.error("Rejected with payload:", action.payload);
             throw new Error(action.payload || "로그인 실패");
         }
     }

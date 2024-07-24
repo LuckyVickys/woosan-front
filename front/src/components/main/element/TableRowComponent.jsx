@@ -1,6 +1,5 @@
 import React from "react";
 import "../../../assets/styles/App.scss";
-import { formatDate } from "../../../util/DateUtil";
 
 const slicedTitle = (str, maxLength) => {
     if (str.length > maxLength) {

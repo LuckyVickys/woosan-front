@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { GoMoveToTop } from "react-icons/go";
 import { BiSolidToTop } from "react-icons/bi";
 
 const TopButton = () => {

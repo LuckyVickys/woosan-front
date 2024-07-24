@@ -50,7 +50,7 @@ const NewMatchingList = ({ items, onItemClick }) => {
                         filePathUrl={item.filePathUrl}
                         nickname={item.nickname}
                         profileImageUrl={item.profileImageUrl}
-                        onClick={() => onItemClick(item.id)} // 수정된 부분
+                        onClick={() => onItemClick(item.id)}
                     />
                 </div>
             ))}

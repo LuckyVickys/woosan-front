@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../assets/styles/App.scss";
-import useCustomLogin from "../../hooks/useCustomLogin"; // 혜리 추가
-import LoginModal from "../../components/member/LoginModal"; // 혜리 추가
+import useCustomLogin from "../../hooks/useCustomLogin";
+import LoginModal from "../../components/member/LoginModal";
 
-import { autocomplete, saveSearchKeyword } from "../../api/boardApi";
+import { autocomplete } from "../../api/boardApi";
 
 const AutocompleteDropdown = ({ suggestions, onSelect, highlightedIndex }) => (
   <ul className="dropdown-list">
@@ -115,7 +115,7 @@ const SearchBar = ({ categories, filters }) => {
     if (!isLogin) {
       return moveToLoginReturn();
     } else {
-      navigate("/board/add"); // AddPage 경로로 이동
+      navigate("/board/add");
     }
   };
 

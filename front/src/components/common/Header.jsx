@@ -9,7 +9,6 @@ import { getKakaoUserData } from "../../api/kakaoApi";
 import Swal from "sweetalert2";
 import { getMemberWithEmail } from "../../api/memberApi";
 import ProfileDropdown from "../member/ProfileDropdown";
-import { login } from "../../slices/loginSlice";
 import defaultProfile from "../../assets/image/profile.png";
 
 

@@ -33,7 +33,7 @@ const NoticeList = () => {
                             item={notice}
                             onClick={handleRowClick}
                             isNotice={true}
-                            className="noticelist-post" // 추가된 부분
+                            className="noticelist-post"
                         />
                     ))}
                 </tbody>

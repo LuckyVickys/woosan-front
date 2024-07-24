@@ -45,9 +45,7 @@ const ReadComponent = () => {
   const boardMenuRef = useRef(null);
   const type = "board";
 
-  // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
-  const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } =
-    useCustomLogin();
+  const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
   useEffect(() => {
     if (loginState.id) {

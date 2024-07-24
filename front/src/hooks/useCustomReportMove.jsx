@@ -36,8 +36,6 @@ const useCustomReportMove = (defaultPath = "/adminPage/report") => {
             categoryName: category,
         }).toString();
 
-        console.log(`Navigating to ${defaultPath} with query: ${queryStr}`);
-
         navigate({
             pathname: defaultPath,
             search: queryStr,

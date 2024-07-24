@@ -3,7 +3,7 @@ import { getKakaoLoginLink } from "../../api/kakaoApi";
 import React, { useState, useEffect } from "react";
 import "../../assets/styles/App.scss";
 import SignUpModal from "./SignUpModal";
-import FinePWModal from "./FinePWModal";
+import FinePWModal from "./FindPWModal";
 import { useDispatch } from "react-redux";
 import useCustomLogin from "../../hooks/useCustomLogin";
 import { login } from "../../slices/loginSlice";

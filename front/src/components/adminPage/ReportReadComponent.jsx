@@ -36,7 +36,6 @@ const ReportReadComponent = () => {
     const [reportType, setReportType] = useState(null);
     const [openMsgModal, setOpenMsgModal] = useState(false);
     const [selectedMsg, setSelectedMsg] = useState(null);
-    const [messageId, setMessageId] = useState("");
     const { moveToRead } = useCustomMove();
     const [result, setResult] = useState(false);
     const loginState = useSelector((state) => state.loginSlice);

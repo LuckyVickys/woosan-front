@@ -29,7 +29,7 @@ const useCustomMove = (defaultPath = "/board") => {
             search: queryStr
         });
 
-        setRefresh(!refresh);  // 강제로 리렌더링
+        setRefresh(!refresh);
     };
 
     const moveToModify = (num) => {

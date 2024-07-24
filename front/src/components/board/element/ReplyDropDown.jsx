@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import ReportModal from "./ReportModal";
 import MsgModal from "./MsgModal";
 import Swal from "sweetalert2";
-import { deleteReply } from "../../../api/replyApi"; // Import deleteReply function
+import { deleteReply } from "../../../api/replyApi";
 import { useSelector } from "react-redux";
 import { MdOutlineLocalPostOffice } from "react-icons/md";
 import "../../../assets/styles/App.scss";
-import useCustomLogin from '../../../hooks/useCustomLogin';        // 혜리 추가
-import LoginModal from '../../../components/member/LoginModal';    // 혜리 추가
+import useCustomLogin from '../../../hooks/useCustomLogin';
+import LoginModal from '../../../components/member/LoginModal';
 
 const ReplyDropDown = ({
-    onSelect,
     replyId,
     openReport,
     openMsg,
@@ -21,11 +20,9 @@ const ReplyDropDown = ({
     getReplies,
 }) => {
     const [openReportModal, setOpenReportModal] = useState(false);
-    const [openMsgModal, setOpenMsgModal] = useState(false);
     const loginState = useSelector((state) => state.loginSlice);
 
-    // 혜리 추가 - 로그인 하지 않았을 때 addPage로 이동하지 못하게
-    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+    const { isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
     const handleReport = () => {
         openReport();
@@ -36,7 +33,6 @@ const ReplyDropDown = ({
     };
 
     const handleDelete = () => {
-        // onSelect("delete", replyId);
         const removeDTO = {
             id: replyId,
             writerId: loginState.id,
@@ -60,7 +56,7 @@ const ReplyDropDown = ({
                             "success"
                         );
                         onDeleteSuccess(replyId);
-                        getReplies(); // 댓글 목록 다시 불러오기
+                        getReplies();
                     })
                     .catch((error) => {
                         Swal.fire(
@@ -104,9 +100,6 @@ const ReplyDropDown = ({
             {openReportModal && (
                 <ReportModal onClose={() => setOpenReportModal(false)} />
             )}
-            {/* {openMsgModal && (
-                <MsgModal onClose={() => setOpenMsgModal(false)} />
-            )} */}
             {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
         </>
     );
