@@ -18,11 +18,11 @@ const MyReceiveMsgComponent = () => {
                 size
             }
         };
-        return getReceiveMessage(params);
+        return getReceiveMessage(params, loginState.accessToken);
     };
 
     const deleteMessage = (id) => {
-        return delReceiveMessage(id);
+        return delReceiveMessage(id, loginState.accessToken);
     };
 
     return (

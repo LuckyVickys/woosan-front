@@ -18,11 +18,11 @@ const MySendMsgComponent = () => {
                 size
             }
         };
-        return getSendMessage(params);
+        return getSendMessage(params, loginState.accessToken);
     };
 
     const deleteMessage = (id) => {
-        return delSendMessage(id);
+        return delSendMessage(id, loginState.accessToken);
     };
 
     return (
