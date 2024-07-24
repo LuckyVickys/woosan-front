@@ -43,15 +43,19 @@ const MsgModal = ({
         if (message.content.trim() === "") {
             Swal.fire({
                 icon: "error",
-                title: "전송 실패",
-                text: "내용을 입력하세요.",
+                title: "전송 실패", 
+                text: "내용을 입력하세요.", 
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6"
             });
             return;
         } else if (message.content.length > 100) {
             Swal.fire({
                 icon: "error",
-                title: "전송 실패",
-                text: "최대 100자까지 입력 가능합니다.",
+                title: "전송 실패", 
+                text: "최대 100자까지 입력 가능합니다.", 
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6"
             });
             return;
         }
@@ -75,11 +79,13 @@ const MsgModal = ({
                     cancelButtonText: "취소",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            "전송 완료",
-                            `${receiver}께 전송되었습니다.`,
-                            "success"
-                        ).then(() => {
+                        Swal.fire({
+                            icon: "success",
+                            title: `전송 완료`, 
+                            text: `${receiver}께 전송되었습니다.`, 
+                            confirmButtonText: "확인",
+                            confirmButtonColor: "#3085d6"
+                        }).then(() => {
                             setIsClosing(true);
                         });
                     }
@@ -89,7 +95,13 @@ const MsgModal = ({
             }
         } catch (error) {
             console.error("쪽지 전송 오류:", error.message);
-            Swal.fire("전송 실패", "쪽지 전송에 실패했습니다.", "error");
+            Swal.fire({
+                icon: "error",
+                title: "전송 실패", 
+                text: "다시 시도해주세요.", 
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6"
+            });
         }
     };
 

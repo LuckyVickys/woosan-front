@@ -62,12 +62,23 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
     const handleClickReportAdd = async (e) => {
         e.preventDefault();
 
-        if (!images || images.length === 0) {
-            Swal.fire(
-                "첨부 파일 없음",
-                "적어도 하나 이상의 파일을 첨부해야 합니다.",
-                "error"
-            );
+        if (!report.complaintReason) {
+            Swal.fire({
+                title: "신고 실패 ", 
+                text: "내용을 입력해주세요.", 
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6"
+            });
+            return;
+        } else if (!images || images.length === 0) {
+            Swal.fire({
+                title: "첨부 파일 없음", 
+                text: "1~3개의 이미지 파일을 첨부해주세요.", 
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6"
+            });
             return;
         }
 
@@ -95,12 +106,15 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
                 try {
                     const response = await addReport(formData);
 
-                    if (response && response.status === 201) {
-                        Swal.fire(
-                            "신고 완료",
-                            `${selectedType}에 대한 신고가 접수되었습니다.`,
-                            "success"
-                        ).then(() => {
+                    if (response) {
+                        Swal.fire({
+                            title: "신고 완료", 
+                            text: `${selectedType}에 대한 신고가 접수되었습니다.`, 
+                            icon: "success",
+                            confirmButtonText: "확인",
+                            confirmButtonColor: "#3085d6"
+                        })
+                        .then(() => {
                             setIsClosing(true);
                         });
                     } else {
@@ -108,7 +122,13 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
                     }
                 } catch (error) {
                     console.error("신고 접수 오류:", error.message);
-                    Swal.fire("신고 접수 실패", error.message, "error");
+                    Swal.fire({
+                        title: "신고 실패", 
+                        text: "다시 시도해주세요.", 
+                        icon: "error",
+                        confirmButtonText: "확인",
+                        confirmButtonColor: "#3085d6"
+                    });
                 }
             }
         });
@@ -129,11 +149,11 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
                     >
                         {selectedType}
                     </div>
-                    내용
+                    신고 내용
                     <textarea
                         className="input report-input"
                         type="text"
-                        placeholder="내용을 입력해주세요."
+                        placeholder="내용를 입력해주세요."
                         value={report.complaintReason}
                         onChange={(e) =>
                             setReport({
