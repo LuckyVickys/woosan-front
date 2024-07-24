@@ -85,11 +85,11 @@ export const deleteBoard = async (removeDTO) => {
     }
 };
 
-export const translate = async (id, boardDTO) => {
+export const translate = async (id, boardApiDTO) => {
     try {
         const response = await axios.post(
             `${prefix}/${id}/translate`,
-            boardDTO
+            boardApiDTO
         );
         return response.data;
     } catch (error) {
@@ -100,6 +100,17 @@ export const translate = async (id, boardDTO) => {
         throw error;
     }
 };
+
+export const summary = async (id, boardApiDTO) => {
+    try {
+
+        const response = await axios.post(`${prefix}/${id}/summary`, boardApiDTO);
+        return response.data;
+    } catch (error) {
+        console.log('Error Summary board: ', error.response ? error.response.data : error.message);
+        throw error;
+    }
+}
 
 export const autocomplete = async (keyword, searchType, category) => {
     const url = `${prefix}/autocomplete`;
