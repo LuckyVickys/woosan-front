@@ -12,7 +12,7 @@ const initState = {
   newPassword: "",
 };
 
-const FinePWModal = ({ onClose }) => {
+const FindPWModal = ({ onClose }) => {
   const loginState = useSelector((state) => state.loginSlice);
   const token = loginState.accessToken;
   const [updateData, setUpdateData] = useState({ ...initState });
@@ -285,4 +285,4 @@ const FinePWModal = ({ onClose }) => {
   );
 };
 
-export default FinePWModal;
+export default FindPWModal;
