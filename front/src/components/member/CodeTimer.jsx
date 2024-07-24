@@ -41,7 +41,7 @@ const CodeTimer = ({ timerActive, resetTimer,  setShowCode }) => {
       const seconds = count % 60;
     
       return (
-        <span>
+        <span className="codeTimer">
           {minutes < 10 ? `0${minutes}` : minutes}:
           {seconds < 10 ? `0${seconds}` : seconds}
         </span>
