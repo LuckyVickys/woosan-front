@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { createBoard } from "../../api/boardApi";
+import { createNotice } from "../../api/adminApi";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../../assets/styles/App.scss";
@@ -66,7 +66,7 @@ const NoticeAddComponent = () => {
             const header = {
                 headers: { "Content-Type": "multipart/form-data" },
             };
-            await createBoard(formData, header);
+            await createNotice(formData, header);
             navigate("/admin/notice");
         } catch (error) {
             console.error("저장 실패", error);

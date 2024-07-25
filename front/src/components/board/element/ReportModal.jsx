@@ -3,6 +3,8 @@ import { addReport } from "../../../api/reportApi";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 import "../../../assets/styles/App.scss";
+import { useSelector } from "react-redux";
+
 
 const initState = {
     type: "",
@@ -13,11 +15,13 @@ const initState = {
 };
 
 const ReportModal = ({ type, targetId, reporterId, onClose }) => {
+    const loginState = useSelector((state) => state.loginSlice);
     const [report, setReport] = useState({ ...initState });
     const [images, setImages] = useState([]);
     const uploadRef = useRef();
     const [isClosing, setIsClosing] = useState(false);
     const [selectedType, setSelectedType] = useState(null);
+    const token = loginState.accessToken;
 
     useEffect(() => {
         setReport({ ...initState });
@@ -104,7 +108,7 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await addReport(formData);
+                    const response = await addReport(formData, token);
 
                     if (response) {
                         Swal.fire({
