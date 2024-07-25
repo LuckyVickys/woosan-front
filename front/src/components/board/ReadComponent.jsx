@@ -15,6 +15,7 @@ import defaultProfile from "../../assets/image/profile.png";
 import Swal from "sweetalert2";
 import useCustomLogin from "../../hooks/useCustomLogin.jsx";
 import LoginModal from "../member/LoginModal.jsx";
+import SuggestedBoardList from "./element/SuggestedBoardList.jsx";
 
 const initState = {
   id: 0,
@@ -26,6 +27,7 @@ const initState = {
   regDate: "",
   views: 0,
   likesCount: 0,
+  replyCount: 0,
   categoryName: "",
   images: null,
   filePathUrl: [],
@@ -38,6 +40,7 @@ const ReadComponent = () => {
 
   const [board, setBoard] = useState(initState);
   const [summarizedBoard, setSummarizedBoard] = useState(null);
+  const [suggestedBoards, setSuggestedBoards] = useState([]);
   const [showBoardMenu, setShowBoardMenu] = useState(false);
   const [openReportModal, setOpenReportModal] = useState(false);
   const [openMsgModal, setOpenMsgModal] = useState(false);
@@ -54,8 +57,11 @@ const ReadComponent = () => {
 
   useEffect(() => {
     getBoard(id).then((data) => {
-      const contentWithLineBreaks = convertLineBreaks(data.content);
-      setBoard({ ...data, content: contentWithLineBreaks });
+      const contentWithLineBreaks = convertLineBreaks(data.boardDTO.content);
+      setBoard({ ...data.boardDTO, content: contentWithLineBreaks });
+      setSuggestedBoards(data.suggestedBoards); // 연관 게시물 데이터 설정
+      console.log("boards", data.boardDTO)
+      console.log("suggestedBoards:", suggestedBoards);
     });
   }, [id]);
 
@@ -166,9 +172,9 @@ const ReadComponent = () => {
     };
   }, []);
 
-  if (!board.title) {
-    return <div>로딩 중...</div>;
-  }
+  // if (!board.title) {
+  //   return <div>로딩 중...</div>;
+  // }
 
   const profileSrc =
     board.writerProfile && board.writerProfile.length > 0
@@ -246,7 +252,7 @@ const ReadComponent = () => {
           </div>
         )}
         <div className="image-container">
-          {board.filePathUrl.map((url, index) => (
+          {(board.filePathUrl || []).map((url, index) => (
             <img
               key={index}
               src={url}
@@ -256,6 +262,10 @@ const ReadComponent = () => {
           ))}
         </div>
       </div>
+
+
+      <SuggestedBoardList suggestedBoards={suggestedBoards} />
+
       <ListButton />
       {openMsgModal && (
         <MsgModal

@@ -48,7 +48,7 @@ export const createBoard = async (formData, header) => {
 
 export const getOne = async (id) => {
     try {
-        const res = await axios.get(`${prefix}/${id}/modify`);
+        const res = await axios.get(`${prefix}/${id}/modify`, header);
         return res.data;
     } catch (error) {
         console.error(
@@ -161,3 +161,9 @@ export const combinedSearch = async (
         throw error;
     }
 };
+
+
+export const getDailyBest = async () => {
+    const res = await axios.get(`${prefix}/daily/best`);
+    return res.data;
+}
