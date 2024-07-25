@@ -12,6 +12,7 @@ import MsgModal from "../board/element/MsgModal.jsx";
 import ReportModal from "../board/element/ReportModal.jsx";
 import Swal from 'sweetalert2';
 import replyArrow from "../../assets/image/reply_arrow.png";
+import useCustomLogin from '../../hooks/useCustomLogin.jsx';
 
 const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCountChange }) => {
     const loginState = useSelector((state) => state.loginSlice);
@@ -28,6 +29,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
     const [totalPages, setTotalPages] = useState(1);
     const dropdownRef = useRef({});
     const replyInputRef = useRef({});
+    const { isLogin, moveToLoginReturn } = useCustomLogin();
 
     // 댓글 및 답글을 가져오는 함수
     useEffect(() => {
@@ -163,10 +165,28 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
 
     // 드롭다운 토글 핸들러
     const toggleDropdown = (commentId) => {
-        setIsDropdownOpen({
-            ...isDropdownOpen,
-            [commentId]: !isDropdownOpen[commentId]
-        });
+        if (!isLogin) {
+            Swal.fire({
+              title: "로그인이 필요한 서비스입니다.",
+              icon: "error",
+              confirmButtonText: "확인",
+              confirmButtonColor: "#3085d6",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                moveToLoginReturn();
+              }
+            });
+            setIsDropdownOpen({
+                ...isDropdownOpen,
+                [commentId]: !isDropdownOpen[commentId]
+            });
+          } else {
+            setIsDropdownOpen({
+                ...isDropdownOpen,
+                [commentId]: !isDropdownOpen[commentId]
+            });
+          }
+        
     };
 
     // 답글 및 댓글이 삭제되었을 때 상태를 업데이트하는 함수

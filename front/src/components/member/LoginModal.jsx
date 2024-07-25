@@ -80,7 +80,11 @@ const LoginModal = ({ onClose }) => {
             text: '오늘도 즐거운 자취생활 되세요!',
             confirmButtonColor: '#3085d6',
             confirmButtonText: '확인',
-          });
+          }).then((result) => {
+            if(result.isConfirmed) {
+              window.location.replace("/");
+            }
+          })
           onClose();
         }
       } catch (error) {

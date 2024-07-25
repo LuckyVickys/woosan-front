@@ -13,6 +13,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import ReportModal from "../board/element/ReportModal.jsx";
 import MsgModal from "../board/element/MsgModal.jsx";
 import { PiGenderIntersexFill } from "react-icons/pi";
+import useCustomLogin from '../../hooks/useCustomLogin.jsx';
 
 // 초기 상태
 const initialState = {
@@ -56,6 +57,7 @@ const reducer = (state, action) => {
 const MatchingModal = ({ item = {}, onClose }) => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id;
+    const { isLogin, moveToLoginReturn } = useCustomLogin();
 
     const [state, dispatch] = useReducer(reducer, {
         ...initialState,
@@ -202,11 +204,37 @@ const MatchingModal = ({ item = {}, onClose }) => {
     };
 
     const openReport = () => {
-        dispatch({ type: 'SET_REPORT_MODAL_OPEN', payload: true });
+        if (!isLogin) {
+            Swal.fire({
+                title: "로그인이 필요한 서비스입니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    moveToLoginReturn();
+                }
+            });
+        } else {
+            dispatch({ type: 'SET_REPORT_MODAL_OPEN', payload: true });
+        }
     };
 
     const openMsg = () => {
-        dispatch({ type: 'SET_MSG_MODAL_OPEN', payload: true });
+        if (!isLogin) {
+            Swal.fire({
+                title: "로그인이 필요한 서비스입니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    moveToLoginReturn();
+                }
+            });
+        } else {
+            dispatch({ type: 'SET_MSG_MODAL_OPEN', payload: true });
+        }
     };
 
     const handleCommentCountChange = (count) => {
@@ -265,9 +293,23 @@ const MatchingModal = ({ item = {}, onClose }) => {
                         <span className={styles.date}>작성 날짜: {formatDate(item.regDate)}</span>
                     </div>
                     <div className={styles.dropdownWrapper} ref={dropdownRef}>
-                        <BsThreeDotsVertical 
-                            className={styles.threeDotsIcon} 
-                            onClick={() => dispatch({ type: 'SET_DROPDOWN_OPEN', payload: !state.isDropdownOpen })}
+                    <BsThreeDotsVertical
+                            onClick={() => {
+                                if (!isLogin) {
+                                    Swal.fire({
+                                        title: "로그인이 필요한 서비스입니다.",
+                                        icon: "error",
+                                        confirmButtonText: "확인",
+                                        confirmButtonColor: "#3085d6",
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            moveToLoginReturn();
+                                        }
+                                    });
+                                } else {
+                                    dispatch({ type: 'SET_DROPDOWN_OPEN', payload: !state.isDropdownOpen });
+                                }
+                            }}
                         />
                         {state.isDropdownOpen && (
                             <MatchingDropDown 
