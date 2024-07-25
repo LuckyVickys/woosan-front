@@ -6,7 +6,7 @@ import { getMembers, getPendingRequestsByBoardId } from '../../api/memberMatchin
 import styles from '../../assets/styles/matching/ModifyMatching.module.scss';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
-import MemberManagement from '../../components/matching/MemberManagement'; 
+import MemberManagement from '../../components/matching/MemberManagement';
 
 const ModifyMatchingPage = () => {
     const { id } = useParams();
@@ -63,7 +63,7 @@ const ModifyMatchingPage = () => {
      */
     const handleSubmit = async (formData) => {
         try {
-            await updateMatchingBoard(id, formData);
+            await updateMatchingBoard(id, formData, loginState.accessToken);
             Swal.fire('성공!', '매칭이 성공적으로 수정되었습니다.', 'success');
             navigate(-1); // 수정 후 이전 페이지로 이동
         } catch (error) {
@@ -86,7 +86,7 @@ const ModifyMatchingPage = () => {
 
         if (result.isConfirmed) {
             try {
-                await deleteMatchingBoard(id, loginState.id);
+                await deleteMatchingBoard(id, loginState.id, loginState.accessToken);
                 Swal.fire('성공!', '매칭이 성공적으로 삭제되었습니다.', 'success');
                 navigate(-1); // 삭제 후 이전 페이지로 이동
             } catch (error) {

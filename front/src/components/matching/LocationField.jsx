@@ -7,17 +7,16 @@ const LocationField = ({ placeName, setPlaceName, locationX, setLocationX, locat
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSaveLocation = (address, x, y, placeName) => {
-       
+        // 주소와 위치 정보 업데이트
         setPlaceName(placeName || address);
         setLocationX(x.toString()); // 숫자를 문자열로 변환
         setLocationY(y.toString()); // 숫자를 문자열로 변환
         setAddress(address); // address 상태 업데이트
-       
         setIsModalOpen(false);
     };
 
     const handleDeleteLocation = () => {
-       
+        // 주소와 위치 정보 초기화
         setPlaceName('');
         setLocationX('');
         setLocationY('');
@@ -57,9 +56,9 @@ const LocationField = ({ placeName, setPlaceName, locationX, setLocationX, locat
 LocationField.propTypes = {
     placeName: PropTypes.string.isRequired,
     setPlaceName: PropTypes.func.isRequired,
-    locationX: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    locationX: PropTypes.string.isRequired,
     setLocationX: PropTypes.func.isRequired,
-    locationY: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    locationY: PropTypes.string.isRequired,
     setLocationY: PropTypes.func.isRequired,
     address: PropTypes.string.isRequired,
     setAddress: PropTypes.func.isRequired,
