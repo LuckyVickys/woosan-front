@@ -13,7 +13,7 @@ const truncateText = (text, maxLength) => {
 
 const MatchingItem = ({
     id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag = '{}', headCount,
-    currentMemberCount, location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
+    currentMemberCount = 1, location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
 }) => {
     // 매칭 타입에 따라 라벨을 반환하는 함수
     function getTypeLabel(type) {
@@ -49,7 +49,6 @@ const MatchingItem = ({
             const parsedTag = JSON.parse(tag);
             return Object.keys(parsedTag).join(', ');
         } catch (e) {
-            console.error("Failed to parse tag:", e);
             return '';
         }
     };
@@ -130,9 +129,9 @@ MatchingItem.propTypes = {
     locationY: PropTypes.number.isRequired,
     address: PropTypes.string.isRequired,
     meetDate: PropTypes.string.isRequired,
-    tag: PropTypes.string,
+    tag: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     headCount: PropTypes.number.isRequired,
-    currentMemberCount: PropTypes.number.isRequired,
+    currentMemberCount: PropTypes.number,
     location: PropTypes.string,
     introduce: PropTypes.string,
     mbti: PropTypes.string,

@@ -104,30 +104,30 @@ const UpdateInfo = () => {
             setNicknameError("닉네임 중복 체크를 진행해주세요.");
             return;
         }
-
+    
         try {
             const profileUpdateDTO = {
                 memberId: memberId,
-                nickname: formData.nickname,
-                location: formData.region,
-                gender: formData.gender,
-                age: formData.age,
-                height: formData.height,
-                mbti: formData.mbti,
-                introduce: formData.introduce,
+                nickname: formData.nickname || null,
+                location: formData.region || null,
+                gender: formData.gender || null,
+                age: formData.age || null,
+                height: formData.height || null,
+                mbti: formData.mbti || null,
+                introduce: formData.introduce || null,
                 point: formData.point,
                 nextPoint: formData.nextPoint,
             };
-
+    
             const formDataObj = new FormData();
             formDataObj.append('profileUpdateDTO', new Blob([JSON.stringify(profileUpdateDTO)], { type: "application/json" }));
-
+    
             if (formData.fileImg) {
                 formDataObj.append('images', formData.fileImg);
             }
-
+    
             const res = await modifyProfile(formDataObj, token);
-
+    
             Swal.fire(
                 "프로필 수정 완료",
                 "원래 화면으로 돌아갑니다.",

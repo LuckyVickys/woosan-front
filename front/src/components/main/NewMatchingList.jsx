@@ -25,7 +25,7 @@ const NewMatchingList = ({ items, onItemClick }) => {
         <div className={styles.newMatchingList}>
             {getRecentItems.map(item => (
                 <div key={item.id} onClick={() => onItemClick(item.id)}>
-                    <MatchingItem 
+                    <MatchingItem
                         id={item.id}
                         memberId={String(item.memberId)}
                         matchingType={item.matchingType}
@@ -39,8 +39,9 @@ const NewMatchingList = ({ items, onItemClick }) => {
                         locationY={item.locationY}
                         address={item.address}
                         meetDate={item.meetDate}
-                        tag={item.tag}
+                        tag={typeof item.tag === 'string' ? item.tag : JSON.stringify(item.tag)}
                         headCount={item.headCount}
+                        currentMemberCount={item.currentMemberCount || 1}
                         location={item.location}
                         introduce={item.introduce}
                         mbti={item.mbti}
@@ -73,8 +74,9 @@ NewMatchingList.propTypes = {
         locationY: PropTypes.number.isRequired,
         address: PropTypes.string.isRequired,
         meetDate: PropTypes.string.isRequired,
-        tag: PropTypes.object.isRequired,
+        tag: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
         headCount: PropTypes.number.isRequired,
+        currentMemberCount: PropTypes.number,
         location: PropTypes.string,
         introduce: PropTypes.string,
         mbti: PropTypes.string,

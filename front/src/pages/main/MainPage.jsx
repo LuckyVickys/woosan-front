@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState, useCallback } from 'react';
+import { NavLink, useNavigate } from "react-router-dom";
 import '../../assets/styles/App.scss';
 import BasicLayout from "../../layouts/BasicLayout";
 import LikeList from "../../components/main/LikeList";
@@ -8,39 +8,75 @@ import NewMatchingList from "../../components/main/NewMatchingList";
 import MatchingModal from '../../components/matching/MatchingModal';
 import Banner from '../../components/main/Banner';
 import { getAllMatching } from '../../api/matchingBoardApi';
+import { useSelector } from 'react-redux';
+import useCustomLogin from "../../hooks/useCustomLogin";
+import LoginModal from "../../components/member/LoginModal";
+import Swal from 'sweetalert2';
 
 const MainPage = () => {
     const [items, setItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
+    const loginState = useSelector((state) => state.loginSlice);
+    const memberType = loginState.memberType;
+    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await getAllMatching();
-                if (Array.isArray(response)) {
-                    setItems(response);
-                } else {
-                    console.error('Invalid response format:', response);
-                    setItems([]);
-                }
-            } catch (error) {
-                console.error('Error fetching matchings:', error);
+    const fetchData = useCallback(async () => {
+        try {
+            const response = await getAllMatching();
+            if (Array.isArray(response)) {
+                setItems(response);
+            } else {
                 setItems([]);
             }
-        };
-
-        fetchData();
+        } catch (error) {
+            setItems([]);
+        }
     }, []);
 
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+    
     const handleItemClick = (id) => {
-        const item = items.find(item => item.id === id);
-        setSelectedItem(item);
+        if (!isLogin) {
+            Swal.fire({
+                title: "로그인이 필요한 서비스입니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    moveToLoginReturn();
+                }
+            });
+        } else if (memberType === "USER" || memberType === "ADMIN") {
+            const item = items.find(item => item.id === id);
+            setSelectedItem(item);
+        }
     };
 
     const handleCloseModal = () => {
         setSelectedItem(null);
     };
 
+    const handleMatchingViewAllClick = useCallback((e) => {
+        e.preventDefault();
+        if (!isLogin) {
+            Swal.fire({
+                title: "로그인이 필요한 서비스입니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    moveToLoginReturn();
+                }
+            });
+        } else if (memberType === "USER" || memberType === "ADMIN") {
+            navigate("/matching");
+        }
+    }, [isLogin, memberType, navigate, moveToLoginReturn]);
     return (
         <BasicLayout>
             <div className="main-contents">
@@ -95,7 +131,7 @@ const MainPage = () => {
                     <div className="main-matching">
                         <div className='main-matching-header'>
                             <div className="header-title">New 모임</div>
-                            <NavLink to={'/matching/'}>View All ➔</NavLink>
+                            <NavLink to={'/matching/'} onClick={handleMatchingViewAllClick}>View All ➔</NavLink>
                         </div>
                         <NewMatchingList items={items} onItemClick={handleItemClick} />
                     </div>
@@ -103,6 +139,8 @@ const MainPage = () => {
                 {selectedItem && (
                     <MatchingModal item={selectedItem} onClose={handleCloseModal} />
                 )}
+
+                {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
             </div>
         </BasicLayout>
     );

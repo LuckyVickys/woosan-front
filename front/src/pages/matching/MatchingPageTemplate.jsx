@@ -2,17 +2,19 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import MatchingModal from '../../components/matching/MatchingModal';
 import FilterBar from '../../components/matching/FilterBar';
+import SelfFilterBar from '../../components/matching/SelfFilterBar';
 import styles from '../../assets/styles/matching/MatchingPageTemplate.module.scss';
 import { throttle } from 'lodash-es';
 
-/**
- * 매칭 페이지 템플릿 컴포넌트
- * @param {Object} props - 매칭 페이지 템플릿 속성
- */
-const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
+const MatchingPageTemplate = ({ items, ListComponent, gridColumns, matchingType }) => {
     const [displayedItems, setDisplayedItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [activeCategory, setActiveCategory] = useState('all');
+    const [activeFilters, setActiveFilters] = useState({
+        gender: '',
+        mbti: '',
+        ageRange: '',
+        category: 'all'
+    });
     const [page, setPage] = useState(1);
     const itemsPerPage = 6;
 
@@ -29,15 +31,27 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
         });
     }, []);
 
+    const filterItems = useCallback((items, filters) => {
+        return items.filter(item => {
+            const genderMatch = !filters.gender || item.gender === filters.gender;
+            const mbtiMatch = !filters.mbti || item.mbti === filters.mbti;
+            const ageMatch = !filters.ageRange || (item.age >= filters.ageRange[0] && item.age <= filters.ageRange[1]);
+            return genderMatch && mbtiMatch && ageMatch;
+        });
+    }, []);
+
     const getSortedItems = (items) => {
         return [...items].sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
     };
 
     useEffect(() => {
         const sortedItems = getSortedItems(items);
-        const filteredItems = filterItemsByCategory(activeCategory, sortedItems);
+        const filteredItems =
+            matchingType === 'self'
+                ? filterItems(sortedItems, activeFilters)
+                : filterItemsByCategory(activeFilters.category, sortedItems);
         setDisplayedItems(filteredItems.slice(0, itemsPerPage * page));
-    }, [items, activeCategory, page, filterItemsByCategory]);
+    }, [items, activeFilters, page, filterItems, filterItemsByCategory, matchingType]);
 
     useEffect(() => {
         const handleScroll = throttle(() => {
@@ -59,20 +73,37 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns }) => {
         setSelectedItem(null);
     };
 
-    const handleCategoryChange = (category) => {
-        setActiveCategory(category);
+    const handleFilterChange = (name, value) => {
+        setActiveFilters(prevFilters => {
+            if (name === 'ageRange') {
+                const ageRanges = {
+                    '20대': [20, 29],
+                    '30대': [30, 39],
+                    '40대': [40, 49],
+                    '50대': [50, 59],
+                    '60대 이상': [60, 100]
+                };
+                return { ...prevFilters, ageRange: value ? ageRanges[value] : '' };
+            }
+            return { ...prevFilters, [name]: value };
+        });
         setPage(1);
-        const sortedItems = getSortedItems(items);
-        setDisplayedItems(filterItemsByCategory(category, sortedItems).slice(0, itemsPerPage));
+    };
+
+    const renderFilterBar = () => {
+        switch (matchingType) {
+            case 'self':
+                return <SelfFilterBar activeFilters={activeFilters} onFilterChange={handleFilterChange} />;
+            default:
+                return <FilterBar activeCategory={activeFilters.category} onCategoryChange={category => handleFilterChange('category', category)} />;
+        }
     };
 
     return (
         <div className={styles.container}>
-            <FilterBar activeCategory={activeCategory} onCategoryChange={handleCategoryChange} />
+            {renderFilterBar()}
             <ListComponent items={displayedItems} onItemClick={handleItemClick} gridColumns={gridColumns} />
-            {selectedItem && (
-                <MatchingModal item={selectedItem} onClose={handleCloseModal} />
-            )}
+            {selectedItem && <MatchingModal item={selectedItem} onClose={handleCloseModal} />}
         </div>
     );
 };
@@ -104,6 +135,7 @@ MatchingPageTemplate.propTypes = {
     })).isRequired,
     ListComponent: PropTypes.elementType.isRequired,
     gridColumns: PropTypes.number.isRequired,
+    matchingType: PropTypes.string.isRequired,
 };
 
 export default MatchingPageTemplate;

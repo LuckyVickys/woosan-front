@@ -12,11 +12,13 @@ import MsgModal from "../board/element/MsgModal.jsx";
 import ReportModal from "../board/element/ReportModal.jsx";
 import Swal from 'sweetalert2';
 import replyArrow from "../../assets/image/reply_arrow.png";
-import useCustomLogin from '../../hooks/useCustomLogin.jsx';
+import useCustomLogin from "../../hooks/useCustomLogin";  // 로그인 훅 추가
+import LoginModal from "../member/LoginModal";  // 로그인 모달 추가
 
 const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCountChange }) => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id; // 로그인된 회원 ID
+    const memberType = loginState.memberType; // 회원 유형 (USER, ADMIN 등)
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [replyInputs, setReplyInputs] = useState({});
@@ -29,7 +31,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
     const [totalPages, setTotalPages] = useState(1);
     const dropdownRef = useRef({});
     const replyInputRef = useRef({});
-    const { isLogin, moveToLoginReturn } = useCustomLogin();
+    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();  // 로그인 훅 사용
 
     // 댓글 및 답글을 가져오는 함수
     useEffect(() => {
@@ -106,6 +108,20 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
 
     // 댓글 제출 핸들러
     const handleCommentSubmit = async () => {
+        if (!isLogin || (memberType !== 'USER' && memberType !== 'ADMIN')) {
+            Swal.fire({
+                title: "로그인이 필요한 서비스입니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    moveToLoginReturn();
+                }
+            });
+            return;
+        }
+
         const requestDTO = {
             matchingId: matchingId,
             writerId: memberId,
@@ -132,6 +148,20 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
 
     // 답글 제출 핸들러
     const handleReplySubmit = async (commentId) => {
+        if (!isLogin || (memberType !== 'USER' && memberType !== 'ADMIN')) {
+            Swal.fire({
+                title: "로그인이 필요한 서비스입니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    moveToLoginReturn();
+                }
+            });
+            return;
+        }
+
         const requestDTO = {
             matchingId: matchingId,
             writerId: memberId,
@@ -165,28 +195,10 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
 
     // 드롭다운 토글 핸들러
     const toggleDropdown = (commentId) => {
-        if (!isLogin) {
-            Swal.fire({
-              title: "로그인이 필요한 서비스입니다.",
-              icon: "error",
-              confirmButtonText: "확인",
-              confirmButtonColor: "#3085d6",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                moveToLoginReturn();
-              }
-            });
-            setIsDropdownOpen({
-                ...isDropdownOpen,
-                [commentId]: !isDropdownOpen[commentId]
-            });
-          } else {
-            setIsDropdownOpen({
-                ...isDropdownOpen,
-                [commentId]: !isDropdownOpen[commentId]
-            });
-          }
-        
+        setIsDropdownOpen({
+            ...isDropdownOpen,
+            [commentId]: !isDropdownOpen[commentId]
+        });
     };
 
     // 답글 및 댓글이 삭제되었을 때 상태를 업데이트하는 함수
@@ -268,6 +280,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                             <button
                                 className={styles.replyButton}
                                 onClick={() => handleReplySubmit(reply.id)}
+                                disabled={!replyInputs[reply.id]?.trim()}
                             >
                                 답글 작성
                             </button>
@@ -331,6 +344,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                         <button
                             className={styles.replyButton}
                             onClick={() => handleReplySubmit(comment.id)}
+                            disabled={!replyInputs[comment.id]?.trim()}
                         >
                             답글 작성
                         </button>
@@ -353,7 +367,13 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                     value={newComment}
                     onChange={handleCommentChange}
                 ></textarea>
-                <button className={styles.commentButton} onClick={handleCommentSubmit}>댓글 작성</button>
+                <button
+                    className={styles.commentButton}
+                    onClick={handleCommentSubmit}
+                    disabled={!newComment.trim()}
+                >
+                    댓글 작성
+                </button>
             </div>
             {isMsgModalOpen && (
                 <MsgModal
@@ -377,6 +397,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                     onPageChange={handlePageChange}
                 />
             )}
+            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
         </div>
     );
 }
