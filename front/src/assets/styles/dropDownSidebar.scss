@@ -64,4 +64,55 @@ $font-family: 'Pretendard-Regular', sans-serif;
             }
         }
     }
+
+    &.admin {
+        .dropdown-toggle {
+            margin-bottom: 5px;
+            width: 100%;
+            background: #fff;
+            border: 1px solid #65676d;
+            color: #000;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: $font-family;
+    
+            svg {
+                fill: #000;
+            }
+        }
+        
+        .category-title {
+            font-weight: bold;
+            padding: 8px;
+            background: #65676d;
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 8px;
+            text-align: left;
+            font-family: $font-family;
+            color: #000;
+            cursor: pointer;
+
+            &.active {
+                background: #fff;
+                color: #9BCC66;
+            }
+
+            &:hover {
+                background: #EDF2EE;
+                color: #000;
+            }
+        }
+    }
 }

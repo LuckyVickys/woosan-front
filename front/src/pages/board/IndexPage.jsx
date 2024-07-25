@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom'; // 현재 경로 가져오기
+import { Outlet, useLocation } from 'react-router-dom'; 
 import BasicLayout from "../../layouts/BasicLayout";
 import SideBar from "../../components/common/SideBar";
 import PageTitle from "../../components/common/PageTitle";

@@ -8,11 +8,11 @@ const DropdownSidebar = ({ pageType, activeCategory, handleNavigation, handleLog
 
     const handleCategoryClick = (category) => {
         handleNavigation(category);
-        setIsOpen(false); // Close dropdown after item is clicked
+        setIsOpen(false);
     };
 
     return (
-        <div className="dropdown-sidebar">
+        <div className={`dropdown-sidebar ${pageType === "admin" ? "admin" : ""}`}>
             <button className="dropdown-toggle" onClick={toggleDropdown}>
                 카테고리 {isOpen ? <FaAngleUp /> : <FaAngleDown />}
             </button>
