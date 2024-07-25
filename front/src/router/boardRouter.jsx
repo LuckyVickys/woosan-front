@@ -1,5 +1,6 @@
 
 import { Suspense, lazy } from "react";
+import AccessRoute from './AccessRoute';
 
 const Loading = <div>Loading....</div>
 
@@ -50,11 +51,19 @@ const boardRouter = () => {
         },
         {
             path: "add",
-            element: <Suspense fallback={Loading}><AddPage /></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><AddPage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "modify/:id",
-            element: <Suspense fallback={Loading}><ModifyPage /></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><ModifyPage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: ":id",

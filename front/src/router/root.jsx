@@ -4,6 +4,7 @@ import matchingRouter from "./matchingRouter"
 import csRouter from "./csRouter"
 import myPageRouter from "./myPageRouter";
 import adminPageRouter from "./adminPageRouter";
+import AccessRoute from './AccessRoute';
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -35,26 +36,40 @@ const root = createBrowserRouter([
     },
     {
         path: "matching",
-        element: <Suspense fallback={Loading}><Matching /></Suspense>,
+        element: (
+            <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+              <Suspense fallback={Loading}><Matching /></Suspense>
+            </AccessRoute>
+          ),
         children: matchingRouter()
     },
     {
         path: "cs",
-        element: <Suspense fallback={Loading}><CS /></Suspense>,
+        element: (
+            <Suspense fallback={Loading}><CS /></Suspense>
+        ),
         children: csRouter()
     },
     {
         path: "mypage",
-        element: <Suspense fallback={Loading}><MyPage /></Suspense>,
+        element: (
+            <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+              <Suspense fallback={Loading}><MyPage /></Suspense>
+            </AccessRoute>
+        ),
         children: myPageRouter()
     },
     {
         path: "admin",
-        element: <Suspense fallback={Loading}><AdminPage/></Suspense>,
+        element: (
+            <AccessRoute allowedRoles={['ADMIN']}>
+              <Suspense fallback={Loading}><AdminPage /></Suspense>
+            </AccessRoute>
+          ),
         children: adminPageRouter()
     },
     {
-        path: "*", // catch-all route
+        path: "*",
         element: <Suspense fallback={Loading}><NotFoundPage /></Suspense>
     }
 ])

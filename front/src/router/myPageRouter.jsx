@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Navigate } from "react-router-dom";
+import AccessRoute from './AccessRoute';
 
 const Loading = <div>Loading....</div>
 
@@ -15,40 +15,76 @@ const MyMsgPage = lazy(()=> import("../pages/myPage/MyMsgPage"))
 const myPageRouter = ()=> {
     return [
         {
-            path: "/mypage",
-            element: <Navigate replace to="/mypage/info"/>
+            path: "",
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><UpdateInfoPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "info",
-            element: <Suspense fallback={Loading}><UpdateInfoPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><UpdateInfoPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "board",
-            element: <Suspense fallback={Loading}><MyBoardPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><MyBoardPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "reply",
-            element: <Suspense fallback={Loading}><MyReplyPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><MyReplyPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "like",
-            element: <Suspense fallback={Loading}><LikePage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><LikePage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "matching",
-            element: <Suspense fallback={Loading}><MyMatchingPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><MyMatchingPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "send-message",
-            element: <Suspense fallback={Loading}><MySendMsgPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><MySendMsgPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {     
             path: "receive-message",
-            element: <Suspense fallback={Loading}><MyReceiveMsgPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><MyReceiveMsgPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "message/:id",
-            element: <Suspense fallback={Loading}><MyMsgPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                    <Suspense fallback={Loading}><MyMsgPage/></Suspense>
+                </AccessRoute>
+            )
         }
     ]
 }

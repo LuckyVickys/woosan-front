@@ -1,6 +1,5 @@
 import { Suspense, lazy } from "react";
-
-
+import AccessRoute from './AccessRoute';
 
 const Loading = <div>Loading....</div>
 
@@ -15,27 +14,53 @@ const matchingRouter = ()=> {
     return [
         {
             path: "",
-            element: <Suspense fallback={Loading}><MatchingPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                  <Suspense fallback={Loading}><MatchingPage/></Suspense>
+                </AccessRoute>
+            )
+            
         },
         {
             path: "regularly",
-            element: <Suspense fallback={Loading}><RegularlyPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                  <Suspense fallback={Loading}><RegularlyPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "temporary",
-            element: <Suspense fallback={Loading}><TemporaryPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                  <Suspense fallback={Loading}><TemporaryPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "self",
-            element: <Suspense fallback={Loading}><SelfPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                  <Suspense fallback={Loading}><SelfPage/></Suspense>
+                </AccessRoute>
+            )
+            
         },
         {
             path: "create",
-            element: <Suspense fallback={Loading}><CreateMatchingPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                  <Suspense fallback={Loading}><CreateMatchingPage/></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "modify/:id",
-            element: <Suspense fallback={Loading}><ModifyMatchingPage/></Suspense>
+            element: (
+                <AccessRoute allowedRoles={['USER', 'ADMIN']}>
+                  <Suspense fallback={Loading}><ModifyMatchingPage/></Suspense>
+                </AccessRoute>
+            )
         }
     ]
 }

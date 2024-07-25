@@ -1,5 +1,5 @@
 // Nav.jsx
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import React from "react";
 import '../../assets/styles/App.scss';
 import RankingList from "./RankingList";
@@ -12,13 +12,14 @@ const Nav = () => {
     const memberType = loginState.memberType;
     const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleMyPageClick = (e) => {
         e.preventDefault();
         if (!isLogin) {
             moveToLoginReturn();
         } else if (memberType === "USER") {
-            navigate("/mypage");
+            navigate("/mypage", { state: { from: location.pathname } });
         }
     }
 
@@ -26,23 +27,35 @@ const Nav = () => {
         <nav id='navbar' className="nav poppins-medium">
             <div className="category">
                 <div className="board">
-                    <NavLink to={'/board/'} className={({ isActive }) => isActive ? "active" : ""}>
+                    <NavLink 
+                        to={{ pathname: '/board/', state: { from: location.pathname } }} 
+                        className={({ isActive }) => isActive ? "active" : ""}
+                    >
                         꿀팁
                     </NavLink>
                 </div>
                 <div className="matching">
-                    <NavLink to={'/matching/'} className={({ isActive }) => isActive ? "active" : ""}>
+                    <NavLink 
+                        to={{ pathname: '/matching/', state: { from: location.pathname } }} 
+                        className={({ isActive }) => isActive ? "active" : ""}
+                    >
                         모임
                     </NavLink>
                 </div>
                 <div className="cs">
-                    <NavLink to={'/cs/'} className={({ isActive }) => isActive ? "active" : ""}>
+                    <NavLink 
+                        to={{ pathname: '/cs/', state: { from: location.pathname } }} 
+                        className={({ isActive }) => isActive ? "active" : ""}
+                    >
                         고객 지원
                     </NavLink>
                 </div>
                 <div className="mypage">
                     {memberType === "ADMIN" ? (
-                        <NavLink to={'/admin/'} className={({ isActive }) => isActive ? "active" : ""}>
+                        <NavLink 
+                            to={{ pathname: '/admin/', state: { from: location.pathname } }} 
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
                             관리자페이지
                         </NavLink>
                     ) : (

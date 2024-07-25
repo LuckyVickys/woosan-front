@@ -10,13 +10,15 @@ import Swal from "sweetalert2";
 import { getMemberWithEmail } from "../../api/memberApi";
 import ProfileDropdown from "../member/ProfileDropdown";
 import defaultProfile from "../../assets/image/profile.png";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 
 const Header = () => {
+  const { isLogin, openLoginModal, closeLoginModal, isLoginModalOpen, doLogin } = useCustomLogin();
   const loginState = useSelector((state) => state.loginSlice);
   const memberType = loginState.memberType;
 
-  const [openLogin, setOpenLogin] = useState(false);
+  // const [openLogin, setOpenLogin] = useState(false);
   const [kakaoUserData, setKakaoUserData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -24,9 +26,9 @@ const Header = () => {
 
   const navigate = useNavigate();
 
-  const closeLoginModal = () => {
-    setOpenLogin(false);
-  };
+  // const closeLoginModal = () => {
+  //   setOpenLogin(false);
+  // };
 
   const navToMessages = () => {
     navigate(memberType === "ADMIN" ? "/admin/receive-message" : "/mypage/receive-message");
@@ -59,7 +61,7 @@ const Header = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [loginState.email, loginState.accessToken]);
 
   useEffect(() => {
     if (isProfileDropdownOpen) {
@@ -97,7 +99,7 @@ const Header = () => {
           <Link to="/" className="logoTitle-text">우리는 함께 산다</Link>
         </div>
       </div>
-      {loginState.email ? (
+      {isLogin ? (
         <div className="login">
           <MdOutlineLocalPostOffice
             className="messageIcon"
@@ -144,13 +146,13 @@ const Header = () => {
           <div
             className="loginButton"
             id="loginButton"
-            onClick={() => setOpenLogin(true)}
+            onClick={openLoginModal}
           >
             로그인
           </div>
         </div>
       )}
-      {openLogin && <LoginModal onClose={closeLoginModal} />}
+      {isLoginModalOpen && <LoginModal onClose={closeLoginModal} doLogin={doLogin} />}
     </header>
   );
 };
