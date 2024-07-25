@@ -105,7 +105,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
         }
 
         .board-row {}
-
+        
         .replyCount {
             margin-left: 10px;
             color: #00B207;
@@ -171,11 +171,11 @@ $font-family: 'Pretendard-Regular', sans-serif;
     align-items: center;
     padding: 10px 10px 0px 20px;
     gap: 10px;
-    width: 990px;
+    width: 100%;
     height: auto;
 
     .title-bar {
-        width: 960px;
+        width: 100%;
         height: 60px;
         background-color: #E2E5E2;
         display: flex;
@@ -196,7 +196,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
 
     .form {
         margin-top: 20px;
-        width: 960px;
+        width: 100%;
 
         .form-group {
             margin-bottom: 20px;
@@ -246,23 +246,25 @@ $font-family: 'Pretendard-Regular', sans-serif;
             }
 
             input[type="text"] {
-                width: 935px;
+                width: 100%;
                 height: 30px;
                 padding: 10px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 font-size: 16px;
                 outline: none;
+                font-family: $font-family;
             }
 
             textarea {
-                width: 935px;
+                width: 100%;
                 height: 240px;
                 padding: 10px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 font-size: 16px;
                 outline: none;
+                font-family: $font-family;
             }
 
             input[type="file"] {
@@ -446,6 +448,23 @@ $font-family: 'Pretendard-Regular', sans-serif;
             margin-left: 10px;
             font-size: 90%;
             color: #EA4B48;
+        }
+    }
+}
+
+// 반응형(Tablet)
+@media (max-width: 1023px) {
+    .area{
+        display: inline;
+
+        .add-component,
+        .modify-component{
+            padding-left: 0;
+
+            input,
+            textarea{
+                width: 100%;
+            }
         }
     }
 }

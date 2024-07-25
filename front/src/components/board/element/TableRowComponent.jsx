@@ -24,7 +24,7 @@ const TableRowComponent = ({
         <td>{isNotice ? "공지사항" : item.categoryName}</td>
         <td>
             {isPopular && <span className="best-label">BEST</span>}
-            {slicedText(item.title, 15)}
+            {slicedText(item.title, 20)}
             <span className="replyCount">({item.replyCount})</span>
         </td>
         <td>{item.nickname}</td>
