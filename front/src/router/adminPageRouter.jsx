@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Navigate } from "react-router-dom";
 import MyMsgPage from "../pages/myPage/MyMsgPage";
+import AccessRoute from './AccessRoute';
 
 const Loading = <div>Loading....</div>;
 
@@ -19,79 +20,84 @@ const adminPageRouter = () => {
     return [
         {
             path: "",
-            element: <Navigate replace to="/admin/upload" />,
+            element: (
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><UploadPage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "upload",
             element: (
-                <Suspense fallback={Loading}>
-                    <UploadPage />
-                </Suspense>
-            ),
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><UploadPage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "report",
             element: (
-                <Suspense fallback={Loading}>
-                    <ReportPage />
-                </Suspense>
-            ),
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><ReportPage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "report/:id",
             element: (
-                <Suspense fallback={Loading}>
-                    <ReportReadPage />
-                </Suspense>
-            ),
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><ReportReadPage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "notice",
             element: (
-                <Suspense fallback={Loading}>
-                    <NoticePage />
-                </Suspense>
-            ),
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><NoticePage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "notice/add",
             element: (
-                <Suspense fallback={Loading}>
-                    <AddNoticePage />
-                </Suspense>
-            ),
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><AddNoticePage /></Suspense>
+                </AccessRoute>
+            )
+            
         },
         {
             path: "notice/modify/:id",
             element: (
-                <Suspense fallback={Loading}>
-                    <ModifyNoticePage />
-                </Suspense>
-            ),
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><ModifyNoticePage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "send-message",
             element: (
-                <Suspense fallback={Loading}>
-                    <MySendMsgPage />
-                </Suspense>
-            ),
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><MySendMsgPage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "receive-message",
             element: (
-                <Suspense fallback={Loading}>
-                    <MyReceiveMsgPage />
-                </Suspense>
-            ),
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><MyReceiveMsgPage /></Suspense>
+                </AccessRoute>
+            )
         },
         {
             path: "message/:id",
             element: (
-                <Suspense fallback={Loading}>
-                    <MyMsgPage />
-                </Suspense>
-            ),
+                <AccessRoute allowedRoles={['ADMIN']}>
+                  <Suspense fallback={Loading}><MyMsgPage /></Suspense>
+                </AccessRoute>
+            )
         },
     ];
 };

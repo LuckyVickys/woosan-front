@@ -1,5 +1,5 @@
 // Nav.jsx
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import React from "react";
 import '../../assets/styles/App.scss';
 import RankingList from "./RankingList";
@@ -13,13 +13,14 @@ const Nav = () => {
     const memberType = loginState.memberType;
     const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleMyPageClick = (e) => {
         e.preventDefault();
         if (!isLogin) {
             moveToLoginReturn();
         } else if (memberType === "USER") {
-            navigate("/mypage");
+            navigate("/mypage", { state: { from: location.pathname } });
         }
     }
 
@@ -52,7 +53,7 @@ const Nav = () => {
                     </NavLink>
                 </div>
                 <div className="matching">
-                <NavLink to={'/matching/'} className={({ isActive }) => isActive ? "active" : ""} onClick={handleMatchingClick}>
+                    <NavLink to={'/matching/'} className={({ isActive }) => isActive ? "active" : ""} onClick={handleMatchingClick}>
                         모임
                     </NavLink>
                 </div>

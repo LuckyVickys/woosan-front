@@ -281,8 +281,7 @@ nav {
 
         .board,
         .matching,
-        .cs,
-        .myPage {
+        .cs{
             margin-right: 32px;
             font-family: $font-family;
             font-size: 14px;
@@ -299,6 +298,26 @@ nav {
 
             a.active {
                 color: #00b207;
+            }
+        }
+
+        .mypage {
+
+            margin-right: 32px;
+            font-family: $font-family;
+            font-size: 14px;
+            font-weight: 700;
+    
+            .nav-link {
+              text-decoration: none;
+    
+              &.active {
+                color: #00b207;
+              }
+            }
+            a {
+                color: #666;
+                transition: color 0.3s ease;
             }
         }
     }
