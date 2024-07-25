@@ -25,12 +25,10 @@ const RegularlyPage = () => {
     };
 
     if (loading) {
-        console.log('로딩 중...');
         return <div className={styles.loading}>Loading...</div>;
     }
 
     if (error) {
-        console.error('데이터를 가져오는 중 오류 발생:', error);
         return <div className={styles.error}>데이터를 가져오는 중 오류 발생</div>;
     }
 

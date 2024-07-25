@@ -37,7 +37,7 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
     useEffect(() => {
         if (!isOpen) return;
 
-        console.log('카카오 클라이언트 아이디:', process.env.REACT_APP_KAKAO_MAPS_API_KEY);
+       
 
         const loadKakaoMapScript = (callback) => {
             const script = document.createElement('script');
@@ -46,7 +46,7 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
                 window.kakao.maps.load(callback);
             };
             script.onerror = (error) => {
-                console.error('카카오 지도 스크립트 로드 오류:', error);
+               
             };
             document.head.appendChild(script);
         };
@@ -73,8 +73,7 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
                         setAddress(address); // 주소 저장
                         setSearchKeyword(address);
                         setErrorMessage(''); // 에러 메시지 초기화
-                        console.log('선택한 주소:', address);
-
+                       
                         if (markerRef.current) {
                             markerRef.current.setPosition(latlng);
                         } else {
@@ -91,7 +90,7 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
                             if (status === window.kakao.maps.services.Status.OK && data.length > 0) {
                                 const place = data[0];
                                 setPlaceName(place.place_name);
-                                console.log('클릭한 장소의 이름:', place.place_name);
+                               
                             } else {
                                 setPlaceName('');
                             }
@@ -125,21 +124,21 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
             return;
         }
         if (!window.kakao || !window.kakao.maps) {
-            console.error('카카오 지도가 로드되지 않았습니다.');
+           
             return;
         }
 
         const geocoder = new window.kakao.maps.services.Geocoder();
         geocoder.addressSearch(searchKeyword, (result, status) => {
             if (status === window.kakao.maps.services.Status.OK) {
-                console.log('주소 검색 결과:', result);
+                
                 setSearchResults(result);
                 setErrorMessage(''); // 에러 메시지 초기화
             } else {
                 const places = new window.kakao.maps.services.Places();
                 places.keywordSearch(searchKeyword, (result, status) => {
                     if (status === window.kakao.maps.services.Status.OK) {
-                        console.log('키워드 검색 결과:', result);
+                       
                         setSearchResults(result);
                         setErrorMessage(''); // 에러 메시지 초기화
                     } else {
@@ -158,7 +157,7 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
         setPlaceName(place.place_name);
         setSearchKeyword(place.address_name || place.road_address_name);
         setAddress(place.address_name || place.road_address_name); // 주소 저장
-        console.log('선택된 장소:', place.place_name, '주소:', place.address_name || place.road_address_name);
+       
 
         if (markerRef.current) {
             markerRef.current.setPosition(latlng);
@@ -176,7 +175,7 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
             return;
         }
         const position = markerRef.current.getPosition();
-        console.log('저장된 주소:', address, position.getLat(), position.getLng(), placeName);
+       
         onSave(address, position.getLat(), position.getLng(), placeName);
         onClose();
     };

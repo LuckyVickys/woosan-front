@@ -53,7 +53,6 @@ const MatchingPage = () => {
             result.push(pageItems);
         }
 
-        console.log("페이지 데이터:", result);
         return result;
     };
 
@@ -98,13 +97,11 @@ const MatchingPage = () => {
 
     // 로딩 중일 때 표시할 내용
     if (loadingRegularly || loadingTemporary || loadingSelf) {
-        console.log("로딩 중...");
         return <div className={styles.loading}>Loading...</div>;
     }
 
     // 데이터 가져오는 중 오류 발생 시 표시할 내용
     if (errorRegularly || errorTemporary || errorSelf) {
-        console.error("데이터를 가져오는 중 오류 발생:", errorRegularly || errorTemporary || errorSelf);
         return <div className={styles.error}>데이터를 가져오는 중 오류 발생</div>;
     }
 

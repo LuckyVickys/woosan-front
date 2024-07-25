@@ -43,7 +43,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                 setAge(userData.age || '');
                 setHeight(userData.height || '');
             } catch (error) {
-                console.error('Failed to fetch user data:', error);
+               
             } finally {
                 setLoading(false);
             }
@@ -61,7 +61,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             try {
                 setTags(JSON.parse(initialValues.tag));
             } catch (error) {
-                console.error('Failed to parse tag JSON:', error);
+               
             }
         }
     }, [initialValues.tag]);
@@ -135,8 +135,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             formData.append('height', height);
         }
 
-        console.log('폼 데이터 제출 중:', Object.fromEntries(formData.entries())); // 디버깅을 위한 콘솔 로그
-        console.log('로그인된 상태:', loginState); // 로그인된 상태 출력
+       
 
         await onSubmit(formData, loginState.id);
     };
