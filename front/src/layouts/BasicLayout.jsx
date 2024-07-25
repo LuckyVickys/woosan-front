@@ -22,7 +22,7 @@ const BasicLayout = ({children}) => {
         const footerHeight = document.querySelector('footer').offsetHeight;
         const area = document.querySelector('.area');
 
-        const areaHeight = windowHeight - headerHeight - navHeight - footerHeight;
+        const areaHeight = windowHeight - headerHeight - navHeight - footerHeight-20;
         area.style.minHeight = areaHeight + 'px';
     };
 
