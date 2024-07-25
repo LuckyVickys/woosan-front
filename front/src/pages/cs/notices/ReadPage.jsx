@@ -7,8 +7,6 @@ import useCustomMove from "../../../hooks/useCustomMove";
 const ReadPage = () => {
     const { moveToList } = useCustomMove("/cs/notices");
 
-    console.log("ReadPage: moveToList defaultPath", moveToList);
-
     return (
         <div className="readPage">
             <NoticeReadComponent moveToList={moveToList} />

@@ -46,7 +46,6 @@ const useCustomReportMove = (defaultPath = "/admin/report") => {
 
     const moveToRead = (num, customPath) => {
         const path = customPath || defaultPath;
-        console.log(`Navigating to ${path}/${num}`);
         navigate({
             pathname: `${path}/${num}`,
             search: queryDefault,
