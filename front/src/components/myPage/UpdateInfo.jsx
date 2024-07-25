@@ -36,13 +36,10 @@ const UpdateInfo = () => {
         const fetchData = async () => {
             if (loginState.email) {
                 try {
-                    console.log("Reply Fetching user data...");
                     const userData = await getMemberWithEmail(loginState.email, loginState.accessToken);
-                    console.log("Reply data fetched: ", userData);
                     setUserData(userData);
 
                     const memberData = await getMember(userData.id);
-                    console.log("Fetched member data:", memberData);
                     setFormData((prevData) => ({
                         ...prevData,
                         nickname: memberData.nickname || "",
@@ -68,7 +65,6 @@ const UpdateInfo = () => {
                     console.error("Error fetching user data: ", error);
                 }
             } else {
-                console.log("loginState.email is not set");
             }
         };
 
@@ -132,7 +128,6 @@ const UpdateInfo = () => {
 
             const res = await modifyProfile(formDataObj);
 
-            console.log("Information updated successfully", res.data);
             Swal.fire(
                 "프로필 수정 완료",
                 "원래 화면으로 돌아갑니다.",

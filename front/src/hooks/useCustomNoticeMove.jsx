@@ -37,7 +37,6 @@ const useCustomNoticeMove = () => {
             categoryName: category,
         }).toString();
 
-        console.log(`Navigating to ${defaultPath} with query: ${queryStr}`);
 
         navigate({
             pathname: defaultPath,
@@ -49,7 +48,6 @@ const useCustomNoticeMove = () => {
 
     const moveToRead = (num, customPath) => {
         const path = customPath || defaultPath;
-        console.log(`Navigating to ${path}/${num}`);
         navigate({
             pathname: `${path}/${num}`,
             search: queryDefault,

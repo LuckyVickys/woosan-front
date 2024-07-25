@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "../../assets/styles/App.scss";
-import {FaUtensils,FaBroom,FaConciergeBell,FaMoneyBill,FaPaintRoller,FaRegFileAlt,FaTh,FaRegSmile,FaUserEdit,FaClipboardList,FaComments,FaHeart,FaUsers,FaEnvelopeOpenText,FaSignOutAlt,FaBullhorn,FaGift} from "react-icons/fa";
+import { FaUtensils, FaBroom, FaConciergeBell, FaMoneyBill, FaPaintRoller, FaRegFileAlt, FaTh, FaRegSmile, FaUserEdit, FaClipboardList, FaComments, FaHeart, FaUsers, FaEnvelopeOpenText, FaSignOutAlt, FaBullhorn, FaGift } from "react-icons/fa";
 import { GoReport } from "react-icons/go";
 import { FiUpload } from "react-icons/fi";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../slices/loginSlice";
 import useCustomLogin from "../../hooks/useCustomLogin";
+import DailyBestBoardList from "./DailyBestBoardList";
 
 const SideBar = ({ pageType }) => {
     const navigate = useNavigate();
@@ -90,9 +91,8 @@ const SideBar = ({ pageType }) => {
                     <>
                         <div className="category-title">꿀팁</div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("")}
@@ -101,17 +101,15 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaTh
-                                    className={`icon ${
-                                        activeCategory === "" ? "active" : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "" ? "active" : ""
+                                        }`}
                                 />
                                 전체
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "맛집" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "맛집" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("맛집")}
@@ -120,19 +118,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaUtensils
-                                    className={`icon ${
-                                        activeCategory === "맛집"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "맛집"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 맛집
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "청소" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "청소" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("청소")}
@@ -141,19 +137,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaBroom
-                                    className={`icon ${
-                                        activeCategory === "청소"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "청소"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 청소
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "요리" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "요리" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("요리")}
@@ -162,19 +156,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaConciergeBell
-                                    className={`icon ${
-                                        activeCategory === "요리"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "요리"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 요리
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "재테크" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "재테크" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("재테크")}
@@ -183,19 +175,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaMoneyBill
-                                    className={`icon ${
-                                        activeCategory === "재테크"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "재테크"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 재테크
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "인테리어" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "인테리어" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("인테리어")}
@@ -206,19 +196,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaPaintRoller
-                                    className={`icon ${
-                                        activeCategory === "인테리어"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "인테리어"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 인테리어
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "정책" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "정책" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("정책")}
@@ -227,19 +215,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaRegFileAlt
-                                    className={`icon ${
-                                        activeCategory === "정책"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "정책"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 정책
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "기타" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "기타" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("기타")}
@@ -248,11 +234,10 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaRegSmile
-                                    className={`icon ${
-                                        activeCategory === "기타"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "기타"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 기타
                             </button>
@@ -286,9 +271,8 @@ const SideBar = ({ pageType }) => {
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "regularly" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "regularly" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("regularly")}
@@ -299,11 +283,10 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaUtensils
-                                    className={`icon ${
-                                        activeCategory === "regularly"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "regularly"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 정기 모임
                             </button>
@@ -320,11 +303,10 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaConciergeBell
-                                    className={`icon ${
-                                        activeCategory === "self"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "self"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 셀프 소개팅
                             </button>
@@ -335,29 +317,27 @@ const SideBar = ({ pageType }) => {
                     <>
                         <div className="category-title">고객 지원</div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "notices" ||
+                            className={`sub-category ${activeCategory === "notices" ||
                                 activeCategory === ""
-                                    ? "active"
-                                    : ""
-                            }`}
+                                ? "active"
+                                : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("notices")}
                                 className={
                                     activeCategory === "notices" ||
-                                    activeCategory === ""
+                                        activeCategory === ""
                                         ? "active"
                                         : ""
                                 }
                             >
                                 <FaBullhorn
-                                    className={`icon ${
-                                        activeCategory === "notices" ||
+                                    className={`icon ${activeCategory === "notices" ||
                                         activeCategory === ""
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 공지사항
                             </button>
@@ -368,37 +348,34 @@ const SideBar = ({ pageType }) => {
                     <>
                         <div className="category-title">마이페이지</div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "info" ||
+                            className={`sub-category ${activeCategory === "info" ||
                                 activeCategory === ""
-                                    ? "active"
-                                    : ""
-                            }`}
+                                ? "active"
+                                : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("info")}
                                 className={
                                     activeCategory === "info" ||
-                                    activeCategory === ""
+                                        activeCategory === ""
                                         ? "active"
                                         : ""
                                 }
                             >
                                 <FaUserEdit
-                                    className={`icon ${
-                                        activeCategory === "info" ||
+                                    className={`icon ${activeCategory === "info" ||
                                         activeCategory === ""
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 회원 정보 수정
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "board" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "board" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("board")}
@@ -407,19 +384,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaClipboardList
-                                    className={`icon ${
-                                        activeCategory === "board"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "board"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 작성한 게시글 조회
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "reply" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "reply" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("reply")}
@@ -428,19 +403,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaComments
-                                    className={`icon ${
-                                        activeCategory === "reply"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "reply"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 작성한 댓글 조회
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "like" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "like" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("like")}
@@ -449,19 +422,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaHeart
-                                    className={`icon ${
-                                        activeCategory === "like"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "like"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 추천 게시글
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "matching" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "matching" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("matching")}
@@ -472,19 +443,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaUsers
-                                    className={`icon ${
-                                        activeCategory === "matching"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "matching"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 모임 조회
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "send-message" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "send-message" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("send-message")}
@@ -495,19 +464,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaEnvelopeOpenText
-                                    className={`icon ${
-                                        activeCategory === "send-message"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "send-message"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 보낸 쪽지함
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "receive-message" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "receive-message" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("receive-message")}
@@ -518,11 +485,10 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaEnvelopeOpenText
-                                    className={`icon ${
-                                        activeCategory === "receive-message"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "receive-message"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 받은 쪽지함
                             </button>
@@ -539,65 +505,60 @@ const SideBar = ({ pageType }) => {
                     <>
                         <div className="category-title">관리자 페이지</div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "upload" ||
+                            className={`sub-category ${activeCategory === "upload" ||
                                 activeCategory === ""
-                                    ? "active"
-                                    : ""
-                            }`}
+                                ? "active"
+                                : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("upload")}
                                 className={
                                     activeCategory === "upload" ||
-                                    activeCategory === ""
+                                        activeCategory === ""
                                         ? "active"
                                         : ""
                                 }
                             >
                                 <FiUpload
-                                    className={`icon ${
-                                        activeCategory === "upload" ||
+                                    className={`icon ${activeCategory === "upload" ||
                                         activeCategory === ""
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 배너 관리
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "report" ||
+                            className={`sub-category ${activeCategory === "report" ||
                                 activeCategory === ""
-                                    ? "active"
-                                    : ""
-                            }`}
+                                ? "active"
+                                : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("report")}
                                 className={
                                     activeCategory === "report" ||
-                                    activeCategory === ""
+                                        activeCategory === ""
                                         ? "active"
                                         : ""
                                 }
                             >
                                 <GoReport
-                                    className={`icon ${
-                                        activeCategory === "report" ||
+                                    className={`icon ${activeCategory === "report" ||
                                         activeCategory === ""
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 신고 관리
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "notice" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "notice" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("notice")}
@@ -606,19 +567,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaBullhorn
-                                    className={`icon ${
-                                        activeCategory === "notice"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "notice"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 공지사항 관리
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "send-message" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "send-message" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("send-message")}
@@ -629,19 +588,17 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaEnvelopeOpenText
-                                    className={`icon ${
-                                        activeCategory === "send-message"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "send-message"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 보낸 쪽지함
                             </button>
                         </div>
                         <div
-                            className={`sub-category ${
-                                activeCategory === "receive-message" ? "active" : ""
-                            }`}
+                            className={`sub-category ${activeCategory === "receive-message" ? "active" : ""
+                                }`}
                         >
                             <button
                                 onClick={() => handleNavigation("receive-message")}
@@ -652,11 +609,10 @@ const SideBar = ({ pageType }) => {
                                 }
                             >
                                 <FaEnvelopeOpenText
-                                    className={`icon ${
-                                        activeCategory === "receive-message"
-                                            ? "active"
-                                            : ""
-                                    }`}
+                                    className={`icon ${activeCategory === "receive-message"
+                                        ? "active"
+                                        : ""
+                                        }`}
                                 />
                                 받은 쪽지함
                             </button>
@@ -670,6 +626,7 @@ const SideBar = ({ pageType }) => {
                     </>
                 )}
             </div>
+            < DailyBestBoardList />
         </aside>
     );
 };

@@ -356,21 +356,21 @@ $font-family: 'Pretendard-Regular', sans-serif;
         color: #2a9d47;
         border-radius: 50px;
         padding: 10px 20px;
-        font-size: 16px; 
+        font-size: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
-        position: relative; 
+        position: relative;
 
         &.prevPostButton {
-            margin-right: 10px; 
+            margin-right: 10px;
         }
 
         &.listButton {
-            background-color: #2a9d47; 
-            color: white; 
+            background-color: #2a9d47;
+            color: white;
             margin: 0 10px;
         }
 
@@ -380,13 +380,72 @@ $font-family: 'Pretendard-Regular', sans-serif;
 
         &:hover {
             background-color: #2a9d47;
-            color: white; 
+            color: white;
         }
 
         .icon {
             font-size: 18px;
             color: #2a9d47;
             margin: 0 5px;
+        }
+    }
+}
+
+
+.suggested-list {
+    margin-top: 15px;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    padding: 20px;
+
+    .category-title {
+        font-size: 18px;
+        font-weight: 700;
+        padding: 5px;
+
+    }
+
+    .suggested-list-items {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); // 2열 레이아웃
+        gap: 15px;
+        list-style: none;
+        padding: 0;
+    }
+
+    .suggested-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 0.3px solid #ddd;
+        padding: 5px 0;
+        margin: -15px 0px -15px 0px;
+        transition: color 0.3s ease;
+
+        &:hover {
+
+            .title {
+                color: #00b207; // 원하는 색상으로 변경
+            }
+        }
+
+
+        // .rank {
+        //     font-weight: 700;
+        //     margin-right: 15px;
+        // }
+
+        .title {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .replyCount {
+            margin-left: 10px;
+            font-size: 90%;
+            color: #EA4B48;
         }
     }
 }
