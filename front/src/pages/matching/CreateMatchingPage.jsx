@@ -4,11 +4,28 @@ import { createRegularly, createTemporary, createSelf } from '../../api/matching
 import styles from '../../assets/styles/matching/CreateMatching.module.scss';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import useCustomLogin from '../../hooks/useCustomLogin';
+import LoginModal from '../../components/member/LoginModal';
+import { useSelector } from 'react-redux';
 
 const CreateMatchingPage = () => {
     const [matchingType, setMatchingType] = useState(1); // 기본값: 정기모임
     const [categoryDescription, setCategoryDescription] = useState(''); // 카테고리 설명 상태
     const navigate = useNavigate(); // useNavigate 훅 사용
+    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+    const loginState = useSelector((state) => state.loginSlice);
+    const memberType = loginState.memberType; // 회원 유형 (USER, ADMIN 등)
+
+    useEffect(() => {
+        const description = '정기모임은 레벨3부터 1개만 생성 가능합니다.';
+        setCategoryDescription(description);
+        Swal.fire({
+            title: '카테고리 안내',
+            text: description,
+            icon: 'info',
+            confirmButtonText: '확인'
+        });
+    }, []);
 
     useEffect(() => {
         switch (matchingType) {
@@ -28,6 +45,20 @@ const CreateMatchingPage = () => {
     }, [matchingType]);
 
     const handleSubmit = async (formData) => {
+        if (!isLogin || (memberType !== 'USER' && memberType !== 'ADMIN')) {
+            Swal.fire({
+                title: "로그인이 필요한 서비스입니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    moveToLoginReturn();
+                }
+            });
+            return;
+        }
+
         try {
             if (matchingType === 1) {
                 await createRegularly(formData);
@@ -41,9 +72,35 @@ const CreateMatchingPage = () => {
             }
             navigate(-1);
         } catch (error) {
-            console.error('모임 생성 중 오류 발생:', error);
             Swal.fire('오류!', error.response ? error.response.data : error.message, 'error');
         }
+    };
+
+    const handleCategoryChange = (e) => {
+        const selectedType = Number(e.target.value);
+        setMatchingType(selectedType);
+
+        // 스윗알럿으로 설명 띄우기
+        let description = '';
+        switch (selectedType) {
+            case 1:
+                description = '정기모임은 레벨3부터 1개만 생성 가능합니다.';
+                break;
+            case 2:
+                description = '번개는 레벨2부터 1개만 생성 가능합니다.';
+                break;
+            case 3:
+                description = '셀프 소개팅은 레벨2부터 1개만 생성 가능합니다.';
+                break;
+            default:
+                break;
+        }
+        Swal.fire({
+            title: '카테고리 안내',
+            text: description,
+            icon: 'info',
+            confirmButtonText: '확인'
+        });
     };
 
     return (
@@ -57,7 +114,7 @@ const CreateMatchingPage = () => {
                 <select
                     id="category"
                     value={matchingType}
-                    onChange={(e) => setMatchingType(Number(e.target.value))}
+                    onChange={handleCategoryChange}
                 >
                     <option value={1}>정기 모임</option>
                     <option value={2}>번개</option>
@@ -66,6 +123,7 @@ const CreateMatchingPage = () => {
                 <span className={styles.categoryDescription}>{categoryDescription}</span>
             </div>
             <MatchingForm onSubmit={handleSubmit} initialValues={{}} matchingType={matchingType} />
+            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
         </div>
     );
 };

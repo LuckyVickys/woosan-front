@@ -7,20 +7,17 @@ const LocationField = ({ placeName, setPlaceName, locationX, setLocationX, locat
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSaveLocation = (address, x, y, placeName) => {
-        console.log('저장된 주소:', address, x, y, placeName);
+       
         setPlaceName(placeName || address);
         setLocationX(x.toString()); // 숫자를 문자열로 변환
         setLocationY(y.toString()); // 숫자를 문자열로 변환
         setAddress(address); // address 상태 업데이트
-        console.log('LocationField - 저장된 address:', address);
-        console.log('LocationField - 저장된 placeName:', placeName);
-        console.log('LocationField - 저장된 locationX:', x.toString());
-        console.log('LocationField - 저장된 locationY:', y.toString());
+       
         setIsModalOpen(false);
     };
 
     const handleDeleteLocation = () => {
-        console.log('주소 삭제');
+       
         setPlaceName('');
         setLocationX('');
         setLocationY('');

@@ -75,12 +75,23 @@ const ModifyMatchingPage = () => {
      * 매칭 삭제 함수
      */
     const handleDelete = async () => {
-        try {
-            await deleteMatchingBoard(id, loginState.id);
-            Swal.fire('성공!', '매칭이 성공적으로 삭제되었습니다.', 'success');
-            navigate(-1); // 삭제 후 이전 페이지로 이동
-        } catch (error) {
-            Swal.fire('오류!', error.response ? error.response.data : error.message, 'error');
+        const result = await Swal.fire({
+            title: '삭제 확인',
+            text: '정말 모임을 삭제하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await deleteMatchingBoard(id, loginState.id);
+                Swal.fire('성공!', '매칭이 성공적으로 삭제되었습니다.', 'success');
+                navigate(-1); // 삭제 후 이전 페이지로 이동
+            } catch (error) {
+                Swal.fire('오류!', error.response ? error.response.data : error.message, 'error');
+            }
         }
     };
 

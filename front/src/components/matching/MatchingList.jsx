@@ -44,9 +44,9 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     locationY={item.locationY}
                     address={item.address}
                     meetDate={item.meetDate}
-                    tag={item.tag} // tag를 문자열로 전달
+                    tag={typeof item.tag === 'string' ? item.tag : JSON.stringify(item.tag)} // tag를 문자열로 전달
                     headCount={item.headCount}
-                    currentMemberCount={item.currentMemberCount}
+                    currentMemberCount={item.currentMemberCount || 1} // currentMemberCount의 기본값 설정
                     location={item.location}
                     introduce={item.introduce}
                     mbti={item.mbti}
@@ -78,7 +78,7 @@ MatchingList.propTypes = {
         locationY: PropTypes.number.isRequired,
         address: PropTypes.string.isRequired,
         meetDate: PropTypes.string.isRequired,
-        tag: PropTypes.string, // tag를 문자열로 받도록 수정
+        tag: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // tag를 문자열로 받도록 수정
         headCount: PropTypes.number.isRequired,
         location: PropTypes.string,
         introduce: PropTypes.string,

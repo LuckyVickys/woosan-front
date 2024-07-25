@@ -30,7 +30,6 @@ const MatchingReplyDropDown = ({ replyId, openReport, openMsg, onDeleteSuccess, 
                     })
                     .catch((error) => {
                         Swal.fire('삭제 실패', '댓글 삭제에 실패했습니다.', 'error');
-                        console.error("Error deleting reply:", error);
                     });
             }
         });
