@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import replyArrow from "../../assets/image/reply_arrow.png";
+import { useSelector } from "react-redux";
 import "../../assets/styles/App.scss";
 import { getList, createReply } from "../../api/replyApi";
 import ReplyDropDown from "./element/ReplyDropDown.jsx";
@@ -10,9 +10,13 @@ import LikeButton from "../../components/common/LikeButton";
 import ReportModal from "./element/ReportModal.jsx";
 import MsgModal from "../../components/board/element/MsgModal";
 import defaultProfile from "../../assets/image/profile.png";
-import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { getMemberWithEmail } from "../../api/memberApi";
+import replyArrow from "../../assets/image/reply_arrow.png";
+import useCustomLogin from "../../hooks/useCustomLogin.jsx";
+import LoginModal from "../member/LoginModal.jsx";
+
+
 
 const initState = {
   dtoList: [],
@@ -47,6 +51,7 @@ const ReplyComponent = () => {
   const dropDownRefs = useRef([]);
   const type = "reply";
   const token = loginState.accesToken;
+  const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,8 +115,22 @@ const ReplyComponent = () => {
   };
 
   const handleDropDownClick = (id) => {
-    setOpenReplyDropDown((prev) => (prev === id ? null : id));
-    setReportReplyId(id);
+    if (!isLogin) {
+      Swal.fire({
+        title: "로그인이 필요한 서비스입니다.",
+        icon: "error",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#3085d6",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          moveToLoginReturn();
+        }
+      });
+      setOpenReplyDropDown(false);
+    } else {
+      setOpenReplyDropDown((prev) => (prev === id ? null : id));
+      setReportReplyId(id);
+    }
   };
 
   const openReport = () => {
@@ -157,6 +176,20 @@ const ReplyComponent = () => {
   };
 
   const handleReplySubmit = async () => {
+    if (!isLogin) {
+      Swal.fire({
+        title: "로그인이 필요한 서비스입니다.",
+        icon: "error",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#3085d6",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          moveToLoginReturn();
+        }
+      });
+      return;
+    }
+
     try {
       await createReply({
         writerId: userId,
@@ -172,6 +205,20 @@ const ReplyComponent = () => {
   };
 
   const handleChildReplySubmit = async (replyId) => {
+    if (!isLogin) {
+      Swal.fire({
+        title: "로그인이 필요한 서비스입니다.",
+        icon: "error",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#3085d6",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          moveToLoginReturn();
+        }
+      });
+      return;
+    }
+
     try {
       await createReply({
         writerId: userId,
@@ -358,6 +405,7 @@ const ReplyComponent = () => {
           </button>
         </div>
       </div>
+      {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
     </>
   );
 };
