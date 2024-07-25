@@ -28,6 +28,8 @@ const MyBoardComponent = () => {
         useCustomMove("/mypage/board");
     const [serverData, setServerData] = useState(initState);
 
+    const token = loginState.accessToken;
+
     useEffect(() => {
         const currentPage = page || 1;
         const currentSize = size || 10;
@@ -38,14 +40,14 @@ const MyBoardComponent = () => {
                 size: currentSize,
             },
         };
-        getMyBoard(params)
+        getMyBoard(params, token)
             .then((data) => {
                 setServerData(data);
             })
             .catch((err) => {
                 console.error("Failed to fetch data:", err);
             });
-    }, [page, size, refresh]);
+    }, [page, size, refresh, loginState.id, token]);
 
     const handleRowClick = (id) => {
         moveToRead(id, "/board");

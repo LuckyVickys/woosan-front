@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import useCustomMove from "../../hooks/useCustomMove";
 import Swal from "sweetalert2";
 import { validateBoardInputs } from "../../util/validationUtil";
+import { getCookie } from '../../util/cookieUtil';
 
 const categories = [
   "선택",
@@ -153,7 +154,11 @@ const ModifyComponent = () => {
 
     try {
       const header = {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          Authorization: `Bearer ${loginState.accessToken}`,
+          Refresh: getCookie("member").refreshToken,
+          "Content-Type": "multipart/form-data"
+        },
       };
       await updateBoard(formData, header);
       navigate(`/board/${id}`);
@@ -168,12 +173,19 @@ const ModifyComponent = () => {
         id: id,
         writerId: loginState.id,
       };
-      await deleteBoard(removeDTO);
+      const header = {
+        headers: {
+          Authorization: `Bearer ${loginState.accessToken}`,
+          Refresh: getCookie("member").refreshToken,
+        },
+      };
+      await deleteBoard(removeDTO, header);
       moveToList();
     } catch (error) {
       console.error("삭제 실패", error);
     }
   };
+
 
   return (
     <div className="modify-component">

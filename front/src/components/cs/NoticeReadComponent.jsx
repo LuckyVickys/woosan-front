@@ -18,15 +18,16 @@ const initState = {
     id: 0,
     writerId: 0,
     nickname: "",
+    writerProfile: "",
     title: "",
     content: "",
     regDate: "",
     views: 0,
     likesCount: 0,
+    replyCount: 0,
     categoryName: "",
     images: null,
     filePathUrl: [],
-    replyCount: 0,
 };
 
 const NoticeReadComponent = () => {
@@ -35,10 +36,10 @@ const NoticeReadComponent = () => {
     const { id } = useParams();
 
     const [notice, setNotice] = useState(initState);
+    const [summarizedBoard, setSummarizedBoard] = useState(null);
     const [showBoardMenu, setShowBoardMenu] = useState(false);
     const [openMsgModal, setOpenMsgModal] = useState(false);
     const boardMenuRef = useRef(null);
-    const [summarizedBoard, setSummarizedBoard] = useState(null);
 
     useEffect(() => {
         if (loginState.id) {

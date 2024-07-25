@@ -27,6 +27,8 @@ const MyLikedComponent = () => {
     const { page, size, moveToList, moveToRead, refresh } = useCustomMove("/mypage/like");
     const [serverData, setServerData] = useState(initState);
 
+    const token = loginState.accessToken;
+
     useEffect(() => {
         const currentPage = page || 1;
         const currentSize = size || 10;
@@ -37,14 +39,14 @@ const MyLikedComponent = () => {
                 size: currentSize,
             },
         };
-        getLikedBoard(params)
+        getLikedBoard(params, token)
             .then((data) => {
                 setServerData(data);
             })
             .catch((err) => {
                 console.error("Failed to fetch data:", err);
             });
-    }, [page, size, refresh]);
+    }, [page, size, refresh, loginState.id, token]);
 
     const handleRowClick = (id) => {
         moveToRead(id, "/board");

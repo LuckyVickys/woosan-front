@@ -72,9 +72,9 @@ export const updateBoard = async (formData, header) => {
     }
 };
 
-export const deleteBoard = async (removeDTO) => {
+export const deleteBoard = async (removeDTO, header) => {
     try {
-        const res = await axios.patch(`${prefix}/delete`, removeDTO);
+        const res = await axios.patch(`${prefix}/delete`, removeDTO, header);
         return res.data;
     } catch (error) {
         console.error(

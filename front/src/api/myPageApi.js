@@ -5,10 +5,19 @@ import { getCookie } from '../util/cookieUtil.jsx';
 const host = `${API_SERVER_HOST}/api/my`;
 
 // 마이페이지 댓글 목록
-export const getMyReplies = async (params) => {
+export const getMyReplies = async (params, token) => {
     try {
-        const response = await axios.post(`${host}/replies`, params);
-        return response.data;
+        const res = await axios({
+            method: 'POST',
+            url: `${host}/replies`,
+            data: params,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
+            }
+        });
+        return res.data;
     } catch (error) {
         console.error('Error fetching my replies:', error.response ? error.response.data : error.message);
         throw error;
@@ -16,10 +25,19 @@ export const getMyReplies = async (params) => {
 };
 
 // 마이페이지 게시글 목록
-export const getMyBoard = async (params) => {
+export const getMyBoard = async (params, token) => {
     try {
-        const response = await axios.post(`${host}/board`, params);
-        return response.data;
+        const res = await axios({
+            method: 'POST',
+            url: `${host}/board`,
+            data: params,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
+            }
+        });
+        return res.data;
     } catch (error) {
         console.error('Error fetching my replies:', error.response ? error.response.data : error.message);
         throw error;
@@ -27,10 +45,19 @@ export const getMyBoard = async (params) => {
 };
 
 // 마이페이지 추천 게시글 목록
-export const getLikedBoard = async (params) => {
+export const getLikedBoard = async (params, token) => {
     try {
-        const response = await axios.post(`${host}/like`, params);
-        return response.data;
+        const res = await axios({
+            method: 'POST',
+            url: `${host}/like`,
+            data: params,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
+            }
+        });
+        return res.data;
     } catch (error) {
         console.error('Error fetching my replies:', error.response ? error.response.data : error.message);
         throw error;
@@ -45,14 +72,14 @@ export const getSendMessage = async (params, token) => {
             url: `${host}/message/list/send`,
             data: params,
             headers: {
-              Authorization: `Bearer ${token}`,
-              Refresh: getCookie("member").refreshToken,
-              'Content-Type': 'application/json'
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
             }
-          });
+        });
         return response.data;
-    } catch(error) {
-        console.error('Error fetching my send messages: ', error.response ? error.response.data : error.message);
+    } catch (error) {
+        console.error('Error sfetching my send messages: ', error.response ? error.response.data : error.message);
         throw error;
     }
 }
@@ -65,13 +92,13 @@ export const getReceiveMessage = async (params, token) => {
             url: `${host}/message/list/receive`,
             data: params,
             headers: {
-              Authorization: `Bearer ${token}`,
-              Refresh: getCookie("member").refreshToken,
-              'Content-Type': 'application/json'
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
             }
-          });
+        });
         return response.data;
-    } catch(error) {
+    } catch (error) {
         console.error('Error fetching my receive messages: ', error.response ? error.response.data : error.message);
         throw error;
     }
@@ -84,13 +111,13 @@ export const delSendMessage = async (id, token) => {
             method: 'PUT',
             url: `${host}/message/del/send?id=${id}`,
             headers: {
-              Authorization: `Bearer ${token}`,
-              Refresh: getCookie("member").refreshToken,
-              'Content-Type': 'application/json'
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
             }
-          });
+        });
         return response.data;
-    } catch(error) {
+    } catch (error) {
         console.error('Error fetching my receive messages: ', error.response ? error.response.data : error.message);
         throw error;
     }
@@ -103,13 +130,13 @@ export const delReceiveMessage = async (id, token) => {
             method: 'PUT',
             url: `${host}/message/del/receive?id=${id}`,
             headers: {
-              Authorization: `Bearer ${token}`,
-              Refresh: getCookie("member").refreshToken,
-              'Content-Type': 'application/json'
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
             }
-          });
+        });
         return response.data;
-    } catch(error) {
+    } catch (error) {
         console.error('Error deleting my receive messsage: ', error.response ? error.response.data : error.message);
         throw error;
     }
@@ -122,13 +149,13 @@ export const getMessage = async (id, token) => {
             method: 'GET',
             url: `${host}/message/${id}`,
             headers: {
-              Authorization: `Bearer ${token}`,
-              Refresh: getCookie("member").refreshToken,
-              'Content-Type': 'application/json'
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
             }
-          });
+        });
         return response.data;
-    } catch(error) {
+    } catch (error) {
         console.error('Error fetching my message: ', error.response ? error.response.data : error.message)
         throw error;
     }

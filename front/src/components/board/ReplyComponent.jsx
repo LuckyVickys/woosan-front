@@ -46,6 +46,7 @@ const ReplyComponent = () => {
   const [reportReplyId, setReportReplyId] = useState(null);
   const dropDownRefs = useRef([]);
   const type = "reply";
+  const token = loginState.accesToken;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -162,10 +163,9 @@ const ReplyComponent = () => {
         content: replyContent,
         parentId: null,
         boardId: id,
-      });
-      setReplyContent(""); // Input 비우기
-      getReplies(); // 댓글 목록 다시 불러오기
-      // window.location.reload(); // 페이지 새로고침
+      }, token);
+      setReplyContent("");
+      getReplies();
     } catch (error) {
       console.error("Error adding reply:", error);
     }
@@ -178,9 +178,9 @@ const ReplyComponent = () => {
         content: childReplyContent[replyId],
         parentId: replyId,
         boardId: id,
-      });
-      setChildReplyContent((prev) => ({ ...prev, [replyId]: "" })); // Input 비우기
-      getReplies(); // 댓글 목록 다시 불러오기
+      }, token);
+      setChildReplyContent((prev) => ({ ...prev, [replyId]: "" }));
+      getReplies();
     } catch (error) {
       console.error("Error adding child reply:", error);
     }
@@ -191,8 +191,8 @@ const ReplyComponent = () => {
       reply.isKakao && reply.kakaoProfile
         ? reply.kakaoProfile
         : reply.writerProfile && reply.writerProfile.length > 0
-        ? reply.writerProfile[0]
-        : defaultProfile;
+          ? reply.writerProfile[0]
+          : defaultProfile;
 
     return (
       <div
@@ -261,8 +261,8 @@ const ReplyComponent = () => {
                   loginState.isKakao && kakaoUserData?.properties?.profile_image
                     ? kakaoUserData.properties.profile_image
                     : userData?.profile && userData.profile.length > 0
-                    ? userData.profile[0]
-                    : defaultProfile
+                      ? userData.profile[0]
+                      : defaultProfile
                 }
                 alt="프로필"
                 className="reply-profile-image"
@@ -340,8 +340,8 @@ const ReplyComponent = () => {
               loginState.isKakao && kakaoUserData?.properties?.profile_image
                 ? kakaoUserData.properties.profile_image
                 : userData?.profile && userData.profile.length > 0
-                ? userData.profile[0]
-                : defaultProfile
+                  ? userData.profile[0]
+                  : defaultProfile
             }
             alt="프로필"
             className="reply-profile-image"

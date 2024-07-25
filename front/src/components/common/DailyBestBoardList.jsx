@@ -33,7 +33,7 @@ const DailyBestBoardList = ({ pageType }) => {
 
     return (
         <div className="daily-best">
-            <div className="category-title">오늘의 인기글</div>
+            <div className="category-title">인기 급상승</div>
             <div className="daily-best-list">
                 {dailyBest.map((post, index) => (
                     <div key={post.id} className="daily-best-item" onClick={() => moveToRead(post.id)}>

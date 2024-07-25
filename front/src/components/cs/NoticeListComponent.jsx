@@ -3,7 +3,7 @@ import { getNoticeList } from "../../api/csApi";
 import useCustomNoticeMove from "../../hooks/useCustomNoticeMove";
 import "../../assets/styles/App.scss";
 import NoticeListPageComponent from "../../components/cs/NoticeListPageComponent";
-import TableRowComponent from "../../components/board/element/TableRowComponent";
+import TableRowComponent from "../../components/cs/NoticeTableRowComponent";
 
 const initState = {
     dtoList: [],

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_SERVER_HOST } from "./boardApi.js";
+import { getCookie } from '../util/cookieUtil.jsx';
 
 const host = `${API_SERVER_HOST}/api/replies`;
 
@@ -15,9 +16,18 @@ export const getList = async (boardId, page = 1, size = 10) => {
     }
 };
 
-export const createReply = async (ReplyDTO) => {
+export const createReply = async (ReplyDTO, token) => {
     try {
-        const res = await axios.post(`${host}/add`, ReplyDTO);
+        const res = await axios({
+            method: 'POST',
+            url: `${host}/add`,
+            data: ReplyDTO,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
+            }
+        });
         return res.data;
     } catch (error) {
         console.error("Error adding reply:", error);
@@ -25,7 +35,7 @@ export const createReply = async (ReplyDTO) => {
     }
 }
 
-export const deleteReply = async (removeDTO) => {
+export const deleteReply = async (removeDTO, token) => {
     try {
         const url = `${host}/delete`;
         const res = await axios.request({
@@ -33,6 +43,8 @@ export const deleteReply = async (removeDTO) => {
             method: 'delete',
             data: removeDTO,
             headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
                 'Content-Type': 'application/json'
             }
         });
