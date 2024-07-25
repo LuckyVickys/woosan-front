@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import useCustomLogin from "../../hooks/useCustomLogin";
 import LoginModal from "../../components/member/LoginModal";
 import Swal from 'sweetalert2';
+import { Desktop, Tablet, Mobile } from '../../layouts/ResponsiveComponent';
 
 const MainPage = () => {
     const [items, setItems] = useState([]);
@@ -79,69 +80,230 @@ const MainPage = () => {
     }, [isLogin, memberType, navigate, moveToLoginReturn]);
     return (
         <BasicLayout>
-            <div className="main-contents">
-                <div className="banner">
-                    <Banner />
-                    <div className="popular-post">
-                        <div className='popular-post-header'>
-                            <div className="header-title">인기글</div>
-                            <NavLink to={'/board/'}>View All ➔</NavLink>
+            <Desktop>
+                <div className="main-contents">
+                    <div className="banner">
+                        <Banner />
+                        <div className="popular-post">
+                            <div className='popular-post-header'>
+                                <div className="header-title">인기글</div>
+                                <NavLink to={'/board/'}>View All ➔</NavLink>
+                            </div>
+                            <LikeList />
                         </div>
-                        <LikeList />
                     </div>
+                    <div className="main-info">
+                        <div className="info">
+                            <div className='info-icon1'></div>
+                            <div className='info-text'>
+                                <h1>100% 회원제 커뮤니티</h1>
+                                <p>비회원은 저리 가라, ONLY 회원</p>
+                            </div>
+                        </div>
+                        <div className="info">
+                            <div className='info-icon2'></div>
+                            <div className='info-text'>
+                                <h1>포인트 차곡차곡, 등급 UP</h1>
+                                <p>더욱 재밌는 커뮤니티 활동</p>
+                            </div>
+                        </div>
+                        <div className="info">
+                            <div className='info-icon3'></div>
+                            <div className='info-text'>
+                                <h1>자취생을 위한 꿀팁이 궁금해!</h1>
+                                <p>자취 고수들의 공유마당, 꿀팁</p>
+                            </div>
+                        </div>
+                        <div className="info">
+                            <div className='info-icon4'></div>
+                            <div className='info-text'>
+                                <h1>심심한데 누구 만날까?</h1>
+                                <p>다양한 모임이 가득, 모임</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="main-notice-matching">
+                        <div className="main-notice">
+                            <div className='main-notice-header'>
+                                <div className="header-title">공지사항</div>
+                                <NavLink to={'/cs/'}>View All ➔</NavLink>
+                            </div>
+                            <NoticeList />
+                        </div>
+                        <div className="main-matching">
+                            <div className='main-matching-header'>
+                                <div className="header-title">New 모임</div>
+                                <NavLink to={'/matching/'}>View All ➔</NavLink>
+                            </div>
+                            <NewMatchingList items={items} onItemClick={handleItemClick} />
+                        </div>
+                    </div>
+                    {selectedItem && (
+                        <MatchingModal item={selectedItem} onClose={handleCloseModal} />
+                    )}
                 </div>
-                <div className="main-info">
-                    <div className="info">
-                        <div className='info-icon1'></div>
-                        <div className='info-text'>
+            </Desktop>
+            <Tablet>
+                <div className="main-contents">
+                    <div className="banner">
+                        <Banner />
+                    </div>
+                    <div className="main-info">
+                        <div className="info">
+                            <div className='info-icon1'></div>
+                            <div className='info-text'>
                             <h1>100% 회원제 커뮤니티</h1>
                             <p>비회원은 저리 가라, ONLY 회원</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="info">
-                        <div className='info-icon2'></div>
-                        <div className='info-text'>
-                            <h1>포인트 차곡차곡, 등급 UP</h1>
-                            <p>더욱 재밌는 커뮤니티 활동</p>
-                        </div>
-                    </div>
-                    <div className="info">
-                        <div className='info-icon3'></div>
-                        <div className='info-text'>
+                        <div className="info">
+                            <div className='info-icon3'></div>
+                            <div className='info-text'>
                             <h1>자취생을 위한 꿀팁이 궁금해!</h1>
                             <p>자취 고수들의 공유마당, 꿀팁</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="info">
+                        <div className="info">
                         <div className='info-icon4'></div>
                         <div className='info-text'>
-                            <h1>심심한데 누구 만날까?</h1>
-                            <p>다양한 모임이 가득, 모임</p>
+                        <h1>심심한데 누구 만날까?</h1>
+                        <p>다양한 모임이 가득, 모임</p>
                         </div>
+                    </div>
+                    </div>
+                    <div className='main-content-list'>
+                        <div className="popular-post">
+                            <div className='popular-post-header'>
+                                <div className="header-title">인기글</div>
+                                <NavLink to={'/board/'}>View All ➔</NavLink>
+                            </div>
+                            <LikeList />
+                        </div>
+                        <div className="main-matching">
+                            <div className='main-matching-header'>
+                                <div className="header-title">New 모임</div>
+                                <NavLink to={'/matching/'}>View All ➔</NavLink>
+                            </div>
+                            <NewMatchingList items={items} onItemClick={handleItemClick} />
+                            </div>
+                            {selectedItem && (
+                            <MatchingModal item={selectedItem} onClose={handleCloseModal} />
+                            )}
+                        </div>
+                    </div>
+            </Tablet>
+            {/* <Mobile>
+                <div className="main-contents">
+                    <div className="banner">
+                        <Banner />
+                        <div className="popular-post">
+                            <div className='popular-post-header'>
+                                <div className="header-title">인기글</div>
+                                <NavLink to={'/board/'}>View All ➔</NavLink>
+                            </div>
+                            <LikeList />
+                        </div>
+                    </div>
+                    <div className="main-info">
+                        <div className="info">
+                            <div className='info-icon1'></div>
+                            <div className='info-text'>
+                                <h1>100% 회원제 커뮤니티</h1>
+                                <p>비회원은 저리 가라, ONLY 회원</p>
+                            </div>
+                        </div>
+                        <div className="info">
+                            <div className='info-icon2'></div>
+                            <div className='info-text'>
+                                <h1>포인트 차곡차곡, 등급 UP</h1>
+                                <p>더욱 재밌는 커뮤니티 활동</p>
+                            </div>
+                        </div>
+                        <div className="info">
+                            <div className='info-icon3'></div>
+                            <div className='info-text'>
+                                <h1>자취생을 위한 꿀팁이 궁금해!</h1>
+                                <p>자취 고수들의 공유마당, 꿀팁</p>
+                            </div>
+                        </div>
+                        <div className="info">
+                            <div className='info-icon4'></div>
+                            <div className='info-text'>
+                                <h1>심심한데 누구 만날까?</h1>
+                                <p>다양한 모임이 가득, 모임</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="main-notice-matching">
+                        <div className="main-notice">
+                            <div className='main-notice-header'>
+                                <div className="header-title">공지사항</div>
+                                <NavLink to={'/cs/'}>View All ➔</NavLink>
+                            </div>
+                            <NoticeList />
+                        </div>
+                        <div className="main-matching">
+                            <div className='main-matching-header'>
+                                <div className="header-title">New 모임</div>
+                                <NavLink to={'/matching/'}>View All ➔</NavLink>
+                            </div>
+                            <NewMatchingList items={items} onItemClick={handleItemClick} />
+                        </div>
+                    </div>
+                    {selectedItem && (
+                        <MatchingModal item={selectedItem} onClose={handleCloseModal} />
+                    )}
+                </div>
+            </Mobile> */}
+            <Mobile>
+                <div className="main-contents">
+                    <div className="banner">
+                        <Banner />
+                    </div>
+                    <div className="main-info">
+                        <div className="info">
+                            <div className='info-icon1'></div>
+                                <div className='info-text'>
+                                <h1>100% 회원제 커뮤니티</h1>
+                                <p>비회원은 저리 가라, ONLY 회원</p>
+                            </div>
+                        </div>
+                        <div className="info">
+                            <div className='info-icon2'></div>
+                            <div className='info-text'>
+                                <h1>포인트 차곡차곡, 등급 UP</h1>
+                                <p>더욱 재밌는 커뮤니티 활동</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='main-content-list2'>
+                        <div className="popular-post">
+                            <div className='popular-post-header'>
+                                <div className="header-title">인기글</div>
+                                <NavLink to={'/board/'}>View All ➔</NavLink>
+                            </div>
+                            <LikeList />
+                        </div>
+                        <div className="main-notice">
+                            <div className='main-notice-header'>
+                                <div className="header-title">공지사항</div>
+                                <NavLink to={'/cs/'}>View All ➔</NavLink>
+                            </div>
+                            <NoticeList />
+                        </div>
+                        <div className="main-matching">
+                            <div className='main-matching-header'>
+                                <div className="header-title">New 모임</div>
+                                <NavLink to={'/matching/'}>View All ➔</NavLink>
+                            </div>
+                            <NewMatchingList items={items} onItemClick={handleItemClick} />
+                        </div>
+                        {selectedItem && (
+                            <MatchingModal item={selectedItem} onClose={handleCloseModal} />
+                        )}
                     </div>
                 </div>
-                <div className="main-notice-matching">
-                    <div className="main-notice">
-                        <div className='main-notice-header'>
-                            <div className="header-title">공지사항</div>
-                            <NavLink to={'/cs/'}>View All ➔</NavLink>
-                        </div>
-                        <NoticeList />
-                    </div>
-                    <div className="main-matching">
-                        <div className='main-matching-header'>
-                            <div className="header-title">New 모임</div>
-                            <NavLink to={'/matching/'} onClick={handleMatchingViewAllClick}>View All ➔</NavLink>
-                        </div>
-                        <NewMatchingList items={items} onItemClick={handleItemClick} />
-                    </div>
-                </div>
-                {selectedItem && (
-                    <MatchingModal item={selectedItem} onClose={handleCloseModal} />
-                )}
-
-                {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
-            </div>
+            </Mobile>
         </BasicLayout>
     );
 }
