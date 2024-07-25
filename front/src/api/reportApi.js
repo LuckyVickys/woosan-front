@@ -1,14 +1,19 @@
 import axios from "axios";
 import { API_SERVER_HOST } from "./boardApi.js";
+import { getCookie } from '../util/cookieUtil.jsx';
 
 const prefix = `${API_SERVER_HOST}/api/report`;
 
-// 신고 추가 함수
-export const addReport = async (formData) => {
+export const addReport = async (formData, token) => {
     try {
-        const header = { headers: { "Content-Type": "multipart/form-data" } };
-        const res = await axios.post(`${prefix}/add`, formData, header);
-        return res; 
+        const res = await axios.post(`${prefix}/add`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return res;
     } catch (error) {
         console.error('Error adding report:', error.response ? error.response.data : error.message);
         throw error;

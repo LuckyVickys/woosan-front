@@ -126,7 +126,7 @@ const UpdateInfo = () => {
                 formDataObj.append('images', formData.fileImg);
             }
 
-            const res = await modifyProfile(formDataObj);
+            const res = await modifyProfile(formDataObj, token);
 
             Swal.fire(
                 "프로필 수정 완료",
