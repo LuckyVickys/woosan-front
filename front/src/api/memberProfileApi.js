@@ -18,21 +18,18 @@ export const getMember = async (id) => {
 };
 
 export const modifyProfile = async (formDataObj, token) => {
-    try {
+  try {
       const res = await axios.patch(`${host}/modify`, formDataObj, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Refresh: getCookie("member").refreshToken,
-          "Content-Type": "multipart/form-data",
-        },
+          headers: {
+              Authorization: `Bearer ${token}`,
+              Refresh: getCookie("member").refreshToken,
+              "Content-Type": "multipart/form-data",
+          },
       });
-  
+
       return res.data;
-    } catch (error) {
-      console.error(
-        "Error modifying member Profile:",
-        error.response ? error.response.data : error.message
-      );
+  } catch (error) {
+      console.error("Error modifying member Profile:", error.response ? error.response.data : error.message);
       throw error;
-    }
-  };
+  }
+};
