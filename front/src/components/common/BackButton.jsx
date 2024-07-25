@@ -10,8 +10,7 @@ const BackButton = () => {
 
     return (
         <div className="movePostButton">
-            <button button className="listButton" onClick={handleBack} > 뒤로가기
-            </button >
+            <button className="listButton" onClick={handleBack} > 뒤로가기 </button >
         </div >
     );
 };

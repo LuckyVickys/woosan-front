@@ -59,9 +59,7 @@ const ReadComponent = () => {
     getBoard(id).then((data) => {
       const contentWithLineBreaks = convertLineBreaks(data.boardDTO.content);
       setBoard({ ...data.boardDTO, content: contentWithLineBreaks });
-      setSuggestedBoards(data.suggestedBoards); // 연관 게시물 데이터 설정
-      console.log("boards", data.boardDTO)
-      console.log("suggestedBoards:", suggestedBoards);
+      setSuggestedBoards(data.suggestedBoards);
     });
   }, [id]);
 
