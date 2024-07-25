@@ -1,5 +1,5 @@
 import React from "react";
-import { formatDate } from "../../../util/DateUtil";
+import { basicDate } from "../../../util/DateUtil";
 
 const slicedText = (str, maxLength) => {
     if (str.length > maxLength) {
@@ -24,11 +24,11 @@ const TableRowComponent = ({
         <td>{isNotice ? "공지사항" : item.categoryName}</td>
         <td>
             {isPopular && <span className="best-label">BEST</span>}
-            {slicedText(item.title, 20)}
+            {slicedText(item.title, 15)}
             <span className="replyCount">({item.replyCount})</span>
         </td>
         <td>{item.nickname}</td>
-        <td>{formatDate(item.regDate)}</td>
+        <td>{basicDate(item.regDate)}</td>
         <td>{item.views}</td>
         <td>{item.likesCount}</td>
     </tr>

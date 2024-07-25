@@ -1,8 +1,9 @@
 .sidebar {
-    padding-right: 20px;
+    margin-right: 20px;
     border-radius: 8px;
     width: 280px;
     overflow: hidden;
+    box-sizing: border-box;
     white-space: nowrap;
 
     .category {
@@ -14,6 +15,7 @@
         .category-title {
             margin-right: 32px;
             padding: 20px 20px;
+            width: 100%;
             font-family: "Pretendard-Regular", sans-serif;
             font-size: 20px;
             font-weight: 600;
