@@ -46,7 +46,7 @@ export const createBoard = async (formData, header) => {
     }
 };
 
-export const getOne = async (id) => {
+export const getOne = async (id, header) => {
     try {
         const res = await axios.get(`${prefix}/${id}/modify`, header);
         return res.data;
