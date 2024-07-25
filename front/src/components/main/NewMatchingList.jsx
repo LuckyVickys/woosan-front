@@ -22,7 +22,6 @@ const NewMatchingList = ({ items, onItemClick }) => {
     }, [items]);
 
     return (
-        // <div className={styles.newMatchingList}>
         <div className={`${styles.newMatchingList} ${styles.verticalLayout}`}>
             {getRecentItems.map(item => (
                 <div key={item.id} onClick={() => onItemClick(item.id)}>
