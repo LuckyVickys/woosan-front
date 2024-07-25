@@ -8,11 +8,14 @@ import '../../assets/styles/App.scss';
 const LikeButton = ({ type, targetId, initialLikesCount }) => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id;
+    const token = loginState.accessToken;
 
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(initialLikesCount);
 
-    const token = loginState.accesToken;
+    useEffect(() => {
+        setLikesCount(initialLikesCount);
+    }, [initialLikesCount]);
 
     useEffect(() => {
         if (!memberId) return;

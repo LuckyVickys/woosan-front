@@ -170,10 +170,6 @@ const ReadComponent = () => {
     };
   }, []);
 
-  // if (!board.title) {
-  //   return <div>로딩 중...</div>;
-  // }
-
   const profileSrc =
     board.writerProfile && board.writerProfile.length > 0
       ? board.writerProfile
@@ -260,7 +256,6 @@ const ReadComponent = () => {
           ))}
         </div>
       </div>
-
 
       <SuggestedBoardList suggestedBoards={suggestedBoards} />
 
