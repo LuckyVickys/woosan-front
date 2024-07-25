@@ -32,6 +32,8 @@ const ReplyDropDown = ({
         openMsg();
     };
 
+    const token = loginState.accessToken;
+
     const handleDelete = () => {
         const removeDTO = {
             id: replyId,
@@ -48,7 +50,7 @@ const ReplyDropDown = ({
             cancelButtonText: "취소",
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteReply(removeDTO)
+                deleteReply(removeDTO, token)
                     .then(() => {
                         Swal.fire(
                             "삭제 완료",

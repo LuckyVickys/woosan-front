@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useCustomNoticetMove from "../../hooks/useCustomNoticeMove";
 import { validateBoardInputs } from "../../util/validationUtil";
+import { getCookie } from '../../util/cookieUtil';
 
 const initState = {
     id: 0,
@@ -107,7 +108,11 @@ const NoticeModifyComponent = () => {
 
         try {
             const header = {
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: {
+                    Authorization: `Bearer ${loginState.accessToken}`,
+                    Refresh: getCookie("member").refreshToken,
+                    "Content-Type": "multipart/form-data"
+                },
             };
             await updateBoard(formData, header);
             navigate(`/cs/notices/${id}`);
@@ -122,7 +127,13 @@ const NoticeModifyComponent = () => {
                 id: id,
                 writerId: loginState.id,
             };
-            await deleteBoard(removeDTO);
+            const header = {
+                headers: {
+                    Authorization: `Bearer ${loginState.accessToken}`,
+                    Refresh: getCookie("member").refreshToken,
+                },
+            };
+            await deleteBoard(removeDTO, header);
             moveToList();
         } catch (error) {
             console.error("삭제 실패", error);

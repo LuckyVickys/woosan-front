@@ -12,6 +12,8 @@ const LikeButton = ({ type, targetId, initialLikesCount }) => {
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(initialLikesCount);
 
+    const token = loginState.accesToken;
+
     useEffect(() => {
         if (!memberId) return;
 
@@ -22,14 +24,14 @@ const LikeButton = ({ type, targetId, initialLikesCount }) => {
                     type,
                     targetId
                 };
-                const likeStatus = await getLikes(toggleRequest);
+                const likeStatus = await getLikes(toggleRequest, token);
                 setLiked(likeStatus);
             } catch (error) {
                 console.error("Error fetching like status:", error);
             }
         };
         fetchLikeStatus();
-    }, [memberId, type, targetId]);
+    }, [memberId, type, targetId, token]);
 
     const handleLikeToggle = async () => {
         if (!memberId) {
@@ -43,7 +45,7 @@ const LikeButton = ({ type, targetId, initialLikesCount }) => {
                 type,
                 targetId
             };
-            await toggleLike(toggleRequest);
+            await toggleLike(toggleRequest, token);
             setLiked((prevLiked) => {
                 setLikesCount((prevLikesCount) => prevLiked ? prevLikesCount - 1 : prevLikesCount + 1);
                 return !prevLiked;

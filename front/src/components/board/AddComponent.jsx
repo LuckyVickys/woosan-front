@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import "../../assets/styles/App.scss";
 import { validateBoardInputs } from "../../util/validationUtil";
+import { getCookie } from '../../util/cookieUtil';
 
 const categories = [
   "선택",
@@ -104,7 +105,13 @@ const AddComponent = ({ titleBarText, category }) => {
     }
 
     try {
-      const header = { headers: { "Content-Type": "multipart/form-data" } };
+      const header = {
+        headers: {
+          Authorization: `Bearer ${loginState.accessToken}`,
+          Refresh: getCookie("member").refreshToken,
+          "Content-Type": "multipart/form-data"
+        }
+      };
       await createBoard(formData, header);
       navigate("/board");
     } catch (error) {

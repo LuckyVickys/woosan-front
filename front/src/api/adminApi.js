@@ -57,9 +57,9 @@ export const updateNotice = async (formData, header) => {
     }
 };
 
-export const deleteNotice = async (removeDTO) => {
+export const deleteNotice = async (removeDTO, header) => {
     try {
-        const res = await axios.patch(`${prefix}/notices/delete`, removeDTO);
+        const res = await axios.patch(`${prefix}/notices/delete`, removeDTO, header);
         return res.data;
     } catch (error) {
         console.error(
