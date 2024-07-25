@@ -24,11 +24,11 @@ const IndexPage = () => {
             info = "새로운 인연을 만나는 소중한 순간, 특별한 소개팅!";
             break;
         case location.pathname.startsWith('/matching'):
-            sub = "전체";
+            sub = "번개";
             info = "혼자서는 싫고 여럿이서 모이고 싶을 때, 확인해보세요!";
             break;
         default:
-            sub = "전체";
+            sub = "번개";
             info = "혼자서는 싫고 여럿이서 모이고 싶을 때, 확인해보세요!";
             break;
     }

@@ -5,14 +5,17 @@ import {FaUtensils,FaBroom,FaConciergeBell,FaMoneyBill,FaPaintRoller,FaRegFileAl
 import { GoReport } from "react-icons/go";
 import { FiUpload } from "react-icons/fi";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../slices/loginSlice";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const SideBar = ({ pageType }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
     const [activeCategory, setActiveCategory] = useState("");
+    const loginState = useSelector((state) => state.loginSlice);
+    const { isLogin } = useCustomLogin();
 
     // URL의 검색 파라미터를 기반으로 activeCategory 상태를 설정
     useEffect(() => {
@@ -29,6 +32,16 @@ const SideBar = ({ pageType }) => {
 
     // 카테고리 클릭 시 URL을 변경하고 activeCategory 상태를 업데이트
     const handleNavigation = (categoryName) => {
+        if(pageType === 'matching' && categoryName === 'regularly' && !(loginState.level === "LEVEL_3" || loginState.memberType === "ADMIN")) {
+            Swal.fire({
+                title: "정기 모임은 레벨 3 이상의 회원만 이용할 수 있습니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            });
+            return;
+        }
+        
         setActiveCategory(categoryName);
         if (pageType === "board") {
             navigate(`/board?page=1&size=10&categoryName=${categoryName}`);
@@ -251,21 +264,25 @@ const SideBar = ({ pageType }) => {
                         <div className="category-title">모임</div>
                         <div
                             className={`sub-category ${
-                                activeCategory === "" ? "active" : ""
+                                activeCategory === "temporary" ? "active" : ""
                             }`}
                         >
                             <button
-                                onClick={() => handleNavigation("")}
+                                onClick={() => handleNavigation("temporary")}
                                 className={
-                                    activeCategory === "" ? "active" : ""
+                                    activeCategory === "temporary"
+                                        ? "active"
+                                        : ""
                                 }
                             >
-                                <FaTh
+                                <FaBroom
                                     className={`icon ${
-                                        activeCategory === "" ? "active" : ""
+                                        activeCategory === "temporary"
+                                            ? "active"
+                                            : ""
                                     }`}
                                 />
-                                전체
+                                번개
                             </button>
                         </div>
                         <div
@@ -289,29 +306,6 @@ const SideBar = ({ pageType }) => {
                                     }`}
                                 />
                                 정기 모임
-                            </button>
-                        </div>
-                        <div
-                            className={`sub-category ${
-                                activeCategory === "temporary" ? "active" : ""
-                            }`}
-                        >
-                            <button
-                                onClick={() => handleNavigation("temporary")}
-                                className={
-                                    activeCategory === "temporary"
-                                        ? "active"
-                                        : ""
-                                }
-                            >
-                                <FaBroom
-                                    className={`icon ${
-                                        activeCategory === "temporary"
-                                            ? "active"
-                                            : ""
-                                    }`}
-                                />
-                                번개
                             </button>
                         </div>
                         <div

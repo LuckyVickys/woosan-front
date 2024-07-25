@@ -1,10 +1,7 @@
 import { Suspense, lazy } from "react";
 
-
-
 const Loading = <div>Loading....</div>
 
-const MatchingPage = lazy(() => import("../pages/matching/MatchingPage"));
 const RegularlyPage = lazy(() => import("../pages/matching/RegularlyPage"));
 const TemporaryPage = lazy(() => import("../pages/matching/TemporaryPage"));
 const SelfPage = lazy(() => import("../pages/matching/SelfPage"));
@@ -13,10 +10,6 @@ const ModifyMatchingPage = lazy(() => import("../pages/matching/ModifyMatchingPa
 
 const matchingRouter = ()=> {
     return [
-        {
-            path: "",
-            element: <Suspense fallback={Loading}><MatchingPage/></Suspense>
-        },
         {
             path: "regularly",
             element: <Suspense fallback={Loading}><RegularlyPage/></Suspense>
