@@ -56,6 +56,7 @@ const MainPage = () => {
         }
     };
 
+
     const handleCloseModal = () => {
         setSelectedItem(null);
     };

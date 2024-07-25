@@ -49,6 +49,7 @@ const ModifyMatchingPage = () => {
             setPendingMembers(pendingResponse);
         } catch (error) {
             // 매칭 멤버 정보 가져오는 중 오류 발생 시 처리
+            Swal.fire('오류!', '매칭 멤버 정보를 불러오는 중 문제가 발생했습니다.', 'error');
         }
     }, [id]);
 

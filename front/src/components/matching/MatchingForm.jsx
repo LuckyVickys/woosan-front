@@ -21,6 +21,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
     const [headCount, setHeadCount] = useState(initialValues.headCount || '');
     const [errors, setErrors] = useState({});
     const [files, setFiles] = useState(initialValues.filePathUrl || []); // 파일 상태 관리
+    const [deletedFiles, setDeletedFiles] = useState([]); // 삭제된 파일 상태 관리
     const [loading, setLoading] = useState(true);
     const uploadRef = useRef();
 
@@ -124,6 +125,11 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             }
         });
 
+        // 삭제된 파일 처리
+        deletedFiles.forEach((file) => {
+            formData.append('deletedFiles', file);
+        });
+
         formData.append('matchingType', matchingType);
 
         if (matchingType === 3) {
@@ -184,6 +190,9 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
 
     const handleRemoveFile = (index) => {
         const newFiles = files.filter((_, i) => i !== index);
+        if (typeof files[index] === 'string') {
+            setDeletedFiles((prev) => [...prev, files[index]]);
+        }
         setFiles(newFiles);
 
         // 입력 창 초기화
@@ -508,7 +517,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                         <div key={index} className={styles.fileItem}>
                             <span>{file.name || file}</span>
                             <button type="button" onClick={() => handleRemoveFile(index)} className={styles.deleteButton}>
-                                X
+                                삭제
                             </button>
                         </div>
                     ))}
