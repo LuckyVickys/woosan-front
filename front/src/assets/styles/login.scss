@@ -139,21 +139,21 @@
         }
 
         .check-button {
-          position: absolute;
-          right: 10px;
-          top: 50%;
-          padding: 0 2.5px;
-          width: 50px;
-          height: 20px;
-          transform: translateY(-50%);
-          background: #9bcc66;
-          color: #fff;
-          border: none;
-          border-radius: 2px;
-          font-size: 10px;
-          font-weight: 400;
-          font-family: "Pretendard-Regular", sans-serif;
-          cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            padding: 0 2.5px;
+            width: 50px;
+            height: 20px;
+            transform: translateY(-50%);
+            background: #9bcc66;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-size: 10px;
+            font-weight: 400;
+            font-family: "Pretendard-Regular", sans-serif;
+            cursor: pointer;
         }
       }
 
@@ -270,4 +270,22 @@
     opacity: 0;
     transform: translate(-50%, -50%);
   }
+}
+
+.email-check-button{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  padding: 0 2.5px;
+  width: 80px;
+  height: 20px;
+  transform: translateY(-50%);
+  background: #9bcc66;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 400;
+  font-family: "Pretendard-Regular", sans-serif;
+  cursor: pointer;
 }

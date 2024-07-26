@@ -195,7 +195,7 @@ const FindPWModal = ({ onClose }) => {
               />
               <button
                 type="button"
-                className="check-button"
+                className="email-check-button"
                 onClick={handleSendEmail}
               >
                 비밀번호 재발급
