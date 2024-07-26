@@ -34,11 +34,11 @@ const DailyBestBoardList = ({ pageType }) => {
 
     return (
         <div className="daily-best">
-            <div className="daily-best-title">인기 급상승</div>
+            <div className="daily-best-title">주간 Top</div>
             {dailyBest.map((post, index) => (
                 <div key={post.id} className="daily-best-item" onClick={() => moveToRead(post.id)}>
                     <span className="daily-best-rank">{index + 1}</span>
-                    <span className="daily-best-text">{slicedText(post.title, 20)}</span>
+                    <span className="daily-best-text">{slicedText(post.title, 15)}</span>
                     <span className="daily-best-reply-count">{post.replyCount}</span>
                 </div>
             ))}

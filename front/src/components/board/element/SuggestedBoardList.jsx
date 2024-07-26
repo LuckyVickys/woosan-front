@@ -27,12 +27,15 @@ const SuggestedBoardList = ({ suggestedBoards }) => {
             <div className="suggested-list-items">
                 {suggestedBoards.map((post) => (
                     <div key={post.id} className="suggested-item" onClick={() => moveToRead(post.id)}>
-                        <p className="categoryName">{post.categoryName}</p>
-                        <p className="title">{slicedTitle(post.title)}</p>
-                        <p className="regDate">{formatDateMin(post.regDate)}</p>
-
-                        <FaHeart className="likesIcon" /><div className="likesCount">{post.likesCount}</div>
-                        <FaComment className="replyIcon" /> <div className="replyCount">{post.replyCount}</div>
+                        <div className="left-section">
+                            <p className="categoryName">{post.categoryName}</p>
+                            <p className="title">{slicedTitle(post.title)}</p>
+                        </div>
+                        <div className="right-section">
+                            <p className="regDate">{formatDateMin(post.regDate)}</p>
+                            <FaHeart className="likesIcon" /><div className="likesCount">{post.likesCount}</div>
+                            <FaComment className="replyIcon" /> <div className="replyCount">{post.replyCount}</div>
+                        </div>
                     </div>
                 ))}
             </div>

@@ -164,6 +164,6 @@ export const combinedSearch = async (
 
 
 export const getDailyBest = async () => {
-    const res = await axios.get(`${prefix}/daily/best`);
+    const res = await axios.get(`${prefix}/weekly/best`);
     return res.data;
 }
