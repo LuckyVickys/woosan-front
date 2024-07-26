@@ -28,7 +28,6 @@ const MatchingPage = () => {
     const memberLevel = loginState.level; // 사용자 레벨 가져오기
 
     // 콘솔 로그 추가
-    console.log("멤버 권한:", memberType);
     console.log('멤버 레벨:', memberLevel);
 
     /**

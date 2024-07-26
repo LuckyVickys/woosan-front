@@ -199,6 +199,16 @@ const NoticeReadComponent = () => {
             </div>
             <div className="post-content">
                 <div dangerouslySetInnerHTML={{ __html: notice.content }}></div>
+                <br/>
+                <br/>
+                {summarizedBoard && (
+                    <div className="summary-content" id="result">
+                        <div className="summary-state">요약 완료</div>
+                        <div
+                        dangerouslySetInnerHTML={{ __html: summarizedBoard.content }}
+                        ></div>
+                    </div>
+                )}
                 <div className="image-container">
                     {notice.filePathUrl.map((url, index) => (
                         <img
@@ -217,12 +227,6 @@ const NoticeReadComponent = () => {
                     receiver={notice.nickname}
                     onClose={closeMsg}
                 />
-            )}
-            {summarizedBoard && (
-                <div className="summarized-content">
-                    <h2>게시글 요약</h2>
-                    <p>{summarizedBoard.content}</p>
-                </div>
             )}
         </>
     );

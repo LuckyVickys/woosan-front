@@ -206,13 +206,6 @@ const MainPage = () => {
                                 <p>비회원은 저리 가라, ONLY 회원</p>
                             </div>
                         </div>
-                        <div className="info">
-                            <div className='info-icon2'></div>
-                            <div className='info-text'>
-                                <h1>포인트 차곡차곡, 등급 UP</h1>
-                                <p>더욱 재밌는 커뮤니티 활동</p>
-                            </div>
-                        </div>
                     </div>
                     <div className='main-content-list2'>
                         <div className="popular-post">

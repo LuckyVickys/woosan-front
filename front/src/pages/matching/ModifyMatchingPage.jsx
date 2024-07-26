@@ -17,9 +17,6 @@ const ModifyMatchingPage = () => {
     const [approvedMembers, setApprovedMembers] = useState([]);
     const [pendingMembers, setPendingMembers] = useState([]);
 
-    /**
-     * 매칭 정보를 가져오는 함수
-     */
     const fetchMatching = useCallback(async () => {
         try {
             const response = await getMatchingBoardsByMemberId(loginState.id);
@@ -38,9 +35,6 @@ const ModifyMatchingPage = () => {
         }
     }, [id, loginState.id, navigate]);
 
-    /**
-     * 매칭 멤버 정보를 가져오는 함수
-     */
     const fetchMembers = useCallback(async () => {
         try {
             const approvedResponse = await getMembers(id);
@@ -48,7 +42,6 @@ const ModifyMatchingPage = () => {
             setApprovedMembers(approvedResponse.filter(member => member.isAccepted === true));
             setPendingMembers(pendingResponse);
         } catch (error) {
-            // 매칭 멤버 정보 가져오는 중 오류 발생 시 처리
             Swal.fire('오류!', '매칭 멤버 정보를 불러오는 중 문제가 발생했습니다.', 'error');
         }
     }, [id]);
@@ -58,23 +51,16 @@ const ModifyMatchingPage = () => {
         fetchMembers();
     }, [fetchMatching, fetchMembers]);
 
-    /**
-     * 매칭 수정 함수
-     * @param {Object} formData - 수정된 매칭 데이터
-     */
     const handleSubmit = async (formData) => {
         try {
             await updateMatchingBoard(id, formData, loginState.accessToken);
             Swal.fire('성공!', '매칭이 성공적으로 수정되었습니다.', 'success');
-            navigate(-1); // 수정 후 이전 페이지로 이동
+            navigate(-1);
         } catch (error) {
             Swal.fire('오류!', error.response ? error.response.data : error.message, 'error');
         }
     };
 
-    /**
-     * 매칭 삭제 함수
-     */
     const handleDelete = async () => {
         const result = await Swal.fire({
             title: '삭제 확인',
@@ -89,18 +75,13 @@ const ModifyMatchingPage = () => {
             try {
                 await deleteMatchingBoard(id, loginState.id, loginState.accessToken);
                 Swal.fire('성공!', '매칭이 성공적으로 삭제되었습니다.', 'success');
-                navigate(-1); // 삭제 후 이전 페이지로 이동
+                navigate(-1);
             } catch (error) {
                 Swal.fire('오류!', error.response ? error.response.data : error.message, 'error');
             }
         }
     };
 
-    /**
-     * 매칭 유형 라벨을 반환하는 함수
-     * @param {number} type - 매칭 유형
-     * @returns {string} 매칭 유형 라벨
-     */
     const getMatchingTypeLabel = (type) => {
         switch (type) {
             case 1:

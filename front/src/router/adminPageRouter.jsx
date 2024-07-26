@@ -22,7 +22,7 @@ const adminPageRouter = () => {
             path: "",
             element: (
                 <AccessRoute allowedRoles={['ADMIN']}>
-                  <Suspense fallback={Loading}><UploadPage /></Suspense>
+                  <Navigate replace to="/admin/upload" />
                 </AccessRoute>
             )
         },
