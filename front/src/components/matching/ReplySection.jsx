@@ -29,6 +29,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
     const [selectedReceiver, setSelectedReceiver] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [totalCommentsCount, setTotalCommentsCount] = useState(0); // 전체 댓글 수 상태 추가
     const dropdownRef = useRef({});
     const replyInputRef = useRef({});
     const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();  // 로그인 훅 사용
@@ -36,7 +37,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
     // 댓글 및 답글을 가져오는 함수
     useEffect(() => {
         fetchComments();
-    }, [matchingId, currentPage, onCommentCountChange]);
+    }, [matchingId, currentPage]);
 
     const fetchComments = async () => {
         try {
@@ -44,8 +45,10 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             const commentTree = buildCommentTree(res.content);
             setComments(commentTree);
             setTotalPages(res.totalPages);
-            const totalCount = res.content.length; // 단순히 댓글 개수로 변경
-            onCommentCountChange(totalCount);
+            setTotalCommentsCount(res.totalElements); // 전체 댓글 수 업데이트
+            if (onCommentCountChange) {
+                onCommentCountChange(res.totalElements);
+            }
         } catch (error) {
             Swal.fire('오류!', '댓글을 가져오는 중 오류가 발생했습니다.', 'error');
         }

@@ -25,7 +25,7 @@ export const getRegularly = async (token) => {
     try {
         const res = await axios({
             method: 'GET',
-            url: `${host}/regularly`,
+            url: `${host}/regularly/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export const getTemporary = async (token) => {
     try {
         const res = await axios({
             method: 'GET',
-            url: `${host}/temporary`,
+            url: `${host}/temporary/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ export const getSelf = async (token) => {
     try {
         const res = await axios({
             method: 'GET',
-            url: `${host}/self`,
+            url: `${host}/self/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -147,7 +147,7 @@ export const updateMatchingBoard = async (id, formData, token) => {
     try {
         const res = await axios({
             method: 'PUT',
-            url: `${host}/${id}`,
+            url: `${host}/${id}/update`,
             data: formData,
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -165,7 +165,7 @@ export const deleteMatchingBoard = async (id, memberId, token) => {
     try {
         const res = await axios({
             method: 'DELETE',
-            url: `${host}/${id}`,
+            url: `${host}/${id}/delete`,
             params: { memberId },
             headers: {
                 Authorization: `Bearer ${token}`,

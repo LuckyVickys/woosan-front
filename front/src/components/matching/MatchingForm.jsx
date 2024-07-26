@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import LocationField from './LocationField';
 import styles from '../../assets/styles/matching/MatchingForm.module.scss';
 import { useSelector } from 'react-redux';
-import { getMember } from '../../api/memberProfileApi'; // 사용자 데이터를 불러오는 API
+import { getMember } from '../../api/memberProfileApi';
 
 const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
-    const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기
+    const loginState = useSelector((state) => state.loginSlice);
     const navigate = useNavigate();
     const [title, setTitle] = useState(initialValues.title || '');
     const [content, setContent] = useState(initialValues.content || '');
@@ -16,16 +16,15 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
     const [address, setAddress] = useState(initialValues.address || '');
     const [meetDate, setMeetDate] = useState(initialValues.meetDate || new Date().toISOString().slice(0, 16));
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [tagInput, setTagInput] = useState(''); // 태그 입력 필드 상태
+    const [tagInput, setTagInput] = useState('');
     const [tags, setTags] = useState({});
     const [headCount, setHeadCount] = useState(initialValues.headCount || '');
     const [errors, setErrors] = useState({});
-    const [files, setFiles] = useState(initialValues.filePathUrl || []); // 파일 상태 관리
-    const [deletedFiles, setDeletedFiles] = useState([]); // 삭제된 파일 상태 관리
+    const [files, setFiles] = useState(initialValues.filePathUrl || []);
+    const [deletedFiles, setDeletedFiles] = useState([]);
     const [loading, setLoading] = useState(true);
     const uploadRef = useRef();
 
-    // 셀프 소개팅에 필요한 상태들
     const [location, setLocation] = useState(initialValues.location || '');
     const [introduce, setIntroduce] = useState(initialValues.introduce || '');
     const [mbti, setMbti] = useState(initialValues.mbti || '');
@@ -36,7 +35,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const userData = await getMember(loginState.id); // 사용자 데이터 불러오기
+                const userData = await getMember(loginState.id);
                 setLocation(userData.location || '');
                 setIntroduce(userData.introduce || '');
                 setMbti(userData.mbti || '');
@@ -74,7 +73,6 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
         study_class: '스터디&클래스'
     };
 
-    // 폼 유효성 검사 함수
     const validateForm = () => {
         const newErrors = {};
         if (!title) newErrors.title = '모임명을 입력해주세요';
@@ -103,18 +101,17 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
         if (!validateForm()) return;
 
         const formData = new FormData();
-        formData.append('memberId', loginState.id); // memberId 추가
+        formData.append('memberId', loginState.id);
         formData.append('title', title);
         formData.append('content', content);
         formData.append('placeName', placeName);
         formData.append('locationX', locationX);
         formData.append('locationY', locationY);
-        formData.append('address', address); // address 추가
+        formData.append('address', address);
         formData.append('meetDate', meetDate);
-        formData.append('tag', JSON.stringify(tags)); // tags를 JSON 문자열로 변환하여 tag 필드에 저장
+        formData.append('tag', JSON.stringify(tags));
         formData.append('headCount', headCount);
 
-        // 파일 처리
         files.forEach((file) => {
             if (typeof file === 'string') {
                 formData.append('existingFiles', file);
@@ -123,7 +120,6 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             }
         });
 
-        // 삭제된 파일 처리
         deletedFiles.forEach((file) => {
             formData.append('deletedFiles', file);
         });
@@ -150,7 +146,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
         const { id, value } = e.target;
         if (id === 'tagInput' && value.length > 6) return;
         if (id === 'title' && value.length > 30) return;
-        
+
         setter(value);
         setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
 
@@ -193,7 +189,6 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
         }
         setFiles(newFiles);
 
-        // 입력 창 초기화
         if (uploadRef.current) {
             uploadRef.current.value = '';
         }
@@ -248,7 +243,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 id="location"
                                 value={location}
                                 onChange={handleInputChange(setLocation)}
-                                className="locationInput" /* 지역 입력창 */
+                                className="locationInput"
                                 placeholder="지역을 입력해주세요 ex)강남구"
                             />
                             {errors.location && <div className={styles.error}>{errors.location}</div>}
@@ -259,7 +254,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 id="mbti"
                                 value={mbti}
                                 onChange={handleInputChange(setMbti)}
-                                className="mbtiInput" /* MBTI 입력창 */
+                                className="mbtiInput"
                             >
                                 <option value="">MBTI를 선택해주세요</option>
                                 {Object.values(MBTI).map(mbtiType => (
@@ -336,7 +331,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 id="category"
                                 value={selectedCategory}
                                 onChange={handleInputChange(setSelectedCategory)}
-                                className="categorySelect" /* 모임 태그 선택창 */
+                                className="categorySelect"
                             >
                                 <option value="">모임 태그를 선택하세요</option>
                                 <option value="romance">연애&사랑</option>
@@ -351,7 +346,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 id="tagInput"
                                 value={tagInput}
                                 onChange={handleInputChange(setTagInput)}
-                                className="tagInput" /* 태그 입력창 */
+                                className="tagInput"
                                 placeholder="상세 태그를 입력해주세요"
                                 maxLength="6"
                             />
@@ -376,7 +371,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 type="datetime-local"
                                 value={meetDate}
                                 onChange={handleInputChange(setMeetDate)}
-                                className="meetDateInput" /* 모임 날짜 입력창 */
+                                className="meetDateInput"
                                 placeholder="2024-07-10 00:00"
                             />
                             {errors.meetDate && <div className={styles.error}>{errors.meetDate}</div>}
@@ -388,7 +383,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 type="number"
                                 value={headCount}
                                 onChange={handleInputChange(setHeadCount)}
-                                className="headCountInput" /* 모집 인원 입력창 */
+                                className="headCountInput"
                                 placeholder="인원을 입력하세요"
                             />
                             {errors.headCount && <div className={styles.error}>{errors.headCount}</div>}
@@ -404,7 +399,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 id="category"
                                 value={selectedCategory}
                                 onChange={handleInputChange(setSelectedCategory)}
-                                className="categorySelect" /* 모임 태그 선택창 */
+                                className="categorySelect"
                             >
                                 <option value="">모임 태그를 선택하세요</option>
                                 <option value="romance">연애&사랑</option>
@@ -419,7 +414,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 id="tagInput"
                                 value={tagInput}
                                 onChange={handleInputChange(setTagInput)}
-                                className="tagInput" /* 태그 입력창 */
+                                className="tagInput"
                                 placeholder="상세 태그를 입력해주세요"
                                 maxLength="6"
                             />
@@ -444,7 +439,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 type="datetime-local"
                                 value={meetDate}
                                 onChange={handleInputChange(setMeetDate)}
-                                className="meetDateInput" /* 모임 날짜 입력창 */
+                                className="meetDateInput"
                                 placeholder="2024-07-10 00:00"
                             />
                             {errors.meetDate && <div className={styles.error}>{errors.meetDate}</div>}
@@ -456,7 +451,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                                 type="number"
                                 value={headCount}
                                 onChange={handleInputChange(setHeadCount)}
-                                className="headCountInput" /* 모집 인원 입력창 */
+                                className="headCountInput"
                                 placeholder="인원을 입력하세요"
                             />
                             {errors.headCount && <div className={styles.error}>{errors.headCount}</div>}
@@ -470,7 +465,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                     id="title"
                     value={title}
                     onChange={handleInputChange(setTitle)}
-                    className="titleInput" /* 모임명 입력창 */
+                    className="titleInput"
                     placeholder="모임명을 입력해주세요"
                     maxLength="30"
                 />
@@ -482,7 +477,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                     id="content"
                     value={content}
                     onChange={handleInputChange(setContent)}
-                    className="contentInput" /* 모임 소개 입력창 */
+                    className="contentInput"
                     placeholder="모임 소개를 입력해주세요"
                     style={{ height: '210px' }}
                 />
@@ -508,7 +503,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                     ref={uploadRef}
                     multiple
                     onChange={handleFileChange}
-                    className="fileUploadInput" /* 파일 업로드 입력창 */
+                    className="fileUploadInput"
                 />
                 <div className={styles.fileList}>
                     {files.map((file, index) => (
