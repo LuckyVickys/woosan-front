@@ -27,9 +27,6 @@ const MatchingPage = () => {
     const memberType = loginState.memberType;
     const memberLevel = loginState.level; // 사용자 레벨 가져오기
 
-    // 콘솔 로그 추가
-    console.log('멤버 레벨:', memberLevel);
-
     /**
      * 정기모임, 번개, 셀프 소개팅 데이터를 병합하여 페이지별로 나누는 함수
      * @param {Array} regularly - 정기모임 데이터 배열

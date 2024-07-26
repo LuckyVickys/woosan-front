@@ -85,7 +85,6 @@ export const createRegularly = async (formData, token) => {
         });
         return res.data;
     } catch (error) {
-        console.log("@@@@@@@@@@@@@@@@accessToken:" + token);
         throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
