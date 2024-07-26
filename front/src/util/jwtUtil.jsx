@@ -5,7 +5,7 @@ import { API_SERVER_HOST } from "../api/boardApi";
 const jwtAxios = axios.create();
 
 const refreshJWT = async (accessToken, refreshToken) => {
-    // const host = API_SERVER_HOST;
+    
     const host = `http://110.165.19.87:3000`;
     const header = {headers: {"Authorization":`Bearer ${accessToken}`}};
     const res = await axios.post(`${host}/api/auth/refresh`, {refreshToken}, header);
