@@ -1,8 +1,8 @@
 import axios from "axios";
 import { API_SERVER_HOST } from "./boardApi";
 
-// const redirect_uri = `http://localhost:3000/kakao`;
-const redirect_uri = `http://110.165.19.87:3000/kakao`;
+const redirect_uri = `http://localhost:3000/kakao`;
+// const redirect_uri = `http://110.165.19.87:3000/kakao`;
 
 const auth_code_path = `https://kauth.kakao.com/oauth/authorize`;
 
