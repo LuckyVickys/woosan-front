@@ -128,7 +128,7 @@ export const cancelMatchingRequest = async (matchingId, memberId, token) => {
     }
 };
 
-// 특정 보드의 모든 멤버 매칭 데이터 삭제
+// 특정 보드의 모든 멤버 매칭 데이터 삭제 - 구현 전
 export const deleteAllMembersByMatchingBoardId = async (matchingId, token) => {
     try {
         const res = await axios({

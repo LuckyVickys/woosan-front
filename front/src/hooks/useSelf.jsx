@@ -13,12 +13,13 @@ const useSelf = () => {
     const [self, setSelf] = useState([]); // 셀프 소개팅 데이터를 저장하는 상태
     const [loading, setLoading] = useState(true); // 로딩 상태를 관리하는 상태
     const [error, setError] = useState(null); // 에러 메시지를 저장하는 상태
-    const loginState = useSelector((state) => state.loginSlice); // 로그인 상태 가져오기
+    const loginState = useSelector((state) => state.loginSlice);
+    const token = loginState.accessToken;
 
     const fetchSelf = useCallback(async () => {
         setLoading(true);
         try {
-            const data = await getSelf();
+            const data = await getSelf(token);
             // 내가 만든 셀프 소개팅을 맨 위에 오도록 정렬
             const mySelf = data.filter(item => item.memberId === loginState.id);
             const otherSelf = data.filter(item => item.memberId !== loginState.id);

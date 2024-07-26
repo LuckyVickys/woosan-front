@@ -58,6 +58,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id;
     const { isLogin, moveToLoginReturn } = useCustomLogin();
+    const token = loginState.accessToken;
 
     const [state, dispatch] = useReducer(reducer, {
         ...initialState,
@@ -71,8 +72,8 @@ const MatchingModal = ({ item = {}, onClose }) => {
         if (!item.id) return;
 
         try {
-            const members = await getMembers(item.id);
-            const pendingRequests = await getPendingRequestsByBoardId(item.id);
+            const members = await getMembers(item.id, token);
+            const pendingRequests = await getPendingRequestsByBoardId(item.id, token);
 
             const acceptedMembersCount = members.filter(member => member.isAccepted).length;
 
@@ -88,7 +89,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
 
     const handleIncreaseViewCount = async (boardId, memberId, writerId) => {
         try {
-            await increaseViewCount(boardId, memberId, writerId);
+            await increaseViewCount(boardId, memberId, writerId, loginState.accessToken);
             dispatch({ type: 'INCREMENT_VIEWS' });
         } catch (error) {
             Swal.fire('오류!', '조회수 증가 중 문제가 발생했습니다.', 'error');
@@ -135,7 +136,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
         };
 
         try {
-            const members = await getMembers(item.id);
+            const members = await getMembers(item.id, token);
             const currentUser = members.find(member => member.memberId === memberId);
 
             if (currentUser && currentUser.isAccepted === false) {
@@ -158,7 +159,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
             matchingId: item.id
         };
         try {
-            await cancelMatchingRequest(requestDTO.matchingId, requestDTO.memberId);
+            await cancelMatchingRequest(requestDTO.matchingId, requestDTO.memberId, token);
             Swal.fire('성공', '가입 신청이 취소되었습니다.', 'success');
             dispatch({ type: 'SET_APPLIED', payload: false });
             fetchMatchingStatus();

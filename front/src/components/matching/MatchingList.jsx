@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import MatchingItem from './MatchingItem';
 import { getMembers } from '../../api/memberMatchingApi';
 import styles from '../../assets/styles/matching/MatchingList.module.scss';
+import { useSelector } from 'react-redux';
 
 /**
  * 매칭 리스트 컴포넌트
@@ -12,12 +13,14 @@ import styles from '../../assets/styles/matching/MatchingList.module.scss';
  */
 const MatchingList = ({ items, onItemClick, gridColumns }) => {
     const [itemsWithMemberCount, setItemsWithMemberCount] = useState([]);
+    const loginState = useSelector((state) => state.loginSlice);
+    const token = loginState.token;
 
     useEffect(() => {
         const fetchMemberCounts = async () => {
             const updatedItems = await Promise.all(items.map(async (item) => {
                 try {
-                    const members = await getMembers(item.id);
+                    const members = await getMembers(item.id, token);
                     const currentMemberCount = members.filter(member => member.isAccepted).length;
                     return { ...item, currentMemberCount };
                 } catch (error) {

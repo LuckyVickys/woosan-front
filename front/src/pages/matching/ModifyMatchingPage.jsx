@@ -16,10 +16,11 @@ const ModifyMatchingPage = () => {
     const [loading, setLoading] = useState(true);
     const [approvedMembers, setApprovedMembers] = useState([]);
     const [pendingMembers, setPendingMembers] = useState([]);
+    const token = loginState.accessToken;
 
     const fetchMatching = useCallback(async () => {
         try {
-            const response = await getMatchingBoardsByMemberId(loginState.id);
+            const response = await getMatchingBoardsByMemberId(loginState.id, loginState.accessToken);
             const matchingBoard = response.find((board) => board.id === Number(id));
             if (matchingBoard) {
                 setMatching(matchingBoard);
@@ -37,8 +38,8 @@ const ModifyMatchingPage = () => {
 
     const fetchMembers = useCallback(async () => {
         try {
-            const approvedResponse = await getMembers(id);
-            const pendingResponse = await getPendingRequestsByBoardId(id);
+            const approvedResponse = await getMembers(id, token);
+            const pendingResponse = await getPendingRequestsByBoardId(id, token);
             setApprovedMembers(approvedResponse.filter(member => member.isAccepted === true));
             setPendingMembers(pendingResponse);
         } catch (error) {

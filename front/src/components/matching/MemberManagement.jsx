@@ -17,13 +17,14 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
     const [localMembers, setLocalMembers] = useState([]);
     const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기
     const currentUserId = loginState.id; // 현재 로그인한 사용자의 ID
+    const token = loginState.accessToken;
     const [isManager, setIsManager] = useState(false); // 모임장 여부 상태
 
     useEffect(() => {
         const fetchMembers = async () => {
             try {
-                const approvedMembers = await getMembers(matchingId);
-                const pendingMembers = await getPendingRequestsByBoardId(matchingId);
+                const approvedMembers = await getMembers(matchingId, token);
+                const pendingMembers = await getPendingRequestsByBoardId(matchingId, token);
 
                 // 현재 사용자가 매니저인지 확인
                 const managerStatus = approvedMembers.some(member => member.memberId === currentUserId && member.isManaged);
