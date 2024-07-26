@@ -5,6 +5,7 @@ import { getMember, modifyProfile } from "../../api/memberProfileApi";
 import { checkNickname, getMemberWithEmail } from "../../api/memberApi";
 import defaultProfile from "../../assets/image/profile.png";
 import Swal from "sweetalert2";
+import { Desktop, Tablet, Mobile } from '../../layouts/ResponsiveComponent';
 
 const UpdateInfo = () => {
     const loginState = useSelector((state) => state.loginSlice);
@@ -183,168 +184,500 @@ const UpdateInfo = () => {
 
 
     return (
-        <div className="update-info">
-            <h2>회원 정보 변경</h2>
-            <div className="update-info-container">
-                <div className="update-user-info-profile">
-                    <div className="update-user-info">
-                        <div className="form-group">
-                            <label>닉네임</label>
-                            <div className="input-button-container">
-                                <input
-                                    className="nickname-input"
-                                    type="text"
-                                    name="nickname"
-                                    value={formData.nickname}
-                                    onChange={handleChange}
-                                    disabled={!updateNickname}
-                                />
-                                <button
-                                    type="button"
-                                    className="check-button"
-                                    onClick={handleNicknameChange}
-                                >
-                                    {updateNickname ? "중복체크" : "변경하기"}
-                                </button>
-                            </div>
-                            {nicknameError && (
-                                <p
-                                    className={`input-error ${
-                                        nicknameAvailable ? "available" : ""
-                                    }`}
-                                >
-                                    {nicknameError}
-                                </p>
-                            )}
-                        </div>
-                        <div className="form-group">
-                            <label>등급 / 포인트</label>
-                            <div className="point-level">
-                                <div className="level-point">
-                                    <span>{loginState.level}</span>
-                                    <div className="progress-bar">
-                                        <div
-                                            className="progress"
-                                            style={{ width: progressBarWidth }}
-                                        ></div>
+        <>
+            <Desktop>
+                <div className="update-info">
+                    <h2>회원 정보 변경</h2>
+                    <div className="update-info-container">
+                        <div className="update-user-info-profile">
+                            <div className="update-user-info">
+                                <div className="form-group">
+                                    <label>닉네임</label>
+                                    <div className="input-button-container">
+                                        <input
+                                            className="nickname-input"
+                                            type="text"
+                                            name="nickname"
+                                            value={formData.nickname}
+                                            onChange={handleChange}
+                                            disabled={!updateNickname}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="check-button"
+                                            onClick={handleNicknameChange}
+                                        >
+                                            {updateNickname ? "중복체크" : "변경하기"}
+                                        </button>
                                     </div>
-                                    <span className="progress-point">
-                                        {formData.point} / {formData.nextPoint}{" "}
-                                        P
-                                    </span>
+                                    {nicknameError && (
+                                        <p
+                                            className={`input-error ${
+                                                nicknameAvailable ? "available" : ""
+                                            }`}
+                                        >
+                                            {nicknameError}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="form-group">
+                                    <label>등급 / 포인트</label>
+                                    <div className="point-level">
+                                        <div className="level-point">
+                                            <span>{loginState.level}</span>
+                                            <div className="progress-bar">
+                                                <div
+                                                    className="progress"
+                                                    style={{ width: progressBarWidth }}
+                                                ></div>
+                                            </div>
+                                            <span className="progress-point">
+                                                {formData.point} / {formData.nextPoint}{" "}
+                                                P
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="location-gender">
+                                    <div className="form-group">
+                                        <label>지역</label>
+                                        <input
+                                            type="text"
+                                            name="region"
+                                            value={formData.region}
+                                            placeholder="입력해주세요"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>성별</label>
+                                        <select
+                                            name="gender"
+                                            value={formData.gender}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">선택</option>
+                                            <option value="male">남성</option>
+                                            <option value="female">여성</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="age-height">
+                                    <div className="form-group">
+                                        <label>나이</label>
+                                        <input
+                                            type="number"
+                                            name="age"
+                                            value={formData.age}
+                                            placeholder="입력해주세요"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>키</label>
+                                        <input
+                                            type="number"
+                                            name="height"
+                                            value={formData.height}
+                                            placeholder="입력해주세요"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>MBTI</label>
+                                    <select
+                                        name="mbti"
+                                        value={formData.mbti}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">선택</option>
+                                        <option value="INTJ">INTJ</option>
+                                        <option value="INTP">INTP</option>
+                                        <option value="ENTJ">ENTJ</option>
+                                        <option value="ENTP">ENTP</option>
+                                        <option value="INFJ">INFJ</option>
+                                        <option value="INFP">INFP</option>
+                                        <option value="ENFJ">ENFJ</option>
+                                        <option value="ENFP">ENFP</option>
+                                        <option value="ISTJ">ISTJ</option>
+                                        <option value="ISFJ">ISFJ</option>
+                                        <option value="ESTJ">ESTJ</option>
+                                        <option value="ESFJ">ESFJ</option>
+                                        <option value="ISTP">ISTP</option>
+                                        <option value="ISFP">ISFP</option>
+                                        <option value="ESTP">ESTP</option>
+                                        <option value="ESFP">ESFP</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label>한줄 자기소개</label>
+                                    <input
+                                        type="text"
+                                        name="introduce"
+                                        value={formData.introduce}
+                                        placeholder="입력해주세요"
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="update-profile">
+                                <div className="user-profile">
+                                    <img
+                                        src={formData.fileImgURL || defaultProfile}
+                                        alt="Profile"
+                                    />
+                                </div>
+                                <input
+                                    type="file"
+                                    accept=".png .jpg .jpeg"
+                                    onChange={handleFileChange}
+                                    style={{ display: "none" }}
+                                    id="file-input"
+                                />
+                                <label
+                                    className="update-profile-button"
+                                    htmlFor="file-input"
+                                >
+                                    사진 선택
+                                </label>
+                            </div>
+                        </div>
+                        <button className="update-button" onClick={handleInfoChange}>
+                            변경하기
+                        </button>
+                    </div>
+                </div>
+            </Desktop>
+            <Tablet>
+                <div className="update-info">
+                    <h2>회원 정보 변경</h2>
+                    <div className="update-info-container">
+                        <div className="update-user-info-profile">
+                            <div className="update-profile">
+                                <div className="user-profile">
+                                    <img
+                                        src={formData.fileImgURL || defaultProfile}
+                                        alt="Profile"
+                                    />
+                                </div>
+                                <input
+                                    type="file"
+                                    accept=".png .jpg .jpeg"
+                                    onChange={handleFileChange}
+                                    style={{ display: "none" }}
+                                    id="file-input"
+                                />
+                                <label
+                                    className="update-profile-button"
+                                    htmlFor="file-input"
+                                >
+                                    사진 선택
+                                </label>
+                            </div>
+                            <div className="update-user-info">
+                                <div className="form-group">
+                                    <label>닉네임</label>
+                                    <div className="input-button-container">
+                                        <input
+                                            className="nickname-input"
+                                            type="text"
+                                            name="nickname"
+                                            value={formData.nickname}
+                                            onChange={handleChange}
+                                            disabled={!updateNickname}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="check-button"
+                                            onClick={handleNicknameChange}
+                                        >
+                                            {updateNickname ? "중복체크" : "변경하기"}
+                                        </button>
+                                    </div>
+                                    {nicknameError && (
+                                        <p
+                                            className={`input-error ${
+                                                nicknameAvailable ? "available" : ""
+                                            }`}
+                                        >
+                                            {nicknameError}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="form-group">
+                                    <label>등급 / 포인트</label>
+                                    <div className="point-level">
+                                        <div className="level-point">
+                                            <span>{loginState.level}</span>
+                                            <div className="progress-bar">
+                                                <div
+                                                    className="progress"
+                                                    style={{ width: progressBarWidth }}
+                                                ></div>
+                                            </div>
+                                            <span className="progress-point">
+                                                {formData.point} / {formData.nextPoint}{" "}
+                                                P
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="location-gender">
+                                    <div className="form-group">
+                                        <label>지역</label>
+                                        <input
+                                            type="text"
+                                            name="region"
+                                            value={formData.region}
+                                            placeholder="입력해주세요"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>성별</label>
+                                        <select
+                                            name="gender"
+                                            value={formData.gender}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">선택</option>
+                                            <option value="male">남성</option>
+                                            <option value="female">여성</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="age-height">
+                                    <div className="form-group">
+                                        <label>나이</label>
+                                        <input
+                                            type="number"
+                                            name="age"
+                                            value={formData.age}
+                                            placeholder="입력해주세요"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>키</label>
+                                        <input
+                                            type="number"
+                                            name="height"
+                                            value={formData.height}
+                                            placeholder="입력해주세요"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>MBTI</label>
+                                    <select
+                                        name="mbti"
+                                        value={formData.mbti}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">선택</option>
+                                        <option value="INTJ">INTJ</option>
+                                        <option value="INTP">INTP</option>
+                                        <option value="ENTJ">ENTJ</option>
+                                        <option value="ENTP">ENTP</option>
+                                        <option value="INFJ">INFJ</option>
+                                        <option value="INFP">INFP</option>
+                                        <option value="ENFJ">ENFJ</option>
+                                        <option value="ENFP">ENFP</option>
+                                        <option value="ISTJ">ISTJ</option>
+                                        <option value="ISFJ">ISFJ</option>
+                                        <option value="ESTJ">ESTJ</option>
+                                        <option value="ESFJ">ESFJ</option>
+                                        <option value="ISTP">ISTP</option>
+                                        <option value="ISFP">ISFP</option>
+                                        <option value="ESTP">ESTP</option>
+                                        <option value="ESFP">ESFP</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label>한줄 자기소개</label>
+                                    <input
+                                        type="text"
+                                        name="introduce"
+                                        value={formData.introduce}
+                                        placeholder="입력해주세요"
+                                        onChange={handleChange}
+                                    />
                                 </div>
                             </div>
                         </div>
-                        <div className="location-gender">
-                            <div className="form-group">
-                                <label>지역</label>
-                                <input
-                                    type="text"
-                                    name="region"
-                                    value={formData.region}
-                                    placeholder="입력해주세요"
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>성별</label>
-                                <select
-                                    name="gender"
-                                    value={formData.gender}
-                                    onChange={handleChange}
-                                >
-                                    <option value="">선택</option>
-                                    <option value="male">남성</option>
-                                    <option value="female">여성</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="age-height">
-                            <div className="form-group">
-                                <label>나이</label>
-                                <input
-                                    type="number"
-                                    name="age"
-                                    value={formData.age}
-                                    placeholder="입력해주세요"
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>키</label>
-                                <input
-                                    type="number"
-                                    name="height"
-                                    value={formData.height}
-                                    placeholder="입력해주세요"
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label>MBTI</label>
-                            <select
-                                name="mbti"
-                                value={formData.mbti}
-                                onChange={handleChange}
-                            >
-                                <option value="">선택</option>
-                                <option value="INTJ">INTJ</option>
-                                <option value="INTP">INTP</option>
-                                <option value="ENTJ">ENTJ</option>
-                                <option value="ENTP">ENTP</option>
-                                <option value="INFJ">INFJ</option>
-                                <option value="INFP">INFP</option>
-                                <option value="ENFJ">ENFJ</option>
-                                <option value="ENFP">ENFP</option>
-                                <option value="ISTJ">ISTJ</option>
-                                <option value="ISFJ">ISFJ</option>
-                                <option value="ESTJ">ESTJ</option>
-                                <option value="ESFJ">ESFJ</option>
-                                <option value="ISTP">ISTP</option>
-                                <option value="ISFP">ISFP</option>
-                                <option value="ESTP">ESTP</option>
-                                <option value="ESFP">ESFP</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label>한줄 자기소개</label>
-                            <input
-                                type="text"
-                                name="introduce"
-                                value={formData.introduce}
-                                placeholder="입력해주세요"
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </div>
-                    <div className="update-profile">
-                        <div className="user-profile">
-                            <img
-                                src={formData.fileImgURL || defaultProfile}
-                                alt="Profile"
-                            />
-                        </div>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            style={{ display: "none" }}
-                            id="file-input"
-                        />
-                        <label
-                            className="update-profile-button"
-                            htmlFor="file-input"
-                        >
-                            사진 선택
-                        </label>
+                        <button className="update-button" onClick={handleInfoChange}>
+                            변경하기
+                        </button>
                     </div>
                 </div>
-                <button className="update-button" onClick={handleInfoChange}>
-                    변경하기
-                </button>
-            </div>
-        </div>
+            </Tablet>
+            <Mobile>
+                <div className="update-info">
+                    <h2>회원 정보 변경</h2>
+                    <div className="update-info-container">
+                        <div className="update-user-info-profile">
+                            <div className="update-profile">
+                                <div className="user-profile">
+                                    <img
+                                        src={formData.fileImgURL || defaultProfile}
+                                        alt="Profile"
+                                    />
+                                </div>
+                                <input
+                                    type="file"
+                                    accept=".png .jpg .jpeg"
+                                    onChange={handleFileChange}
+                                    style={{ display: "none" }}
+                                    id="file-input"
+                                />
+                                <label
+                                    className="update-profile-button"
+                                    htmlFor="file-input"
+                                >
+                                    사진 선택
+                                </label>
+                            </div>
+                            <div className="update-user-info">
+                                <div className="form-group">
+                                    <label>닉네임</label>
+                                    <div className="input-button-container">
+                                        <input
+                                            className="nickname-input"
+                                            type="text"
+                                            name="nickname"
+                                            value={formData.nickname}
+                                            onChange={handleChange}
+                                            disabled={!updateNickname}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="check-button"
+                                            onClick={handleNicknameChange}
+                                        >
+                                            {updateNickname ? "중복체크" : "변경하기"}
+                                        </button>
+                                    </div>
+                                    {nicknameError && (
+                                        <p
+                                            className={`input-error ${
+                                                nicknameAvailable ? "available" : ""
+                                            }`}
+                                        >
+                                            {nicknameError}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="form-group">
+                                    <label>등급 / 포인트</label>
+                                    <div className="point-level">
+                                        <div className="level-point">
+                                            <span>{loginState.level}</span>
+                                            <div className="progress-bar">
+                                                <div
+                                                    className="progress"
+                                                    style={{ width: progressBarWidth }}
+                                                ></div>
+                                            </div>
+                                            <span className="progress-point">
+                                                {formData.point} / {formData.nextPoint}{" "}
+                                                P
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="location-gender">
+                                    <div className="form-group">
+                                        <label>지역</label>
+                                        <input
+                                            type="text"
+                                            name="region"
+                                            value={formData.region}
+                                            placeholder="입력해주세요"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>성별</label>
+                                        <select
+                                            name="gender"
+                                            value={formData.gender}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">선택</option>
+                                            <option value="male">남성</option>
+                                            <option value="female">여성</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="age-height">
+                                    <div className="form-group">
+                                        <label>나이</label>
+                                        <input
+                                            type="number"
+                                            name="age"
+                                            value={formData.age}
+                                            placeholder="입력해주세요"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>키</label>
+                                        <input
+                                            type="number"
+                                            name="height"
+                                            value={formData.height}
+                                            placeholder="입력해주세요"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>MBTI</label>
+                                    <select
+                                        name="mbti"
+                                        value={formData.mbti}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">선택</option>
+                                        <option value="INTJ">INTJ</option>
+                                        <option value="INTP">INTP</option>
+                                        <option value="ENTJ">ENTJ</option>
+                                        <option value="ENTP">ENTP</option>
+                                        <option value="INFJ">INFJ</option>
+                                        <option value="INFP">INFP</option>
+                                        <option value="ENFJ">ENFJ</option>
+                                        <option value="ENFP">ENFP</option>
+                                        <option value="ISTJ">ISTJ</option>
+                                        <option value="ISFJ">ISFJ</option>
+                                        <option value="ESTJ">ESTJ</option>
+                                        <option value="ESFJ">ESFJ</option>
+                                        <option value="ISTP">ISTP</option>
+                                        <option value="ISFP">ISFP</option>
+                                        <option value="ESTP">ESTP</option>
+                                        <option value="ESFP">ESFP</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label>한줄 자기소개</label>
+                                    <input
+                                        type="text"
+                                        name="introduce"
+                                        value={formData.introduce}
+                                        placeholder="입력해주세요"
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <button className="update-button" onClick={handleInfoChange}>
+                            변경하기
+                        </button>
+                    </div>
+                </div>
+            </Mobile>
+        </>
     );
 };
 

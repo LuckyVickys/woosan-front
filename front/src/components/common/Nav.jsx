@@ -20,7 +20,7 @@ const Nav = () => {
         if (!isLogin) {
             moveToLoginReturn();
         } else if (memberType === "USER") {
-            navigate("/mypage", { state: { from: location.pathname } });
+            navigate("/mypage/", { state: { from: location.pathname } });
         }
     }
 
@@ -71,7 +71,6 @@ const Nav = () => {
                         <NavLink to={'/mypage/'}
                             className={({ isActive }) => isActive ? "active" : ""}
                             onClick={handleMyPageClick}
-                            style={{ cursor: 'pointer' }}
                         >
                             마이페이지
                         </NavLink>
