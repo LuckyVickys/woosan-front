@@ -21,7 +21,7 @@ header {
     justify-content: space-between;
     align-items: center;
     height: $headerHeight;
-    padding: 20px;
+    padding: 20px 25%;
     border-bottom: 2px solid $shadow;
 }
 
@@ -272,7 +272,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     height: $navHeight;
-    padding: 20px;
+    padding: 20px 25%;
 
     .category {
         display: flex;
@@ -283,7 +283,7 @@ nav {
         .matching,
         .cs{
             font-family: $font-family;
-            font-size: 0.8rem;
+            font-size: 16px;
             font-weight: 700;
             white-space: nowrap;
 
@@ -303,7 +303,7 @@ nav {
 
         .mypage {
             font-family: $font-family;
-            font-size: 0.8rem;
+            font-size: 16px;
             font-weight: 700;
             white-space: nowrap;
     
@@ -426,7 +426,7 @@ nav {
 .area {
     display: flex;;
     // height: 100%;
-    padding-bottom: 20px;
+    padding: 20px 25%;
 }
 
 // BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
@@ -631,7 +631,7 @@ nav {
     width: 35px;
     height: 35px;
     border: none;
-    background-color: #000;
+    background-color: #333333;
     border-radius: 50%;
     color: #fff;
     cursor: pointer;

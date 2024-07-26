@@ -279,3 +279,15 @@ $font-family: "Pretendard-Regular", sans-serif;
         }
     }
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .update-user-info-profile{
+        display: flex;
+        flex-direction: column;
+
+        .update-user-info {
+            width: 100%;
+        }
+    }
+}

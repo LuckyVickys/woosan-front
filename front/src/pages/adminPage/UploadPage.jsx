@@ -51,7 +51,7 @@ const UploadPage = () => {
     <div className="upload-banner">
       <h2>업로드</h2>
       <div className="upload-box">
-        <input type="file" multiple onChange={handleFileChange} />
+        <input type="file" accept=".png,.jpg,.jpeg" multiple onChange={handleFileChange} />
       </div>
       <div className="file-list">
         {selectedFiles.map((file, index) => (

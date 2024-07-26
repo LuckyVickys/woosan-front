@@ -60,7 +60,22 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
     };
 
     const handleFileChange = (e) => {
-        setImages(e.target.files);
+        const file = e.target.files[0];
+        if (file) {
+
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+  
+            if (allowedTypes.includes(file.type)) {
+                setImages(e.target.files);
+            } else {
+                Swal.fire({
+                    title: "업로드 실패",
+                    text: `jpg, jpeg, png 파일만 업로드 가능합니다.`,
+                    icon: "error",
+                    confirmButtonText: "확인",
+                });
+            }
+        }
     };
 
     const handleClickReportAdd = async (e) => {

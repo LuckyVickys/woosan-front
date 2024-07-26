@@ -84,7 +84,22 @@ const AddComponent = ({ titleBarText, category }) => {
   };
 
   const handleFileChange = (e) => {
-    setFiles(e.target.files);
+    const file = e.target.files[0];
+      if (file) {
+
+          const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+          if (allowedTypes.includes(file.type)) {
+            setFiles(e.target.files);
+          } else {
+              Swal.fire({
+                  title: "업로드 실패",
+                  text: `jpg, jpeg, png 파일만 업로드 가능합니다.`,
+                  icon: "error",
+                  confirmButtonText: "확인",
+              });
+          }
+      }
   };
 
   const handleClickAdd = async (e) => {
@@ -115,7 +130,13 @@ const AddComponent = ({ titleBarText, category }) => {
       await createBoard(formData, header);
       navigate("/board");
     } catch (error) {
-      console.error("저장 실패", error);
+      Swal.fire({
+        title: `저장 실패`,
+        text: `다시 시도해주세요.`,
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "확인",
+      });
     }
   };
 
@@ -185,6 +206,7 @@ const AddComponent = ({ titleBarText, category }) => {
           <label>첨부파일</label>
           <input
             type="file"
+            accept=".png,.jpg,.jpeg"
             ref={uploadRef}
             multiple
             onChange={handleFileChange}
