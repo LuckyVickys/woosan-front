@@ -108,12 +108,13 @@ const MatchingModal = ({ item = {}, onClose }) => {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                dispatch({ type: 'SET_DROPDOWN_OPEN', payload: false });
+            if (dropdownRef.current && dropdownRef.current.contains(event.target)) {
+                return;
             }
             if (modalRef.current && !modalRef.current.contains(event.target)) {
                 onClose();
             }
+            dispatch({ type: 'SET_DROPDOWN_OPEN', payload: false });
         };
 
         document.addEventListener('mousedown', handleClickOutside);
