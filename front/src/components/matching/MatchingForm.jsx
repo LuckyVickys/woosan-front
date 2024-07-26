@@ -135,6 +135,8 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             formData.append('height', height);
         }
 
+        console.log('FormData:', Object.fromEntries(formData.entries())); // 로그 추가
+
         await onSubmit(formData, loginState.id);
     };
 

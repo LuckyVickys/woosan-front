@@ -54,6 +54,7 @@ const RegularlyPage = () => {
                     items={regularly}
                     ListComponent={MatchingList}
                     gridColumns={2}
+                    matchingType={1}
                 />
             </div>
             {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
