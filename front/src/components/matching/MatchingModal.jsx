@@ -82,7 +82,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
             dispatch({ type: 'SET_MEMBERS_COUNT', payload: acceptedMembersCount });
 
         } catch (error) {
-            // 매칭 상태를 가져오는 중 오류 발생 시 처리
+            Swal.fire('오류!', '매칭 상태를 가져오는 중 문제가 발생했습니다.', 'error');
         }
     }, [item.id, item.memberId, memberId]);
 
@@ -91,7 +91,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
             await increaseViewCount(boardId, memberId, writerId);
             dispatch({ type: 'INCREMENT_VIEWS' });
         } catch (error) {
-            // 조회수 증가 중 오류 발생 시 처리
+            Swal.fire('오류!', '조회수 증가 중 문제가 발생했습니다.', 'error');
         }
     };
 

@@ -6,27 +6,36 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../../assets/styles/matching/TemporaryPagePage.module.scss';
 import useCustomLogin from '../../hooks/useCustomLogin';
 import LoginModal from '../../components/member/LoginModal';
+import Swal from 'sweetalert2';
+import { useSelector } from 'react-redux';
 
 const TemporaryPage = () => {
     const { temporary, loading, error } = useTemporary();
     const navigate = useNavigate();
     const [sortedTemporary, setSortedTemporary] = useState([]);
 
-    // 혜리 추가 - 로그인 상태 확인
     const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+
+    const loginState = useSelector((state) => state.loginSlice);
+    const memberLevel = loginState.level;
 
     useEffect(() => {
         if (temporary.length > 0) {
-            // 모임 날짜 기준으로 정렬
             const sorted = [...temporary].sort((a, b) => new Date(a.meetDate) - new Date(b.meetDate));
             setSortedTemporary(sorted);
         }
     }, [temporary]);
 
-    // 모임 만들기 버튼 클릭 핸들러
     const handleCreateButtonClick = () => {
         if (!isLogin) {
             moveToLoginReturn();
+        } else if (memberLevel === 'LEVEL_1') {
+            Swal.fire({
+                title: "레벨 제한",
+                html: "정기모임 레벨3이상 1인1개<br>번개, 셀프소개팅 레벨2이상 1인 1개",
+                icon: "warning",
+                confirmButtonText: "확인"
+            });
         } else {
             navigate('/matching/create');
         }

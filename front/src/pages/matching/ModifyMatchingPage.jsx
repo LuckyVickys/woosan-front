@@ -6,7 +6,7 @@ import { getMembers, getPendingRequestsByBoardId } from '../../api/memberMatchin
 import styles from '../../assets/styles/matching/ModifyMatching.module.scss';
 import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
-import MemberManagement from '../../components/matching/MemberManagement';
+import MemberManagement from '../../components/matching/MemberManagement'; 
 
 const ModifyMatchingPage = () => {
     const { id } = useParams();

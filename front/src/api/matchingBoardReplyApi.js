@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_SERVER_HOST } from './boardApi.js';
+import Swal from 'sweetalert2';
 
 const host = `${API_SERVER_HOST}/api/matchingReply`;
 
@@ -17,7 +18,7 @@ export const saveReply = async (requestDTO, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
 };
 
@@ -35,7 +36,7 @@ export const deleteReply = async (id, memberId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
 };
 
@@ -53,6 +54,26 @@ export const getReplies = async (matchingId, pageable, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
+};
+
+// API 에러를 처리하는 함수
+const handleApiError = (error) => {
+    if (error.response && error.response.data) {
+        Swal.fire({
+            title: 'Error',
+            text: error.response.data.message || '서버 오류가 발생했습니다.',
+            icon: 'error',
+            confirmButtonText: '확인'
+        });
+    } else {
+        Swal.fire({
+            title: 'Error',
+            text: '서버 오류가 발생했습니다.',
+            icon: 'error',
+            confirmButtonText: '확인'
+        });
+    }
+    throw error;
 };

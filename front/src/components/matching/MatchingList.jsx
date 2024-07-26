@@ -16,9 +16,14 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
     useEffect(() => {
         const fetchMemberCounts = async () => {
             const updatedItems = await Promise.all(items.map(async (item) => {
-                const members = await getMembers(item.id);
-                const currentMemberCount = members.filter(member => member.isAccepted).length;
-                return { ...item, currentMemberCount };
+                try {
+                    const members = await getMembers(item.id);
+                    const currentMemberCount = members.filter(member => member.isAccepted).length;
+                    return { ...item, currentMemberCount };
+                } catch (error) {
+                    console.error(`Failed to fetch members for item ${item.id}`, error);
+                    return { ...item, currentMemberCount: 0 }; // 기본값 0으로 설정
+                }
             }));
             setItemsWithMemberCount(updatedItems);
         };
@@ -46,7 +51,7 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
                     meetDate={item.meetDate}
                     tag={typeof item.tag === 'string' ? item.tag : JSON.stringify(item.tag)} // tag를 문자열로 전달
                     headCount={item.headCount}
-                    currentMemberCount={item.currentMemberCount || 1} // currentMemberCount의 기본값 설정
+                    currentMemberCount={item.currentMemberCount || 0} // currentMemberCount의 기본값 설정
                     location={item.location}
                     introduce={item.introduce}
                     mbti={item.mbti}

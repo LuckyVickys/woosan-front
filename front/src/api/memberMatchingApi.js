@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_SERVER_HOST } from "./boardApi.js";
+import Swal from "sweetalert2";
 
 const host = `${API_SERVER_HOST}/api/memberMatching`;
 
@@ -17,7 +18,7 @@ export const applyMatching = async (requestDTO, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
 };
 
@@ -35,7 +36,7 @@ export const updateMatching = async (id, isAccepted, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
 };
 
@@ -53,7 +54,7 @@ export const leaveMatching = async (id, memberId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
 };
 
@@ -71,7 +72,7 @@ export const kickMember = async (id, memberId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
 };
 
@@ -88,7 +89,7 @@ export const getMembers = async (matchingId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
 };
 
@@ -105,7 +106,7 @@ export const getPendingRequestsByBoardId = async (matchingId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
 };
 
@@ -123,7 +124,7 @@ export const cancelMatchingRequest = async (matchingId, memberId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
 };
 
@@ -140,6 +141,26 @@ export const deleteAllMembersByMatchingBoardId = async (matchingId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw error;
+        handleApiError(error);
     }
+};
+
+// API 에러를 처리하는 함수
+const handleApiError = (error) => {
+    if (error.response && error.response.data) {
+        Swal.fire({
+            title: 'Error',
+            text: error.response.data.message || '서버 오류가 발생했습니다.',
+            icon: 'error',
+            confirmButtonText: '확인'
+        });
+    } else {
+        Swal.fire({
+            title: 'Error',
+            text: '서버 오류가 발생했습니다.',
+            icon: 'error',
+            confirmButtonText: '확인'
+        });
+    }
+    throw error;
 };

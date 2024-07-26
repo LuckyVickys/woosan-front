@@ -13,7 +13,7 @@ const truncateText = (text, maxLength) => {
 
 const MatchingItem = ({
     id, memberId, matchingType, title, content, regDate, views, isDeleted, placeName, locationX, locationY, address, meetDate, tag = '{}', headCount,
-    currentMemberCount = 1, location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
+    currentMemberCount = 0, location, introduce, mbti, gender, age, height, onClick, filePathUrl, nickname, profileImageUrl
 }) => {
     // 매칭 타입에 따라 라벨을 반환하는 함수
     function getTypeLabel(type) {

@@ -43,8 +43,6 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                 setGender(userData.gender || '');
                 setAge(userData.age || '');
                 setHeight(userData.height || '');
-            } catch (error) {
-                console.error("Failed to fetch user data:", error);
             } finally {
                 setLoading(false);
             }

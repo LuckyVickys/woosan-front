@@ -61,13 +61,13 @@ const CreateMatchingPage = () => {
 
         try {
             if (matchingType === 1) {
-                await createRegularly(formData);
+                await createRegularly(formData, loginState.accessToken); // AccessToken 전달
                 Swal.fire('성공!', '정기모임이 성공적으로 생성되었습니다.', 'success');
             } else if (matchingType === 2) {
-                await createTemporary(formData);
+                await createTemporary(formData, loginState.accessToken); // AccessToken 전달
                 Swal.fire('성공!', '번개모임이 성공적으로 생성되었습니다.', 'success');
             } else if (matchingType === 3) {
-                await createSelf(formData);
+                await createSelf(formData, loginState.accessToken); // AccessToken 전달
                 Swal.fire('성공!', '셀프 소개팅이 성공적으로 생성되었습니다.', 'success');
             }
             navigate(-1);

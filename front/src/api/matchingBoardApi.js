@@ -16,7 +16,7 @@ export const getAllMatching = async (token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -33,7 +33,7 @@ export const getRegularly = async (token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -50,7 +50,7 @@ export const getTemporary = async (token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -67,7 +67,7 @@ export const getSelf = async (token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -85,7 +85,7 @@ export const createRegularly = async (formData, token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -103,10 +103,9 @@ export const createTemporary = async (formData, token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
-
 
 // 셀프 소개팅 생성
 export const createSelf = async (formData, token) => {
@@ -122,7 +121,7 @@ export const createSelf = async (formData, token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -139,27 +138,12 @@ export const getMatchingBoardsByMemberId = async (memberId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
 // 매칭 보드 수정
 export const updateMatchingBoard = async (id, formData, token) => {
-    console.log("업데이트 시작");
-    console.log("ID:", id);
-    console.log("formData:", formData);
-    
-    // FormData의 키와 값을 로그로 출력
-    for (let key of formData.keys()) {
-        console.log("FormData 키:", key);
-    }
-
-    for (let value of formData.values()) {
-        console.log("FormData 값:", value);
-    }
-
-    console.log("Token:", token);
-
     try {
         const res = await axios({
             method: 'PUT',
@@ -170,23 +154,9 @@ export const updateMatchingBoard = async (id, formData, token) => {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        console.log("응답 데이터:", res.data);
         return res.data;
     } catch (error) {
-        if (error.response) {
-            // 서버에서 응답을 받았으나 2xx 범위에 들지 않는 상태 코드
-            console.error("에러 응답 데이터:", error.response.data);
-            console.error("에러 상태 코드:", error.response.status);
-            console.error("에러 헤더:", error.response.headers);
-        } else if (error.request) {
-            // 요청이 만들어졌으나 응답을 받지 못함
-            console.error("요청 데이터:", error.request);
-        } else {
-            // 요청 설정 중에 발생한 에러
-            console.error("에러 메시지:", error.message);
-        }
-        console.error("에러 설정:", error.config);
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -204,7 +174,7 @@ export const deleteMatchingBoard = async (id, memberId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -226,6 +196,6 @@ export const increaseViewCount = async (boardId, memberId, writerId, token) => {
         });
         return res.data;
     } catch (error) {
-        throw new Error('서버 오류가 발생했습니다.');
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
