@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_SERVER_HOST } from "./boardApi.js";
+import { getCookie } from '../util/cookieUtil.jsx';
 
 const prefix = `${API_SERVER_HOST}/api/admin`;
 
@@ -139,7 +140,7 @@ export const getBannerList = async () => {
     }
 };
 
-export const updateBanner = async (fileUpdateDTO) => {
+export const updateBanner = async (fileUpdateDTO, token) => {
     try {
         const formData = new FormData();
         fileUpdateDTO.existFiles.forEach((fileUrl, index) => {
@@ -151,6 +152,8 @@ export const updateBanner = async (fileUpdateDTO) => {
 
         const res = await axios.post(`${prefix}/myBanner/modify`, formData, {
             headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
                 "Content-Type": "multipart/form-data",
             },
         });
