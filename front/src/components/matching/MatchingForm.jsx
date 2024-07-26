@@ -11,8 +11,8 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
     const [title, setTitle] = useState(initialValues.title || '');
     const [content, setContent] = useState(initialValues.content || '');
     const [placeName, setPlaceName] = useState(initialValues.placeName || '');
-    const [locationX, setLocationX] = useState(initialValues.locationX || '');
-    const [locationY, setLocationY] = useState(initialValues.locationY || '');
+    const [locationX, setLocationX] = useState((initialValues.locationX || 0).toString());
+    const [locationY, setLocationY] = useState((initialValues.locationY || 0).toString());
     const [address, setAddress] = useState(initialValues.address || '');
     const [meetDate, setMeetDate] = useState(initialValues.meetDate || new Date().toISOString().slice(0, 16));
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -21,6 +21,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
     const [headCount, setHeadCount] = useState(initialValues.headCount || '');
     const [errors, setErrors] = useState({});
     const [files, setFiles] = useState(initialValues.filePathUrl || []); // 파일 상태 관리
+    const [deletedFiles, setDeletedFiles] = useState([]); // 삭제된 파일 상태 관리
     const [loading, setLoading] = useState(true);
     const uploadRef = useRef();
 
@@ -42,8 +43,6 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                 setGender(userData.gender || '');
                 setAge(userData.age || '');
                 setHeight(userData.height || '');
-            } catch (error) {
-               
             } finally {
                 setLoading(false);
             }
@@ -61,7 +60,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             try {
                 setTags(JSON.parse(initialValues.tag));
             } catch (error) {
-               
+                console.error("Failed to parse tags:", error);
             }
         }
     }, [initialValues.tag]);
@@ -124,6 +123,11 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             }
         });
 
+        // 삭제된 파일 처리
+        deletedFiles.forEach((file) => {
+            formData.append('deletedFiles', file);
+        });
+
         formData.append('matchingType', matchingType);
 
         if (matchingType === 3) {
@@ -134,8 +138,6 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             formData.append('age', age);
             formData.append('height', height);
         }
-
-       
 
         await onSubmit(formData, loginState.id);
     };
@@ -186,6 +188,9 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
 
     const handleRemoveFile = (index) => {
         const newFiles = files.filter((_, i) => i !== index);
+        if (typeof files[index] === 'string') {
+            setDeletedFiles((prev) => [...prev, files[index]]);
+        }
         setFiles(newFiles);
 
         // 입력 창 초기화
@@ -486,7 +491,9 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             <LocationField
                 placeName={placeName}
                 setPlaceName={setPlaceName}
+                locationX={locationX}
                 setLocationX={setLocationX}
+                locationY={locationY}
                 setLocationY={setLocationY}
                 address={address}
                 setAddress={setAddress}
@@ -508,7 +515,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                         <div key={index} className={styles.fileItem}>
                             <span>{file.name || file}</span>
                             <button type="button" onClick={() => handleRemoveFile(index)} className={styles.deleteButton}>
-                                X
+                                삭제
                             </button>
                         </div>
                     ))}

@@ -14,11 +14,9 @@ export const getAllMatching = async (token) => {
                 'Content-Type': 'application/json'
             }
         });
-        
         return res.data;
     } catch (error) {
-        
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -33,11 +31,9 @@ export const getRegularly = async (token) => {
                 'Content-Type': 'application/json'
             }
         });
-        
         return res.data;
     } catch (error) {
-        
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -52,11 +48,9 @@ export const getTemporary = async (token) => {
                 'Content-Type': 'application/json'
             }
         });
-        
         return res.data;
     } catch (error) {
-       
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -71,11 +65,9 @@ export const getSelf = async (token) => {
                 'Content-Type': 'application/json'
             }
         });
-        
         return res.data;
     } catch (error) {
-        
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -91,11 +83,9 @@ export const createRegularly = async (formData, token) => {
                 'Content-Type': 'multipart/form-data'
             }
         });
-       
         return res.data;
     } catch (error) {
-        
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -111,11 +101,9 @@ export const createTemporary = async (formData, token) => {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        
         return res.data;
     } catch (error) {
-        
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -131,11 +119,9 @@ export const createSelf = async (formData, token) => {
                 'Content-Type': 'multipart/form-data'
             }
         });
-       
         return res.data;
     } catch (error) {
-       
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -150,11 +136,9 @@ export const getMatchingBoardsByMemberId = async (memberId, token) => {
                 'Content-Type': 'application/json'
             }
         });
-       
         return res.data;
     } catch (error) {
-       
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -170,11 +154,9 @@ export const updateMatchingBoard = async (id, formData, token) => {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        
         return res.data;
     } catch (error) {
-       
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -190,11 +172,9 @@ export const deleteMatchingBoard = async (id, memberId, token) => {
                 'Content-Type': 'application/json'
             }
         });
-        
         return res.data;
     } catch (error) {
-        
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
 
@@ -214,10 +194,8 @@ export const increaseViewCount = async (boardId, memberId, writerId, token) => {
                 'Content-Type': 'application/json'
             }
         });
-       
         return res.data;
     } catch (error) {
-       
-        throw error;
+        throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }

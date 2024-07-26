@@ -49,6 +49,7 @@ const ModifyMatchingPage = () => {
             setPendingMembers(pendingResponse);
         } catch (error) {
             // 매칭 멤버 정보 가져오는 중 오류 발생 시 처리
+            Swal.fire('오류!', '매칭 멤버 정보를 불러오는 중 문제가 발생했습니다.', 'error');
         }
     }, [id]);
 
@@ -63,7 +64,7 @@ const ModifyMatchingPage = () => {
      */
     const handleSubmit = async (formData) => {
         try {
-            await updateMatchingBoard(id, formData);
+            await updateMatchingBoard(id, formData, loginState.accessToken);
             Swal.fire('성공!', '매칭이 성공적으로 수정되었습니다.', 'success');
             navigate(-1); // 수정 후 이전 페이지로 이동
         } catch (error) {
@@ -86,7 +87,7 @@ const ModifyMatchingPage = () => {
 
         if (result.isConfirmed) {
             try {
-                await deleteMatchingBoard(id, loginState.id);
+                await deleteMatchingBoard(id, loginState.id, loginState.accessToken);
                 Swal.fire('성공!', '매칭이 성공적으로 삭제되었습니다.', 'success');
                 navigate(-1); // 삭제 후 이전 페이지로 이동
             } catch (error) {
