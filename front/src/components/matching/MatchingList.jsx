@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 const MatchingList = ({ items, onItemClick, gridColumns }) => {
     const [itemsWithMemberCount, setItemsWithMemberCount] = useState([]);
     const loginState = useSelector((state) => state.loginSlice);
-    const token = loginState.token;
+    const token = loginState.accessToken;
 
     useEffect(() => {
         const fetchMemberCounts = async () => {
