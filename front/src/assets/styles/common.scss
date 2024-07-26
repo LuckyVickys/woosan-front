@@ -1,6 +1,6 @@
 $shadow: #e5e5e5;
 $font-family: "Pretendard-Regular", sans-serif;
-$headerHeight: auto;
+$headerHeight: 50px;
 $navHeight: 23px;
 
 body {
@@ -272,7 +272,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     height: $navHeight;
-    padding: 20px 0px;
+    padding: 20px;
 
     .category {
         display: flex;
@@ -424,40 +424,9 @@ nav {
 
 // BasidLayout의 area
 .area {
-    display: flex;
-    align-items: left;
-    min-height: calc(100vh - 60px);
-    padding-bottom: 60px;
-
-    // 위로 가기 버튼
-    .move-to-top {
-        display: flex;
-        align-items: center;
-        position: fixed;
-        right: 10px;
-        bottom: 90px;
-        margin: auto 10px 10px;
-        width: 35px;
-        height: 35px;
-        border: none;
-        background-color: #00b207;
-        border-radius: 50%;
-        color: #fff;
-        z-index: 10;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-
-        &.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .topbutton{
-            width: 25px;
-            height: 25px;
-        }
-    }
+    display: flex;;
+    // height: 100%;
+    padding-bottom: 20px;
 }
 
 // BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
@@ -652,14 +621,46 @@ nav {
     cursor: pointer;
 }
 
-// footer
+// 위로 가기 버튼
+.move-to-top {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    right: 10px;
+    bottom: 90px;
+    width: 35px;
+    height: 35px;
+    border: none;
+    background-color: #000;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .topbutton{
+        width: 25px;
+        height: 25px;
+    }
+}
+
 footer {
     position: relative;
-    transform: translateY(-100%);
+    bottom:0;
+    left: 0;
+    // width: 100%; 
+    z-index: 1001;
+    line-height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    height: 50px;
     padding: 0 20px;
     background: #333333;
     font-size: 10px;
@@ -667,13 +668,14 @@ footer {
     font-family: $font-family;
 
     .site {
+        display: flex;
         justify-content: center;
         align-items: center;
         margin-right: 20px;
-    }
 
-    .site img {
-        margin-right: 16px;
+        img {
+            margin-right: 16px;
+        }
     }
 }
 
