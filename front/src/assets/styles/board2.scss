@@ -416,7 +416,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
 
     .suggested-item {
         display: flex;
-        align-items: center;
+        // align-items: center;
         justify-content: space-between;
         border-top: 0.3px solid #646363;
         padding: 5px 0;
@@ -424,11 +424,27 @@ $font-family: 'Pretendard-Regular', sans-serif;
         transition: color 0.3s ease;
 
         &:hover {
+            cursor: pointer;
 
-            .title {
-                color: #00b207;
+            .title,
+            .regDate,
+            .categoryName,
+            .likesCount,
+            .replyCount {
+                font-weight: 700;
             }
         }
+
+        .left-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+        }
+
 
         .categoryName {
             color: #00b207;
@@ -451,7 +467,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
         }
 
         .likesCount {
-            margin-left: 3px;
+            margin-left: 8px;
             font-size: 90%;
             color: #303030;
         }
@@ -471,7 +487,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
         .likesIcon {
             color: #EA4B48;
             opacity: 90%;
-            margin-left: 12px;
+            margin-left: 20px;
         }
     }
 }
