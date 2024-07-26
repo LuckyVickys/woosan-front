@@ -71,11 +71,19 @@ export const deleteNotice = async (removeDTO, header) => {
     }
 };
 
-export const getReportList = async (pageParam) => {
+export const getReportList = async (pageParam, token) => {
     const { page, size, categoryName } = pageParam;
     const params = { page, size, ...(categoryName && { categoryName }) };
+
     try {
-        const res = await axios.get(`${prefix}/report`, { params });
+        const res = await axios.get(`${prefix}/report`, {
+            params,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
+            }
+        });
         return res.data;
     } catch (error) {
         console.error(
@@ -86,9 +94,17 @@ export const getReportList = async (pageParam) => {
     }
 };
 
-export const getReport = async (id) => {
+
+export const getReport = async (id, token) => {
     try {
-        const res = await axios.get(`${prefix}/report/${id}`);
+        const res = await axios.get(`${prefix}/report/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
+            }
+        });
+        
         return res.data;
     } catch (error) {
         console.error(
@@ -99,10 +115,16 @@ export const getReport = async (id) => {
     }
 };
 
-export const getTarget = async (id, type) => {
+
+export const getTarget = async (id, type, token) => {
     try {
         const res = await axios.get(`${prefix}/report/target`, {
             params: { id: id, type: type },
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
+            }
         });
         return res.data;
     } catch (error) {
@@ -114,9 +136,15 @@ export const getTarget = async (id, type) => {
     }
 };
 
-export const checkReport = async (id) => {
+export const checkReport = async (id, token) => {
     try {
-        const res = await axios.post(`${prefix}/report/${id}`);
+        const res = await axios.post(`${prefix}/report/${id}`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Refresh: getCookie("member").refreshToken,
+                'Content-Type': 'application/json'
+            }
+        });
         return res.data;
     } catch (error) {
         console.error(

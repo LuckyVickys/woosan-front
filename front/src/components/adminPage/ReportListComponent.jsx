@@ -4,6 +4,7 @@ import useCustomReportMove from "../../hooks/useCustomReportMove";
 import ReportListPageComponent from "../adminPage/element/ReportListPageComponent";
 import ReportTableRowComponent from "../adminPage/element/ReportTableRowComponent";
 import "../../assets/styles/App.scss";
+import { useSelector } from "react-redux";
 
 const initState = {
     dtoList: [],
@@ -25,9 +26,10 @@ const ReportListComponent = () => {
     const { page, size, moveToList, moveToRead, refresh } =
         useCustomReportMove();
     const [reportData, setReportData] = useState(initState);
+    const token = useSelector((state) => state.loginSlice.accessToken);
 
     useEffect(() => {
-        getReportList({ page, size })
+        getReportList({ page, size }, token)
             .then((data) => {
                 setReportData(data);
             })
