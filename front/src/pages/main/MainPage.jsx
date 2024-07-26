@@ -19,12 +19,12 @@ const MainPage = () => {
     const [selectedItem, setSelectedItem] = useState(null);
     const loginState = useSelector((state) => state.loginSlice);
     const memberType = loginState.memberType;
-    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
+    const { isLogin, moveToLoginReturn } = useCustomLogin();
     const navigate = useNavigate();
 
     const fetchData = useCallback(async () => {
         try {
-            const response = await getAllMatching();
+            const response = await getAllMatching(loginState.accessToken);
             if (Array.isArray(response)) {
                 setItems(response);
             } else {

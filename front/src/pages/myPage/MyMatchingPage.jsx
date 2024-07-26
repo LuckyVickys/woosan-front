@@ -18,7 +18,7 @@ const MyMatchingPage = () => {
     useEffect(() => {
         const fetchMyMatchings = async () => {
             try {
-                const matchings = await getMatchingBoardsByMemberId(loginState.id);
+                const matchings = await getMatchingBoardsByMemberId(loginState.id, loginState.accessToken);
                 // 정기모임(1), 번개(2), 셀프소개팅(3) 순서대로 정렬
                 const sortedMatchings = matchings.sort((a, b) => a.matchingType - b.matchingType);
                 setMyMatchings(sortedMatchings);

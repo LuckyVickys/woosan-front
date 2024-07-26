@@ -11,7 +11,7 @@ export const getAllMatching = async (token) => {
             url: `${host}/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/json'
             }
         });
         return res.data;
@@ -28,7 +28,7 @@ export const getRegularly = async (token) => {
             url: `${host}/regularly/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/json'
             }
         });
         return res.data;
@@ -45,7 +45,7 @@ export const getTemporary = async (token) => {
             url: `${host}/temporary/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/json'
             }
         });
         return res.data;
@@ -62,7 +62,7 @@ export const getSelf = async (token) => {
             url: `${host}/self/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/json'
             }
         });
         return res.data;
@@ -85,6 +85,7 @@ export const createRegularly = async (formData, token) => {
         });
         return res.data;
     } catch (error) {
+        console.log("@@@@@@@@@@@@@@@@accessToken:" + token);
         throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
 }
