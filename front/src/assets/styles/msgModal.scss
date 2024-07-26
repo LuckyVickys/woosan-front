@@ -17,7 +17,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 40%;
+    width: 45%;
     padding: 25px;
     display: flex;
     flex-direction: column;
@@ -74,7 +74,7 @@
     }
 
     &.message-input {
-        width: 100%;
+        width: 95%;
         height: 210px;
         resize: none;
     }
