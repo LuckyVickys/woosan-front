@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getDailyBest } from "../../api/boardApi";
 import useCustomMove from "../../hooks/useCustomMove";
+import "../../assets/styles/App.scss";
 
 const DailyBestBoardList = ({ pageType }) => {
     const [dailyBest, setDailyBest] = useState([]);
@@ -33,16 +34,14 @@ const DailyBestBoardList = ({ pageType }) => {
 
     return (
         <div className="daily-best">
-            <div className="category-title">인기 급상승</div>
-            <div className="daily-best-list">
-                {dailyBest.map((post, index) => (
-                    <div key={post.id} className="daily-best-item" onClick={() => moveToRead(post.id)}>
-                        <div className="rank">{index + 1}</div>
-                        <p className="title">{slicedText(post.title)}</p>
-                        <p className="replyCount">{post.replyCount}</p>
-                    </div>
-                ))}
-            </div>
+            <div className="daily-best-title">인기 급상승</div>
+            {dailyBest.map((post, index) => (
+                <div key={post.id} className="daily-best-item" onClick={() => moveToRead(post.id)}>
+                    <span className="daily-best-rank">{index + 1}</span>
+                    <span className="daily-best-text">{slicedText(post.title, 20)}</span>
+                    <span className="daily-best-reply-count">{post.replyCount}</span>
+                </div>
+            ))}
         </div>
     )
 }

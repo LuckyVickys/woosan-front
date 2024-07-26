@@ -402,13 +402,12 @@ $font-family: 'Pretendard-Regular', sans-serif;
         font-size: 18px;
         font-weight: 700;
         padding: 5px;
-
     }
 
     .suggested-list-items {
         display: grid;
         grid-template-columns: repeat(2, 1fr); // 2열 레이아웃
-        gap: 15px;
+        gap: 50px;
         list-style: none;
         padding: 0;
     }
@@ -417,23 +416,22 @@ $font-family: 'Pretendard-Regular', sans-serif;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 0.3px solid #ddd;
+        border-top: 0.3px solid #646363;
         padding: 5px 0;
-        margin: -15px 0px -15px 0px;
+        margin: 10px 0px -10px 0px;
         transition: color 0.3s ease;
 
         &:hover {
 
             .title {
-                color: #00b207; // 원하는 색상으로 변경
+                color: #00b207;
             }
         }
 
-
-        // .rank {
-        //     font-weight: 700;
-        //     margin-right: 15px;
-        // }
+        .categoryName {
+            color: #00b207;
+            margin-right: 15px;
+        }
 
         .title {
             flex-grow: 1;
@@ -442,10 +440,36 @@ $font-family: 'Pretendard-Regular', sans-serif;
             white-space: nowrap;
         }
 
-        .replyCount {
-            margin-left: 10px;
+        .regDate {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-left: 5px;
+        }
+
+        .likesCount {
+            margin-left: 3px;
             font-size: 90%;
+            color: #303030;
+        }
+
+        .replyCount {
+            margin-left: 3px;
+            font-size: 90%;
+            color: #303030;
+        }
+
+        .replyIcon {
+            color: #00b207;
+            opacity: 90%;
+            margin-left: 12px;
+        }
+
+        .likesIcon {
             color: #EA4B48;
+            opacity: 90%;
+            margin-left: 12px;
         }
     }
 }
