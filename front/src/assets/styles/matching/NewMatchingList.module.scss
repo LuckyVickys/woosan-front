@@ -22,3 +22,12 @@
         background-color: #f1f1f1;
     }
 }
+
+// 반응형(Tablet)
+@media (max-width: 1023px) {
+    .verticalLayout {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+}

@@ -89,56 +89,6 @@
         }
     }
 
-    .daily-best {
-        margin-top: 15px;
-        border: 1px solid #e6e6e6;
-        border-radius: 8px;
-        padding: 20px;
-
-        .category-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .daily-best-list {
-            list-style: none;
-            padding: 10;
-
-            .daily-best-item {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin: -7px 0;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-
-
-                &:hover {
-                    background-color: #f0f0f0;
-                }
-
-
-                .rank {
-                    font-weight: 700;
-                    margin-right: 15px;
-                }
-
-                .title {
-                    flex-grow: 1;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-
-                .replyCount {
-                    margin-left: 10px;
-                    font-size: 90%;
-                    color: #00b207;
-                }
-            }
-        }
-    }
 
 
     &.admin {
@@ -195,6 +145,56 @@
                         background-color: #20b526;
                     }
                 }
+            }
+        }
+    }
+
+    .daily-best {
+        margin-top: 20px;
+        border: 1px solid #e6e6e6;
+        border-radius: 8px;
+        background-color: #ffffff;
+        padding: 20px;
+
+        .daily-best-title {
+            font-family: "Pretendard-Regular", sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .daily-best-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e6e6e6;
+            font-size: 15px;
+            cursor: pointer;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                font-weight: 700;
+            }
+
+            .daily-best-rank {
+                font-weight: bold;
+                margin-right: 15px;
+            }
+
+            .daily-best-text {
+                flex-grow: 1;
+                margin-right: 10px;
+            }
+
+            .daily-best-reply-count {
+                color: #00b207;
+                padding: 2px 5px;
+                border-radius: 3px;
+                font-size: 14px;
             }
         }
     }

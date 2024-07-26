@@ -159,10 +159,11 @@ const AddComponent = ({ titleBarText, category }) => {
           <input
             type="text"
             name="title"
-            placeholder="제목을 입력해주세요."
+            placeholder="제목을 입력해주세요.(최대 40자)"
             value={board.title}
             onChange={handleChangeBoard}
             maxLength={40}
+            className="title"
           />
           {errors.title && <div className="error-message">{errors.title}</div>}
         </div>
@@ -170,10 +171,11 @@ const AddComponent = ({ titleBarText, category }) => {
           <label>내용</label>
           <textarea
             name="content"
-            placeholder="내용을 입력해주세요."
+            placeholder="내용을 입력해주세요.(최대 1960자)"
             value={board.content}
             onChange={handleChangeBoard}
             maxLength={1960}
+            className="textarea"
           ></textarea>
           {errors.content && (
             <div className="error-message">{errors.content}</div>

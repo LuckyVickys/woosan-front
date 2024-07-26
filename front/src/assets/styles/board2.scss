@@ -3,7 +3,7 @@
 $font-family: 'Pretendard-Regular', sans-serif;
 
 .list-component {
-    padding: 0 20px 20px 20px;
+    padding: 0 20px 0 20px;
     font-family: $font-family;
     white-space: nowrap;
 }
@@ -105,7 +105,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
         }
 
         .board-row {}
-
+        
         .replyCount {
             margin-left: 10px;
             color: #00B207;
@@ -171,11 +171,11 @@ $font-family: 'Pretendard-Regular', sans-serif;
     align-items: center;
     padding: 10px 10px 0px 20px;
     gap: 10px;
-    width: 990px;
+    width: 100%;
     height: auto;
 
     .title-bar {
-        width: 960px;
+        width: 100%;
         height: 60px;
         background-color: #E2E5E2;
         display: flex;
@@ -196,7 +196,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
 
     .form {
         margin-top: 20px;
-        width: 960px;
+        width: 100%;
 
         .form-group {
             margin-bottom: 20px;
@@ -246,23 +246,25 @@ $font-family: 'Pretendard-Regular', sans-serif;
             }
 
             input[type="text"] {
-                width: 935px;
+                width: 100%;
                 height: 30px;
                 padding: 10px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 font-size: 16px;
                 outline: none;
+                font-family: $font-family;
             }
 
             textarea {
-                width: 935px;
+                width: 100%;
                 height: 240px;
                 padding: 10px;
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 font-size: 16px;
                 outline: none;
+                font-family: $font-family;
             }
 
             input[type="file"] {
@@ -402,38 +404,52 @@ $font-family: 'Pretendard-Regular', sans-serif;
         font-size: 18px;
         font-weight: 700;
         padding: 5px;
-
     }
 
     .suggested-list-items {
         display: grid;
         grid-template-columns: repeat(2, 1fr); // 2열 레이아웃
-        gap: 15px;
+        gap: 50px;
         list-style: none;
         padding: 0;
     }
 
     .suggested-item {
         display: flex;
-        align-items: center;
+        // align-items: center;
         justify-content: space-between;
-        border-bottom: 0.3px solid #ddd;
+        border-top: 0.3px solid #646363;
         padding: 5px 0;
-        margin: -15px 0px -15px 0px;
+        margin: 10px 0px -10px 0px;
         transition: color 0.3s ease;
 
         &:hover {
+            cursor: pointer;
 
-            .title {
-                color: #00b207; // 원하는 색상으로 변경
+            .title,
+            .regDate,
+            .categoryName,
+            .likesCount,
+            .replyCount {
+                font-weight: 700;
             }
         }
 
+        .left-section {
+            display: flex;
+            align-items: center;
+        }
 
-        // .rank {
-        //     font-weight: 700;
-        //     margin-right: 15px;
-        // }
+        .right-section {
+            display: flex;
+            align-items: center;
+        }
+
+
+        .categoryName {
+            color: #00b207;
+            margin-right: 15px;
+        }
 
         .title {
             flex-grow: 1;
@@ -442,10 +458,53 @@ $font-family: 'Pretendard-Regular', sans-serif;
             white-space: nowrap;
         }
 
-        .replyCount {
-            margin-left: 10px;
+        .regDate {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-left: 5px;
+        }
+
+        .likesCount {
+            margin-left: 8px;
             font-size: 90%;
+            color: #303030;
+        }
+
+        .replyCount {
+            margin-left: 3px;
+            font-size: 90%;
+            color: #303030;
+        }
+
+        .replyIcon {
+            color: #00b207;
+            opacity: 90%;
+            margin-left: 12px;
+        }
+
+        .likesIcon {
             color: #EA4B48;
+            opacity: 90%;
+            margin-left: 20px;
+        }
+    }
+}
+
+// 반응형(Tablet)
+@media (max-width: 1023px) {
+    .area{
+        display: inline;
+
+        .add-component,
+        .modify-component{
+            padding-left: 0;
+
+            input,
+            textarea{
+                width: 100%;
+            }
         }
     }
 }

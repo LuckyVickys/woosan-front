@@ -45,7 +45,7 @@ const Nav = () => {
 }
 
     return (
-        <nav id='navbar' className="nav poppins-medium">
+        <nav id='navbar' className="nav">
             <div className="category">
                 <div className="board">
                     <NavLink to={'/board/'} className={({ isActive }) => isActive ? "active" : ""}>

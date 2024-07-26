@@ -47,3 +47,32 @@
         right: 20px;
     }
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .main-banner {
+        height: 200px;
+
+        .banner-image-wrapper {
+            height: 100%;
+        }
+
+        .banner-image {
+            height: 100%;
+        }
+
+        .banner-slider-left,
+        .banner-slider-right {
+            width: 25px;
+            height: 25px;
+        }
+
+        .banner-slider-left {
+            left: 5px;
+        }
+
+        .banner-slider-right {
+            right: 5px;
+        }
+    }
+}
