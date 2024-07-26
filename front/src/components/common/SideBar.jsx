@@ -73,7 +73,7 @@ const SideBar = ({ pageType }) => {
         });
     };
 
-    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
     return (
