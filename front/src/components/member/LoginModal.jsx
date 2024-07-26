@@ -86,13 +86,15 @@ const LoginModal = ({ onClose }) => {
             }
           })
           onClose();
+        } else {
+
         }
       } catch (error) {
         console.error('Error message:', error.message);
         Swal.fire({
           icon: 'error',
           title: '로그인 실패',
-          text: error.message === '탈퇴한 회원입니다.' ? '탈퇴한 회원입니다.' : '로그인 할 수 없습니다.',
+          text: error.message,
           confirmButtonColor: '#3085d6',
         });
       }
