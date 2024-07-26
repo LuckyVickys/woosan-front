@@ -5,7 +5,7 @@ import "../../assets/styles/App.scss";
 import { getBoard, translate, summary } from "../../api/boardApi";
 import BoardDropDown from "../../components/board/element/BoardDropDown.jsx";
 import ListButton from "../../components/board/element/ListButton.jsx";
-import { formatDate } from "../../util/DateUtil.jsx";
+import { basicDate } from "../../util/DateUtil.jsx";
 import LikeButton from "../../components/common/LikeButton";
 import { FaComment } from "react-icons/fa";
 import ReportModal from "./element/ReportModal.jsx";
@@ -196,7 +196,7 @@ const ReadComponent = () => {
             <p className="post-author">
               <img src={profileSrc} alt="프로필" className="profile-image" />
               {board.nickname} | &nbsp; 조회수 {board.views} | 댓글{" "}
-              {board.replyCount} | {formatDate(board.regDate)}
+              {board.replyCount} | {basicDate(board.regDate)}
             </p>
           </div>
         </div>

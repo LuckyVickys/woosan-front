@@ -11,7 +11,7 @@ import { getMemberWithEmail } from "../../api/memberApi";
 import ProfileDropdown from "../member/ProfileDropdown";
 import defaultProfile from "../../assets/image/profile.png";
 import useCustomLogin from "../../hooks/useCustomLogin";
-
+import { Desktop, Tablet, Mobile } from '../../layouts/ResponsiveComponent';
 
 const Header = () => {
   const { isLogin, openLoginModal, closeLoginModal, isLoginModalOpen, doLogin } = useCustomLogin();
@@ -88,72 +88,212 @@ const Header = () => {
     }, []);
 
   return (
-    <header className="header">
-      <div className="logo">
-        <div className="logoImage">
-          <Link to="/">
-            <img src={logoImage} alt="Logo" />
-          </Link>
-        </div>
-        <div className="logoTitle">
-          <Link to="/" className="logoTitle-text">우리는 함께 산다</Link>
-        </div>
-      </div>
-      {isLogin ? (
-        <div className="login">
-          <MdOutlineLocalPostOffice
-            className="messageIcon"
-            onClick={navToMessages}
-          />
-          <div className="loginBar"> | </div>
-          {userData ? (
-            <div className="profile-box" id="loginProfile" ref={profileBoxRef}>
-              <div className="user-level-nickname">
-                <div className="user-level">
-                {userData.memberType === "ADMIN" ? userData.memberType : userData.level}
+      <>
+          <Desktop>
+              <header className="header">
+                <div className="logo">
+                  <div className="logoImage">
+                    <Link to="/">
+                      <img src={logoImage} alt="Logo" />
+                    </Link>
+                  </div>
+                  <div className="logoTitle">
+                    <Link to="/" className="logoTitle-text">우리는 함께 산다</Link>
+                  </div>
                 </div>
-                <div className="user-nickname">{userData.nickname}</div>
-              </div>
-              {userData.profile && userData.profile.length > 0 ? (
-                <img
-                  className="user-profile"
-                  src={userData.profile[0]}
-                  alt="프로필 이미지"
-                  onClick={toggleProfileDropdown}
-                />
-              ) : (
-                <img
-                className="user-profile"
-                src={defaultProfile}
-                alt="프로필 기본 이미지"
-                onClick={toggleProfileDropdown}
-              />
-              )}
-              {isProfileDropdownOpen && <ProfileDropdown userData={userData} />}
-            </div>
-          ) : (
-            <div className="profile-box" id="loginProfile">
-              <div className="user-level-nickname">
-                <div className="user-level">로딩 중...</div>
-              </div>
-              <div className="user-profile"></div>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="login">
-          <div className="loginBar"> | </div>
-          <div
-            className="loginButton"
-            id="loginButton"
-            onClick={openLoginModal}
-          >
-            로그인
-          </div>
-        </div>
-      )}
-      {isLoginModalOpen && <LoginModal onClose={closeLoginModal} doLogin={doLogin} />}
-    </header>
+                {isLogin ? (
+                  <div className="login">
+                    <MdOutlineLocalPostOffice
+                      className="messageIcon"
+                      onClick={navToMessages}
+                    />
+                    <div className="loginBar"> | </div>
+                    {userData ? (
+                      <div className="profile-box" id="loginProfile" ref={profileBoxRef}>
+                        <div className="user-level-nickname">
+                          <div className="user-level">
+                          {userData.memberType === "ADMIN" ? userData.memberType : userData.level}
+                          </div>
+                          <div className="user-nickname">{userData.nickname}</div>
+                        </div>
+                        {userData.profile && userData.profile.length > 0 ? (
+                          <img
+                            className="user-profile"
+                            src={userData.profile[0]}
+                            alt="프로필 이미지"
+                            onClick={toggleProfileDropdown}
+                          />
+                        ) : (
+                          <img
+                          className="user-profile"
+                          src={defaultProfile}
+                          alt="프로필 기본 이미지"
+                          onClick={toggleProfileDropdown}
+                        />
+                        )}
+                        {isProfileDropdownOpen && <ProfileDropdown userData={userData} />}
+                      </div>
+                    ) : (
+                      <div className="profile-box" id="loginProfile">
+                        <div className="user-level-nickname">
+                          <div className="user-level">로딩 중...</div>
+                        </div>
+                        <div className="user-profile"></div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="login">
+                    <div className="loginBar"> | </div>
+                    <div
+                      className="loginButton"
+                      id="loginButton"
+                      onClick={openLoginModal}
+                    >
+                      로그인
+                    </div>
+                  </div>
+                )}
+                {isLoginModalOpen && <LoginModal onClose={closeLoginModal} doLogin={doLogin} />}
+              </header>
+          </Desktop>
+          <Tablet>
+              <header className="header">
+                <div className="logo">
+                  <div className="logoImage">
+                    <Link to="/">
+                      <img src={logoImage} alt="Logo" />
+                    </Link>
+                  </div>
+                  <div className="logoTitle">
+                    <Link to="/" className="logoTitle-text">우리는 함께 산다</Link>
+                  </div>
+                </div>
+                {isLogin ? (
+                  <div className="login">
+                    <MdOutlineLocalPostOffice
+                      className="messageIcon"
+                      onClick={navToMessages}
+                    />
+                    <div className="loginBar"> | </div>
+                    {userData ? (
+                      <div className="profile-box" id="loginProfile" ref={profileBoxRef}>
+                        <div className="user-level-nickname">
+                          <div className="user-level">
+                          {userData.memberType === "ADMIN" ? userData.memberType : userData.level}
+                          </div>
+                          <div className="user-nickname">{userData.nickname}</div>
+                        </div>
+                        {userData.profile && userData.profile.length > 0 ? (
+                          <img
+                            className="user-profile"
+                            src={userData.profile[0]}
+                            alt="프로필 이미지"
+                            onClick={toggleProfileDropdown}
+                          />
+                        ) : (
+                          <img
+                          className="user-profile"
+                          src={defaultProfile}
+                          alt="프로필 기본 이미지"
+                          onClick={toggleProfileDropdown}
+                        />
+                        )}
+                        {isProfileDropdownOpen && <ProfileDropdown userData={userData} />}
+                      </div>
+                    ) : (
+                      <div className="profile-box" id="loginProfile">
+                        <div className="user-level-nickname">
+                          <div className="user-level">로딩 중...</div>
+                        </div>
+                        <div className="user-profile"></div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="login">
+                    <div className="loginBar"> | </div>
+                    <div
+                      className="loginButton"
+                      id="loginButton"
+                      onClick={openLoginModal}
+                    >
+                      로그인
+                    </div>
+                  </div>
+                )}
+                {isLoginModalOpen && <LoginModal onClose={closeLoginModal} doLogin={doLogin} />}
+              </header>
+          </Tablet>
+          <Mobile>
+              <header className="header">
+                <div className="logo">
+                  <div className="logoImage">
+                    <Link to="/">
+                      <img src={logoImage} alt="Logo" />
+                    </Link>
+                  </div>
+                  <div className="logoTitle">
+                    <Link to="/" className="logoTitle-text">우산</Link>
+                  </div>
+                </div>
+                {isLogin ? (
+                  <div className="login">
+                    <MdOutlineLocalPostOffice
+                      className="messageIcon"
+                      onClick={navToMessages}
+                    />
+                    <div className="loginBar"> | </div>
+                    {userData ? (
+                      <div className="profile-box" id="loginProfile" ref={profileBoxRef}>
+                        <div className="user-level-nickname">
+                          <div className="user-level">
+                          {userData.memberType === "ADMIN" ? userData.memberType : userData.level}
+                          </div>
+                          <div className="user-nickname">{userData.nickname}</div>
+                        </div>
+                        {userData.profile && userData.profile.length > 0 ? (
+                          <img
+                            className="user-profile"
+                            src={userData.profile[0]}
+                            alt="프로필 이미지"
+                            onClick={toggleProfileDropdown}
+                          />
+                        ) : (
+                          <img
+                          className="user-profile"
+                          src={defaultProfile}
+                          alt="프로필 기본 이미지"
+                          onClick={toggleProfileDropdown}
+                        />
+                        )}
+                        {isProfileDropdownOpen && <ProfileDropdown userData={userData} />}
+                      </div>
+                    ) : (
+                      <div className="profile-box" id="loginProfile">
+                        <div className="user-level-nickname">
+                          <div className="user-level">로딩 중...</div>
+                        </div>
+                        <div className="user-profile"></div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="login">
+                    <div className="loginBar"> | </div>
+                    <div
+                      className="loginButton"
+                      id="loginButton"
+                      onClick={openLoginModal}
+                    >
+                      로그인
+                    </div>
+                  </div>
+                )}
+                {isLoginModalOpen && <LoginModal onClose={closeLoginModal} doLogin={doLogin} />}
+              </header>
+          </Mobile>
+      </>
   );
 };
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom'; // 현재 경로 가져오기
+import { Outlet, useLocation } from 'react-router-dom'; 
 import BasicLayout from "../../layouts/BasicLayout";
 import SideBar from "../../components/common/SideBar";
 import PageTitle from "../../components/common/PageTitle";
 import SearchBar from "../../components/common/SearchBar";
+import { Desktop, Tablet, Mobile } from '../../layouts/ResponsiveComponent';
 
 const IndexPage = () => {
     const location = useLocation();
@@ -92,18 +93,54 @@ const IndexPage = () => {
     };
 
     return (
-        <BasicLayout>
-            <SideBar pageType="board" />
-            <div className="contents">
-                {!shouldHideSubAndInfo(location.pathname) && (
-                    <PageTitle main="꿀팁" sub={sub} info={info} />
-                )}
-                {!shouldHideSearchBar(location.pathname) && (
-                    <SearchBar categories={categories} filters={filters} />
-                )}
-                <Outlet />
-            </div>
-        </BasicLayout>
+        <>
+            <Desktop>
+                <BasicLayout>
+                    <SideBar pageType="board" />
+                    <div className="contents">
+                        {!shouldHideSubAndInfo(location.pathname) && (
+                            <PageTitle main="꿀팁" sub={sub} info={info} />
+                        )}
+                        {!shouldHideSearchBar(location.pathname) && (
+                            <SearchBar categories={categories} filters={filters} />
+                        )}
+                        <Outlet />
+                    </div>
+                </BasicLayout>
+            </Desktop>
+            <Tablet>
+                <BasicLayout>
+                    <div className='dropdown-sidebar-contents'>
+                        <SideBar pageType="board" />
+                        <div className="contents">
+                            {!shouldHideSubAndInfo(location.pathname) && (
+                                <PageTitle main="꿀팁" sub={sub}/>
+                            )}
+                            {!shouldHideSearchBar(location.pathname) && (
+                                <SearchBar categories={categories} filters={filters} />
+                            )}
+                            <Outlet />
+                        </div>
+                    </div>
+                </BasicLayout>
+            </Tablet>
+            <Mobile>
+                <BasicLayout>
+                    <div className='dropdown-sidebar-contents'>
+                        <SideBar pageType="board" />
+                        <div className="contents">
+                            {!shouldHideSubAndInfo(location.pathname) && (
+                                <PageTitle main="꿀팁" sub={sub} />
+                            )}
+                            {!shouldHideSearchBar(location.pathname) && (
+                                <SearchBar categories={categories} filters={filters} />
+                            )}
+                            <Outlet />
+                        </div>
+                    </div>
+                </BasicLayout>
+            </Mobile>
+        </>
     );
 }
 

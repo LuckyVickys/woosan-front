@@ -8,48 +8,49 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
 
-    .popular-post {
-        margin-left: 20px;
-        height: 370px;
-        border-radius: 10px;
-        border-left: 2px solid #e5e5e5;
-        border-bottom: 3px solid #e5e5e5;
+.popular-post {
+    margin-left: 20px;
+    height: 370px;
+    border-radius: 10px;
+    border-left: 2px solid #e5e5e5;
+    border-bottom: 3px solid #e5e5e5;
 
-        .likelist-post {
+    .likelist-post {
+        display: flex;
+        align-items: center;
+        padding: 4px 15px;
+        width: 350px;
+        font-family: "Pretendard-Regular", sans-serif;
+        font-size: 14px;
+        white-space: nowrap;
+        cursor: pointer;
+
+        .likelist-category {
+            color: #00b207;
+            font-weight: 800;
+        }
+        .likelist-title {
+            margin: 0 10px;
+            width: 100%;
+            font-weight: 400;
+        }
+        .likelist-like {
             display: flex;
             align-items: center;
-            padding: 4px 15px;
-            width: 350px;
-            font-family: "Pretendard-Regular", sans-serif;
-            font-size: 14px;
-            white-space: nowrap;
-            cursor: pointer;
+            font-weight: 400;
 
-            .likelist-category {
-                color: #00b207;
-                font-weight: 800;
-            }
-            .likelist-title {
-                margin: 0 10px;
-                width: 100%;
-                font-weight: 400;
-            }
-            .likelist-like {
-                display: flex;
-                align-items: center;
-                font-weight: 400;
-
-                .likelist-like-icon {
-                    width: 20px;
-                    height: 20px;
-                    background: url("../image/heart-icon.svg") no-repeat;
-                    background-size: contain;
-                }
+            .likelist-like-icon {
+                width: 20px;
+                height: 20px;
+                background: url("../image/heart-icon.svg") no-repeat;
+                background-size: contain;
             }
         }
     }
 }
+
 .main-info {
     display: flex;
     justify-content: space-between;
@@ -58,7 +59,9 @@
     padding: 0 40px;
     height: 74px;
     border-radius: 10px;
-    box-shadow: 6px 3px 10px 3px rgb(0, 0, 0, 0.1);
+    border-top: 2px solid #e5e5e5;
+    border-left: 2px solid #e5e5e5;
+    border-bottom: 3px solid #e5e5e5;
     font-family: "Pretendard-Regular", sans-serif;
     .info {
         display: flex;
@@ -95,12 +98,12 @@
             white-space: nowrap;
             h1 {
                 margin-bottom: 0px;
-                font-size: 16px;
+                font-size: 1rem;
                 font-weight: 800;
             }
             p {
                 margin-top: 8px;
-                font-size: 14px;
+                font-size: 0.7rem;
                 font-weight: 400;
             }
         }
@@ -111,166 +114,57 @@
     justify-content: space-between;
     align-items: center;
     margin: 10px 0 0 0;
-
     width: 100%;
-    .main-notice {
-        width: auto;
-        height: 220px;
-        border-radius: 10px;
-        border-left: 2px solid #e5e5e5;
-        border-bottom: 3px solid #e5e5e5;
+}
 
-        .noticelist-post {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 15px;
-            width: 350px;
-            font-family: "Pretendard-Regular", sans-serif;
-            font-size: 14px;
-            white-space: nowrap;
-            cursor: pointer;
+.main-notice {
+    width: auto;
+    height: 100%;
+    border-radius: 10px;
+    border-left: 2px solid #e5e5e5;
+    border-bottom: 3px solid #e5e5e5;
 
-            &.notice-row {
-                .noticelist-category {
-                    color: #ea4b48;
-                    font-weight: 800;
-                }
+    .noticelist-post {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 15px;
+        width: 350px;
+        font-family: "Pretendard-Regular", sans-serif;
+        font-size: 14px;
+        white-space: nowrap;
+        cursor: pointer;
 
-                .noticelist-title {
-                    margin: 0 10px;
-                    width: 100%;
-                    font-weight: 400;
-                }
-
-                .noticelist-like {
-                    display: flex;
-                    align-items: center;
-                    font-weight: 400;
-                }
+        &.notice-row {
+            .noticelist-category {
+                color: #ea4b48;
+                font-weight: 800;
             }
-        }
-    }
-    .main-matching {
-        margin-left: 20px;
-        width: 100%;
-        height: 220px;
-        border-radius: 10px;
-        border-left: 2px solid #e5e5e5;
-        border-bottom: 3px solid #e5e5e5;
-        .header-title {
-            color: #ea4b48;
-        }
-        .newMatchingList {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0px 15px;
-            .newMatchingList-post {
+
+            .noticelist-title {
+                margin: 0 10px;
+                width: 100%;
+                font-weight: 400;
+            }
+
+            .noticelist-like {
                 display: flex;
-                justify-content: space-between;
-                .newMatchingList-img {
-                    align-items: center;
-                    margin-right: 15px;
-                    width: 150px;
-                    height: 150px;
-                    background: #e5e5e5;
-                    border-radius: 10px;
-                }
-                .newMatchingList-contents {
-                    width: 300px;
-                    font-family: "Pretendard-Regular", sans-serif;
-                    .newMatchingList-catagory-tag,
-                    .newMatchingList-location,
-                    .newMatchingList-date,
-                    .newMatchingList-nickname,
-                    .newMatchingList-matching {
-                        display: flex;
-                        align-items: center;
-                        margin-bottom: 5px;
-                    }
-                    .newMatchingList-catagory-tag {
-                        color: #fff;
-                        font-size: 14px;
-                        font-weight: 400;
-                        .newMatchingList-regurlary,
-                        .newMatchingList-temporary,
-                        .newMatchingList-self,
-                        .newMatchingList-tag {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            padding: 0px 10px;
-                            height: 30px;
-                            border-radius: 5px;
-                        }
-                        .newMatchingList-regurlary {
-                            margin-right: 5px;
-                            background: #ea4b48;
-                        }
-                        .newMatchingList-temporary {
-                            margin-right: 5px;
-                            background: #fdca00;
-                        }
-                        .newMatchingList-self {
-                            margin-right: 5px;
-                            background: #2388ff;
-                        }
-                        .newMatchingList-tag {
-                            background: #00b207;
-                        }
-                    }
-                    .newMatchingList-title {
-                        margin-bottom: 5px;
-                        font-size: 16px;
-                        font-weight: 600;
-                    }
-                    .newMatchingList-location-icon,
-                    .newMatchingList-date-icon,
-                    .newMatchingList-nickname-icon,
-                    .newMatchingList-matching-icon {
-                        margin-right: 5px;
-                        width: 20px;
-                        height: 20px;
-                    }
-                    .newMatchingList-location-icon {
-                        background: url("../image/icon-location.svg") no-repeat;
-                        background-size: contain;
-                    }
-                    .newMatchingList-date-icon {
-                        background: url("../image/icon-calendar.svg") no-repeat;
-                        background-size: contain;
-                    }
-                    .newMatchingList-nickname-icon {
-                        background: url("../image/icon-person.svg") no-repeat;
-                        background-size: contain;
-                    }
-                    .newMatchingList-matching-icon {
-                        background: url("../image/icon-matching.svg") no-repeat;
-                        background-size: contain;
-                    }
-                    .newMatchingList-location-text,
-                    .newMatchingList-date-text,
-                    .newMatchingList-nickname-text,
-                    .newMatchingList-matching-text {
-                        font-size: 14px;
-                        font-weight: 400;
-                    }
-                    .newMatchingList-nickname-matching {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                    }
-                    .newMatchingList-matching-text {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                }
+                align-items: center;
+                font-weight: 400;
             }
         }
     }
 }
+
+.main-matching {
+    margin-left: 20px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border-left: 2px solid #e5e5e5;
+    border-bottom: 3px solid #e5e5e5;
+}
+
 .popular-post-header,
 .main-notice-header,
 .main-matching-header {
@@ -289,5 +183,40 @@ a {
     text-decoration: none;
     &:hover {
         text-decoration: none;
+    }
+}
+
+// 반응형(Tablet)
+@media (max-width: 1023px) {
+    .main-content-list{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        gap: 5px;
+    }
+
+    .popular-post{
+        margin-left: 0;
+    }
+}
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .main-info{
+        display: flex;
+        justify-content: center;
+    }
+    .main-content-list2{
+        justify-content: space-between;
+
+        .popular-post,
+        .main-notice {
+            margin-top: 10px;
+        }
+
+        .main-matching{
+            margin-top: 10px;
+            margin-left: 0;
+        }
     }
 }

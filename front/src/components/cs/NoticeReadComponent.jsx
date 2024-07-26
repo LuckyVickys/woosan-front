@@ -5,7 +5,7 @@ import "../../assets/styles/App.scss";
 import { getNotice, translateNotice } from "../../api/csApi";
 import BoardDropDown from "../../components/board/element/BoardDropDown.jsx";
 import BackButton from "../../components/common/BackButton.jsx";
-import { formatDate } from "../../util/DateUtil.jsx";
+import { basicDate } from "../../util/DateUtil.jsx";
 import LikeButton from "../../components/common/LikeButton";
 import { FaComment } from "react-icons/fa";
 import MsgModal from "../../components/board/element/MsgModal";
@@ -165,7 +165,7 @@ const NoticeReadComponent = () => {
                         <p className="post-author">
                             {notice.nickname} | &nbsp; 조회수 {notice.views} |
                             댓글 {notice.replyCount} |{" "}
-                            {formatDate(notice.regDate)}
+                            {basicDate(notice.regDate)}
                         </p>
                     </div>
                 </div>
