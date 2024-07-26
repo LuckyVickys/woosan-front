@@ -4,6 +4,7 @@ import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 import { formatDate } from "../../../util/DateUtil";
 import "../../../assets/styles/App.scss";
+import { useSelector } from "react-redux";
 
 const initState = {
     senderId: "",
@@ -21,6 +22,8 @@ const MsgModal = ({
 }) => {
     const [message, setMessage] = useState({ ...initState });
     const [isClosing, setIsClosing] = useState(false);
+    const loginState = useSelector((state) => state.loginSlice);
+    const token = loginState.accessToken;
 
     useEffect(() => {
         setMessage({ ...initState });
@@ -63,7 +66,7 @@ const MsgModal = ({
                 senderId: senderId,
                 receiver: receiver,
                 content: message.content,
-            });
+            }, token);
 
             if (response) {
                 Swal.fire({
