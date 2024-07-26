@@ -31,9 +31,16 @@ const NoticeModifyComponent = () => {
     const { moveToList } = useCustomNoticetMove();
 
     useEffect(() => {
+        const header = {
+            headers: {
+                Authorization: `Bearer ${loginState.accessToken}`,
+                Refresh: getCookie("member").refreshToken,
+            },
+        };
+
         const fetchData = async () => {
             try {
-                const response = await getOne(id);
+                const response = await getOne(id, header);
                 if (response.writerId !== loginState.id) {
                     alert("접근 권한이 없습니다.");
                     navigate("/board");

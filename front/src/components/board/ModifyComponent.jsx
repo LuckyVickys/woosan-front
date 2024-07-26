@@ -70,10 +70,17 @@ const ModifyComponent = () => {
     fetchData();
   }, [loginState.email, loginState.accessToken]);
 
+  const header = {
+    headers: {
+      Authorization: `Bearer ${loginState.accessToken}`,
+      Refresh: getCookie("member").refreshToken,
+    },
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getOne(id);
+        const response = await getOne(id, header);
         if (response.writerId !== loginState.id) {
           alert("접근 권한이 없습니다.");
           navigate("/board");
@@ -153,13 +160,6 @@ const ModifyComponent = () => {
     }
 
     try {
-      const header = {
-        headers: {
-          Authorization: `Bearer ${loginState.accessToken}`,
-          Refresh: getCookie("member").refreshToken,
-          "Content-Type": "multipart/form-data"
-        },
-      };
       await updateBoard(formData, header);
       navigate(`/board/${id}`);
     } catch (error) {
@@ -172,12 +172,6 @@ const ModifyComponent = () => {
       const removeDTO = {
         id: id,
         writerId: loginState.id,
-      };
-      const header = {
-        headers: {
-          Authorization: `Bearer ${loginState.accessToken}`,
-          Refresh: getCookie("member").refreshToken,
-        },
       };
       await deleteBoard(removeDTO, header);
       moveToList();
