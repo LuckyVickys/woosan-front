@@ -24,9 +24,11 @@ const MatchingPage = () => {
     // 로그인 상태와 사용자 정보
     const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
     const loginState = useSelector((state) => state.loginSlice);
+    const memberType = loginState.memberType;
     const memberLevel = loginState.level; // 사용자 레벨 가져오기
 
     // 콘솔 로그 추가
+    console.log("멤버 권한:", memberType);
     console.log('멤버 레벨:', memberLevel);
 
     /**
