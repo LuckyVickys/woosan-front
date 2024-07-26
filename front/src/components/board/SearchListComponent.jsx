@@ -5,6 +5,7 @@ import useCustomMove from "../../hooks/useCustomMove";
 import SearchListPageComponent from "../../components/board/element/SearchListPageComponent";
 import TableRowComponent from "../../components/board/element/TableRowComponent";
 import "../../assets/styles/App.scss";
+import SearchBar from "../../components/common/SearchBar.jsx"
 
 const initState = {
   standardResult: {
@@ -91,63 +92,87 @@ const SearchListComponent = ({ category, filter, keyword }) => {
 
   const { standardResult, synonymResult } = serverData;
 
-  return (
-    <div className="list-component">
-      <h2>기본 검색 결과</h2>
-      <table className="list-table">
-        <thead>
-          <tr>
-            <th>카테고리</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성 날짜</th>
-            <th>조회수</th>
-            <th>추천</th>
-          </tr>
-        </thead>
-        <tbody>
-          {standardResult.dtoList &&
-            standardResult.dtoList.map((item) => (
-              <TableRowComponent
-                key={item.id}
-                item={item}
-                onClick={() => handleRowClick(item.id)}
-              />
-            ))}
-        </tbody>
-      </table>
-      <SearchListPageComponent
-        serverData={standardResult}
-        movePage={moveStandardPage}
-      />
+  const categories = [
+    { label: '전체', value: '전체' },
+    { label: '맛집', value: '맛집' },
+    { label: '청소', value: '청소' },
+    { label: '요리', value: '요리' },
+    { label: '재테크', value: '재테크' },
+    { label: '인테리어', value: '인테리어' },
+    { label: '정책', value: '정책' },
+    { label: '기타', value: '기타' }
+  ];
 
-      <h2>연관 검색 결과</h2>
-      <table className="list-table">
-        <thead>
-          <tr>
-            <th>카테고리</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성 날짜</th>
-            <th>조회수</th>
-            <th>추천</th>
-          </tr>
-        </thead>
-        <tbody>
-          {synonymResult.dtoList &&
-            synonymResult.dtoList.map((item) => (
-              <TableRowComponent
-                key={item.id}
-                item={item}
-                onClick={() => handleRowClick(item.id)}
-              />
-            ))}
-        </tbody>
-      </table>
-      <SearchListPageComponent
-        serverData={synonymResult}
-        movePage={moveSynonymPage}
-      />
+  const filters = [
+    { label: '제목', value: 'title' },
+    { label: '내용', value: 'content' },
+    { label: '작성자', value: 'writer' },
+    { label: '제목 + 내용', value: 'titleOrContent' },
+    { label: '제목 + 작성자', value: 'titleOrWriter' },
+    { label: '내용 + 작성자', value: 'contentOrWriter' },
+    { label: '제목 + 내용 + 작성자', value: 'titleOrContentOrWriter' }
+  ];
+  return (
+    <div>
+      <div><br></br></div>
+      <SearchBar categories={categories} filters={filters} />
+      <div className="list-component">
+        <h2>기본 검색 결과</h2>
+        <table className="list-table">
+          <thead>
+            <tr>
+              <th>카테고리</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성 날짜</th>
+              <th>조회수</th>
+              <th>추천</th>
+            </tr>
+          </thead>
+          <tbody>
+            {standardResult.dtoList &&
+              standardResult.dtoList.map((item) => (
+                <TableRowComponent
+                  key={item.id}
+                  item={item}
+                  onClick={() => handleRowClick(item.id)}
+                />
+              ))}
+          </tbody>
+        </table>
+        <SearchListPageComponent
+          serverData={standardResult}
+          movePage={moveStandardPage}
+        />
+
+        <h2>연관 검색 결과</h2>
+        <table className="list-table">
+          <thead>
+            <tr>
+              <th>카테고리</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성 날짜</th>
+              <th>조회수</th>
+              <th>추천</th>
+            </tr>
+          </thead>
+          <tbody>
+            {synonymResult.dtoList &&
+              synonymResult.dtoList.map((item) => (
+                <TableRowComponent
+                  key={item.id}
+                  item={item}
+                  onClick={() => handleRowClick(item.id)}
+                />
+              ))}
+          </tbody>
+        </table>
+        <SearchListPageComponent
+          serverData={synonymResult}
+          movePage={moveSynonymPage}
+        />
+      </div>
     </div>
   );
 };
