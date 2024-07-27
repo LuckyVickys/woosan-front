@@ -34,7 +34,7 @@ const IndexPage = () => {
             break;
     }
 
-    const hideTopBarPaths = ['/matching/CreateMatching'];
+    const hideTopBarPaths = ['/matching/create', '/matching/modify'];
 
     const shouldHideTopBar = (pathname) => {
         return hideTopBarPaths.some((path) => {
