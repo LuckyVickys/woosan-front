@@ -165,8 +165,7 @@
 }
 
 .popular-post-header,
-.main-notice-header,
-.main-matching-header {
+.main-notice-header{
     display: flex;
     padding: 17.5px 15px;
     justify-content: space-between;
@@ -177,6 +176,23 @@
         color: #00b207;
     }
 }
+
+.main-matching-header {
+    display: flex;
+    padding: 17.5px 0 17.5px 0 ;
+    justify-content: space-between;
+    font-family: "Pretendard-Regular", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+
+    .header-title{
+        color: #ea4b48;
+    }
+    a {
+        color: #00b207;
+    }
+}
+
 // Link 밑줄 제거, hover
 a {
     text-decoration: none;
@@ -189,7 +205,7 @@ a {
 @media (min-width: 1025px) {
 
     .main-info {
-        width: 1400px;
+        // width: 1400px;
 
         .info{
             padding: 0 40px;
@@ -200,7 +216,7 @@ a {
     }
     .main-matching {
         margin-left: 20px;
-        padding: 0 10px;
+        padding: 0 20px;
     }
 }
 
