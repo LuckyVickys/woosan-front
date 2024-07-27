@@ -91,3 +91,11 @@ button {
     word-wrap: break-word;
     word-break: break-all;
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .upload-banner{
+        margin: 0 10px;
+        margin-bottom: 10px;
+    }
+}

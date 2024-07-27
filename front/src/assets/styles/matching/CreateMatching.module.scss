@@ -164,3 +164,17 @@ textarea {
         padding-left: 25px;
     }
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .form{
+        width: 95%;
+        padding-left: 10px;
+    }
+
+    .container{
+        margin-top: 10px;
+        width: 95%;
+        padding-left: 10px;
+    }
+}
