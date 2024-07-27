@@ -91,12 +91,25 @@ const UpdateInfo = () => {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const fileURL = URL.createObjectURL(file);
-            setFormData((prevData) => ({
-                ...prevData,
-                fileImg: file,
-                fileImgURL: fileURL,
-            }));
+            
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+            if (allowedTypes.includes(file.type)) {
+                const fileURL = URL.createObjectURL(file);
+
+                setFormData((prevData) => ({
+                    ...prevData,
+                    fileImg: file,
+                    fileImgURL: fileURL,
+                }));
+            } else {
+                Swal.fire({
+                    title: "업로드 실패",
+                    text: `jpg, jpeg, png 파일만 업로드 가능합니다.`,
+                    icon: "error",
+                    confirmButtonText: "확인",
+                });
+            }
         }
     };
 
@@ -129,16 +142,24 @@ const UpdateInfo = () => {
     
             const res = await modifyProfile(formDataObj, token);
     
-            Swal.fire(
-                "프로필 수정 완료",
-                "원래 화면으로 돌아갑니다.",
-                "success"
-            ).then(() => {
+            Swal.fire({
+                title: "프로필 수정 완료",
+                text: "회원 정보 수정 페이지로 돌아갑니다.",
+                icon: "success",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            }).then(() => {
                 window.location.reload();
             });
         } catch (error) {
             console.error("Error updating information:", error);
-            Swal.fire("프로필 수정 실패", `다시 시도해주세요.`, "error");
+            Swal.fire({
+                title: "프로필 수정 실패",
+                text: `다시 시도해주세요.: ${error.message}`,
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            });
         }
     };
 
@@ -354,6 +375,8 @@ const UpdateInfo = () => {
                     <h2>회원 정보 변경</h2>
                     <div className="update-info-container">
                         <div className="update-user-info-profile">
+
+                            
                             <div className="update-profile">
                                 <div className="user-profile">
                                     <img

@@ -23,6 +23,15 @@
     }
 }
 
+// 반응형(Desktop)
+@media (min-width: 1025px) {
+    .newMatchingList {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px; /* 항목 간격 조정 */
+    }
+}
+
 // 반응형(Tablet)
 @media (max-width: 1024px) {
     .verticalLayout {
@@ -34,5 +43,9 @@
 
 // 반응형(Mobile)
 @media (max-width: 767px) {
-    
+    .verticalLayout {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
 }

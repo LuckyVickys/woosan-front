@@ -122,7 +122,25 @@ const ModifyComponent = () => {
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
-    setFiles([...files, ...selectedFiles]);
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+    const validFiles = selectedFiles.filter(file => allowedTypes.includes(file.type));
+
+    if (validFiles.length !== selectedFiles.length) {
+        Swal.fire({
+            title: "업로드 실패",
+            text: "jpg, jpeg, png 파일만 업로드 가능합니다.",
+            icon: "error",
+            confirmButtonText: "확인",
+        });
+    }
+
+    const newFiles = validFiles.map(file => ({
+        file,
+        url: URL.createObjectURL(file),
+    }));
+
+    setFiles(prevFiles => [...prevFiles, ...newFiles]);
   };
 
   const handleFileRemove = (index) => {
@@ -163,7 +181,13 @@ const ModifyComponent = () => {
       await updateBoard(formData, header);
       navigate(`/board/${id}`);
     } catch (error) {
-      console.error("수정 실패", error);
+      Swal.fire({
+        title: `수정 실패`,
+        text: `다시 시도해주세요.`,
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "확인",
+      });
     }
   };
 
@@ -176,7 +200,13 @@ const ModifyComponent = () => {
       await deleteBoard(removeDTO, header);
       moveToList();
     } catch (error) {
-      console.error("삭제 실패", error);
+      Swal.fire({
+        title: `삭제 실패`,
+        text: `다시 시도해주세요.`,
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "확인",
+      });
     }
   };
 
@@ -239,7 +269,7 @@ const ModifyComponent = () => {
         </div>
         <div className="form-group">
           <label>첨부파일</label>
-          <input type="file" onChange={handleFileChange} multiple />
+          <input type="file" accept=".png,.jpg,.jpeg" onChange={handleFileChange} multiple />
           <div className="file-list">
             {files.map((file, index) => (
               <div key={index} className="file-item">

@@ -90,6 +90,7 @@ const ReportReadComponent = () => {
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "확인",
+            confirmButtonColor: "#3085d6",
             cancelButtonText: "취소",
         });
 
@@ -128,6 +129,8 @@ const ReportReadComponent = () => {
             showCancelButton: true,
             confirmButtonText: "확인",
             cancelButtonText: "취소",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
         });
 
         if (result.isConfirmed) {
@@ -139,6 +142,7 @@ const ReportReadComponent = () => {
                     text: "신고 상세 조회 페이지로 돌아갑니다.",
                     icon: "success",
                     confirmButtonText: "확인",
+                    confirmButtonColor: "#3085d6",
                 });
             } catch (error) {
                 Swal.fire({
@@ -146,6 +150,7 @@ const ReportReadComponent = () => {
                     text: `신고 처리 중 오류가 발생했습니다: ${error.message}`,
                     icon: "error",
                     confirmButtonText: "확인",
+                    confirmButtonColor: "#3085d6",
                 });
             }
         }
