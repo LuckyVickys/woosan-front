@@ -68,52 +68,54 @@ const MyBoardComponent = () => {
 
     return (
         <>
-            {dtoList.length > 0 ? (
-                <div className="list-component">
-                    <table className="list-table">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>카테고리</th>
-                                <th>제목</th>
-                                <th>작성 날짜</th>
-                                <th>조회수</th>
-                                <th>추천</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {dtoList &&
-                                dtoList.map((item, index) => (
-                                    <MyBoardTableRowComponent
-                                        key={item.id}
-                                        item={item}
-                                        index={index}
-                                        onClick={() => handleRowClick(item.id)}
-                                    />
-                                ))}
-                        </tbody>
-                    </table>
-                    <ListPageComponent
-                        serverData={{
-                            dtoList,
-                            pageNumList,
-                            pageRequestDTO,
-                            prev,
-                            next,
-                            totalCount,
-                            prevPage,
-                            nextPage,
-                            totalPage,
-                            current,
-                        }}
-                        movePage={(page) => moveToList({ page })}
-                    />
-                </div>
-            ) : (
-                <div className="message-not-found">
-                    작성한 게시글이 존재하지 않습니다.
-                </div>
-            )}
+            <div className="myBoard-list-component">
+                {dtoList.length > 0 ? (
+                    <div className="list-component">
+                        <table className="list-table">
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>카테고리</th>
+                                    <th>제목</th>
+                                    <th>작성 날짜</th>
+                                    <th>조회수</th>
+                                    <th>추천</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {dtoList &&
+                                    dtoList.map((item, index) => (
+                                        <MyBoardTableRowComponent
+                                            key={item.id}
+                                            item={item}
+                                            index={index}
+                                            onClick={() => handleRowClick(item.id)}
+                                        />
+                                    ))}
+                            </tbody>
+                        </table>
+                        <ListPageComponent
+                            serverData={{
+                                dtoList,
+                                pageNumList,
+                                pageRequestDTO,
+                                prev,
+                                next,
+                                totalCount,
+                                prevPage,
+                                nextPage,
+                                totalPage,
+                                current,
+                            }}
+                            movePage={(page) => moveToList({ page })}
+                        />
+                    </div>
+                ) : (
+                    <div className="message-not-found">
+                        작성한 게시글이 존재하지 않습니다.
+                    </div>
+                )}
+            </div>
         </>
     );
 };

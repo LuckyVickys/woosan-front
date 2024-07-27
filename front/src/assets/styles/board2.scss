@@ -5,7 +5,6 @@ $font-family: 'Pretendard-Regular', sans-serif;
 .list-component {
     padding: 0 20px 0 20px;
     font-family: $font-family;
-    white-space: nowrap;
 }
 
 .list-title {
@@ -519,11 +518,18 @@ $font-family: 'Pretendard-Regular', sans-serif;
 // 반응형(Tablet)
 @media (max-width: 1024px) {
     .area {
-        display: inline;
+        // display: inline;
+        width: 100%;
+        height: 85%;
 
+        .dropdown-sidebar-contents{
+            width: 100%;
+        }
+        
         .add-component,
         .modify-component {
             margin-top: 10px;
+            padding-bottom: 380px;
 
             .title-bar,
             .form {
@@ -540,141 +546,149 @@ $font-family: 'Pretendard-Regular', sans-serif;
 // 반응형(Mobile)
 @media (max-width: 767px) {
 
-    .list-table {
-        font-size: 0.8rem;
-        table-layout: fixed;
+    .area {
 
-        tbody {
-            tr {
+        .list-component {
+            padding: 0 20px 0 20px;
+            font-family: $font-family;
+        }
 
-                td {
-                    padding: 10px;
-                    border-bottom: 1px solid #e0e0e0;
+        .list-table {
+            font-size: 0.8rem;
+            table-layout: fixed;
+
+            tbody {
+                tr {
+
+                    td {
+                        padding: 10px;
+                        border-bottom: 1px solid #e0e0e0;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+
+                        &:nth-child(1) {
+                            text-align: left;
+                            white-space: nowrap;
+                        }
+
+                        &:nth-child(2) {
+                            text-align: left;
+                            white-space: nowrap;
+                        }
+
+                        &:nth-child(3) {
+                            text-align: center;
+                            white-space: nowrap;
+                        }
+
+                        &:nth-child(4) {
+                            text-align: center;
+                            white-space: nowrap;
+                        }
+
+                        &:nth-child(5) {
+                            text-align: right;
+                            white-space: nowrap;
+                        }
+
+                        &:nth-child(6) {
+                            text-align: right;
+                            white-space: nowrap;
+                        }
+                    }
+                }
+            }
+        }
+
+        .pagination {
+
+            .pagination-button {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        .add-component,
+        .modify-component {
+
+            .title-bar,
+            .form {
+                width: 95%;
+            }
+        }
+
+        .suggested-list-items{
+            flex-direction: column;
+
+            .suggested-item {
+                flex-direction: column;
+                padding: 0;
+                font-size: 0.8rem;
+                height: auto;
+
+                &:hover {
+                    cursor: pointer;
+
+                    .title,
+                    .regDate,
+                    .categoryName,
+                    .likesCount,
+                    .replyCount {
+                        font-weight: 700;
+                    }
+                }
+
+                .left-section {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .right-section {
+                    display: flex;
+                    align-items: center;
+                }
+
+
+                .categoryName {
+                    color: #00b207;
+                    margin-right: 15px;
+                }
+
+                .title {
+                    flex-grow: 1;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-
-                    &:nth-child(1) {
-                        text-align: left;
-                        white-space: nowrap;
-                    }
-
-                    &:nth-child(2) {
-                        text-align: left;
-                        white-space: nowrap;
-                    }
-
-                    &:nth-child(3) {
-                        text-align: center;
-                        white-space: nowrap;
-                    }
-
-                    &:nth-child(4) {
-                        text-align: center;
-                        white-space: nowrap;
-                    }
-
-                    &:nth-child(5) {
-                        text-align: right;
-                        white-space: nowrap;
-                    }
-
-                    &:nth-child(6) {
-                        text-align: right;
-                        white-space: nowrap;
-                    }
                 }
-            }
-        }
-    }
 
-    .pagination {
+                .regDate {
+                    margin: 0;
+                }
 
-        .pagination-button {
-            width: 15px;
-            height: 15px;
-        }
-    }
+                .likesCount {
+                    margin-left: 8px;
+                    font-size: 90%;
+                    color: #303030;
+                }
 
-    .add-component,
-    .modify-component {
-
-        .title-bar,
-        .form {
-            width: 95%;
-        }
-    }
-
-    .suggested-list-items{
-        flex-direction: column;
-
-        .suggested-item {
-            flex-direction: column;
-            padding: 0;
-            font-size: 0.8rem;
-            height: auto;
-
-            &:hover {
-                cursor: pointer;
-
-                .title,
-                .regDate,
-                .categoryName,
-                .likesCount,
                 .replyCount {
-                    font-weight: 700;
+                    margin-left: 3px;
+                    font-size: 90%;
+                    color: #303030;
                 }
-            }
 
-            .left-section {
-                display: flex;
-                align-items: center;
-            }
+                .replyIcon {
+                    color: #00b207;
+                    opacity: 90%;
+                    margin-left: 12px;
+                }
 
-            .right-section {
-                display: flex;
-                align-items: center;
-            }
-
-
-            .categoryName {
-                color: #00b207;
-                margin-right: 15px;
-            }
-
-            .title {
-                flex-grow: 1;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-
-            .regDate {
-                margin: 0;
-            }
-
-            .likesCount {
-                margin-left: 8px;
-                font-size: 90%;
-                color: #303030;
-            }
-
-            .replyCount {
-                margin-left: 3px;
-                font-size: 90%;
-                color: #303030;
-            }
-
-            .replyIcon {
-                color: #00b207;
-                opacity: 90%;
-                margin-left: 12px;
-            }
-
-            .likesIcon {
-                color: #EA4B48;
-                opacity: 90%;
-                margin-left: 20px;
+                .likesIcon {
+                    color: #EA4B48;
+                    opacity: 90%;
+                    margin-left: 20px;
+                }
             }
         }
     }

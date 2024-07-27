@@ -44,39 +44,41 @@ const ReportListComponent = () => {
 
     return (
         <>
-            {reportData.dtoList.length > 0 ? (
-                <div className="list-component">
-                    <table className="list-table">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>신고 유형</th>
-                                <th>신고 사유</th>
-                                <th>신고자</th>
-                                <th>신고 날짜</th>
-                                <th>처리 여부</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {reportData.dtoList.map((item) => (
-                                <ReportTableRowComponent
-                                    key={item.id}
-                                    item={item}
-                                    onClick={() => handleReportClick(item.id)}
-                                />
-                            ))}
-                        </tbody>
-                    </table>
-                    <ReportListPageComponent
-                        reportData={reportData}
-                        movePage={moveToList}
-                    />
-                </div>
-            ) : (
-                <div className="message-not-found">
-                    신고가 존재하지 않습니다.
-                </div>
-            )}
+            <div className="report-list-component">
+                {reportData.dtoList.length > 0 ? (
+                    <div className="list-component">
+                        <table className="list-table">
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>신고 유형</th>
+                                    <th>신고 사유</th>
+                                    <th>신고자</th>
+                                    <th>신고 날짜</th>
+                                    <th>처리 여부</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reportData.dtoList.map((item) => (
+                                    <ReportTableRowComponent
+                                        key={item.id}
+                                        item={item}
+                                        onClick={() => handleReportClick(item.id)}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
+                        <ReportListPageComponent
+                            reportData={reportData}
+                            movePage={moveToList}
+                        />
+                    </div>
+                ) : (
+                    <div className="message-not-found">
+                        신고가 존재하지 않습니다.
+                    </div>
+                )}
+            </div>
         </>
     );
 };
