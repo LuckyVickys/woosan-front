@@ -19,6 +19,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id; // 로그인된 회원 ID
     const memberType = loginState.memberType; // 회원 유형 (USER, ADMIN 등)
+    const level = loginState.level;
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [replyInputs, setReplyInputs] = useState({});
@@ -50,7 +51,13 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                 onCommentCountChange(res.totalElements);
             }
         } catch (error) {
-            Swal.fire('오류!', '댓글을 가져오는 중 오류가 발생했습니다.', 'error');
+            Swal.fire({
+                title: '오류!', 
+                text: '댓글을 가져오는 중 오류가 발생했습니다.', 
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '확인'
+            });
         }
     };
 
@@ -111,7 +118,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
 
     // 댓글 제출 핸들러
     const handleCommentSubmit = async () => {
-        if (!isLogin || (memberType !== 'USER' && memberType !== 'ADMIN')) {
+        if (!isLogin) {
             Swal.fire({
                 title: "로그인이 필요한 서비스입니다.",
                 icon: "error",
@@ -123,6 +130,15 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                 }
             });
             return;
+        } else {
+            if(level === 'LEVEL_1') {
+                Swal.fire({
+                    title: "레벨2 이상만 이용할 수 있는 서비스입니다.",
+                    icon: "error",
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#3085d6",
+                });
+            }
         }
 
         const requestDTO = {
@@ -131,13 +147,20 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             content: newComment,
             parentId: parentId
         };
+
         try {
             await saveReply(requestDTO);
             setNewComment('');
             fetchComments();
             if (onReplyAdded) onReplyAdded();
         } catch (error) {
-            Swal.fire('오류!', '댓글 저장 중 오류가 발생했습니다.', 'error');
+            Swal.fire({
+                title: '오류!', 
+                text: '댓글을 저장하는 중 오류가 발생했습니다.', 
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '확인'
+            });
         }
     };
 
@@ -184,7 +207,13 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             fetchComments();
             if (onReplyAdded) onReplyAdded();
         } catch (error) {
-            Swal.fire('오류!', '답글 저장 중 오류가 발생했습니다.', 'error');
+            Swal.fire({
+                title: '오류!', 
+                text: '답글 저장 중 오류가 발생했습니다.', 
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: '확인'
+            });
         }
     };
 

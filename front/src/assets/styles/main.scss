@@ -186,6 +186,17 @@ a {
     }
 }
 
+// 반응형(Desktop)
+@media (min-width: 1025px) {
+    .main-notice {
+        width: 350px;
+    }
+    .main-matching {
+        margin-left: 20px;
+        width: 70%;
+    }
+}
+
 // 반응형(Tablet)
 @media (max-width: 1024px) {
     .main-content-list{

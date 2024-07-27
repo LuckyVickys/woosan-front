@@ -500,6 +500,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                     id="fileUpload"
                     name="fileUpload"
                     type="file"
+                    accept=".png,.jpg,.jpeg"
                     ref={uploadRef}
                     multiple
                     onChange={handleFileChange}
