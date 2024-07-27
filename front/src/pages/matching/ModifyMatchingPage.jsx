@@ -34,7 +34,7 @@ const ModifyMatchingPage = () => {
         } finally {
             setLoading(false);
         }
-    }, [id, loginState.id, navigate]);
+    }, [id, loginState.id, navigate, loginState.accessToken]);
 
     const fetchMembers = useCallback(async () => {
         try {
@@ -45,7 +45,7 @@ const ModifyMatchingPage = () => {
         } catch (error) {
             Swal.fire('오류!', '매칭 멤버 정보를 불러오는 중 문제가 발생했습니다.', 'error');
         }
-    }, [id]);
+    }, [id, token]);
 
     useEffect(() => {
         fetchMatching();

@@ -5,7 +5,6 @@ import { MdOutlineLocalPostOffice } from "react-icons/md";
 import LoginModal from "../member/LoginModal";
 import "../../assets/styles/App.scss";
 import { useSelector } from "react-redux";
-import { getKakaoUserData } from "../../api/kakaoApi";
 import Swal from "sweetalert2";
 import { getMemberWithEmail } from "../../api/memberApi";
 import ProfileDropdown from "../member/ProfileDropdown";
@@ -18,17 +17,11 @@ const Header = () => {
   const loginState = useSelector((state) => state.loginSlice);
   const memberType = loginState.memberType;
 
-  // const [openLogin, setOpenLogin] = useState(false);
-  const [kakaoUserData, setKakaoUserData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const profileBoxRef = useRef(null);
 
   const navigate = useNavigate();
-
-  // const closeLoginModal = () => {
-  //   setOpenLogin(false);
-  // };
 
   const navToMessages = () => {
     navigate(memberType === "ADMIN" ? "/admin/receive-message" : "/mypage/receive-message");
@@ -44,11 +37,6 @@ const Header = () => {
         try {
           const userData = await getMemberWithEmail(loginState.email, loginState.accessToken);
           setUserData(userData);
-
-          if (loginState.isKakao) {
-            const kakaoData = await getKakaoUserData(loginState.accessToken);
-            setKakaoUserData(kakaoData);
-          }
         } catch (error) {
           Swal.fire({
             title: `로그인 에러`,

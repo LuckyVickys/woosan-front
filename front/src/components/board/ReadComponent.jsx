@@ -56,6 +56,10 @@ const ReadComponent = () => {
   }, [loginState.id]);
 
   useEffect(() => {
+    setSummarizedBoard(null);
+  }, [board.id, id]);
+
+  useEffect(() => {
     getBoard(id).then((data) => {
       const contentWithLineBreaks = convertLineBreaks(data.boardDTO.content);
       setBoard({ ...data.boardDTO, content: contentWithLineBreaks });
