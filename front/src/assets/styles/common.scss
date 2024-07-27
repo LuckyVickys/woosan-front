@@ -2,6 +2,9 @@ $shadow: #e5e5e5;
 $font-family: "Pretendard-Regular", sans-serif;
 $headerHeight: 50px;
 $navHeight: 23px;
+$padding-desktop: 20%;
+$padding-tablet: 5%;
+$padding-mobile: 5%;
 
 body {
     margin: 0;
@@ -21,7 +24,7 @@ header {
     justify-content: space-between;
     align-items: center;
     height: $headerHeight;
-    padding: 20px 25%;
+    padding: 20px calc(#{$padding-desktop} - 10%);
     border-bottom: 2px solid $shadow;
 }
 
@@ -272,7 +275,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     height: $navHeight;
-    padding: 20px 25%;
+    padding: 20px calc(#{$padding-desktop} - 10%);
 
     .category {
         display: flex;
@@ -425,8 +428,7 @@ nav {
 // BasidLayout의 area
 .area {
     display: flex;;
-    // height: 100%;
-    padding: 20px 25%;
+    padding: 20px calc(#{$padding-desktop} - 10%);
 }
 
 // BasidLayout의 area에서 sidebar를 제외한 콘텐츠 영역
@@ -719,6 +721,18 @@ a {
 
 // 반응형(Desktop)
 @media (min-width: 1025px) {
+    header {
+        padding: 20px calc(#{$padding-desktop} - 10%);
+    }
+
+    nav {
+        padding: 20px calc(#{$padding-desktop} - 10%);
+    }
+
+    .area {
+        padding: 20px calc(#{$padding-desktop} - 10%);
+    }
+
     .board,
     .matching,
     .cs{
@@ -728,6 +742,17 @@ a {
 
 // 반응형(Tablet)
 @media (max-width: 1024px) {
+    header {
+        padding: 20px calc(#{$padding-tablet} - 10%);
+    }
+
+    nav {
+        padding: 20px calc(#{$padding-tablet} - 10%);
+    }
+
+    .area {
+        padding: 20px calc(#{$padding-tablet} - 10%);
+    }
     .board,
     .matching,
     .cs{
@@ -737,6 +762,18 @@ a {
 
 // 반응형(Mobile)
 @media (max-width: 767px) {
+    header {
+        padding: 20px calc(#{$padding-mobile} - 10%);
+    }
+
+    nav {
+        padding: 20px calc(#{$padding-mobile} - 10%);
+    }
+
+    .area {
+        padding: 20px calc(#{$padding-mobile} - 10%);
+    }
+
     .board,
     .matching,
     .cs{

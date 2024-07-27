@@ -185,6 +185,7 @@ const ReportModal = ({ type, targetId, reporterId, onClose }) => {
                     <input
                         className="report-file"
                         type="file"
+                        accept=".png .jpg .jpeg"
                         ref={uploadRef}
                         multiple
                         onChange={handleFileChange}
