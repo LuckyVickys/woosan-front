@@ -517,12 +517,8 @@ $font-family: 'Pretendard-Regular', sans-serif;
 
         .add-component,
         .modify-component{
-            padding-left: 0;
-
-            input,
-            textarea{
-                width: 100%;
-            }
+            max-width: 960px;
+            padding: 20px;
         }
 
         .suggested-list-items{
