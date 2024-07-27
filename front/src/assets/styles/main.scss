@@ -1,4 +1,3 @@
-@import "Font";
 .main-contents {
     width: 100%;
     height: 100%;
@@ -206,7 +205,6 @@ a {
 @media (min-width: 1025px) {
 
     .main-info {
-        // width: 1400px;
 
         .info{
             padding: 0 40px;
@@ -255,12 +253,6 @@ a {
 // 반응형(Mobile)
 @media (max-width: 767px) {
 
-    .wrapper{
-        .area {
-            height: 145%;
-        }
-    }
-
     .main-info{
         display: flex;
         justify-content: center;
@@ -284,12 +276,6 @@ a {
 // 반응형(Mobile)
 @media (max-width: 400px) {
 
-    .wrapper{
-        .area {
-            height: 205%;
-        }
-    }
-
     .main-info{
         display: flex;
         justify-content: center;
@@ -301,12 +287,30 @@ a {
         .popular-post,
         .main-notice {
             margin-top: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .main-matching{
             margin-top: 10px;
             margin-left: 0;
             padding: 0;
+        }
+    }
+}
+
+// 반응형(Mobile)
+@media (max-width: 375px) {
+    .popular-post{
+        .likelist-post{
+            width: 330px;
+        }
+    }
+
+    .main-notice {
+        .noticelist-post {
+            width: 330px;
         }
     }
 }

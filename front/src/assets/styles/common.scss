@@ -816,7 +816,6 @@ header {
     align-items: center;
     height: $headerHeight;
     padding: 20px;
-    border-bottom: 2px solid $shadow;
 }
 
 .logo {
@@ -1058,6 +1057,10 @@ header {
             }
         }
     }
+}
+
+.header-bar{
+    border-bottom: 2px solid $shadow;
 }
 
 // Nav
@@ -1509,9 +1512,24 @@ a {
     background-color: #7faf4e;
 }
 
-
 // 반응형(Desktop)
 @media (min-width: 1025px) {
+
+    header{
+        width: 1400px;
+        margin: 0 auto;
+    }
+
+    .nav{
+        width: 1400px;
+        margin: 0 auto;
+    }
+
+    .area{
+        width: 1400px;
+        margin: 0 auto;
+    }
+
     .board,
     .matching,
     .cs{
