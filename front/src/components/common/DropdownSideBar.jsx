@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import "../../assets/styles/App.scss";
 
 const DropdownSidebar = ({ pageType, activeCategory, handleNavigation, handleLogout }) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleDropdown = () => setIsOpen(!isOpen);
+    const sideBarRef = useRef(null);
 
     const handleCategoryClick = (category) => {
         handleNavigation(category);
         setIsOpen(false);
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (sideBarRef.current && !sideBarRef.current.contains(event.target)) {
+                setIsOpen(false); // 외부 클릭 시 드롭다운 닫기
+            }
+        };
+    
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, []);
+
     return (
-        <div className={`dropdown-sidebar ${pageType === "admin" ? "admin" : ""}`}>
+        <div className={`dropdown-sidebar ${pageType === "admin" ? "admin" : ""}`} ref={sideBarRef}>
             <button className="dropdown-toggle" onClick={toggleDropdown}>
                 카테고리 {isOpen ? <FaAngleUp /> : <FaAngleDown />}
             </button>

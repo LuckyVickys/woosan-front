@@ -17,7 +17,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 45%;
+    width: 850px;
     padding: 25px;
     display: flex;
     flex-direction: column;
@@ -112,3 +112,17 @@
         }
     }
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .msg-modal {
+      width: 300px;
+    }
+  
+    .input {
+  
+      &.message-input {
+        width: 90%;
+      }
+    }
+  }

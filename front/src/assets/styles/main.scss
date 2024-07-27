@@ -222,6 +222,13 @@ a {
 
 // 반응형(Tablet)
 @media (max-width: 1024px) {
+
+    .main-info{
+        .info{
+            padding: 20px;
+        }
+    }
+
     .main-content-list{
         display: flex;
         justify-content: space-between;
