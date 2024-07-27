@@ -29,7 +29,7 @@ const useRegularly = () => {
         };
 
         fetchRegularly(); // 데이터 가져오는 함수 호출
-    }, []); // 컴포넌트가 마운트될 때 한 번만 실행
+    }, [token]); // 컴포넌트가 마운트될 때 한 번만 실행
 
     return { regularly, loading, error }; // 모임 데이터, 로딩 상태, 에러 메시지를 반환
 };

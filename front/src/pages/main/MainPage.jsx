@@ -18,13 +18,14 @@ const MainPage = () => {
     const [items, setItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const loginState = useSelector((state) => state.loginSlice);
+    const token = loginState.accessToken;
     const memberType = loginState.memberType;
-    const { isLogin, moveToLoginReturn } = useCustomLogin();
+    const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
     const navigate = useNavigate();
 
     const fetchData = useCallback(async () => {
         try {
-            const response = await getAllMatching(loginState.accessToken);
+            const response = await getAllMatching(token);
             if (Array.isArray(response)) {
                 setItems(response);
             } else {
@@ -33,7 +34,7 @@ const MainPage = () => {
         } catch (error) {
             setItems([]);
         }
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         fetchData();
@@ -57,7 +58,6 @@ const MainPage = () => {
         }
     };
 
-
     const handleCloseModal = () => {
         setSelectedItem(null);
     };
@@ -79,6 +79,7 @@ const MainPage = () => {
             navigate("/matching");
         }
     }, [isLogin, memberType, navigate, moveToLoginReturn]);
+
     return (
         <BasicLayout>
             <Desktop>
@@ -134,7 +135,7 @@ const MainPage = () => {
                         <div className="main-matching">
                             <div className='main-matching-header'>
                                 <div className="header-title">New 모임</div>
-                                <NavLink to={'/matching/'}>View All ➔</NavLink>
+                                <NavLink to={'/matching/'} onClick={handleMatchingViewAllClick}>View All ➔</NavLink>
                             </div>
                             <NewMatchingList items={items} onItemClick={handleItemClick} />
                         </div>
@@ -183,7 +184,7 @@ const MainPage = () => {
                         <div className="main-matching">
                             <div className='main-matching-header'>
                                 <div className="header-title">New 모임</div>
-                                <NavLink to={'/matching/'}>View All ➔</NavLink>
+                                <NavLink to={'/matching/'} onClick={handleMatchingViewAllClick}>View All ➔</NavLink>
                             </div>
                             <NewMatchingList items={items} onItemClick={handleItemClick} />
                             </div>
@@ -225,7 +226,7 @@ const MainPage = () => {
                         <div className="main-matching">
                             <div className='main-matching-header'>
                                 <div className="header-title">New 모임</div>
-                                <NavLink to={'/matching/'}>View All ➔</NavLink>
+                                <NavLink to={'/matching/'} onClick={handleMatchingViewAllClick}>View All ➔</NavLink>
                             </div>
                             <NewMatchingList items={items} onItemClick={handleItemClick} />
                         </div>
@@ -235,6 +236,7 @@ const MainPage = () => {
                     </div>
                 </div>
             </Mobile>
+            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
         </BasicLayout>
     );
 }

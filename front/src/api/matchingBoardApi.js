@@ -11,7 +11,7 @@ export const getAllMatching = async (token) => {
             url: `${host}/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
-                // 'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
         });
         return res.data;
@@ -28,7 +28,7 @@ export const getRegularly = async (token) => {
             url: `${host}/regularly/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
-                // 'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
         });
         return res.data;
@@ -45,7 +45,7 @@ export const getTemporary = async (token) => {
             url: `${host}/temporary/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
-                // 'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
         });
         return res.data;
@@ -62,7 +62,7 @@ export const getSelf = async (token) => {
             url: `${host}/self/list`,
             headers: {
                 Authorization: `Bearer ${token}`,
-                // 'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
         });
         return res.data;

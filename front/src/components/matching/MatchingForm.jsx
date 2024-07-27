@@ -15,10 +15,10 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
     const [locationY, setLocationY] = useState((initialValues.locationY || 0).toString());
     const [address, setAddress] = useState(initialValues.address || '');
     const [meetDate, setMeetDate] = useState(initialValues.meetDate || new Date().toISOString().slice(0, 16));
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(matchingType === 3 ? 'romance' : '');
     const [tagInput, setTagInput] = useState('');
-    const [tags, setTags] = useState({});
-    const [headCount, setHeadCount] = useState(initialValues.headCount || '');
+    const [tags, setTags] = useState(matchingType === 3 ? { '셀프소개팅': 'romance' } : {});
+    const [headCount, setHeadCount] = useState(initialValues.headCount || (matchingType === 3 ? 99999 : ''));
     const [errors, setErrors] = useState({});
     const [files, setFiles] = useState(initialValues.filePathUrl || []);
     const [deletedFiles, setDeletedFiles] = useState([]);
@@ -39,7 +39,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                 setLocation(userData.location || '');
                 setIntroduce(userData.introduce || '');
                 setMbti(userData.mbti || '');
-                setGender(userData.gender || '');
+                setGender(userData.gender === 'male' ? '남성' : '여성');
                 setAge(userData.age || '');
                 setHeight(userData.height || '');
             } finally {
@@ -75,8 +75,8 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
 
     const validateForm = () => {
         const newErrors = {};
-        if (!title) newErrors.title = '모임명을 입력해주세요';
-        if (!content) newErrors.content = '모임 소개를 입력해주세요';
+        if (!title) newErrors.title = matchingType === 3 ? '셀소 제목을 입력해주세요' : '모임명을 입력해주세요';
+        if (!content) newErrors.content = matchingType === 3 ? '하고싶은말을 입력해주세요' : '모임 소개를 입력해주세요';
         if (!placeName) newErrors.placeName = '모임 장소를 입력해주세요';
         if (!meetDate) newErrors.meetDate = '모임 날짜 / 시간을 입력해주세요';
         if (Object.keys(tags).length === 0) newErrors.tags = '모임 태그를 입력해주세요';
@@ -196,7 +196,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
 
     const handleTagSubmit = (e) => {
         e.preventDefault();
-        if (!selectedCategory) {
+        if (!selectedCategory && matchingType !== 3) {
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 category: '모임 태그를 선택해주세요'
@@ -204,7 +204,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             return;
         }
         if (tagInput.length >= 2 && tagInput.length <= 6) {
-            setTags({ [tagInput]: selectedCategory });
+            setTags({ ...tags, [tagInput]: selectedCategory });
             setTagInput('');
             setSelectedCategory('');
             setErrors((prevErrors) => ({
@@ -234,7 +234,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
-            {matchingType === 3 ? (
+            {matchingType === 3 && (
                 <>
                     <div className={styles.inlineFormGroup}>
                         <div className={`${styles.formGroup} ${styles.inline}`}>
@@ -324,161 +324,94 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
                         />
                         {errors.introduce && <div className={styles.error}>{errors.introduce}</div>}
                     </div>
-                    <div className={styles.inlineFormGroup}>
-                        <div className={`${styles.formGroup} ${styles.short}`}>
-                            <label htmlFor="category">모임 태그</label>
-                            <select
-                                id="category"
-                                value={selectedCategory}
-                                onChange={handleInputChange(setSelectedCategory)}
-                                className="categorySelect"
-                            >
-                                <option value="">모임 태그를 선택하세요</option>
-                                <option value="romance">연애&사랑</option>
-                                <option value="sports">운동&스포츠</option>
-                                <option value="food">푸드&드링크</option>
-                                <option value="culture">문화&예술</option>
-                                <option value="neighborhood">동네&또래</option>
-                                <option value="study_class">스터디&클래스</option>
-                            </select>
-                            {errors.category && <div className={styles.error}>{errors.category}</div>}
-                            <input
-                                id="tagInput"
-                                value={tagInput}
-                                onChange={handleInputChange(setTagInput)}
-                                className="tagInput"
-                                placeholder="상세 태그를 입력해주세요"
-                                maxLength="6"
-                            />
-                            {errors.tagInput && <div className={styles.error}>{errors.tagInput}</div>}
-                            <button onClick={handleTagSubmit} className={styles.addButton}>추가</button>
-                            <div className={styles.tagContainer}>
-                                {Object.keys(tags).map((tag) => (
-                                    <div key={tag} className={styles.tag}>
-                                        {categoryLabels[tags[tag]]}: {tag}
-                                        <button type="button" onClick={() => handleTagRemove(tag)} className={styles.deleteButton}>
-                                            X
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                            {errors.tags && <div className={styles.error}>{errors.tags}</div>}
-                        </div>
-                        <div className={`${styles.formGroup} ${styles.short}`}>
-                            <label htmlFor="meetDate">모임 날짜 / 시간</label>
-                            <input
-                                id="meetDate"
-                                type="datetime-local"
-                                value={meetDate}
-                                onChange={handleInputChange(setMeetDate)}
-                                className="meetDateInput"
-                                placeholder="2024-07-10 00:00"
-                            />
-                            {errors.meetDate && <div className={styles.error}>{errors.meetDate}</div>}
-                        </div>
-                        <div className={`${styles.formGroup} ${styles.short}`}>
-                            <label htmlFor="headCount">모집 인원</label>
-                            <input
-                                id="headCount"
-                                type="number"
-                                value={headCount}
-                                onChange={handleInputChange(setHeadCount)}
-                                className="headCountInput"
-                                placeholder="인원을 입력하세요"
-                            />
-                            {errors.headCount && <div className={styles.error}>{errors.headCount}</div>}
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <>
-                    <div className={styles.inlineFormGroup}>
-                        <div className={`${styles.formGroup} ${styles.short}`}>
-                            <label htmlFor="category">모임 태그</label>
-                            <select
-                                id="category"
-                                value={selectedCategory}
-                                onChange={handleInputChange(setSelectedCategory)}
-                                className="categorySelect"
-                            >
-                                <option value="">모임 태그를 선택하세요</option>
-                                <option value="romance">연애&사랑</option>
-                                <option value="sports">운동&스포츠</option>
-                                <option value="food">푸드&드링크</option>
-                                <option value="culture">문화&예술</option>
-                                <option value="neighborhood">동네&또래</option>
-                                <option value="study_class">스터디&클래스</option>
-                            </select>
-                            {errors.category && <div className={styles.error}>{errors.category}</div>}
-                            <input
-                                id="tagInput"
-                                value={tagInput}
-                                onChange={handleInputChange(setTagInput)}
-                                className="tagInput"
-                                placeholder="상세 태그를 입력해주세요"
-                                maxLength="6"
-                            />
-                            {errors.tagInput && <div className={styles.error}>{errors.tagInput}</div>}
-                            <button onClick={handleTagSubmit} className={styles.addButton}>추가</button>
-                            <div className={styles.tagContainer}>
-                                {Object.keys(tags).map((tag) => (
-                                    <div key={tag} className={styles.tag}>
-                                        {categoryLabels[tags[tag]]}: {tag}
-                                        <button type="button" onClick={() => handleTagRemove(tag)} className={styles.deleteButton}>
-                                            X
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                            {errors.tags && <div className={styles.error}>{errors.tags}</div>}
-                        </div>
-                        <div className={`${styles.formGroup} ${styles.short}`}>
-                            <label htmlFor="meetDate">모임 날짜 / 시간</label>
-                            <input
-                                id="meetDate"
-                                type="datetime-local"
-                                value={meetDate}
-                                onChange={handleInputChange(setMeetDate)}
-                                className="meetDateInput"
-                                placeholder="2024-07-10 00:00"
-                            />
-                            {errors.meetDate && <div className={styles.error}>{errors.meetDate}</div>}
-                        </div>
-                        <div className={`${styles.formGroup} ${styles.short}`}>
-                            <label htmlFor="headCount">모집 인원</label>
-                            <input
-                                id="headCount"
-                                type="number"
-                                value={headCount}
-                                onChange={handleInputChange(setHeadCount)}
-                                className="headCountInput"
-                                placeholder="인원을 입력하세요"
-                            />
-                            {errors.headCount && <div className={styles.error}>{errors.headCount}</div>}
-                        </div>
-                    </div>
                 </>
             )}
+            <div className={styles.inlineFormGroup}>
+                <div className={`${styles.formGroup} ${styles.short}`}>
+                    <label htmlFor="category">모임 태그</label>
+                    <select
+                        id="category"
+                        value={selectedCategory}
+                        onChange={handleInputChange(setSelectedCategory)}
+                        className="categorySelect"
+                        disabled={matchingType === 3}
+                    >
+                        <option value="">모임 태그를 선택하세요</option>
+                        <option value="romance">연애&사랑</option>
+                        <option value="sports">운동&스포츠</option>
+                        <option value="food">푸드&드링크</option>
+                        <option value="culture">문화&예술</option>
+                        <option value="neighborhood">동네&또래</option>
+                        <option value="study_class">스터디&클래스</option>
+                    </select>
+                    {errors.category && <div className={styles.error}>{errors.category}</div>}
+                    <input
+                        id="tagInput"
+                        value={matchingType === 3 ? '셀프소개팅' : tagInput}
+                        onChange={handleInputChange(setTagInput)}
+                        className="tagInput"
+                        placeholder="상세 태그를 입력해주세요"
+                        maxLength="6"
+                        disabled={matchingType === 3}
+                    />
+                    {errors.tagInput && <div className={styles.error}>{errors.tagInput}</div>}
+                    <button onClick={handleTagSubmit} className={styles.addButton} disabled={matchingType === 3}>추가</button>
+                    <div className={styles.tagContainer}>
+                        {Object.keys(tags).map((tag) => (
+                            <div key={tag} className={styles.tag}>
+                                {categoryLabels[tags[tag]]}: {tag}
+                                <button type="button" onClick={() => handleTagRemove(tag)} className={styles.deleteButton} disabled={matchingType === 3}>
+                                    X
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                    {errors.tags && <div className={styles.error}>{errors.tags}</div>}
+                </div>
+                <div className={`${styles.formGroup} ${styles.short}`}>
+                    <label htmlFor="meetDate">모임 날짜 / 시간</label>
+                    <input
+                        id="meetDate"
+                        type="datetime-local"
+                        value={meetDate}
+                        onChange={handleInputChange(setMeetDate)}
+                        className="meetDateInput"
+                    />
+                    {errors.meetDate && <div className={styles.error}>{errors.meetDate}</div>}
+                </div>
+                <div className={`${styles.formGroup} ${styles.short}`}>
+                    <label htmlFor="headCount">모집 인원</label>
+                    <input
+                        id="headCount"
+                        type="number"
+                        value={headCount}
+                        onChange={handleInputChange(setHeadCount)}
+                        className="headCountInput"
+                        placeholder="인원을 입력하세요"
+                    />
+                    {errors.headCount && <div className={styles.error}>{errors.headCount}</div>}
+                </div>
+            </div>
             <div className={styles.formGroup}>
-                <label htmlFor="title">모임명</label>
+                <label htmlFor="title">{matchingType === 3 ? '셀소 제목' : '모임명'}</label>
                 <input
                     id="title"
                     value={title}
                     onChange={handleInputChange(setTitle)}
                     className="titleInput"
-                    placeholder="모임명을 입력해주세요"
+                    placeholder={matchingType === 3 ? '셀소 제목을 입력해주세요 ex) 한강 데이트 가요' : '모임명을 입력해주세요'}
                     maxLength="30"
                 />
                 {errors.title && <div className={styles.error}>{errors.title}</div>}
             </div>
             <div className={styles.formGroup}>
-                <label htmlFor="content">모임 소개</label>
+                <label htmlFor="content">{matchingType === 3 ? '하고싶은말' : '모임 소개'}</label>
                 <textarea
                     id="content"
                     value={content}
                     onChange={handleInputChange(setContent)}
                     className="contentInput"
-                    placeholder="모임 소개를 입력해주세요"
+                    placeholder={matchingType === 3 ? '하고싶은말을 입력해주세요' : '모임 소개를 입력해주세요'}
                     style={{ height: '210px' }}
                 />
                 {errors.content && <div className={styles.error}>{errors.content}</div>}
@@ -495,7 +428,7 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
             />
             {errors.placeName && <div className={styles.error}>{errors.placeName}</div>}
             <div className={styles.formGroup}>
-                <label htmlFor="fileUpload" className={styles.label}>첨부파일</label>
+                <label htmlFor="fileUpload" className={styles.label}>{matchingType === 3 ? '본인 사진' : '첨부파일'}</label>
                 <input
                     id="fileUpload"
                     name="fileUpload"

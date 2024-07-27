@@ -47,7 +47,7 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns, matchingType 
     useEffect(() => {
         const sortedItems = getSortedItems(items);
         const filteredItems =
-            matchingType === 'self'
+            matchingType === 3
                 ? filterItems(sortedItems, activeFilters)
                 : filterItemsByCategory(activeFilters.category, sortedItems);
         setDisplayedItems(filteredItems.slice(0, itemsPerPage * page));
@@ -92,7 +92,7 @@ const MatchingPageTemplate = ({ items, ListComponent, gridColumns, matchingType 
 
     const renderFilterBar = () => {
         switch (matchingType) {
-            case 'self':
+            case 3:
                 return <SelfFilterBar activeFilters={activeFilters} onFilterChange={handleFilterChange} />;
             default:
                 return <FilterBar activeCategory={activeFilters.category} onCategoryChange={category => handleFilterChange('category', category)} />;
@@ -135,7 +135,7 @@ MatchingPageTemplate.propTypes = {
     })).isRequired,
     ListComponent: PropTypes.elementType.isRequired,
     gridColumns: PropTypes.number.isRequired,
-    matchingType: PropTypes.string.isRequired,
+    matchingType: PropTypes.number.isRequired,
 };
 
 export default MatchingPageTemplate;

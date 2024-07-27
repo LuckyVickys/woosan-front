@@ -29,7 +29,7 @@ const useTemporary = () => {
         };
 
         fetchTemporary(); // 데이터 가져오는 함수 호출
-    }, []); // 컴포넌트가 마운트될 때 한 번만 실행
+    }, [token]); // 컴포넌트가 마운트될 때 한 번만 실행
 
     return { temporary, loading, error }; // 번개 데이터, 로딩 상태, 에러 메시지를 반환
 };

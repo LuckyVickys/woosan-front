@@ -59,6 +59,7 @@ const TemporaryPage = () => {
                     items={sortedTemporary}
                     ListComponent={MatchingList}
                     gridColumns={2}
+                    matchingType={2} // 번개의 타입을 지정
                 />
             </div>
             {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}

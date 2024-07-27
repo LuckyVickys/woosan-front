@@ -29,7 +29,7 @@ const useSelf = () => {
         } finally {
             setLoading(false);
         }
-    }, [loginState.id]);
+    }, [loginState.id , token]);
 
     useEffect(() => {
         fetchSelf();

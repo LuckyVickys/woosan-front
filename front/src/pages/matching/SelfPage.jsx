@@ -58,7 +58,7 @@ const SelfPage = () => {
                     items={self}
                     ListComponent={MatchingList}
                     gridColumns={2}
-                    matchingType="self"
+                    matchingType={3}
                 />
             </div>
             {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
