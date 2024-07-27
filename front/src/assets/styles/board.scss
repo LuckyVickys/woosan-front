@@ -262,3 +262,74 @@ $font-family: 'Pretendard-Regular', sans-serif;
     }
   }
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    // ReadComponent
+.post-title {
+  white-space: normal;
+
+  .post-title-text{
+    width: 100%;
+    font-size: 1rem;
+    word-break: break-word;
+  }
+
+  .api-button{
+    display: flex;
+    align-items: center;
+    
+    .papago-button{
+      margin-right: 10px;
+      width: 30px;
+      height: 30px;
+      background: url("../image/papago.png");
+      background-size: contain;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .clova-button{
+      width: 30px;
+      height: 30px;
+      background: url("../image/clova.png");
+      background-size: contain;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
+}
+
+.board-header {
+  font-size: 0.5em;
+
+  .left {  
+    .profile-image {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  .right {
+    display: flex;
+    align-items: center;
+  
+    .like-button {
+      font-size: 0.5em;
+    }
+  }
+}
+
+.alert-message {
+  font-size: 0.5em;
+}
+
+.post-content {
+  font-size: 0.8rem;
+  }
+
+  .image-container {
+    flex-direction: column;
+  }
+}
