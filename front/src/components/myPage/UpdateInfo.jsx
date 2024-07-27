@@ -375,29 +375,6 @@ const UpdateInfo = () => {
                     <h2>회원 정보 변경</h2>
                     <div className="update-info-container">
                         <div className="update-user-info-profile">
-
-                            
-                            <div className="update-profile">
-                                <div className="user-profile">
-                                    <img
-                                        src={formData.fileImgURL || defaultProfile}
-                                        alt="Profile"
-                                    />
-                                </div>
-                                <input
-                                    type="file"
-                                    accept=".png .jpg .jpeg"
-                                    onChange={handleFileChange}
-                                    style={{ display: "none" }}
-                                    id="file-input"
-                                />
-                                <label
-                                    className="update-profile-button"
-                                    htmlFor="file-input"
-                                >
-                                    사진 선택
-                                </label>
-                            </div>
                             <div className="update-user-info">
                                 <div className="form-group">
                                     <label>닉네임</label>
@@ -528,6 +505,27 @@ const UpdateInfo = () => {
                                         onChange={handleChange}
                                     />
                                 </div>
+                            </div>
+                            <div className="update-profile">
+                                <div className="user-profile">
+                                    <img
+                                        src={formData.fileImgURL || defaultProfile}
+                                        alt="Profile"
+                                    />
+                                </div>
+                                <input
+                                    type="file"
+                                    accept=".png .jpg .jpeg"
+                                    onChange={handleFileChange}
+                                    style={{ display: "none" }}
+                                    id="file-input"
+                                />
+                                <label
+                                    className="update-profile-button"
+                                    htmlFor="file-input"
+                                >
+                                    사진 선택
+                                </label>
                             </div>
                         </div>
                         <button className="update-button" onClick={handleInfoChange}>
