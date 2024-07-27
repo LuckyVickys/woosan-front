@@ -116,3 +116,11 @@ $font-family: 'Pretendard-Regular', sans-serif;
         }
     }
 }
+
+// 반응형(Tablet)
+@media (max-width: 1024px) {
+
+    .dropdown-sidebar-contents{
+        width: 100%;
+    }
+}

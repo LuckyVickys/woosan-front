@@ -5,6 +5,7 @@ import ReportListPageComponent from "../adminPage/element/ReportListPageComponen
 import ReportTableRowComponent from "../adminPage/element/ReportTableRowComponent";
 import "../../assets/styles/App.scss";
 import { useSelector } from "react-redux";
+import { Desktop, Tablet, Mobile } from '../../layouts/ResponsiveComponent';
 
 const initState = {
     dtoList: [],
@@ -44,7 +45,7 @@ const ReportListComponent = () => {
 
     return (
         <>
-            <div className="report-list-component">
+            <Desktop>
                 {reportData.dtoList.length > 0 ? (
                     <div className="list-component">
                         <table className="list-table">
@@ -78,7 +79,77 @@ const ReportListComponent = () => {
                         신고가 존재하지 않습니다.
                     </div>
                 )}
-            </div>
+            </Desktop>
+            <Tablet>
+                {reportData.dtoList.length > 0 ? (
+                    <div className="list-component">
+                        <table className="list-table">
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>신고 유형</th>
+                                    <th>신고 사유</th>
+                                    <th>신고자</th>
+                                    <th>신고 날짜</th>
+                                    <th>처리 여부</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reportData.dtoList.map((item) => (
+                                    <ReportTableRowComponent
+                                        key={item.id}
+                                        item={item}
+                                        onClick={() => handleReportClick(item.id)}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
+                        <ReportListPageComponent
+                            reportData={reportData}
+                            movePage={moveToList}
+                        />
+                    </div>
+                ) : (
+                    <div className="message-not-found">
+                        신고가 존재하지 않습니다.
+                    </div>
+                )}
+            </Tablet>
+            <Mobile>
+                {reportData.dtoList.length > 0 ? (
+                    <div className="list-component">
+                        <table className="list-table">
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>신고 유형</th>
+                                    <th>신고 사유</th>
+                                    <th>신고자</th>
+                                    <th>신고 날짜</th>
+                                    <th>처리 여부</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reportData.dtoList.map((item) => (
+                                    <ReportTableRowComponent
+                                        key={item.id}
+                                        item={item}
+                                        onClick={() => handleReportClick(item.id)}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
+                        <ReportListPageComponent
+                            reportData={reportData}
+                            movePage={moveToList}
+                        />
+                    </div>
+                ) : (
+                    <div className="message-not-found">
+                        신고가 존재하지 않습니다.
+                    </div>
+                )}
+            </Mobile>
         </>
     );
 };
