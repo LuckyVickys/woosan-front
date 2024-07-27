@@ -56,7 +56,7 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
-    padding: 0 40px;
+    // padding: 0 40px;
     height: 74px;
     border-radius: 10px;
     border-top: 2px solid #e5e5e5;
@@ -111,10 +111,9 @@
 }
 .main-notice-matching {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin: 10px 0 0 0;
-    width: 100%;
+    // width: 100%;
 }
 
 .main-notice {
@@ -188,12 +187,20 @@ a {
 
 // 반응형(Desktop)
 @media (min-width: 1025px) {
+
+    .main-info {
+        width: 1400px;
+
+        .info{
+            padding: 0 40px;
+        }
+    }
     .main-notice {
-        width: 350px;
+        width: 380px;
     }
     .main-matching {
         margin-left: 20px;
-        width: 70%;
+        padding: 0 10px;
     }
 }
 
@@ -209,6 +216,11 @@ a {
     .popular-post{
         margin-left: 0;
         padding-bottom: 25px;
+    }
+
+    .main-matching {
+        margin-left: 20px;
+        padding: 0 10px;
     }
 }
 

@@ -44,41 +44,43 @@ const Nav = () => {
 }
 
     return (
-        <nav id='navbar' className="nav">
-            <div className="category">
-                <div className="board">
-                    <NavLink to={'/board/'} className={({ isActive }) => isActive ? "active" : ""}>
-                        꿀팁
-                    </NavLink>
-                </div>
-                <div className="matching">
-                    <NavLink to={'/matching/'} className={({ isActive }) => isActive ? "active" : ""} onClick={handleMatchingClick}>
-                        모임
-                    </NavLink>
-                </div>
-                <div className="cs">
-                    <NavLink to={'/cs/'} className={({ isActive }) => isActive ? "active" : ""}>
-                        고객 지원
-                    </NavLink>
-                </div>
-                <div className="mypage">
-                    {memberType === "ADMIN" ? (
-                        <NavLink to={'/admin/'} className={({ isActive }) => isActive ? "active" : ""}>
-                            관리자페이지
+        <nav>
+            <div id='navbar' className="nav">
+                <div className="category">
+                    <div className="board">
+                        <NavLink to={'/board/'} className={({ isActive }) => isActive ? "active" : ""}>
+                            꿀팁
                         </NavLink>
-                    ) : (
-                        <NavLink to={'/mypage/'}
-                            className={({ isActive }) => isActive ? "active" : ""}
-                            onClick={handleMyPageClick}
-                        >
-                            마이페이지
+                    </div>
+                    <div className="matching">
+                        <NavLink to={'/matching/'} className={({ isActive }) => isActive ? "active" : ""} onClick={handleMatchingClick}>
+                            모임
                         </NavLink>
-                    )}
+                    </div>
+                    <div className="cs">
+                        <NavLink to={'/cs/'} className={({ isActive }) => isActive ? "active" : ""}>
+                            고객 지원
+                        </NavLink>
+                    </div>
+                    <div className="mypage">
+                        {memberType === "ADMIN" ? (
+                            <NavLink to={'/admin/'} className={({ isActive }) => isActive ? "active" : ""}>
+                                관리자페이지
+                            </NavLink>
+                        ) : (
+                            <NavLink to={'/mypage/'}
+                                className={({ isActive }) => isActive ? "active" : ""}
+                                onClick={handleMyPageClick}
+                            >
+                                마이페이지
+                            </NavLink>
+                        )}
+                    </div>
                 </div>
+                
+                <RankingList />
+                {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
             </div>
-            
-            <RankingList />
-            {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
         </nav>
     );
 }
