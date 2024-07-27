@@ -22,6 +22,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
         th {
             padding: 10px;
             background-color: #EDF2EE;
+            color: #000;
             border-bottom: 2px solid #d0d0d0;
 
             &:nth-child(1) {
@@ -171,11 +172,9 @@ $font-family: 'Pretendard-Regular', sans-serif;
 
 .add-component,
 .modify-component {
-    background: #FFFFFF;
     display: flex;
     flex-direction: column;
     align-items: center;
-    // padding: 10px 10px 0px 20px;
     gap: 10px;
     width: 100%;
     height: auto;
@@ -188,6 +187,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
         background-color: #E2E5E2;
         display: flex;
         align-items: center;
+        color: #000;
 
         .title-bar-line {
             width: 3px;
@@ -228,6 +228,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
                     text-align: left;
                     background-color: #fff;
                     cursor: pointer;
+                    color: #000;
                 }
 
                 .dropdown-list {
@@ -242,6 +243,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
                     z-index: 10;
                     max-height: 200px;
                     overflow-y: auto;
+                    color: #000;
 
                     li {
                         padding: 10px;
