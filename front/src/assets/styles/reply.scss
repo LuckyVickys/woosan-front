@@ -185,6 +185,8 @@ $font-family: "Pretendard-Regular", sans-serif;
     width: 100%;
     font-family: $font-family;
     outline: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .submit-button {
@@ -192,7 +194,7 @@ $font-family: "Pretendard-Regular", sans-serif;
     border: 1px solid #00b207;
     color: #fff;
     border-radius: 20px;
-    padding: 10px 20px;
+    padding: 10px;
     font-family: $font-family;
     cursor: pointer;
 }
@@ -239,4 +241,61 @@ $font-family: "Pretendard-Regular", sans-serif;
 .replies {
     padding-left: 15px;
     margin: 15px;
+}
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+
+    .full-width-reply-input-field{
+        overflow: hidden;
+        font-size: 0.8rem;
+    }
+
+    .reply-section{
+        padding: 10px;
+    }
+
+    .reply-header {
+        margin-left: 10px;
+    }
+
+    .reply-author {
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin: 0 0 5px 0;
+    }
+
+    .reply-form-container{
+        margin-left: 20px;
+        padding-left: 20px;
+    }
+
+    .reply-text-button {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin: 0 0 5px 0;
+    
+        .reply-text {
+            width: auto;
+            padding-left: 40px;
+            font-size: 0.8em;
+            margin: 0 0 5px 0;
+        }
+    }
+
+    .reply-input-field{
+        min-width: 100px;
+        font-size: 0.8rem;
+    }
+
+    .like-button {
+        width: 20px;
+        font-size: 0.7rem;
+        
+        .likeIcon {
+            width: 10px;
+        }
+    }
+
 }
