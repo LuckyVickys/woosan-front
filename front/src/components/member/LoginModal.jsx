@@ -27,7 +27,6 @@ const LoginModal = ({ onClose }) => {
   const [openSignUp, setOpenSignUp] = useState(false);
   const [openFinePW, setOpenFinePW] = useState(false);
 
-  // 헤리 추가
   const dispatch = useDispatch();
   const [loginParam, setLoginParam] = useState({ ...initState });
   const { doLogin, isLogin } = useCustomLogin();
