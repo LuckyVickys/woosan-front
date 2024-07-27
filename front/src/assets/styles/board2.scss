@@ -105,7 +105,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
         }
 
         .board-row {}
-        
+
         .replyCount {
             margin-left: 10px;
             color: #00B207;
@@ -404,24 +404,27 @@ $font-family: 'Pretendard-Regular', sans-serif;
     .category-title {
         font-size: 18px;
         font-weight: 700;
-        padding: 5px;
+        margin-bottom: 10px;
     }
 
     .suggested-list-items {
         display: grid;
         grid-template-columns: repeat(2, 1fr); // 2열 레이아웃
-        gap: 50px;
+        gap: 40px;
         list-style: none;
+        font-size: 15px;
         padding: 0;
+        cursor: pointer;
+        margin-bottom: 20px;
     }
 
     .suggested-item {
         display: flex;
-        // align-items: center;
+        align-items: center;
         justify-content: space-between;
         border-top: 0.3px solid #646363;
         padding: 5px 0;
-        margin: 10px 0px -10px 0px;
+        margin: 0px 0px -40px 0px;
         transition: color 0.3s ease;
 
         &:hover {
@@ -495,15 +498,15 @@ $font-family: 'Pretendard-Regular', sans-serif;
 
 // 반응형(Tablet)
 @media (max-width: 1024px) {
-    .area{
+    .area {
         display: inline;
 
         .add-component,
-        .modify-component{
+        .modify-component {
             padding-left: 0;
 
             input,
-            textarea{
+            textarea {
                 width: 100%;
             }
         }
