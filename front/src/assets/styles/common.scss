@@ -806,6 +806,22 @@ a {
 // 반응형(Mobile)
 @media (max-width: 767px) {
 
+    .real-time-rankings {
+        width: 35%;
+        font-size: 0.8rem;
+        font-weight: 500;
+
+        .ranking-item {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            
+            .rank-number {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    }
+
     .board,
     .matching,
     .cs{
