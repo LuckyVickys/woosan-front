@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getBannerList, updateBanner } from "../../api/adminApi";
 import "../../assets/styles/uploadBanner.scss";
+import Swal from "sweetalert2";
 
 const UploadPage = () => {
     
@@ -27,16 +28,28 @@ const UploadPage = () => {
   };
 
   const handleUpload = async () => {
-    try {
-      const fileUpdateDTO = {
-        existFiles: banners,
-        newFiles: selectedFiles,
-      };
-      const response = await updateBanner(fileUpdateDTO, token);
-      window.location.reload();
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
+    Swal.fire({
+      title: '배너를 변경하시겠습니까?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '네',
+      cancelButtonText: '아니오',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const fileUpdateDTO = {
+            existFiles: banners,
+            newFiles: selectedFiles,
+          };
+          const response = await updateBanner(fileUpdateDTO, token);
+          window.location.reload();
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
+      }
+    });
   };
 
   const handleRemoveBanner = (index) => {
