@@ -73,7 +73,7 @@ const ReportListComponent = () => {
                     />
                 </div>
             ) : (
-                <div className="report-not-found">
+                <div className="message-not-found">
                     신고가 존재하지 않습니다.
                 </div>
             )}

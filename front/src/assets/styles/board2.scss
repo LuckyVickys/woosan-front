@@ -183,6 +183,7 @@ $font-family: 'Pretendard-Regular', sans-serif;
     width: 100%;
     height: auto;
     font-family: $font-family;
+    margin-bottom: 10px;
 
     .title-bar {
         width: 100%;
@@ -523,6 +524,11 @@ $font-family: 'Pretendard-Regular', sans-serif;
         .add-component,
         .modify-component {
             margin-top: 10px;
+
+            .title-bar,
+            .form {
+                width: 95%;
+            }
         }
 
         .suggested-list-items{
@@ -587,6 +593,15 @@ $font-family: 'Pretendard-Regular', sans-serif;
         .pagination-button {
             width: 15px;
             height: 15px;
+        }
+    }
+
+    .add-component,
+    .modify-component {
+
+        .title-bar,
+        .form {
+            width: 95%;
         }
     }
 

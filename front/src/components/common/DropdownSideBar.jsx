@@ -81,7 +81,7 @@ const DropdownSidebar = ({ pageType, activeCategory, handleNavigation, handleLog
                             <button onClick={() => handleCategoryClick("notice")} className={activeCategory === "notice" ? "active" : ""}>공지사항 관리</button>
                             <button onClick={() => handleCategoryClick("send-message")} className={activeCategory === "send-message" ? "active" : ""}>보낸 쪽지함</button>
                             <button onClick={() => handleCategoryClick("receive-message")} className={activeCategory === "receive-message" ? "active" : ""}>받은 쪽지함</button>
-                            <button onClick={handleLogout}>로그아웃</button>
+                            <button onClick={handleLogout}>Log out</button>
                         </>
                     )}
                 </div>

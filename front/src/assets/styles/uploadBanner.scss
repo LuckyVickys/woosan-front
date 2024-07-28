@@ -2,6 +2,7 @@ $font-family: "Pretendard-Regular", sans-serif;
 
 .upload-banner{
     font-family: $font-family;
+    margin-bottom: 10px;
 }
 
 h2 {
@@ -89,4 +90,12 @@ button {
 .banner-name{
     word-wrap: break-word;
     word-break: break-all;
+}
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .upload-banner{
+        margin: 0 10px;
+        margin-bottom: 10px;
+    }
 }
