@@ -1292,8 +1292,7 @@ header {
     font-weight: 300;
     font-style: normal;
 
-    .category-dropdown,
-    .filter-dropdown {
+    .category-dropdown {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -1302,6 +1301,28 @@ header {
         border-radius: 8px;
         padding: 8px;
         width: 150px;
+        cursor: pointer;
+
+        .dropdown-arrow {
+            margin-top: 5px;
+            width: 10px;
+            height: 10px;
+            transform: rotate(90deg);
+            background: url("../image/category-arrow.svg") no-repeat;
+            background-size: contain;
+            float: right;
+        }
+    }
+
+    .filter-dropdown {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        border: 1px solid #e6e6e6;
+        border-radius: 8px;
+        padding: 8px;
+        width: 190px;
         cursor: pointer;
 
         .dropdown-arrow {
