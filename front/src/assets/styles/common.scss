@@ -22,6 +22,32 @@ $navHeight: 23px;
     .post-content{
         color: #d8d8d8;
     }
+
+    .write-button,
+    .search-input {
+        background: none;
+        color: #fff;
+    }
+    .dropdown-sidebar {
+        .category {
+            .category-title {
+                color: #000;
+            }
+        }
+    }
+
+    .update-password 
+    .update-user-info-profile 
+    .update-user-info 
+    .input-button-container 
+    .nickname-input, 
+    .update-info 
+    .update-user-info-profile 
+    .update-user-info 
+    .input-button-container 
+    .nickname-input {
+        color: #fff;
+    }
 }
   
 
@@ -622,6 +648,7 @@ header {
             font-weight: 300;
             font-style: normal;
             outline: none;
+            background: none;
         }
 
         .search-button {
@@ -664,6 +691,7 @@ header {
     width: 120px;
     height: 37px;
     padding: 8px;
+    background-color: #fff;
     border: 2px solid #9bcc66;
     border-radius: 43px;
     font-size: 14px;
