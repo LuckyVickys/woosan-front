@@ -37,7 +37,11 @@ const SelfPage = () => {
     };
 
     useEffect(() => {
-        fetchSelf();
+        if (typeof fetchSelf === 'function') {
+            fetchSelf();
+        } else {
+            console.error('fetchSelf is not a function');
+        }
     }, [fetchSelf]);
 
     if (loading) {

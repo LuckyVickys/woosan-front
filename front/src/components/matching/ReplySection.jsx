@@ -45,23 +45,13 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
      * 댓글 및 답글을 가져오는 함수
      */
     const fetchComments = async () => {
-        try {
-            const res = await getReplies(matchingId, { page: currentPage - 1, size: 10 }, token);
-            const commentTree = buildCommentTree(res.content);
-            setComments(commentTree);
-            setTotalPages(res.totalPages);
-            setTotalCommentsCount(res.totalElements); // 전체 댓글 수 업데이트
-            if (onCommentCountChange) {
-                onCommentCountChange(res.totalElements);
-            }
-        } catch (error) {
-            Swal.fire({
-                title: '오류!', 
-                text: '댓글을 가져오는 중 오류가 발생했습니다.', 
-                icon: 'error',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: '확인'
-            });
+        const res = await getReplies(matchingId, { page: currentPage - 1, size: 10 }, token);
+        const commentTree = buildCommentTree(res.content);
+        setComments(commentTree);
+        setTotalPages(res.totalPages);
+        setTotalCommentsCount(res.totalElements); // 전체 댓글 수 업데이트
+        if (onCommentCountChange) {
+            onCommentCountChange(res.totalElements);
         }
     };
 
@@ -138,15 +128,14 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                 }
             });
             return;
-        } else {
-            if(level === 'LEVEL_1') {
-                Swal.fire({
-                    title: "레벨2 이상만 이용할 수 있는 서비스입니다.",
-                    icon: "error",
-                    confirmButtonText: "확인",
-                    confirmButtonColor: "#3085d6",
-                });
-            }
+        } else if(level === 'LEVEL_1') {
+            Swal.fire({
+                title: "레벨2 이상만 이용할 수 있는 서비스입니다.",
+                icon: "error",
+                confirmButtonText: "확인",
+                confirmButtonColor: "#3085d6",
+            });
+            return;
         }
 
         const requestDTO = {
@@ -156,20 +145,10 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             parentId: parentId
         };
 
-        try {
-            await saveReply(requestDTO, token); // 토큰 필요
-            setNewComment('');
-            fetchComments();
-            if (onReplyAdded) onReplyAdded();
-        } catch (error) {
-            Swal.fire({
-                title: '오류!', 
-                text: '댓글을 저장하는 중 오류가 발생했습니다.', 
-                icon: 'error',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: '확인'
-            });
-        }
+        await saveReply(requestDTO, token); // 토큰 필요
+        setNewComment('');
+        fetchComments();
+        if (onReplyAdded) onReplyAdded();
     };
 
     // 답글 입력값 변경 핸들러
@@ -202,27 +181,18 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             content: replyInputs[commentId],
             parentId: commentId
         };
-        try {
-            await saveReply(requestDTO, token); // 토큰 필요
-            setReplyInputs({
-                ...replyInputs,
-                [commentId]: ''
-            });
-            setShowReplyInput({
-                ...showReplyInput,
-                [commentId]: false
-            });
-            fetchComments();
-            if (onReplyAdded) onReplyAdded();
-        } catch (error) {
-            Swal.fire({
-                title: '오류!', 
-                text: '답글 저장 중 오류가 발생했습니다.', 
-                icon: 'error',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: '확인'
-            });
-        }
+
+        await saveReply(requestDTO, token); // 토큰 필요
+        setReplyInputs({
+            ...replyInputs,
+            [commentId]: ''
+        });
+        setShowReplyInput({
+            ...showReplyInput,
+            [commentId]: false
+        });
+        fetchComments();
+        if (onReplyAdded) onReplyAdded();
     };
 
     // 답글 입력창 토글 핸들러
@@ -310,7 +280,11 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                     </button>
                     {showReplyInput[reply.id] && (
                         <div className={styles.replyInputContainer} ref={el => replyInputRef.current[reply.id] = el}>
-                            <img src={loginState.profileImage || defaultProfile} alt="프로필" className={styles.profileImage} />
+                            <img src={
+                                loginState.isKakao && loginState.kakaoProfile
+                                    ? loginState.kakaoProfile
+                                    : loginState.profileImage || defaultProfile
+                            } alt="프로필" className={styles.profileImage} />
                             <textarea
                                 className={styles.replyInput}
                                 placeholder="댓글은 또 다른 나입니다. 바르고 고운말로 작성해주세요."
@@ -374,7 +348,11 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
                 </button>
                 {showReplyInput[comment.id] && (
                     <div className={styles.replyInputContainer} ref={el => replyInputRef.current[comment.id] = el}>
-                        <img src={loginState.profileImage || defaultProfile} alt="프로필" className={styles.profileImage} />
+                        <img src={
+                            loginState.isKakao && loginState.kakaoProfile
+                                ? loginState.kakaoProfile
+                                : loginState.profileImage || defaultProfile
+                        } alt="프로필" className={styles.profileImage} />
                         <textarea
                             className={styles.replyInput}
                             placeholder="답글은 또 다른 나입니다. 바르고 고운말로 작성해주세요."
@@ -400,7 +378,11 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             <h2>댓글</h2>
             {comments.length > 0 ? renderComments(comments) : <p>댓글이 없습니다.</p>}
             <div className={styles.commentInputContainer}>
-                <img src={loginState.profileImage || defaultProfile} alt="프로필" className={styles.profileImage} />
+                <img src={
+                    loginState.isKakao && loginState.kakaoProfile
+                        ? loginState.kakaoProfile
+                        : loginState.profileImage || defaultProfile
+                } alt="프로필" className={styles.profileImage} />
                 <textarea
                     className={styles.commentInput}
                     placeholder="댓글은 또 다른 나입니다. 바르고 고운말로 작성해주세요."
