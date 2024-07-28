@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/styles/App.scss";
 import { useSelector, useDispatch } from "react-redux";
@@ -66,6 +66,19 @@ const ProfileDropdown = ({userData}) => {
     const pointPercent =
         ((userData.point / userData.nextPoint) * 100).toFixed(1) + "%";
 
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+        setIsDarkMode(savedTheme === 'dark');
+        }
+    }, []);
+    
+    useEffect(() => {
+        document.documentElement.setAttribute('display-theme', isDarkMode ? 'dark' : 'light');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    }, [isDarkMode]);
+    
     return (
         <>
             <div className="profile-dropdown-wrapper">

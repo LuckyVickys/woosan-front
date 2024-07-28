@@ -5,7 +5,7 @@
 
 .container {
     padding: 20px;
-    background-color: #fff;
+    // background-color: #fff;
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
@@ -17,6 +17,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 20px;
+        color: #000;
 
         .titleBarLine {
             width: 3px;

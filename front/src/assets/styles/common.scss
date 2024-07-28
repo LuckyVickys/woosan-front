@@ -3,10 +3,23 @@ $font-family: "Pretendard-Regular", sans-serif;
 $headerHeight: 50px;
 $navHeight: 23px;
 
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+}
+  
+[display-theme='dark'] {
+    --background-color: #000000;
+    --text-color: #ffffff;
+}
+  
+
 body {
     margin: 0;
     width: 100%;
     height: 100%;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 // BasicLayout의 전체 영역(header. nav, area, footer)
@@ -332,7 +345,6 @@ header {
     }
 
     .real-time-rankings {
-        background: #fff;
         border: 1px solid $shadow;
         padding: 10px;
         border-radius: 5px;
@@ -561,6 +573,7 @@ header {
         border: 1px solid #e6e6e6;
         border-radius: 8px;
         background: #fff;
+        color: #000;
         z-index: 10;
         list-style: none;
         padding: 0;
@@ -642,7 +655,6 @@ header {
     padding: 8px;
     border: 2px solid #9bcc66;
     border-radius: 43px;
-    background: #fff;
     font-size: 14px;
     font-family: $font-family;
     font-weight: 700;

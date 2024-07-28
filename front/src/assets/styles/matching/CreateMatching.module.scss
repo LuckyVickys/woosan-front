@@ -16,7 +16,7 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    // background-color: #fff;
 }
 
 .formGroup {
@@ -50,7 +50,7 @@ textarea {
 
 .container {
     // padding: 20px;
-    background-color: #fff;
+    // background-color: #fff;
     width: 100%;
     // max-width: 960px;
     // margin: 0 auto;
@@ -63,6 +63,7 @@ textarea {
         display: flex;
         align-items: center;
         margin-bottom: 20px;
+        color: #000;
 
         .titleBarLine {
             width: 3px;
