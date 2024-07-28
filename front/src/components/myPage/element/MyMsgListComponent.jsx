@@ -6,6 +6,7 @@ import { formatDate } from "../../../util/DateUtil";
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector } from "react-redux";
 import useCustomMsgMove from "../../../hooks/useCustomMsgMove";
+import { Desktop, Tablet, Mobile } from '../../../layouts/ResponsiveComponent';
 
 const initState = {
     dtoList: [],
@@ -119,66 +120,192 @@ const MessageListComponent = ({
 
     return (
         <>
-            {dtoList.length > 0 ? (
-                <div className="list-component">
-                    <table className="list-table">
-                        <thead>
-                            <tr>
-                                {columnHeaders.map((header, index) => (
-                                    <th key={index}>{header}</th>
-                                ))}
-                                <th>삭제</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {dtoList &&
-                                dtoList.map((item, index) => (
-                                    <tr
-                                        key={item.id}
-                                        className="board-row"
-                                        onClick={() => handleMsgClick(item.id)}
-                                    >
-                                        <td>{index + 1}</td>
-                                        <td>
-                                            {role === "receive"
-                                                ? item.senderNickname
-                                                : item.receiverNickname}
-                                        </td>
-                                        <td>{slicedText(item.content, 15)}</td>
-                                        <td>{formatDate(item.regDate)}</td>
-                                        <td
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleDeleteMsg(item.id);
-                                            }}
+            <Desktop>
+                {dtoList.length > 0 ? (
+                    <div className="list-component">
+                        <table className="list-table">
+                            <thead>
+                                <tr>
+                                    {columnHeaders.map((header, index) => (
+                                        <th key={index}>{header}</th>
+                                    ))}
+                                    <th>삭제</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {dtoList &&
+                                    dtoList.map((item, index) => (
+                                        <tr
+                                            key={item.id}
+                                            className="board-row"
+                                            onClick={() => handleMsgClick(item.id)}
                                         >
-                                            <MdDeleteForever />
-                                        </td>
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </table>
-                    <ListPageComponent
-                        serverData={{
-                            dtoList,
-                            pageNumList,
-                            pageRequestDTO,
-                            prev,
-                            next,
-                            totalCount,
-                            prevPage,
-                            nextPage,
-                            totalPage,
-                            current,
-                        }}
-                        movePage={moveToList}
-                    />
-                </div>
-            ) : (
-                <div className="message-not-found">
-                    쪽지가 존재하지 않습니다.
-                </div>
-            )}
+                                            <td>{index + 1}</td>
+                                            <td>
+                                                {role === "receive"
+                                                    ? item.senderNickname
+                                                    : item.receiverNickname}
+                                            </td>
+                                            <td>{slicedText(item.content, 15)}</td>
+                                            <td>{formatDate(item.regDate)}</td>
+                                            <td
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDeleteMsg(item.id);
+                                                }}
+                                            >
+                                                <MdDeleteForever />
+                                            </td>
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
+                        <ListPageComponent
+                            serverData={{
+                                dtoList,
+                                pageNumList,
+                                pageRequestDTO,
+                                prev,
+                                next,
+                                totalCount,
+                                prevPage,
+                                nextPage,
+                                totalPage,
+                                current,
+                            }}
+                            movePage={moveToList}
+                        />
+                    </div>
+                ) : (
+                    <div className="message-not-found">
+                        쪽지가 존재하지 않습니다.
+                    </div>
+                )}
+            </Desktop>
+            <Tablet>
+                {dtoList.length > 0 ? (
+                    <div className="list-component">
+                        <table className="list-table">
+                            <thead>
+                                <tr>
+                                    {columnHeaders.map((header, index) => (
+                                        <th key={index}>{header}</th>
+                                    ))}
+                                    <th>삭제</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {dtoList &&
+                                    dtoList.map((item, index) => (
+                                        <tr
+                                            key={item.id}
+                                            className="board-row"
+                                            onClick={() => handleMsgClick(item.id)}
+                                        >
+                                            <td>{index + 1}</td>
+                                            <td>
+                                                {role === "receive"
+                                                    ? item.senderNickname
+                                                    : item.receiverNickname}
+                                            </td>
+                                            <td>{slicedText(item.content, 15)}</td>
+                                            <td>{formatDate(item.regDate)}</td>
+                                            <td
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDeleteMsg(item.id);
+                                                }}
+                                            >
+                                                <MdDeleteForever />
+                                            </td>
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
+                        <ListPageComponent
+                            serverData={{
+                                dtoList,
+                                pageNumList,
+                                pageRequestDTO,
+                                prev,
+                                next,
+                                totalCount,
+                                prevPage,
+                                nextPage,
+                                totalPage,
+                                current,
+                            }}
+                            movePage={moveToList}
+                        />
+                    </div>
+                ) : (
+                    <div className="message-not-found">
+                        쪽지가 존재하지 않습니다.
+                    </div>
+                )}
+            </Tablet>
+            <Mobile>
+                {dtoList.length > 0 ? (
+                    <div className="list-component">
+                        <table className="list-table">
+                            <thead>
+                                <tr>
+                                    {columnHeaders.map((header, index) => (
+                                        <th key={index}>{header}</th>
+                                    ))}
+                                    <th>삭제</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {dtoList &&
+                                    dtoList.map((item, index) => (
+                                        <tr
+                                            key={item.id}
+                                            className="board-row"
+                                            onClick={() => handleMsgClick(item.id)}
+                                        >
+                                            <td>{index + 1}</td>
+                                            <td>
+                                                {role === "receive"
+                                                    ? item.senderNickname
+                                                    : item.receiverNickname}
+                                            </td>
+                                            <td>{slicedText(item.content, 15)}</td>
+                                            <td>{formatDate(item.regDate)}</td>
+                                            <td
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDeleteMsg(item.id);
+                                                }}
+                                            >
+                                                <MdDeleteForever />
+                                            </td>
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
+                        <ListPageComponent
+                            serverData={{
+                                dtoList,
+                                pageNumList,
+                                pageRequestDTO,
+                                prev,
+                                next,
+                                totalCount,
+                                prevPage,
+                                nextPage,
+                                totalPage,
+                                current,
+                            }}
+                            movePage={moveToList}
+                        />
+                    </div>
+                ) : (
+                    <div className="message-not-found">
+                        쪽지가 존재하지 않습니다.
+                    </div>
+                )}
+            </Mobile>
         </>
     );
 };

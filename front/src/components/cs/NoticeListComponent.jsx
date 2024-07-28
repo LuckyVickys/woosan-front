@@ -4,6 +4,7 @@ import useCustomNoticeMove from "../../hooks/useCustomNoticeMove";
 import "../../assets/styles/App.scss";
 import NoticeListPageComponent from "../../components/cs/NoticeListPageComponent";
 import TableRowComponent from "../../components/cs/NoticeTableRowComponent";
+import { Desktop, Tablet, Mobile } from '../../layouts/ResponsiveComponent';
 
 const initState = {
     dtoList: [],
@@ -40,36 +41,98 @@ const NoticeListComponent = () => {
     };
 
     return (
-        <div className="notice-list-component">
-            <div className="list-component">
-                <table className="list-table">
-                    <thead>
-                        <tr>
-                            <th>카테고리</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>작성 날짜</th>
-                            <th>조회수</th>
-                            <th>추천</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {noticeData.dtoList &&
-                            noticeData.dtoList.map((item) => (
-                                <TableRowComponent
-                                    key={item.id}
-                                    item={item}
-                                    onClick={() => handleRowClick(item.id)}
-                                />
-                            ))}
-                    </tbody>
-                </table>
-                <NoticeListPageComponent
-                    noticeData={noticeData}
-                    movePage={moveToList}
-                />
-            </div>
-        </div>
+        <>
+            <Desktop>
+                <div className="list-component">
+                    <table className="list-table">
+                        <thead>
+                            <tr>
+                                <th>카테고리</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성 날짜</th>
+                                <th>조회수</th>
+                                <th>추천</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {noticeData.dtoList &&
+                                noticeData.dtoList.map((item) => (
+                                    <TableRowComponent
+                                        key={item.id}
+                                        item={item}
+                                        onClick={() => handleRowClick(item.id)}
+                                    />
+                                ))}
+                        </tbody>
+                    </table>
+                    <NoticeListPageComponent
+                        noticeData={noticeData}
+                        movePage={moveToList}
+                    />
+                </div>
+            </Desktop>
+            <Tablet>
+                <div className="list-component">
+                    <table className="list-table">
+                        <thead>
+                            <tr>
+                                <th>카테고리</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성 날짜</th>
+                                <th>조회수</th>
+                                <th>추천</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {noticeData.dtoList &&
+                                noticeData.dtoList.map((item) => (
+                                    <TableRowComponent
+                                        key={item.id}
+                                        item={item}
+                                        onClick={() => handleRowClick(item.id)}
+                                    />
+                                ))}
+                        </tbody>
+                    </table>
+                    <NoticeListPageComponent
+                        noticeData={noticeData}
+                        movePage={moveToList}
+                    />
+                </div>
+            </Tablet>
+            <Mobile>
+                <div className="list-component">
+                    <table className="list-table">
+                        <thead>
+                            <tr>
+                                <th>카테고리</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성 날짜</th>
+                                <th>조회수</th>
+                                <th>추천</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {noticeData.dtoList &&
+                                noticeData.dtoList.map((item) => (
+                                    <TableRowComponent
+                                        key={item.id}
+                                        item={item}
+                                        onClick={() => handleRowClick(item.id)}
+                                    />
+                                ))}
+                        </tbody>
+                    </table>
+                    <NoticeListPageComponent
+                        noticeData={noticeData}
+                        movePage={moveToList}
+                    />
+                </div>
+            </Mobile>
+        </>
     );
 };
 

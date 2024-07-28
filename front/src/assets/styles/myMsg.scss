@@ -149,3 +149,10 @@ $font-family: 'Pretendard-Regular', sans-serif;
     font-family: $font-family;
     white-space: nowrap;
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .message-not-found {
+        margin-bottom: 300px;
+    }
+}
