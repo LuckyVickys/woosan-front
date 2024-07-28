@@ -11,6 +11,17 @@ $navHeight: 23px;
 [display-theme='dark'] {
     --background-color: #000000;
     --text-color: #ffffff;
+
+
+    .logoTitle-text,
+    .like-button,
+    .read-msg-content{
+        color: #fff;
+    }
+
+    .post-content{
+        color: #d8d8d8;
+    }
 }
   
 
@@ -57,14 +68,14 @@ header {
     .logoTitle {
         font-size: 32px;
         font-family: "GodoB", sans-serif;
-
-        .logoTitle-text {
-            font-size: 32px;
-            font-family: "GodoB", sans-serif;
-            color: #000;
-            white-space: nowrap;
-        }
     }
+}
+
+.logoTitle-text {
+    font-size: 32px;
+    font-family: "GodoB", sans-serif;
+    color: #000;
+    white-space: nowrap;
 }
 
 .login {
