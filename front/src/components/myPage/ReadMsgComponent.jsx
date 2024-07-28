@@ -52,7 +52,7 @@ const ReadMsgComponent = ({ selectedMsg, deleteMessage }) => {
             cancelButtonText: '취소',
         }).then((result) => {
             if (result.isConfirmed) {
-                const deleteFunc = selectedMsg.role === "발신자" ? delSendMessage : delReceiveMessage;
+                const deleteFunc = selectedMsg.role === "발신자" ? delReceiveMessage : delSendMessage;
                 deleteFunc(selectedMsg.id).then(() => {
                     Swal.fire({
                         title: '삭제가 완료되었습니다.',
