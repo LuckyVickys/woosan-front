@@ -141,3 +141,12 @@ textarea {
 .deleteButton:hover {
     background-color: #c9302c;
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .container {
+        margin: 5px;
+        padding: 0;
+        width: 95%;
+    }
+}

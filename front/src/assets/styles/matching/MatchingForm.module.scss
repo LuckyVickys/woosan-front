@@ -231,3 +231,16 @@ textarea {
     cursor: pointer;
     margin-left: 5px;
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+
+    .fileItem {
+        width: 100%;
+        padding: 5px;
+        width: 90%;
+        white-space: normal;
+        word-wrap: break-word; 
+        word-break: break-word;
+    }
+}
