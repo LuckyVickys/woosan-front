@@ -40,33 +40,35 @@ const NoticeListComponent = () => {
     };
 
     return (
-        <div className="list-component">
-            <table className="list-table">
-                <thead>
-                    <tr>
-                        <th>카테고리</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성 날짜</th>
-                        <th>조회수</th>
-                        <th>추천</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {noticeData.dtoList &&
-                        noticeData.dtoList.map((item) => (
-                            <TableRowComponent
-                                key={item.id}
-                                item={item}
-                                onClick={() => handleRowClick(item.id)}
-                            />
-                        ))}
-                </tbody>
-            </table>
-            <NoticeListPageComponent
-                noticeData={noticeData}
-                movePage={moveToList}
-            />
+        <div className="notice-list-component">
+            <div className="list-component">
+                <table className="list-table">
+                    <thead>
+                        <tr>
+                            <th>카테고리</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성 날짜</th>
+                            <th>조회수</th>
+                            <th>추천</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {noticeData.dtoList &&
+                            noticeData.dtoList.map((item) => (
+                                <TableRowComponent
+                                    key={item.id}
+                                    item={item}
+                                    onClick={() => handleRowClick(item.id)}
+                                />
+                            ))}
+                    </tbody>
+                </table>
+                <NoticeListPageComponent
+                    noticeData={noticeData}
+                    movePage={moveToList}
+                />
+            </div>
         </div>
     );
 };

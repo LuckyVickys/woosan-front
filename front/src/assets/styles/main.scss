@@ -223,6 +223,10 @@ a {
 // 반응형(Tablet)
 @media (max-width: 1024px) {
 
+    .main-contents {
+        height: 85%;
+    }
+
     .main-info{
         .info{
             padding: 20px;
