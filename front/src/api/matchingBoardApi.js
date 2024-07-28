@@ -6,30 +6,34 @@ const host = `${API_SERVER_HOST}/api/matching`;
 // 모든 매칭 가져오기
 export const getAllMatching = async (token) => {
     try {
+        const headers = {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        };
+
         const res = await axios({
             method: 'GET',
             url: `${host}/list`,
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         });
         return res.data;
     } catch (error) {
         throw new Error(error.response?.data || '서버 오류가 발생했습니다.');
     }
-}
+};
 
 // 정기 모임 가져오기
 export const getRegularly = async (token) => {
     try {
+        const headers = {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        };
+
         const res = await axios({
             method: 'GET',
             url: `${host}/regularly/list`,
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         });
         return res.data;
     } catch (error) {
@@ -40,13 +44,15 @@ export const getRegularly = async (token) => {
 // 번개 가져오기
 export const getTemporary = async (token) => {
     try {
+        const headers = {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        };
+
         const res = await axios({
             method: 'GET',
             url: `${host}/temporary/list`,
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         });
         return res.data;
     } catch (error) {
@@ -57,13 +63,15 @@ export const getTemporary = async (token) => {
 // 셀프 소개팅 가져오기
 export const getSelf = async (token) => {
     try {
+        const headers = {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        };
+
         const res = await axios({
             method: 'GET',
             url: `${host}/self/list`,
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+            headers: headers
         });
         return res.data;
     } catch (error) {

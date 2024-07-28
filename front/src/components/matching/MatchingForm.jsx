@@ -228,10 +228,6 @@ const MatchingForm = ({ onSubmit, initialValues = {}, matchingType }) => {
         });
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
             {matchingType === 3 && (

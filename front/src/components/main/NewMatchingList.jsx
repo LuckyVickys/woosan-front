@@ -1,11 +1,35 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import MatchingItem from '../../components/matching/MatchingItem';
 import styles from '../../assets/styles/matching/NewMatchingList.module.scss';
+import { getMembers } from '../../api/memberMatchingApi';
+import { useSelector } from 'react-redux';
 
 const NewMatchingList = ({ items, onItemClick }) => {
+    const [itemsWithMemberCount, setItemsWithMemberCount] = useState([]);
+    const loginState = useSelector((state) => state.loginSlice);
+    const token = loginState.accessToken;
+
+    useEffect(() => {
+        const fetchMemberCounts = async () => {
+            const updatedItems = await Promise.all(items.map(async (item) => {
+                try {
+                    const members = await getMembers(item.id, token);
+                    const currentMemberCount = members.filter(member => member.isAccepted).length;
+                    return { ...item, currentMemberCount };
+                } catch (error) {
+                    console.error(`Failed to fetch members for item ${item.id}`, error);
+                    return { ...item, currentMemberCount: 0 }; // 기본값 0으로 설정
+                }
+            }));
+            setItemsWithMemberCount(updatedItems);
+        };
+
+        fetchMemberCounts();
+    }, [items, token]);
+
     const getRecentItems = useMemo(() => {
-        const sortedItems = [...items].sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
+        const sortedItems = [...itemsWithMemberCount].sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
         const selectedItems = [];
         const types = new Set();
 
@@ -19,7 +43,7 @@ const NewMatchingList = ({ items, onItemClick }) => {
         }
 
         return selectedItems;
-    }, [items]);
+    }, [itemsWithMemberCount]);
 
     return (
         <div className={`${styles.newMatchingList} ${styles.verticalLayout}`}>
@@ -41,7 +65,7 @@ const NewMatchingList = ({ items, onItemClick }) => {
                         meetDate={item.meetDate}
                         tag={typeof item.tag === 'string' ? item.tag : JSON.stringify(item.tag)}
                         headCount={item.headCount}
-                        currentMemberCount={item.currentMemberCount || 1}
+                        currentMemberCount={item.currentMemberCount || 0}
                         location={item.location}
                         introduce={item.introduce}
                         mbti={item.mbti}

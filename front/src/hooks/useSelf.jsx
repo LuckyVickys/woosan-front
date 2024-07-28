@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { getSelf } from '../api/matchingBoardApi';
 import { useSelector } from 'react-redux';
 
@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
  * @returns {object} self - 셀프 소개팅 데이터 배열
  * @returns {boolean} loading - 로딩 상태
  * @returns {string|null} error - 에러 메시지
- * @returns {Function} fetchSelf - 데이터를 가져오는 함수
  */
 const useSelf = () => {
     const [self, setSelf] = useState([]); // 셀프 소개팅 데이터를 저장하는 상태
@@ -16,26 +15,23 @@ const useSelf = () => {
     const loginState = useSelector((state) => state.loginSlice);
     const token = loginState.accessToken;
 
-    const fetchSelf = useCallback(async () => {
-        setLoading(true);
-        try {
-            const data = await getSelf(token);
-            // 내가 만든 셀프 소개팅을 맨 위에 오도록 정렬
-            const mySelf = data.filter(item => item.memberId === loginState.id);
-            const otherSelf = data.filter(item => item.memberId !== loginState.id);
-            setSelf([...mySelf, ...otherSelf]);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    }, [loginState.id , token]);
-
     useEffect(() => {
-        fetchSelf();
-    }, [fetchSelf]); // fetchSelf를 의존성 배열에 포함
+        const fetchSelf = async () => {
+            try {
+                // 셀프 소개팅 데이터를 API에서 가져옴
+                const data = await getSelf(token);
+                setSelf(data); // 가져온 데이터를 상태에 저장
+            } catch (error) {
+                setError(error.message); // 에러가 발생하면 에러 메시지를 상태에 저장
+            } finally {
+                setLoading(false); // 데이터를 다 가져오면 로딩 상태를 false로 변경
+            }
+        };
 
-    return { self, loading, error, fetchSelf };
+        fetchSelf(); // 데이터 가져오는 함수 호출
+    }, [token]); // 컴포넌트가 마운트될 때 한 번만 실행
+
+    return { self, loading, error }; // 셀프 소개팅 데이터, 로딩 상태, 에러 메시지를 반환
 };
 
 export default useSelf;

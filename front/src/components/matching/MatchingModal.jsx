@@ -54,6 +54,15 @@ const reducer = (state, action) => {
     }
 };
 
+const convertNewlineToBreak = (text) => {
+    return text.split('\n').map((line, index) => (
+        <React.Fragment key={index}>
+            {line}
+            <br />
+        </React.Fragment>
+    ));
+};
+
 const MatchingModal = ({ item = {}, onClose }) => {
     const loginState = useSelector((state) => state.loginSlice);
     const memberId = loginState.id;
@@ -72,8 +81,8 @@ const MatchingModal = ({ item = {}, onClose }) => {
         if (!item.id) return;
 
         try {
-            const members = await getMembers(item.id, token);
-            const pendingRequests = await getPendingRequestsByBoardId(item.id, token);
+            const members = await getMembers(item.id, token); // 토큰 필요
+            const pendingRequests = await getPendingRequestsByBoardId(item.id, token); // 토큰 필요
 
             const acceptedMembersCount = members.filter(member => member.isAccepted).length;
 
@@ -85,11 +94,11 @@ const MatchingModal = ({ item = {}, onClose }) => {
         } catch (error) {
             Swal.fire('오류!', '매칭 상태를 가져오는 중 문제가 발생했습니다.', 'error');
         }
-    }, [item.id, item.memberId, memberId]);
+    }, [item.id, item.memberId, memberId, token]);
 
     const handleIncreaseViewCount = async (boardId, memberId, writerId) => {
         try {
-            await increaseViewCount(boardId, memberId, writerId, loginState.accessToken);
+            await increaseViewCount(boardId, memberId, writerId, token); // 토큰 필요
             dispatch({ type: 'INCREMENT_VIEWS' });
         } catch (error) {
             Swal.fire('오류!', '조회수 증가 중 문제가 발생했습니다.', 'error');
@@ -136,7 +145,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
         };
 
         try {
-            const members = await getMembers(item.id, token);
+            const members = await getMembers(item.id, token); // 토큰 필요
             const currentUser = members.find(member => member.memberId === memberId);
 
             if (currentUser && currentUser.isAccepted === false) {
@@ -144,7 +153,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
                 return;
             }
 
-            await applyMatching(requestDTO);
+            await applyMatching(requestDTO, token); // 토큰 필요
             Swal.fire('성공', '가입 신청이 성공적으로 완료되었습니다.', 'success');
             dispatch({ type: 'SET_APPLIED', payload: true });
             fetchMatchingStatus();
@@ -159,7 +168,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
             matchingId: item.id
         };
         try {
-            await cancelMatchingRequest(requestDTO.matchingId, requestDTO.memberId, token);
+            await cancelMatchingRequest(requestDTO.matchingId, requestDTO.memberId, token); // 토큰 필요
             Swal.fire('성공', '가입 신청이 취소되었습니다.', 'success');
             dispatch({ type: 'SET_APPLIED', payload: false });
             fetchMatchingStatus();
@@ -174,7 +183,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
             matchingId: item.id
         };
         try {
-            await leaveMatching(requestDTO.matchingId, requestDTO.memberId);
+            await leaveMatching(requestDTO.matchingId, requestDTO.memberId, token); // 토큰 필요
             Swal.fire('성공', '모임에서 탈퇴했습니다.', 'success');
             dispatch({ type: 'SET_MEMBER', payload: false });
             fetchMatchingStatus();
@@ -354,7 +363,7 @@ const MatchingModal = ({ item = {}, onClose }) => {
                 </div>
                 <div className={styles.contentContainer}>
                     <div className={styles.contentBox}>
-                        <p>{item.content}</p>
+                        <p>{convertNewlineToBreak(item.content)}</p>
                         {item.filePathUrl && item.filePathUrl.length > 0 && (
                             <div className={styles.imagesContainer}>
                                 {item.filePathUrl.map((url, index) => (
