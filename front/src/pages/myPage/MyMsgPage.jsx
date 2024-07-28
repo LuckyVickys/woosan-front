@@ -14,8 +14,8 @@ const MyMsgPage = () => {
             try {
                 const messageData = await getMessage(id, loginState.accessToken);
                 if (loginState && loginState.nickname) {
-                    const role = loginState.nickname === messageData.senderNickname ? "발신자" : "수신자";
-                    const nickname = (role === "발신자" ? messageData.receiverNickname : messageData.senderNickname);
+                    const role = loginState.nickname === messageData.senderNickname ? "수신자" : "발신자";
+                    const nickname = (role === "발신자" ? messageData.senderNickname : messageData.receiverNickname);
                     setSelectedMsg({
                         ...messageData,
                         role,
