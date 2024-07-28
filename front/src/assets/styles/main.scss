@@ -222,6 +222,13 @@ a {
 
 // 반응형(Tablet)
 @media (max-width: 1024px) {
+
+    .main-info{
+        .info{
+            padding: 20px;
+        }
+    }
+
     .main-content-list{
         display: flex;
         justify-content: space-between;
@@ -236,7 +243,7 @@ a {
 
     .main-matching {
         margin-left: 20px;
-        padding: 0 10px;
+        padding: 0 20px;
     }
 }
 
@@ -257,6 +264,7 @@ a {
         .main-matching{
             margin-top: 10px;
             margin-left: 0;
+            padding: 0;
         }
     }
 }

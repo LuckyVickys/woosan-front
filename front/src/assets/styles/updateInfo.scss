@@ -121,7 +121,6 @@ $font-family: "Pretendard-Regular", sans-serif;
         width: 100%;
 
         .update-user-info {
-            width: 60%;
 
             .input-error {
                 color: #ea4b48;
@@ -246,7 +245,6 @@ $font-family: "Pretendard-Regular", sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 30%;
 
             .user-profile {
                 width: 50%;
@@ -262,21 +260,43 @@ $font-family: "Pretendard-Regular", sans-serif;
                     height: 100%;
                     object-fit: cover;
                 }
-            }
-
-            .update-profile-button {
-                text-align: center;
-                margin-top: 15px;
-                width: 115px;
-                padding: 10px;
-                background: none;
-                border: 2px solid #9bcc66;
-                border-radius: 43px;
-                color: #9bcc66;
-                font-family: $font-family;
-                cursor: pointer;
+                
             }
         }
+    }
+    .update-profile-button {
+        text-align: center;
+        margin-top: 15px;
+        width: 115px;
+        padding: 10px;
+        background: none;
+        border: 2px solid #9bcc66;
+        border-radius: 43px;
+        color: #9bcc66;
+        font-family: $font-family;
+        cursor: pointer;
+    }
+}
+
+// 반응형(Desktop)
+@media (min-width: 1025px) {
+    .update-user-info {
+        width: 60%;
+    }
+
+    .update-profile {
+        width: 40%;
+    }
+}
+
+// 반응형(Tablet)
+@media (max-width: 1024px) {
+    .update-user-info {
+        width: 60%;
+    }
+
+    .update-profile {
+        width: 40%;
     }
 }
 
@@ -285,9 +305,18 @@ $font-family: "Pretendard-Regular", sans-serif;
     .update-user-info-profile{
         display: flex;
         flex-direction: column;
+        gap: 25px;
 
         .update-user-info {
             width: 100%;
+        }
+
+        .update-profile {
+            width: 100%;
+            .update-profile-button{
+                width: 80px;
+                font-size: 0.9rem;
+            }
         }
     }
 }
