@@ -32,7 +32,7 @@ const MatchingList = ({ items, onItemClick, gridColumns }) => {
         };
 
         fetchMemberCounts();
-    }, [items]);
+    }, [items, token]);
 
     return (
         <div className={`${styles.itemsGrid} ${styles.verticalLayout}`} style={{ gridTemplateColumns: `repeat(${gridColumns}, 1fr)` }}>

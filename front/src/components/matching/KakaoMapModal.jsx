@@ -1,82 +1,101 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../assets/styles/matching/KakaoMapModal.module.scss';
 
-// KakaoMapModal 컴포넌트 정의
 const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
-    const [searchKeyword, setSearchKeyword] = useState(''); // 검색어 상태
-    const [placeName, setPlaceName] = useState(''); // 선택된 장소 이름 상태
-    const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
-    const [searchResults, setSearchResults] = useState([]); // 검색 결과 상태
-    const mapRef = useRef(null); // 지도를 렌더링할 DOM 요소 참조
-    const markerRef = useRef(null); // 마커 참조
-    const mapInstanceRef = useRef(null); // 지도 인스턴스 참조
-    const [address, setAddress] = useState(''); // 주소 상태
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const [placeName, setPlaceName] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const mapRef = useRef(null);
+    const markerRef = useRef(null);
+    const mapInstanceRef = useRef(null);
+    const [address, setAddress] = useState('');
 
-    // 모달이 열릴 때 Kakao 지도 스크립트를 로드하고 초기화하는 useEffect
+    /**
+     * 카카오 맵 스크립트를 로드하는 함수
+     * @param {Function} callback - 스크립트 로드 후 호출할 콜백 함수
+     */
+    const loadKakaoMapScript = (callback) => {
+        const script = document.createElement('script');
+        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAPS_API_KEY}&libraries=services&autoload=false`;
+        script.onload = () => {
+            window.kakao.maps.load(callback);
+        };
+        script.onerror = () => {
+            // 스크립트 로드 오류 처리
+        };
+        document.head.appendChild(script);
+    };
+
+    /**
+     * 마커를 찍고 해당 위치를 중심으로 장소를 검색하는 함수
+     * @param {Object} latlng - 위치 정보 (위도, 경도)
+     */
+    const placeMarkerAndSearch = useCallback((latlng) => {
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.coord2Address(latlng.getLng(), latlng.getLat(), (result, status) => {
+            if (status === window.kakao.maps.services.Status.OK) {
+                const address = result[0].address.address_name;
+                setAddress(address);
+                setSearchKeyword(address);
+                setErrorMessage('');
+
+                if (markerRef.current) {
+                    markerRef.current.setPosition(latlng);
+                } else {
+                    markerRef.current = new window.kakao.maps.Marker({
+                        position: latlng,
+                        map: mapInstanceRef.current,
+                    });
+                }
+
+                const places = new window.kakao.maps.services.Places();
+                places.keywordSearch(address, (data, status) => {
+                    if (status === window.kakao.maps.services.Status.OK && data.length > 0) {
+                        setSearchResults(data);
+                        const place = data[0];
+                        setPlaceName(place.place_name);
+                    } else {
+                        setPlaceName('');
+                    }
+                }, {
+                    location: latlng,
+                    radius: 500
+                });
+            }
+        });
+    }, []);
+
+    /**
+     * 카카오 맵을 초기화하는 함수
+     */
+    const initializeMap = useCallback(() => {
+        const container = mapRef.current;
+        const options = {
+            center: new window.kakao.maps.LatLng(37.566535, 126.9779692),
+            level: 3,
+        };
+
+        const map = new window.kakao.maps.Map(container, options);
+        mapInstanceRef.current = map;
+
+        window.kakao.maps.event.addListener(map, 'click', (mouseEvent) => {
+            const latlng = mouseEvent.latLng;
+            placeMarkerAndSearch(latlng);
+        });
+
+        window.kakao.maps.event.addListener(map, 'dragend', () => {
+            const center = map.getCenter();
+            placeMarkerAndSearch(center);
+        });
+
+        mapRef.current = map;
+    }, [placeMarkerAndSearch]);
+
     useEffect(() => {
         if (!isOpen) return;
 
-        const loadKakaoMapScript = (callback) => {
-            const existingScript = document.getElementById('kakao-map-script');
-            if (existingScript) {
-                window.kakao.maps.load(callback);
-                return;
-            }
-
-            const script = document.createElement('script');
-            script.id = 'kakao-map-script';
-            script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAPS_API_KEY}&libraries=services&autoload=false`;
-            script.onload = () => {
-                window.kakao.maps.load(callback);
-            };
-            document.head.appendChild(script);
-        };
-
-        const initializeMap = () => {
-            if (!window.kakao || !window.kakao.maps) {
-                return;
-            }
-
-            const container = mapRef.current;
-            const options = {
-                center: new window.kakao.maps.LatLng(37.566535, 126.9779692), // 초기 중심 좌표 설정
-                level: 3, // 지도 레벨 설정
-            };
-
-            const map = new window.kakao.maps.Map(container, options);
-            mapInstanceRef.current = map;
-
-            // 지도 클릭 이벤트 등록
-            window.kakao.maps.event.addListener(map, 'click', (mouseEvent) => {
-                const latlng = mouseEvent.latLng;
-                const geocoder = new window.kakao.maps.services.Geocoder();
-
-                // 좌표를 주소로 변환
-                geocoder.coord2Address(latlng.getLng(), latlng.getLat(), (result, status) => {
-                    if (status === window.kakao.maps.services.Status.OK) {
-                        const address = result[0].address.address_name;
-                        setAddress(address); // 주소 저장
-                        setSearchKeyword(address);
-                        setErrorMessage(''); // 에러 메시지 초기화
-
-                        // 마커 위치 설정
-                        if (markerRef.current) {
-                            markerRef.current.setPosition(latlng);
-                        } else {
-                            markerRef.current = new window.kakao.maps.Marker({
-                                position: latlng,
-                                map: map,
-                            });
-                        }
-                    }
-                });
-            });
-
-            mapRef.current = map;
-        };
-
-        // Kakao 지도 스크립트가 로드되지 않은 경우 로드
         if (!window.kakao || !window.kakao.maps) {
             loadKakaoMapScript(initializeMap);
         } else {
@@ -88,9 +107,11 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
                 window.kakao.maps.event.removeListener(mapRef.current, 'click');
             }
         };
-    }, [isOpen]);
+    }, [isOpen, initializeMap]);
 
-    // 검색 버튼 클릭 시 호출되는 함수
+    /**
+     * 검색어로 장소를 검색하는 함수
+     */
     const handleSearch = () => {
         if (!searchKeyword) {
             setErrorMessage('빈 검색어입니다. 주소를 입력하세요.');
@@ -104,13 +125,13 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
         geocoder.addressSearch(searchKeyword, (result, status) => {
             if (status === window.kakao.maps.services.Status.OK) {
                 setSearchResults(result);
-                setErrorMessage(''); // 에러 메시지 초기화
+                setErrorMessage('');
             } else {
                 const places = new window.kakao.maps.services.Places();
                 places.keywordSearch(searchKeyword, (result, status) => {
                     if (status === window.kakao.maps.services.Status.OK) {
                         setSearchResults(result);
-                        setErrorMessage(''); // 에러 메시지 초기화
+                        setErrorMessage('');
                     } else {
                         setErrorMessage('검색된 결과가 없습니다.');
                         setSearchResults([]);
@@ -120,16 +141,18 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
         });
     };
 
-    // 검색 결과에서 장소 선택 시 호출되는 함수
+    /**
+     * 선택한 장소를 설정하는 함수
+     * @param {Object} place - 선택한 장소 정보
+     */
     const handleSelectPlace = (place) => {
         const latlng = new window.kakao.maps.LatLng(place.y, place.x);
         mapInstanceRef.current.setCenter(latlng);
 
         setPlaceName(place.place_name);
         setSearchKeyword(place.address_name || place.road_address_name);
-        setAddress(place.address_name || place.road_address_name); // 주소 저장
+        setAddress(place.address_name || place.road_address_name);
 
-        // 마커 위치 설정
         if (markerRef.current) {
             markerRef.current.setPosition(latlng);
         } else {
@@ -140,7 +163,9 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
         }
     };
 
-    // 저장 버튼 클릭 시 호출되는 함수
+    /**
+     * 선택한 위치를 저장하는 함수
+     */
     const handleSave = () => {
         if (!markerRef.current) {
             setErrorMessage('선택된 모임 장소가 없습니다.');
@@ -151,7 +176,10 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
         onClose();
     };
 
-    // 검색어 입력 시 엔터 키를 눌렀을 때 호출되는 함수
+    /**
+     * Enter 키를 누를 때 검색을 실행하는 함수
+     * @param {Object} e - 이벤트 객체
+     */
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -209,9 +237,9 @@ const KakaoMapModal = ({ isOpen, onClose, onSave }) => {
 };
 
 KakaoMapModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired, // 모달이 열려 있는지 여부
-    onClose: PropTypes.func.isRequired, // 모달 닫기 함수
-    onSave: PropTypes.func.isRequired, // 저장 버튼 클릭 시 호출되는 함수
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
 };
 
 export default KakaoMapModal;

@@ -17,14 +17,14 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
     const [localMembers, setLocalMembers] = useState([]);
     const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기
     const currentUserId = loginState.id; // 현재 로그인한 사용자의 ID
-    const token = loginState.accessToken;
+    const token = loginState.accessToken; // 액세스 토큰 가져오기
     const [isManager, setIsManager] = useState(false); // 모임장 여부 상태
 
     useEffect(() => {
         const fetchMembers = async () => {
             try {
-                const approvedMembers = await getMembers(matchingId, token);
-                const pendingMembers = await getPendingRequestsByBoardId(matchingId, token);
+                const approvedMembers = await getMembers(matchingId, token); // 승인된 멤버 가져오기
+                const pendingMembers = await getPendingRequestsByBoardId(matchingId, token); // 대기 중인 멤버 가져오기
 
                 // 현재 사용자가 매니저인지 확인
                 const managerStatus = approvedMembers.some(member => member.memberId === currentUserId && member.isManaged);
@@ -37,12 +37,12 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
                     setLocalMembers(filteredApprovedMembers);
                 }
             } catch (error) {
-                // 멤버 데이터 가져오기 중 오류 발생 시 처리
+                Swal.fire('오류', '멤버 데이터를 가져오는 중 오류가 발생했습니다.', 'error');
             }
         };
 
         fetchMembers();
-    }, [matchingId, type, currentUserId]);
+    }, [matchingId, type, currentUserId, token]);
 
     useEffect(() => {
         if (members) {
@@ -66,7 +66,7 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
 
         if (result.isConfirmed) {
             try {
-                await updateMatching(id, true);
+                await updateMatching(id, true, token); // 토큰 필요
                 setLocalMembers((prev) => prev.filter((member) => member.id !== id));
                 Swal.fire('승인 완료', '가입 요청을 승인하였습니다.', 'success');
                 onMemberUpdate(); // 회원 상태가 변경되었음을 상위 컴포넌트에 알림
@@ -92,7 +92,7 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
 
         if (result.isConfirmed) {
             try {
-                await updateMatching(id, false); // isAccepted를 false로 업데이트
+                await updateMatching(id, false, token); // 토큰 필요, isAccepted를 false로 업데이트
                 setLocalMembers((prev) => prev.filter((member) => member.id !== id));
                 Swal.fire('거절 완료', '가입 요청을 거절하였습니다.', 'success');
                 onMemberUpdate(); // 회원 상태가 변경되었음을 상위 컴포넌트에 알림
@@ -118,7 +118,7 @@ const MemberManagement = ({ matchingId, type, onMemberUpdate, members }) => {
 
         if (result.isConfirmed) {
             try {
-                await kickMember(matchingId, memberId);
+                await kickMember(matchingId, memberId, token); // 토큰 필요
                 setLocalMembers((prev) => prev.filter((member) => member.memberId !== memberId));
                 Swal.fire('강퇴 완료', '회원을 강퇴하였습니다.', 'success');
                 onMemberUpdate(); // 회원 상태가 변경되었음을 상위 컴포넌트에 알림

@@ -25,6 +25,7 @@ const MatchingPage = () => {
     const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();
     const loginState = useSelector((state) => state.loginSlice);
     const memberLevel = loginState.level; // 사용자 레벨 가져오기
+    
 
     /**
      * 정기모임, 번개, 셀프 소개팅 데이터를 병합하여 페이지별로 나누는 함수

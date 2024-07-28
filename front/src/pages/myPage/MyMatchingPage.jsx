@@ -11,6 +11,7 @@ const MyMatchingPage = () => {
     const itemsPerPage = 6; // 페이지당 매칭 개수
     const navigate = useNavigate();
     const loginState = useSelector((state) => state.loginSlice); // 로그인된 상태 가져오기
+    const token = loginState.accessToken; // 토큰 가져오기
 
     /**
      * 나의 매칭 정보를 가져오는 함수
@@ -18,7 +19,7 @@ const MyMatchingPage = () => {
     useEffect(() => {
         const fetchMyMatchings = async () => {
             try {
-                const matchings = await getMatchingBoardsByMemberId(loginState.id, loginState.accessToken);
+                const matchings = await getMatchingBoardsByMemberId(loginState.id, token); // 토큰 필요
                 // 정기모임(1), 번개(2), 셀프소개팅(3) 순서대로 정렬
                 const sortedMatchings = matchings.sort((a, b) => a.matchingType - b.matchingType);
                 setMyMatchings(sortedMatchings);
@@ -30,7 +31,7 @@ const MyMatchingPage = () => {
         if (loginState.id) {
             fetchMyMatchings();
         }
-    }, [loginState.id]);
+    }, [loginState.id, token]);
 
     /**
      * 매칭 클릭 시 호출되는 함수

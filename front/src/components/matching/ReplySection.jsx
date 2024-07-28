@@ -34,15 +34,19 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
     const dropdownRef = useRef({});
     const replyInputRef = useRef({});
     const { isLogin, moveToLoginReturn, isLoginModalOpen, closeLoginModal } = useCustomLogin();  // 로그인 훅 사용
+    const token = loginState.accessToken; // 토큰 가져오기
 
     // 댓글 및 답글을 가져오는 함수
     useEffect(() => {
         fetchComments();
     }, [matchingId, currentPage]);
 
+    /**
+     * 댓글 및 답글을 가져오는 함수
+     */
     const fetchComments = async () => {
         try {
-            const res = await getReplies(matchingId, { page: currentPage - 1, size: 10 });
+            const res = await getReplies(matchingId, { page: currentPage - 1, size: 10 }, token);
             const commentTree = buildCommentTree(res.content);
             setComments(commentTree);
             setTotalPages(res.totalPages);
@@ -61,7 +65,11 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
         }
     };
 
-    // 댓글 트리를 빌드하는 함수
+    /**
+     * 댓글 트리를 빌드하는 함수
+     * @param {Array} comments - 댓글 목록
+     * @returns {Array} - 댓글 트리
+     */
     const buildCommentTree = (comments) => {
         const map = {};
         const roots = [];
@@ -149,7 +157,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
         };
 
         try {
-            await saveReply(requestDTO);
+            await saveReply(requestDTO, token); // 토큰 필요
             setNewComment('');
             fetchComments();
             if (onReplyAdded) onReplyAdded();
@@ -195,7 +203,7 @@ const ReplySection = ({ matchingId, parentId = null, onReplyAdded, onCommentCoun
             parentId: commentId
         };
         try {
-            await saveReply(requestDTO);
+            await saveReply(requestDTO, token); // 토큰 필요
             setReplyInputs({
                 ...replyInputs,
                 [commentId]: ''
