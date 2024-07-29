@@ -14,7 +14,6 @@ import LoginModal from "../../components/member/LoginModal";
 import Swal from 'sweetalert2';
 import { Desktop, Tablet, Mobile } from '../../layouts/ResponsiveComponent';
 
-// 하드코딩된 예시 데이터
 const hardcodedItems = [
     {
         id: 1,
@@ -70,7 +69,6 @@ const hardcodedItems = [
         nickname: "아니야",
         profileImageUrl: ["http://example.com/explorer.jpg"]
     }
-    // 필요에 따라 더 많은 하드코딩된 데이터 추가
 ];
 
 const MainPage = () => {
@@ -248,13 +246,13 @@ const MainPage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="main-notice-matching">
-                        <div className="main-notice">
-                            <div className='main-notice-header'>
-                                <div className="header-title">공지사항</div>
-                                <NavLink to={'/cs/'}>View All ➔</NavLink>
+                    <div className='main-content-list'>
+                        <div className="popular-post">
+                            <div className='popular-post-header'>
+                                <div className="header-title">인기글</div>
+                                <NavLink to={'/board/'}>View All ➔</NavLink>
                             </div>
-                            <NoticeList />
+                            <LikeList />
                         </div>
                         <div className="main-matching">
                             <div className='main-matching-header'>
@@ -282,22 +280,15 @@ const MainPage = () => {
                             <p>비회원은 저리 가라, ONLY 회원</p>
                             </div>
                         </div>
-                        <div className="info">
-                            <div className='info-icon3'></div>
-                            <div className='info-text'>
-                            <h1>자취생을 위한 꿀팁이 궁금해!</h1>
-                            <p>자취 고수들의 공유마당, 꿀팁</p>
-                            </div>
-                        </div>
-                        <div className="info">
-                            <div className='info-icon4'></div>
-                            <div className='info-text'>
-                            <h1>심심한데 누구 만날까?</h1>
-                            <p>다양한 모임이 가득, 모임</p>
-                            </div>
-                        </div>
                     </div>
-                    <div className="main-notice-matching">
+                    <div className='main-content-list2'>
+                        <div className="popular-post">
+                            <div className='popular-post-header'>
+                                <div className="header-title">인기글</div>
+                                <NavLink to={'/board/'}>View All ➔</NavLink>
+                            </div>
+                            <LikeList />
+                        </div>
                         <div className="main-notice">
                             <div className='main-notice-header'>
                                 <div className="header-title">공지사항</div>
