@@ -278,7 +278,7 @@ const ReplyComponent = () => {
                     openMsg={openMsg}
                     showReportButton={userId !== reply.writerId}
                     showMsgButton={userId !== reply.writerId}
-                    showDeleteButton={userId === reply.writerId}
+                    showDeleteButton={userId === reply.writerId || loginState.memberType === 'ADMIN'}
                     onDeleteSuccess={handleDeleteSuccess}
                     getReplies={getReplies}
                   />
