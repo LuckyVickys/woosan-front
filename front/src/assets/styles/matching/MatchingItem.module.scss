@@ -185,3 +185,15 @@
     height: 20px;
     display: inline-block;
 }
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    
+    .matchingItemCard {
+        .matchingItemContent {
+            .details {
+                font-size: 0.8rem;
+            }
+        }
+    }
+}

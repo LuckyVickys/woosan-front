@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../assets/styles/matching/MatchingItem.module.scss';
 import { PiGenderIntersexFill } from "react-icons/pi";
+import { Desktop, Tablet, Mobile } from '../../layouts/ResponsiveComponent';
 
 // 문자열 길이를 제한하고 "..."을 추가하는 함수
 const truncateText = (text, maxLength) => {
@@ -76,42 +77,122 @@ const MatchingItem = ({
     const imageUrl = filePathUrl && filePathUrl.length > 0 ? filePathUrl[0] : "";
 
     return (
-        <div className={styles.matchingItemCard} onClick={onClick}>
-            <div className={styles.imagePlaceholder}>
-                {imageUrl ? (
-                    <img src={imageUrl} alt="매칭 썸네일" className={styles.matchingImage} />
-                ) : (
-                    <div className={styles.noImage}>이미지 없음</div>
-                )}
-            </div>
-            <div className={styles.matchingItemContent}>
-                <div className={styles.matchingItemHeader}>
-                    <span className={`${styles.typeLabel} ${getTypeStyle(matchingType)}`}>{getTypeLabel(matchingType)}</span>
-                    {matchingType !== 3 && <span className={styles.tag}>{renderTag(tag)}</span>}
-                    {matchingType === 3 && <span className={styles.tag}>{mbti || ''}</span>}
-                </div>
-                <div className={styles.matchingItemBody}>
-                    <span className={styles.title}>{truncateText(title, 30)}</span>
-                    <div className={styles.details}>
-                        <div className={styles.detailItem}><strong><span className={styles.location}></span></strong> {truncateText(placeName, 8)}</div>
-                        {matchingType !== 3 && (
-                            <>
-                                <div className={styles.detailItem}><strong><span className={styles.date}></span></strong> {formatDateTime(meetDate, matchingType)}</div>
-                                <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
-                                <div className={styles.detailItem}><strong><span className={styles.headCount}></span></strong> {currentMemberCount}/{headCount}</div>
-                            </>
-                        )}
-                        {matchingType === 3 && (
-                            <>
-                                <div className={styles.detailItem}><strong><PiGenderIntersexFill className={styles.gender} /></strong> {gender || ''}</div>
-                                <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
-                                <div className={styles.detailItem}><strong><span className={styles.age}></span></strong> {age ? `${age}세` : ''}</div>
-                            </>
+        <>
+            <Desktop>
+                <div className={styles.matchingItemCard} onClick={onClick}>
+                    <div className={styles.imagePlaceholder}>
+                        {imageUrl ? (
+                            <img src={imageUrl} alt="매칭 썸네일" className={styles.matchingImage} />
+                        ) : (
+                            <div className={styles.noImage}>이미지 없음</div>
                         )}
                     </div>
+                    <div className={styles.matchingItemContent}>
+                        <div className={styles.matchingItemHeader}>
+                            <span className={`${styles.typeLabel} ${getTypeStyle(matchingType)}`}>{getTypeLabel(matchingType)}</span>
+                            {matchingType !== 3 && <span className={styles.tag}>{renderTag(tag)}</span>}
+                            {matchingType === 3 && <span className={styles.tag}>{mbti || ''}</span>}
+                        </div>
+                        <div className={styles.matchingItemBody}>
+                            <span className={styles.title}>{truncateText(title, 30)}</span>
+                            <div className={styles.details}>
+                                <div className={styles.detailItem}><strong><span className={styles.location}></span></strong> {truncateText(placeName, 8)}</div>
+                                {matchingType !== 3 && (
+                                    <>
+                                        <div className={styles.detailItem}><strong><span className={styles.date}></span></strong> {formatDateTime(meetDate, matchingType)}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.headCount}></span></strong> {currentMemberCount}/{headCount}</div>
+                                    </>
+                                )}
+                                {matchingType === 3 && (
+                                    <>
+                                        <div className={styles.detailItem}><strong><PiGenderIntersexFill className={styles.gender} /></strong> {gender || ''}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.age}></span></strong> {age ? `${age}세` : ''}</div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </Desktop>
+            <Tablet>
+                <div className={styles.matchingItemCard} onClick={onClick}>
+                    <div className={styles.imagePlaceholder}>
+                        {imageUrl ? (
+                            <img src={imageUrl} alt="매칭 썸네일" className={styles.matchingImage} />
+                        ) : (
+                            <div className={styles.noImage}>이미지 없음</div>
+                        )}
+                    </div>
+                    <div className={styles.matchingItemContent}>
+                        <div className={styles.matchingItemHeader}>
+                            <span className={`${styles.typeLabel} ${getTypeStyle(matchingType)}`}>{getTypeLabel(matchingType)}</span>
+                            {matchingType !== 3 && <span className={styles.tag}>{renderTag(tag)}</span>}
+                            {matchingType === 3 && <span className={styles.tag}>{mbti || ''}</span>}
+                        </div>
+                        <div className={styles.matchingItemBody}>
+                            <span className={styles.title}>{truncateText(title, 30)}</span>
+                            <div className={styles.details}>
+                                <div className={styles.detailItem}><strong><span className={styles.location}></span></strong> {truncateText(placeName, 8)}</div>
+                                {matchingType !== 3 && (
+                                    <>
+                                        <div className={styles.detailItem}><strong><span className={styles.date}></span></strong> {formatDateTime(meetDate, matchingType)}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.headCount}></span></strong> {currentMemberCount}/{headCount}</div>
+                                    </>
+                                )}
+                                {matchingType === 3 && (
+                                    <>
+                                        <div className={styles.detailItem}><strong><PiGenderIntersexFill className={styles.gender} /></strong> {gender || ''}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.age}></span></strong> {age ? `${age}세` : ''}</div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Tablet>
+            <Mobile>
+                <div className={styles.matchingItemCard} onClick={onClick}>
+                    <div className={styles.imagePlaceholder}>
+                        {imageUrl ? (
+                            <img src={imageUrl} alt="매칭 썸네일" className={styles.matchingImage} />
+                        ) : (
+                            <div className={styles.noImage}>이미지 없음</div>
+                        )}
+                    </div>
+                    <div className={styles.matchingItemContent}>
+                        <div className={styles.matchingItemHeader}>
+                            <span className={`${styles.typeLabel} ${getTypeStyle(matchingType)}`}>{getTypeLabel(matchingType)}</span>
+                            {matchingType !== 3 && <span className={styles.tag}>{renderTag(tag)}</span>}
+                            {matchingType === 3 && <span className={styles.tag}>{mbti || ''}</span>}
+                        </div>
+                        <div className={styles.matchingItemBody}>
+                            <span className={styles.title}>{truncateText(title, 30)}</span>
+                            <div className={styles.details}>
+                                <div className={styles.detailItem}><strong><span className={styles.location}></span></strong> {truncateText(placeName, 5)}</div>
+                                {matchingType !== 3 && (
+                                    <>
+                                        <div className={styles.detailItem}><strong><span className={styles.date}></span></strong> {formatDateTime(meetDate, matchingType)}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.headCount}></span></strong> {currentMemberCount}/{headCount}</div>
+                                    </>
+                                )}
+                                {matchingType === 3 && (
+                                    <>
+                                        <div className={styles.detailItem}><strong><PiGenderIntersexFill className={styles.gender} /></strong> {gender || ''}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.nickname}></span></strong> {nickname}</div>
+                                        <div className={styles.detailItem}><strong><span className={styles.age}></span></strong> {age ? `${age}세` : ''}</div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Mobile>
+        </>
     );
 }
 

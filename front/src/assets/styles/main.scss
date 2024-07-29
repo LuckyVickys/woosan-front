@@ -267,6 +267,10 @@ a {
             margin-top: 10px;
             margin-left: 0;
             padding: 0;
+            
+            .main-matching-header {
+                padding: 10px;
+            }
         }
     }
 }
@@ -300,6 +304,7 @@ a {
 
 // 반응형(Mobile)
 @media (max-width: 375px) {
+    
     .popular-post{
         .likelist-post{
             width: 330px;
