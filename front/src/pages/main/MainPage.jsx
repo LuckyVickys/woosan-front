@@ -226,7 +226,7 @@ const MainPage = () => {
                         <div className="main-matching">
                             <div className='main-matching-header'>
                                 <div className="header-title">New 모임</div>
-                                <NavLink to={'/matching/'} onClick={handleMatchingViewAllClick}>View All1234 ➔</NavLink>
+                                <NavLink to={'/matching/'} onClick={handleMatchingViewAllClick}>View All ➔</NavLink>
                             </div>
                             <NewMatchingList items={items} onItemClick={handleItemClick} />
                         </div>
