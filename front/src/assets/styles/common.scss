@@ -2,6 +2,7 @@ $shadow: #e5e5e5;
 $font-family: "Pretendard-Regular", sans-serif;
 $headerHeight: 50px;
 $navHeight: 23px;
+$headerMargin: 0 auto;
 
 :root {
     --background-color: #ffffff;
@@ -9,7 +10,7 @@ $navHeight: 23px;
 }
   
 [display-theme='dark'] {
-    --background-color: #000000;
+    --background-color: #333333;
     --text-color: #ffffff;
 
 
@@ -113,6 +114,7 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
 
         .user-level-nickname {
             margin-right: 10px;
@@ -136,13 +138,13 @@ header {
             background-size: contain;
             border-radius: 50%;
             cursor: pointer;
-            position: relative;
+            // position: relative;
         }
 
         .profile-dropdown-wrapper {
             position: absolute;
-            top: 10%;
-            right: 1%;
+            top: 100%;
+            right: -15%;
             display: flex;
             flex-direction: column;
             align-items: end;
@@ -775,6 +777,20 @@ a {
         max-width: 1400px;
         width: 100%;
         margin: 0 auto;
+    }
+
+    .profile-dropdown-wrapper {
+        position: relative;
+        top: 10%;
+        right: calc(var($headerMargin) + 1%);
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        font-family: $font-family;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1;
     }
 
     .nav{
