@@ -6,16 +6,21 @@ const host = `${API_SERVER_HOST}/api/matching`;
 // 모든 매칭 가져오기
 export const getAllMatching = async (token) => {
     try {
+        // 조건적으로 Authorization 헤더를 추가
         const headers = {
-            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         };
+
+        if (token) {
+            headers.Authorization = `Bearer ${token}`;
+        }
 
         const res = await axios({
             method: 'GET',
             url: `${host}/list`,
             headers: headers
         });
+
         return res.data;
     } catch (error) {
         throw new Error(error.response?.data || '서버 오류가 발생했습니다.');

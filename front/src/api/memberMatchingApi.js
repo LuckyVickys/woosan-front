@@ -147,20 +147,5 @@ export const deleteAllMembersByMatchingBoardId = async (matchingId, token) => {
 
 // API 에러를 처리하는 함수
 const handleApiError = (error) => {
-    if (error.response && error.response.data) {
-        Swal.fire({
-            title: 'Error',
-            text: error.response.data.message || '서버 오류가 발생했습니다.',
-            icon: 'error',
-            confirmButtonText: '확인'
-        });
-    } else {
-        Swal.fire({
-            title: 'Error',
-            text: '서버 오류가 발생했습니다.',
-            icon: 'error',
-            confirmButtonText: '확인'
-        });
-    }
     throw error;
 };

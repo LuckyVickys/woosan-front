@@ -15,17 +15,20 @@ const NewMatchingList = ({ items, onItemClick }) => {
             const updatedItems = await Promise.all(items.map(async (item) => {
                 try {
                     const members = await getMembers(item.id, token);
+                    console.log(`Members for item ${item.id}:`, members); // 디버깅 로그 추가
                     const currentMemberCount = members.filter(member => member.isAccepted).length;
                     return { ...item, currentMemberCount };
                 } catch (error) {
-                    console.error(`Failed to fetch members for item ${item.id}`, error);
-                    return { ...item, currentMemberCount: 0 }; // 기본값 0으로 설정
+                    console.error(`Error fetching members for item ${item.id}:`, error); // 에러 로그 추가
+                    return { ...item, currentMemberCount: item.currentMemberCount || 0 }; // 기본값 0으로 설정
                 }
             }));
             setItemsWithMemberCount(updatedItems);
         };
 
-        fetchMemberCounts();
+        if (items.length) {
+            fetchMemberCounts();
+        }
     }, [items, token]);
 
     const getRecentItems = useMemo(() => {
