@@ -15,7 +15,6 @@ const NewMatchingList = ({ items, onItemClick }) => {
             const updatedItems = await Promise.all(items.map(async (item) => {
                 try {
                     const members = await getMembers(item.id, token);
-                    console.log(`Members for item ${item.id}:`, members); // 디버깅 로그 추가
                     const currentMemberCount = members.filter(member => member.isAccepted).length;
                     return { ...item, currentMemberCount };
                 } catch (error) {
