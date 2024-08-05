@@ -1,0 +1,51 @@
+@import '../font.scss';
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pageNumber,
+.pageControl {
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pageNumber:hover,
+.pageControl:hover {
+    background-color: #00B207;
+}
+
+.active {
+    font-weight: bold;
+    background-color: #00B207;
+    color: white;
+}
+
+.disabled {
+    pointer-events: none;
+    color: #ccc;
+}
+
+/* 화살표 스타일 추가 */
+.pageControl {
+    background-color: #eee; /* 기본 회색 배경 */
+}
+
+.pageControl:hover {
+    background-color: #eee; /* 호버 시 배경색 */
+}

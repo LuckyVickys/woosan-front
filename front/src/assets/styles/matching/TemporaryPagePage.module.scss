@@ -1,0 +1,100 @@
+@import '../font.scss';
+
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.createButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.createButton:hover {
+    background-color: #218838;
+}
+
+.createButton:active {
+    background-color: #1e7e34;
+}
+
+.loading,
+.error,
+.noItems {
+    font-size: 18px;
+    color: #333;
+}
+
+.timeBarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.scrollButton {
+    background-color: #f0f0f0;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.scrollButton:hover {
+    background-color: #e0e0e0;
+}
+
+.timeBar {
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 5px; // 좌우 스크롤 버튼을 고려한 패딩
+}
+
+.timeButton {
+    background-color: #fff;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    transition: background-color 0.3s, color 0.3s;
+
+    &.selected {
+        background-color: #2388FF;
+        color: white;
+    }
+
+    &:hover {
+        background-color: #00B207;
+        color: white;
+    }
+}

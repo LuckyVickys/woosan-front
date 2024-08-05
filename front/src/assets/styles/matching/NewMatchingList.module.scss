@@ -1,0 +1,50 @@
+@import '../font.scss';
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+
+.newMatchingList {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px; /* 항목 간격 조정 */
+
+    /* 스크롤바 스타일 조정 (선택사항) */
+    &::-webkit-scrollbar {
+        height: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+}
+
+// 반응형(Desktop)
+@media (min-width: 1025px) {
+    .newMatchingList {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px; /* 항목 간격 조정 */
+    }
+}
+
+// 반응형(Tablet)
+@media (max-width: 1024px) {
+    .verticalLayout {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .verticalLayout {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+}

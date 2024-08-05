@@ -1,0 +1,292 @@
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.login-modal,
+.signup-modal,
+.pwfind-modal {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  width: 400px;
+  padding: 30px 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: "Pretendard-Regular", sans-serif;
+  white-space: nowrap;
+  color: #000;
+
+  h2 {
+    margin: 0 0 20px 0;
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .form-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .input-box {
+
+      position: relative;
+      margin-bottom: 10px;
+
+      .input-info {
+        font-size: 12px;
+        font-weight: 800;
+        text-align: left;
+        margin: 5px 0;
+      }
+
+      .input-info-password {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 800;
+        text-align: left;
+        margin: 5px 0;
+
+        .input-info-password-title {
+          margin: 0;
+          font-size: 12px;
+          font-weight: 800;
+          text-align: left;
+          font-family: "Pretendard-Regular", sans-serif;
+        }
+
+        .input-info-pw {
+          margin: 0 0 0 5px;
+          color: #999999;
+          font-size: 12px;
+          font-weight: 400;
+          text-align: left;
+          font-family: "Pretendard-Regular", sans-serif;
+        }
+      }
+
+      .email-input,
+      .pw-input,
+      .nickname-input,
+      .pw-check-input,
+      .new-pw-input,
+      .code-input {
+        outline: none;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #e6e6e6;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 400;
+        font-family: "Pretendard-Regular", sans-serif;
+      }
+
+      .input-error {
+        color: #ea4b48;
+        font-size: 12px;
+        font-weight: 400;
+        text-align: left;
+        margin: 5px 0;
+
+        &.available {
+          color: #9bcc66;
+        }
+      }
+
+      .input-button-container {
+        position: relative;
+
+        .email-input,
+        .nickname-input {
+          outline: none;
+          padding: 10px;
+          box-sizing: border-box;
+          border: 1px solid #e6e6e6;
+          border-radius: 6px;
+          font-size: 14px;
+          font-weight: 400;
+        }
+
+        .codeTimer{
+          position: absolute;
+          right: 60px;
+          top: 50%;
+          padding: 0 2.5px;
+          width: 50px;
+          height: 20px;
+          transform: translateY(-50%);
+          border: none;
+          border-radius: 2px;
+          font-size: 15px;
+          font-weight: 400;
+          font-family: "Pretendard-Regular", sans-serif;
+          cursor: pointer;
+        }
+
+        .check-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            padding: 0 2.5px;
+            width: 50px;
+            height: 20px;
+            transform: translateY(-50%);
+            background: #9bcc66;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-size: 10px;
+            font-weight: 400;
+            font-family: "Pretendard-Regular", sans-serif;
+            cursor: pointer;
+        }
+      }
+
+      .input-toggle-container {
+        position: relative;
+
+        .toggle-password-button {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          height: 20px;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          border-radius: 2px;
+          font-size: 15px;
+          font-weight: 400;
+          cursor: pointer;
+        }
+
+      }
+    }
+
+    .add-fucntion {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0 0 0;
+      font-size: 12px;
+      font-weight: 400;
+
+      .agree-checkbox {
+        display: flex;
+        justify-content: center;
+
+        .checkbox {
+          margin-right: 5px;
+        }
+        .checkbox-text {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+    .forgotPW {
+        text-align: end;
+        margin: 10px 0 0 0;
+        font-size: 12px;
+        font-weight: 400;
+        color: #666666;
+        text-decoration: none;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+    .login-button,
+    .signup-button,
+    .pwchange-button {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      padding: 10px;
+      height: 45px;
+      background: #9bcc66;
+      color: #fff;
+      border: none;
+      border-radius: 43px;
+      cursor: pointer;
+    }
+  }
+
+  .socialLogin-text,
+  .signup-text,
+  .signup-link {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .socialLogin-button {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    cursor: pointer;
+
+    .kakao-icon,
+    .naver-icon,
+    .google-icon {
+      margin: 0 5px;
+      width: 50px;
+      height: 50px;
+      background-size: contain;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .kakao-icon {
+      background: url(../image/kakao.svg);
+    }
+    .naver-icon {
+      background: url(../image/naver.svg);
+    }
+    .google-icon {
+      background: url(../image/google.svg);
+    }
+  }
+
+  .signup-link {
+    color: #9bcc66;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  &.closing {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.email-check-button{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  padding: 0 2.5px;
+  width: 80px;
+  height: 20px;
+  transform: translateY(-50%);
+  background: #9bcc66;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 400;
+  font-family: "Pretendard-Regular", sans-serif;
+  cursor: pointer;
+}

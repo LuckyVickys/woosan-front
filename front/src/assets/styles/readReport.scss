@@ -1,0 +1,110 @@
+$font-family: "Pretendard-Regular", sans-serif;
+
+.read-report-component {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 0px 20px;
+    gap: 10px;
+    height: auto;
+    font-family: $font-family;
+
+    label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .report-type,
+    .report-member-target,
+    .report-reporter-ragDate {
+        display: flex;
+        gap: 10px;
+    }
+
+    .report-link-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+        height: 30px;
+        padding: 5px;
+        background: #9bcc66;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 16px;
+    }
+
+    .report-text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 230px;
+        height: 30px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .horizonLine {
+        text-align: center;
+        border-bottom: 1px solid #aaa;
+        line-height: 0.1em;
+        margin: 20px 0;
+    }
+
+    .report-content-text {
+        height: 150px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .image-container {
+        display: flex;
+        justify-content: space-around;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+
+        .image {
+            width: auto;
+            height: 251px;
+        }
+    }
+
+    .report-buttons {
+        margin-top: 5px;
+        margin-bottom: 20px;
+        margin-left: auto;
+        button {
+            width: 120px;
+            height: 37px;
+            padding: 8px;
+            border: none;
+            border-radius: 43px;
+            color: #fff;
+            font-size: 14px;
+            font-family: $font-family;
+            font-weight: 400;
+            font-style: normal;
+            white-space: nowrap;
+            cursor: pointer;
+
+            &.secession-button {
+                background-color: #65676d;
+                margin-left: 10px;
+            }
+
+            &.remove-button {
+                background-color: #ea4b48;
+                margin-left: 10px;
+            }
+
+            &.finish-button {
+                background-color: #9bcc66;
+                margin-left: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,246 @@
+@import '../font.scss';
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 항목과 항목 사이의 세로 마진 */
+    width: 100%;
+    // max-width: 960px;
+    margin: 0 auto;
+    // background-color: #fff;
+    margin-top: 40px; /* 폼이 모임 카테고리 아래에서 시작할 수 있도록 마진 추가 */
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px; /* 요소 사이의 간격 추가 */
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+
+    &.short {
+        width: 30%; /* 균등 분배를 위해 flex 값을 추가 */
+    }
+
+    &.inline {
+        width: 30%;
+    }
+}
+
+.inlineFormGroup {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px; /* 요소 사이의 간격 추가 */
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea, select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    // width: 100%;
+}
+
+/* 각 입력창의 크기를 조절 */
+.locationInput { /* 지역 입력창 */
+    width: 300px;
+}
+
+.mbtiInput { /* MBTI 입력창 */
+    width: 300px;
+}
+
+.tagInput { /* 태그 입력창 */
+    width: 230px; /* 모임 장소 크기와 동일하게 설정 */
+}
+
+.categorySelect { /* 모임 태그 선택창 */
+    width: 250px; /* 모임 장소 크기와 동일하게 설정 */
+}
+
+.headCountInput { /* 모집 인원 입력창 */
+    width: 150px;
+}
+
+.meetDateInput { /* 모임 날짜 입력창 */
+    width: 200px;
+}
+
+.titleInput { /* 모임명 입력창 */
+    width: 600px;
+}
+
+.contentInput { /* 모임 소개 입력창 */
+    width: 800px;
+    height: 210px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.submitButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 43px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #2388FF;
+    color: white;
+    width: 130px;
+}
+
+.cancelButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 43px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #EA4B48;
+    color: white;
+    margin-left: 10px;
+    width: 130px;
+}
+
+.formButtons {
+    display: flex;
+    justify-content: flex-end;
+    width: 97.5%;
+}
+
+.resultMessage {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #28a745;
+}
+
+.error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+.genderContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.genderButton {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: white;
+}
+
+.genderButton.active {
+    background-color: #28a745;
+    color: white;
+}
+
+/* 파일 업로드 부분의 스타일 추가 */
+.fileUploadGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.fileUploadLabel {
+    margin-bottom: 10px;
+}
+
+.fileUploadInput {
+    /* 기본 파일 선택 스타일을 유지합니다 */
+}
+
+.fileList {
+    margin-top: 10px;
+}
+
+.fileItem {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid #9BCC66;
+    border-radius: 4px; /* 타원형으로 만들기 위한 값 */
+    width: fit-content; /* 내용에 맞게 너비 조절 */
+}
+
+.deleteButton {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+}
+
+.tagContainer {
+    margin-top: 10px;
+}
+
+.addButton {
+    margin-top: 10px;
+    padding: 5px 10px; /* 작게 조정 */
+    border: none;
+    border-radius: 5px;
+    background-color: #2388FF;
+    color: white;
+    font-size: 16px; /* 작게 조정 */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100px;
+}
+
+.addButton:hover {
+    background-color: #1a6bc7;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-right: 1px;
+    padding: 5px 10px;
+    border: 1px solid #9BCC66;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.tag .deleteButton {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+
+    .fileItem {
+        width: 100%;
+        padding: 5px;
+        width: 90%;
+        white-space: normal;
+        word-wrap: break-word; 
+        word-break: break-word;
+    }
+}

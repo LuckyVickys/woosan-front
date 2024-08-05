@@ -1,0 +1,181 @@
+@import '../font.scss';
+
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    // background-color: #fff;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+
+
+.resultMessage {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #28a745;
+}
+
+.container {
+    // padding: 20px;
+    // background-color: #fff;
+    width: 100%;
+    // max-width: 960px;
+    // margin: 0 auto;
+    margin-bottom: 10px;
+
+    .titleBar {
+        width: 100%;
+        height: 60px;
+        background-color: #E2E5E2;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        color: #000;
+
+        .titleBarLine {
+            width: 3px;
+            height: 60px;
+            background-color: #20B526;
+            margin-right: 10px;
+        }
+
+        .titleBarText {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .categorySelector {
+        margin-bottom: 20px;
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        select {
+            width: 100%;
+            max-width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    }
+}
+
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.closeButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.categorySelector {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    select {
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .categoryDescription {
+        color: #00B207;
+        font-size: 16px;
+        margin-top: 5px;
+    }
+}
+
+// 반응형(Tablet)
+@media (max-width: 1024px) {
+    
+    .form{
+        width: 95%;
+        padding-left: 25px;
+    }
+
+    .container{
+        margin-top: 10px;
+        width: 95%;
+        padding-left: 25px;
+    }
+}
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .form{
+        width: 95%;
+        padding-left: 10px;
+    }
+
+    .container{
+        margin-top: 10px;
+        width: 95%;
+        padding-left: 10px;
+    }
+}

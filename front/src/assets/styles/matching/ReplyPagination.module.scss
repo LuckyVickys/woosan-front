@@ -1,0 +1,30 @@
+@import '../font.scss';
+
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pageControl, .pageNumber {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 5px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.pageControl.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.pageNumber.active {
+    background-color: #2388FF;
+    color: white;
+}

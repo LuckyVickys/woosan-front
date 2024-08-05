@@ -1,0 +1,148 @@
+@import '../font.scss';
+
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.matchingList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+    
+}
+
+.matchingItem {
+    position: relative;
+    width: 480px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.matchingItem:hover {
+    transform: translateY(-5px);
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.heartButton, .xButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+}
+
+.heartButton:hover {
+    transform: scale(1.2);
+    color: #ff6b6b;
+}
+
+.xButton:hover {
+    transform: scale(1.2);
+    color: #d32f2f;
+}
+
+.newMatchingButton {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-bottom: 20px;
+}
+
+.newMatchingButton:hover {
+    background-color: #ff4b4b;
+    transform: translateY(-3px);
+}
+
+.newMatchingButton:active {
+    background-color: #e03e3e;
+    transform: translateY(1px);
+}
+
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.headerButton {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: transform 0.3s;
+}
+
+.headerButton:hover {
+    transform: translateY(-3px);
+    color: #ff6b6b;
+}
+
+.heartItem, .cancelButton, .acceptButton, .rejectButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.cancelButton:hover, .acceptButton:hover, .rejectButton:hover {
+    transform: scale(1.2);
+}
+
+
+
+.createButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.createButton:hover {
+    background-color: #218838;
+}
+
+.createButton:active {
+    background-color: #1e7e34;
+}
+
+.loading,
+.error,
+.noItems {
+    font-size: 18px;
+    color: #333;
+}
+
+.navButtons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,328 @@
+@import '../font.scss';
+
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+}
+
+.modal {
+    background: white;
+    border-radius: 10px;
+    width: 985px;
+    height: 600px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    color: #000;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.titleContainer {
+    display: flex;
+    align-items: center;
+}
+
+.labels {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.matchingType {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.정기모임 {
+    background-color: #EA4B48;
+    color: white;
+}
+
+.번개 {
+    background-color: #FDCA00;
+    color: white;
+}
+
+.셀프소개팅 {
+    background-color: #2388FF;
+    color: white;
+}
+
+.tag {
+    padding: 5px 10px;
+    background-color: #00B207;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    margin-left: 10px;
+}
+
+.mbti {
+    padding: 5px 10px;
+    background-color: #00B207;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    margin-left: 10px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.closeButton {
+    background: url('../../image/icon-delete.svg') no-repeat;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    border: none; /* 테두리 제거 */
+    
+}
+
+.infoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.leftInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.applyButton,
+.cancelButton,
+.leaveButton,
+.managerButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.applyButton {
+    background-color: #00B207;
+    color: white;
+}
+
+.cancelButton {
+    background-color: #EA4B48;
+    color: white;
+}
+
+.leaveButton {
+    background-color: #FDCA00;
+    color: white;
+}
+
+.managerButton {
+    background-color: #2388FF;
+    color: white;
+}
+
+.detailsContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.detailBox {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.detailBox:last-child {
+    margin-right: 0;
+}
+
+.detailBox p {
+    margin: 0;
+}
+
+.contentContainer {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.contentBox {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.imagesContainer {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    margin-top: 10px;
+    justify-content: center; /* 중앙 정렬 */
+}
+
+.image {
+    width: 295px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.commentsContainer {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.commentBox {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.replyBox {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pageButton {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 5px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.active {
+    background-color: #2388FF;
+    color: white;
+}
+
+.memberInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.warningMessage {
+    background-color: #E6E6E6; /* 배경 색상 */
+    color: red; /* 글씨 색상 */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.selfIntroductionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.selfIntroductionRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.selfIntroductionItem {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    flex: 1;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center; /* 아이콘과 텍스트 중앙 정렬 */
+}
+
+.selfIntroductionItem:last-child {
+    margin-right: 0;
+}
+
+.locationIcon {
+    background: url('../../image/icon-location.svg') no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.ageIcon {
+    background: url('../../image//icon-fire.svg') no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+    background-size: contain;
+}
+
+.heightIcon {
+    background: url('../../image/icon-person.svg') no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.genderIcon {
+    color: #00B207;
+    font-size: 20px;  // 성별 아이콘 폰트 크기 설정
+    margin-right: 5px;  // 아이콘과 텍스트 간격 설정
+    display: inline-block;
+}

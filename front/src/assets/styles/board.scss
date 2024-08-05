@@ -1,0 +1,333 @@
+$primary-color: #00B207;
+$secondary-color: #E5E5E5;
+$font-family: 'Pretendard-Regular', sans-serif;
+
+// ReadPage
+.read-page {
+  margin: 0 auto;
+  font-family: $font-family;
+}
+
+// ReadComponent
+.post-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  border-bottom: 2px solid $secondary-color;
+  font-family: $font-family;
+  white-space: nowrap;
+
+  .post-title-text{
+    font-size: 20px;
+    color: $primary-color;
+    font-weight: 800;
+  }
+
+  .api-button{
+    display: flex;
+    align-items: center;
+    
+    .papago-button{
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+      background: url("../image/papago.png");
+      background-size: contain;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .clova-button{
+      width: 40px;
+      height: 40px;
+      background: url("../image/clova.png");
+      background-size: contain;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-family: $font-family;
+  white-space: nowrap;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  .left {
+    display: flex;
+    align-items: center;
+  
+    .profile-image {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+  
+    .author-info {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .post-author {
+      font-size: 1em;
+      color: #666;
+      margin: 0;
+    }
+    
+    .post-stats {
+      font-size: 0.9em;
+      color: #888;
+    }
+  }
+  
+  .right {
+    display: flex;
+    align-items: center;
+  
+    .like-button {
+      transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      background-color: transparent;
+      cursor: pointer;
+      margin-right: 10px;
+
+      .likeIcon {
+        margin-right: 10px;
+      }
+      font-size: 16px;
+      font-family: $font-family;
+    }
+    
+    .menu-button {
+      background-color: transparent;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+  }
+}
+
+.alert-message {
+  font-size: 0.9em;
+  color: red;
+  background-color: $secondary-color;
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin: 10px 0 20px;
+  font-family: $font-family;
+  white-space: nowrap;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.post-content {
+  min-height: 320px;
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #000;
+  border: 1px solid $secondary-color;
+  border-radius: 10px;
+  padding: 15px;
+  font-family: $font-family;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  .summary-content{
+    padding: 10px;
+    border: 1px solid $secondary-color;
+    font-size: 16px;
+
+    .summary-state{
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  
+    .image {
+      width: 294.33px;
+      height: 251px;
+      border-radius: 8px;
+    }
+  }
+}
+
+// PageComponent
+.movePostButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-weight: 800px;
+  font-family: $font-family;
+  white-space: nowrap;
+
+  .prevPostButton,
+  .nextPostButton {
+    background-color: transparent;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  .listButton {
+    background-color: $primary-color;
+    border: 1px solid $primary-color;
+    color: #fff;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+}
+
+// BoardDropDown
+.board-dropdown-wrapper,
+.comment-dropdown-wrapper{
+  position: relative;
+  white-space: nowrap;
+
+  .board-dropdown-list,
+  .comment-dropdown-list {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100px;
+    border: 1px solid #E6E6E6;
+    border-radius: 8px;
+    background: #fff;
+    z-index: 10;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #868E96;
+    font-size: 12px;
+    font-family: 'Pretendard-Regular', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  
+    .board-dropdown,
+    .comment-dropdown{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+      cursor: pointer;
+  
+      .board-report-icon,
+      .comment-report-icon{
+        margin-right: 10px;
+        width: 15px;
+        height: 15px;
+        background: url("../image/icon-report.svg");
+      }
+      .board-msg-icon,
+      .comment-msg-icon{
+        margin-right: 10px;
+        width: 16px;
+        height: 15px;
+      }
+      .board-modify-icon{
+        margin-right: 10px;
+        width: 15px;
+        height: 15px;
+        background: url("../image/icon-modify.svg");
+      }
+      .comment-delete-icon{
+        margin-right: 10px;
+        width: 15px;
+        height: 15px;
+        background: url("../image/icon-delete.svg");
+      }
+    }
+  }
+}
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+  
+    .post-title {
+      white-space: normal;
+
+      .post-title-text{
+        width: 100%;
+        font-size: 1rem;
+        word-break: break-word;
+      }
+
+      .api-button{
+        display: flex;
+        align-items: center;
+        
+        .papago-button{
+          margin-right: 10px;
+          width: 30px;
+          height: 30px;
+          background: url("../image/papago.png");
+          background-size: contain;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+        }
+        .clova-button{
+          width: 30px;
+          height: 30px;
+          background: url("../image/clova.png");
+          background-size: contain;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .board-header {
+      font-size: 0.5em;
+
+      .left {  
+        .profile-image {
+          width: 20px;
+          height: 20px;
+        }
+      }
+      
+      .right {
+        display: flex;
+        align-items: center;
+      
+        .like-button {
+          font-size: 0.5em;
+        }
+      }
+    }
+
+    .alert-message {
+      font-size: 0.5em;
+    }
+
+    .post-content {
+      font-size: 0.8rem;
+    }
+
+    .image-container {
+      flex-direction: column;
+    }
+}

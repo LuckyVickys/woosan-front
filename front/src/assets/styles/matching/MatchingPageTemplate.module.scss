@@ -1,0 +1,51 @@
+@import '../font.scss';
+
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+
+
+.container {
+    padding: 20px;
+}
+
+.topItems {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+
+    .item {
+        flex: 1;
+        margin: 0 10px;
+
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    }
+}
+
+.remainingItems {
+    display: flex;
+    flex-wrap: wrap;
+
+    .matching-item-card {
+        width: 100%; /* 카드 너비를 100%로 설정하여 한 줄에 하나씩 표시 */
+        margin-bottom: 10px; /* 카드 사이의 간격을 줌 */
+    }
+}
+
+.loading {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
+
+.error {
+    text-align: center;
+    font-size: 18px;
+    color: red;
+}

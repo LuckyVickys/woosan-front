@@ -1,0 +1,152 @@
+@import '../font.scss';
+* {
+    font-family: 'Pretendard-Regular'; /* 모든 요소에 폰트 적용 */
+}
+
+.container {
+    padding: 20px;
+    // background-color: #fff;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+
+    .titleBar {
+        width: 100%;
+        height: 60px;
+        background-color: #E2E5E2;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        color: #000;
+
+        .titleBarLine {
+            width: 3px;
+            height: 60px;
+            background-color: #20B526;
+            margin-right: 10px;
+        }
+
+        .titleBarText {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .categorySelector {
+        margin-bottom: 20px;
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        select {
+            width: 100%;
+            max-width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    }
+}
+
+.deleteButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.deleteButton {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 16px;
+    
+}
+
+.managementContainer {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    /* 가입신청관리와 모임원관리 사이의 마진 추가 */
+    margin-top: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    /* 가입신청관리와 모임유형 사이의 마진 추가 */
+    margin-top: 50px;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.resultMessage {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #28a745;
+}
+
+.readOnlyInput {
+    background-color: #ccc;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    width: 250px;
+    margin-bottom: 10px;
+}
+
+.deleteButton {
+    margin-top: 20px;
+    background-color: #EA4B48;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 43px;
+    cursor: pointer;  
+    width: 120px;  
+}
+
+.deleteButton:hover {
+    background-color: #c9302c;
+}
+
+// 반응형(Mobile)
+@media (max-width: 767px) {
+    .container {
+        margin: 5px;
+        padding: 0;
+        width: 95%;
+    }
+}
