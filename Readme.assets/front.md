@@ -70,7 +70,7 @@ MainPage와 모든 IndexPage에서 `Desktop`, `Tablet`, `Mobile` 컴포넌트를
 
 # 라이크 모드 및 다크 모드
 <img src="https://github.com/user-attachments/assets/37a63636-9fb0-4df8-8b83-4e5eee685c10" /><br>
-깊이감과 대비를 제공하는 #333333 배경색과 부드러운 #d3d3d3 폰트 색상으로 **눈의 피로를 줄이고 가독성을 높여, 주요 콘텐츠를 강조**했습니다.
+깊이감과 대비를 제공하는 #333333 배경색과 회색 계열의 #d3d3d3 폰트 색상으로 **눈의 피로를 줄이고 가독성을 높여, 주요 콘텐츠를 강조**했습니다.
 <br>
 - `ProfileDropdow 컴포넌트`에서 `useState`, `useEffect`, `onClick 함수`를 활용하여 구현했습니다.
 - common.scss에서 `CSS 변수`를 사용하여 기본 배경색과 폰트 색상을 설정하고, 다크 모드 활성화 시 `배경색과 폰트 색상을 동적으로 변경`되도록 했습니다.
