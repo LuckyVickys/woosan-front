@@ -9,7 +9,7 @@
 ## 이메일 임시 비밀번호 전송
 ![image](https://github.com/user-attachments/assets/8ec3bcb1-fd65-45b2-a366-9af38e8bf5f6)<br>
 입력 받은 이메일로 임시 비밀번호를 전송합니다.
-- `axios`의 `POST 메서드`를 사용하여 `sendEmail` API를 호출하고 임시 비밀번호를 전합니다.
+- `axios`의 `POST 메서드`를 사용하여 `sendEmail` API를 호출하고 임시 비밀번호를 전송합니다.
 - 회원 가입된 이메일인 경우에 전송된 임시 비밀번호을 확인할 수 있습니다.
 - 재발급된 임시 비밀번호는 새로운 비밀번호로 변경하기 전까지 로그인 시 사용 가능합니다.
 
