@@ -15,6 +15,8 @@
 
 ### 신고 상세 내용
 ![스크린샷 2024-07-28 163150](https://github.com/user-attachments/assets/7502f64a-5f40-4586-b423-f010b3b313b5)
+![스크린샷 2024-08-10 065920](https://github.com/user-attachments/assets/516f01f0-08e1-478e-8c66-032395dd6bcf)
+![스크린샷 2024-08-10 065906](https://github.com/user-attachments/assets/5838c4dc-5267-4921-9a68-02b327684619)
   - 바로가기를 통해 신고 대상으로 이동이 가능합니다. (댓글, 게시글 -> 해당 게시글) (쪽지 -> 쪽지 Modal)
   - 신고 대상자 탈퇴를 통해 사용자가 로그인 하지 못하게 정지처리가 가능합니다.
   - 신고글 삭제를 통해 신고 대상을 삭제합니다.
