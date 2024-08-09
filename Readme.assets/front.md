@@ -36,28 +36,30 @@
 - 사용자가 로그인하지 않았거나 권한이 없을 경우, 사용자를 `이전 페이지(location.state?.from)` 또는 `메인 페이지`로 `리디렉션`합니다.
 - 이를 통해 접근 권한이 없는 페이지로의 직접 접근을 방지합니다.
   
-        import React from 'react';
-        import { Navigate, useLocation,  } from 'react-router-dom';
-        import useCustomLogin from '../hooks/useCustomLogin';
-  
-        const AccessRoute = ({ children, allowedRoles }) => {
-          const { isLogin, loginState } = useCustomLogin();
-          const location = useLocation();
-        
-        const fromPath = location.state?.from || '/'; 
-          if (!isLogin) {
-            return <Navigate to={fromPath} replace />;
-          }
-        
-          if (allowedRoles && !allowedRoles.includes(loginState.memberType)) {
-            return <Navigate to={fromPath} replace />;
-          }
-        
-          return children;
-        };
-        
-        export default AccessRoute;
+```javascript
+import React from 'react';
+import { Navigate, useLocation,  } from 'react-router-dom';
+import useCustomLogin from '../hooks/useCustomLogin';
 
+const AccessRoute = ({ children, allowedRoles }) => {
+  const { isLogin, loginState } = useCustomLogin();
+  const location = useLocation();
+
+const fromPath = location.state?.from || '/'; 
+  if (!isLogin) {
+    return <Navigate to={fromPath} replace />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(loginState.memberType)) {
+    return <Navigate to={fromPath} replace />;
+  }
+
+  return children;
+}; 
+
+export default AccessRoute;
+```
+<br>
 # 반응형 웹
 <img src="https://github.com/user-attachments/assets/5236c2ff-9966-41ea-ac33-e132ea000a08" /><br>
 **react-responsive 라이브러리**와 **Media Query**를 사용하여 화면 크기에 따라 조건부 렌더링을 구현했습니다.<br>
