@@ -2,7 +2,7 @@
 (첨부 예정)
 
 # 라우터
-모든 경로를 **컴포넌트**로 구현하였으며, `root`는 주요 경로를, 나머지 라우터들은 카테고리별 세부 경로를 설정했습니다.
+모든 경로를 **컴포넌트**로 구현하였으며, **root**는 주요 경로를, **나머지 라우터들**은 카테고리별 세부 경로를 설정했습니다.
 ### 주요 경로
 - **`/`** : `main` 폴더의 `MainPage` 컴포넌트
 - **`/kakao`** : `social` 폴더의 `KakaoRedirectPage` 컴포넌트
@@ -39,6 +39,7 @@
         import React from 'react';
         import { Navigate, useLocation,  } from 'react-router-dom';
         import useCustomLogin from '../hooks/useCustomLogin';
+  
         const AccessRoute = ({ children, allowedRoles }) => {
           const { isLogin, loginState } = useCustomLogin();
           const location = useLocation();
@@ -58,28 +59,19 @@
         export default AccessRoute;
 
 # 반응형 웹
+<img src="https://github.com/user-attachments/assets/5236c2ff-9966-41ea-ac33-e132ea000a08" /><br>
 **react-responsive 라이브러리**와 **Media Query**를 사용하여 화면 크기에 따라 조건부 렌더링을 구현했습니다.<br>
-MainPage와 모든 IndexPage에서 `Desktop`, `Tablet`, `Mobile` 컴포넌트를 사용하여 각 디바이스에 맞는 레이아웃을 적용했습니다.
+
 ### 디바이스별 레이아웃
+MainPage와 모든 IndexPage에서 `Desktop`, `Tablet`, `Mobile` 컴포넌트를 사용하여 각 디바이스에 맞는 레이아웃을 적용했습니다.
 - **`Mobile`**: 767px 이하
 - **`Tablet`**: 768px ~ 1024px
 - **`Desktop`**: 1025px 이상
-        import React from 'react';
-        import { useMediaQuery } from 'react-responsive';
-        
-        export const Desktop = ({ children }) => {
-          const isDesktop = useMediaQuery({ minWidth: 1025 });
-          return isDesktop ? children : null;
-        };
-        
-        export const Tablet = ({ children }) => {
-          const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
-          return isTablet ? children : null;
-        };
-        
-        export const Mobile = ({ children }) => {
-          const isMobile = useMediaQuery({ maxWidth: 767 });
-          return isMobile ? children : null;
-        };
+
+# 다크 모드
+<img src="https://github.com/user-attachments/assets/37a63636-9fb0-4df8-8b83-4e5eee685c10" /><br>
+깊이감과 대비를 제공하는 #333333 배경색과 부드러운 #d3d3d3 폰트 색상으로 **눈의 피로를 줄이고 가독성을 높여, 주요 콘텐츠를 강조**했습니다.
 <br>
-        
+- `ProfileDropdow 컴포넌트`에서 `useState`, `useEffect`, `onClick` 함수들을 활용하여 구현했습니다.
+- common.scss에서 `CSS 변수`를 사용하여 기본 배경색과 폰트 색상을 설정하고, 다크 모드 활성화 시 `배경색과 폰트 색상을 동적으로 변경`되도록 했습니다.
+- `display-theme='dark` 속성을 통해 전체 페이지의 색상 테마를 관리하며, 다양한 UI 요소(로고, 버튼, 입력 필드 등)에 다크 모드를 적용하여 사용자 만족도를 향상하고자 했습니다.
