@@ -77,7 +77,7 @@ MainPage와 모든 IndexPage에서 `Desktop`, `Tablet`, `Mobile` 컴포넌트를
 - `display-theme='dark` 속성을 통해 전체 페이지의 색상 테마를 관리하며, 다양한 UI 요소(로고, 버튼, 입력 필드 등)에 다크 모드를 동일하게 적용했습니다.
 
 # 스크롤 상단 버튼
-<img src="https://github.com/user-attachments/assets/9ec5a36d-905c-4a7b-9718-e5cbef2710d5" />
+<img src="https://github.com/user-attachments/assets/9ec5a36d-905c-4a7b-9718-e5cbef2710d5" /><br>
 사용자가 페이지를 스크롤할 때 **버튼의 가시성**을 조절하여 **페이지 최상단으로 자연스럽게 이동**할 수 있도록 구현했습니다.
 
 - `TopButton 컴포넌트`에서 `useState`와 `useEffect 훅`을 사용하여 스크롤 위치에 따른 버튼의 가시성을 제어합니다.
