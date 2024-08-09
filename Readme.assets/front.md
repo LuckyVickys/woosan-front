@@ -2,6 +2,7 @@
 (첨부 예정)
 
 # 라우터
+모든 경로를 **컴포넌트**로 구현하였으며, `root`는 주요 경로를, 나머지 라우터들은 카테고리별 세부 경로를 설정했습니다.
 ### 주요 경로
 - **`/`** : `main` 폴더의 `MainPage` 컴포넌트
 - **`/kakao`** : `social` 폴더의 `KakaoRedirectPage` 컴포넌트
@@ -12,7 +13,7 @@
 - **`/admin`** : `admin` 폴더의 `IndexPage` 컴포넌트
 - **`*`** : `NotFoundPage` 컴포넌트
 ### 세부 경로
-- `{children}`과 `Outlet`을 사용하여 주요 경로의 세부 경로인 `boardRouter`, `matchingRouter`, `csRouter`, `myPageRouter`, `adminPageRouter`를 설정하였습니다.
+- `{children}`과 `Outlet`을 사용하여 세부 경로인 `boardRouter`, `matchingRouter`, `csRouter`, `myPageRouter`, `adminPageRouter`를 설정하였습니다.
 
 # 레이아웃
 라우터의 세부 경로들은 **주요 경로의 레이아웃을 공유**하도록 구성하여, **페이지 간 일관된 사용자 경험**을 제공합니다.<br>
@@ -30,29 +31,55 @@
 
 # URL 접근 제어
 **로그인 여부**와 **사용자 권한**에 따라 **페이지 접근을 제한**하여 **보안을 강화**하고 **사용자 경험을 개선**했습니다.
-
 - `AccessRoute 컴포넌트`를 통해 `USER`, `ADMIN`의 여부에 따라 접근 가능한 페이지를 설정하였습니다.
 - `useCustomLogin 훅`을 사용하여 사용자의 `로그인 상태(isLogin)`과 `권한(loginState.memberType)`을 확인합니다.
 - 사용자가 로그인하지 않았거나 권한이 없을 경우, 사용자를 `이전 페이지(location.state?.from)` 또는 `메인 페이지`로 `리디렉션`합니다.
 - 이를 통해 접근 권한이 없는 페이지로의 직접 접근을 방지합니다.
-```import React from 'react';
-import { Navigate, useLocation,  } from 'react-router-dom';
-import useCustomLogin from '../hooks/useCustomLogin';
+  
+        import React from 'react';
+        import { Navigate, useLocation,  } from 'react-router-dom';
+        import useCustomLogin from '../hooks/useCustomLogin';
+        const AccessRoute = ({ children, allowedRoles }) => {
+          const { isLogin, loginState } = useCustomLogin();
+          const location = useLocation();
+        
+        const fromPath = location.state?.from || '/'; 
+          if (!isLogin) {
+            return <Navigate to={fromPath} replace />;
+          }
+        
+          if (allowedRoles && !allowedRoles.includes(loginState.memberType)) {
+            return <Navigate to={fromPath} replace />;
+          }
+        
+          return children;
+        };
+        
+        export default AccessRoute;
 
-const AccessRoute = ({ children, allowedRoles }) => {
-  const { isLogin, loginState } = useCustomLogin();
-  const location = useLocation();
-
-const fromPath = location.state?.from || '/'; 
-  if (!isLogin) {
-    return <Navigate to={fromPath} replace />;
-  }
-
-  if (allowedRoles && !allowedRoles.includes(loginState.memberType)) {
-    return <Navigate to={fromPath} replace />;
-  }
-
-  return children;
-};
-
-export default AccessRoute;```
+# 반응형 웹
+**react-responsive 라이브러리**와 **Media Query**를 사용하여 화면 크기에 따라 조건부 렌더링을 구현했습니다.<br>
+MainPage와 모든 IndexPage에서 `Desktop`, `Tablet`, `Mobile` 컴포넌트를 사용하여 각 디바이스에 맞는 레이아웃을 적용했습니다.
+### 디바이스별 레이아웃
+- **`Mobile`**: 767px 이하
+- **`Tablet`**: 768px ~ 1024px
+- **`Desktop`**: 1025px 이상
+        import React from 'react';
+        import { useMediaQuery } from 'react-responsive';
+        
+        export const Desktop = ({ children }) => {
+          const isDesktop = useMediaQuery({ minWidth: 1025 });
+          return isDesktop ? children : null;
+        };
+        
+        export const Tablet = ({ children }) => {
+          const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
+          return isTablet ? children : null;
+        };
+        
+        export const Mobile = ({ children }) => {
+          const isMobile = useMediaQuery({ maxWidth: 767 });
+          return isMobile ? children : null;
+        };
+<br>
+        
