@@ -158,6 +158,8 @@ root@woosan-front1:~# vi .ssh/authorized_keys
 
 
 ## NCP
+![스크린샷 2024-08-10 063751](https://github.com/user-attachments/assets/998db77a-ddb7-4b6c-8b04-ca201ef697d9)
+
 ### 1. 2개의 배포 서버를 Target Group에 추가 (리스너 포트: 3000)
 ### 2. 생성한 타겟 그룹의 로드밸런서 생성
 ### 3. 로드밸런서 IP로 접속
