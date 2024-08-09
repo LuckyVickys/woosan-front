@@ -60,6 +60,7 @@ const fromPath = location.state?.from || '/';
 export default AccessRoute;
 ```
 <br>
+
 # 반응형 웹
 <img src="https://github.com/user-attachments/assets/5236c2ff-9966-41ea-ac33-e132ea000a08" /><br>
 **react-responsive 라이브러리**와 **Media Query**를 사용하여 화면 크기에 따라 조건부 렌더링을 구현했습니다.<br>
