@@ -20,7 +20,7 @@
 ### 기본 레이아웃 설계
 <img src="https://github.com/user-attachments/assets/5bc1975a-1639-4b2e-94a2-cb06bb6790c5" width=550px height-300px/><br>
 - `BasicLayout` 컴포넌트를 설계하여 모든 주요 페이지에 공통으로 적용되는 기본 레이아웃을 구현했습니다.<br>
-- 상단의 `Header`, `HeaderBar`, `Nav`, `area 영역`('div' 태그 사용), 하단의 `Footer`, 그리고 페이지 상단으로 이동할 수 있는 `TopButton`으로 구성되어 있습니다.<br>
+- 상단의 `Header`, `HeaderBar`, `Nav`, `area 영역`('div' 태그 사용), 하단의 `Footer`, 그리고 스크롤 상단 버튼인 `TopButton`으로 구성되어 있습니다.<br>
 - `BasicLayout` 컴포넌트는 area 영역의 `{children}`을 통해 페이지별 해당 컴포넌트를 동적으로 렌더링할 수 있도록 설계했습니다.<br>
 ### 페이지별 레이아웃 설계
 <img src="https://github.com/user-attachments/assets/73f15ac2-e5d3-45e8-98cd-4e22d057999f" width=500px height-300px/><br>
@@ -68,10 +68,18 @@ MainPage와 모든 IndexPage에서 `Desktop`, `Tablet`, `Mobile` 컴포넌트를
 - **`Tablet`**: 768px ~ 1024px
 - **`Desktop`**: 1025px 이상
 
-# 다크 모드
+# 라이크 모드 및 다크 모드
 <img src="https://github.com/user-attachments/assets/37a63636-9fb0-4df8-8b83-4e5eee685c10" /><br>
 깊이감과 대비를 제공하는 #333333 배경색과 부드러운 #d3d3d3 폰트 색상으로 **눈의 피로를 줄이고 가독성을 높여, 주요 콘텐츠를 강조**했습니다.
 <br>
-- `ProfileDropdow 컴포넌트`에서 `useState`, `useEffect`, `onClick` 함수들을 활용하여 구현했습니다.
+- `ProfileDropdow 컴포넌트`에서 `useState`, `useEffect`, `onClick 함수`를 활용하여 구현했습니다.
 - common.scss에서 `CSS 변수`를 사용하여 기본 배경색과 폰트 색상을 설정하고, 다크 모드 활성화 시 `배경색과 폰트 색상을 동적으로 변경`되도록 했습니다.
-- `display-theme='dark` 속성을 통해 전체 페이지의 색상 테마를 관리하며, 다양한 UI 요소(로고, 버튼, 입력 필드 등)에 다크 모드를 적용하여 사용자 만족도를 향상하고자 했습니다.
+- `display-theme='dark` 속성을 통해 전체 페이지의 색상 테마를 관리하며, 다양한 UI 요소(로고, 버튼, 입력 필드 등)에 다크 모드를 동일하게 적용했습니다.
+
+# 스크롤 상단 버튼
+<img src="https://github.com/user-attachments/assets/9ec5a36d-905c-4a7b-9718-e5cbef2710d5" />
+사용자가 페이지를 스크롤할 때 **버튼의 가시성**을 조절하여 **페이지 최상단으로 자연스럽게 이동**할 수 있도록 구현했습니다.
+
+- `TopButton 컴포넌트`에서 `useState`와 `useEffect 훅`을 사용하여 스크롤 위치에 따른 버튼의 가시성을 제어합니다.
+- `window.addEventListener`를 통해 스크롤 이벤트를 감지하고,  `window.scrollTo`를 사용하여 페이지 최상단으로 스크롤합니다.
+- 항상 화면 오른쪽 하단에 고정되도록 기본 레이아웃에 배치했습니다.
