@@ -51,10 +51,13 @@
 - MyReceiveMsgComponent: 받은 쪽지의 목록 조회 삭제
 - ReadMsgComponent: 쪽지 상세 조회 및 답장, 삭제, 신고
 
+## Hooks
+- useCustomMsgMove: 로그인 권한에 따라 마이페이지 또는 관리자 페이지의 보낸 쪽지함 / 받은 쪽지함 / 쪽지 상세 페이지로 이동
+
 ## Features
 1. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**작성한 게시글 조회**</a>: 로그인한 회원이 작성한 게시글 목록을 조회할 수 있습니다.
 2. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**작성한 댓글 조회**</a>: 작성한 댓글 목록을 조회할 수 있습니다.
 3. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**추천 게시글 조회**</a>: 추천한 게시글을 조회할 수 있습니다.
 4. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**보낸 쪽지함**</a>: 보낸 쪽지 목록을 조회합니다.
 5. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**받은 쪽지함**</a>: 받은 쪽지 목록을 조회합니다.
-8. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**쪽지 상세 페이지**</a>: 쪽지 상세 페이지를 조회합니다.
+6. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**쪽지 상세 페이지**</a>: 쪽지 상세 페이지를 조회합니다.
