@@ -60,4 +60,4 @@
 3. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**추천 게시글 조회**</a>: 추천한 게시글을 조회할 수 있습니다.
 4. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**보낸 쪽지함**</a>: 보낸 쪽지 목록을 조회합니다.
 5. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**받은 쪽지함**</a>: 받은 쪽지 목록을 조회합니다.
-6. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**쪽지 상세 페이지**</a>: 쪽지 상세 페이지를 조회합니다.
+6. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/myPage.md">**쪽지 상세 조회**</a>: 쪽지 상세 페이지를 조회합니다.
