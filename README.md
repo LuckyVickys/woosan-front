@@ -149,7 +149,8 @@ MainPage와 모든 IndexPage에서 `Desktop`, `Tablet`, `Mobile` 컴포넌트를
 <img src="https://github.com/user-attachments/assets/37a63636-9fb0-4df8-8b83-4e5eee685c10" /><br>
 깊이감과 대비를 제공하는 #333333 배경색과 회색 계열의 #d3d3d3 폰트 색상으로 **눈의 피로를 줄이고 가독성을 높여, 주요 콘텐츠를 강조**했습니다.
 <br>
-- `ProfileDropdow 컴포넌트`에서 `useState`, `useEffect`, `onClick 함수`를 활용하여 구현했습니다.
+- `ProfileDropdown 컴포넌트`에서 `useState`, `useEffect`, `onClick 함수`를 활용하여 구현했습니다.
+- `localStorage`를 사용하여 현재 테마의 설정을 저장하고, 페이지를 로드할 때 저장된 테마를 적용하여 사용자가 이전에 선택한 테마가 유지되도록 합니다.
 - common.scss에서 `CSS 변수`를 사용하여 기본 배경색과 폰트 색상을 설정하고, 다크 모드 활성화 시 `배경색과 폰트 색상을 동적으로 변경`되도록 했습니다.
 - `display-theme='dark` 속성을 통해 전체 페이지의 색상 테마를 관리하며, 다양한 UI 요소(로고, 버튼, 입력 필드 등)에 다크 모드를 동일하게 적용했습니다.
 <br>
