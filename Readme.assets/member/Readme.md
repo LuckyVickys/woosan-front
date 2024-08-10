@@ -28,9 +28,10 @@
 4. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/signup.md">**비밀번호 보이기 토글**</a>: 비밀번호를 입력할 때 입력된 내용을 보이거나 숨길 수 있게 합니다.
 5. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/signup.md">**회원가입**</a>: 새로운 회원을 등록하고, 가입 성공 시 로그인 모달창으로 전환합니다.
 6. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/login.md">**일반 로그인**</a>: 이메일과 비밀번호를 입력받아 로그인 처리를 합니다.
-7. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/UpdatePw.md">**임시 비밀번호 메일 전송**</a>: 임시 비밀번호를 생성하여 이메일로 전송합니다.
-8. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/UpdatePw.md">**비밀번호 변경**</a>: 재발급된 비밀번호를 확인한 후 새로운 비밀번호로 변경합니다.
-9. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/message.md">**쪽지 전송**</a>: 사용자가 다른 회원에게 쪽지를 전송할 수 있습니다.
+7. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/login.md">**소셜 로그인**</a>: 카카오 계정으로 인증을 요청하여 회원가입 및 로그인을 합니다.
+8. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/UpdatePw.md">**임시 비밀번호 메일 전송**</a>: 임시 비밀번호를 생성하여 이메일로 전송합니다.
+9. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/UpdatePw.md">**비밀번호 변경**</a>: 재발급된 비밀번호를 확인한 후 새로운 비밀번호로 변경합니다.
+10. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/message.md">**쪽지 전송**</a>: 사용자가 다른 회원에게 쪽지를 전송할 수 있습니다.
 <br>
 
 ---
