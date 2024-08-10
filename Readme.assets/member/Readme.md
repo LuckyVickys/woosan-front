@@ -38,6 +38,8 @@
 8. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/UpdatePw.md">**임시 비밀번호 메일 전송**</a>: 임시 비밀번호를 생성하여 이메일로 전송합니다.
 9. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/UpdatePw.md">**비밀번호 변경**</a>: 재발급된 비밀번호를 확인한 후 새로운 비밀번호로 변경합니다.
 10. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/message.md">**쪽지 전송**</a>: 사용자가 다른 회원에게 쪽지를 전송할 수 있습니다.
+11. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/login.md">**프로필 드롭다운**</a>: 사용자의 프로필 정보를 표시합니다.
+12. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/member/login.md">**로그아웃**</a>: 로그아웃을 합니다.
 <br>
 
 ---
