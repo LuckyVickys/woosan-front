@@ -1,7 +1,55 @@
 # 패키지 구조
-(첨부 예정)
+```
+📦src
+ ┣ 📂api
+ ┣ 📂assets
+ ┃ ┣ 📂image
+ ┃ ┗ 📂styles
+ ┣ 📂components
+ ┃ ┣ 📂adminPage
+ ┃ ┣ 📂board
+ ┃ ┣ 📂common
+ ┃ ┣ 📂cs
+ ┃ ┣ 📂main
+ ┃ ┣ 📂matching
+ ┃ ┣ 📂member
+ ┃ ┗ 📂myPage
+ ┣ 📂hooks
+ ┣ 📂layouts
+ ┣ 📂pages
+ ┃ ┣ 📂adminPage
+ ┃ ┣ 📂board
+ ┃ ┣ 📂cs
+ ┃ ┣ 📂main
+ ┃ ┣ 📂matching
+ ┃ ┣ 📂myPage
+ ┃ ┣ 📂social
+ ┃ ┗ 📜NotFoundPage.jsx
+ ┣ 📂router
+ ┣ 📂slices
+ ┣ 📂util
+ ┣ 📜App.css
+ ┣ 📜App.js
+ ┣ 📜App.test.js
+ ┣ 📜index.css
+ ┣ 📜index.js
+ ┣ 📜logo.svg
+ ┣ 📜reportWebVitals.js
+ ┣ 📜setupTests.js
+ ┗ 📜store.js
+```
 
 # 라우터
+```
+ ┣ 📂router
+ ┃ ┣ 📜AccessRoute.jsx
+ ┃ ┣ 📜adminPageRouter.jsx
+ ┃ ┣ 📜boardRouter.jsx
+ ┃ ┣ 📜csRouter.jsx
+ ┃ ┣ 📜matchingRouter.jsx
+ ┃ ┣ 📜myPageRouter.jsx
+ ┃ ┗ 📜root.jsx
+```
 모든 경로를 **컴포넌트**로 구현하였으며, **root**는 주요 경로를, **나머지 라우터들**은 카테고리별 세부 경로를 설정했습니다.
 ### 주요 경로
 - **`/`** : `main` 폴더의 `MainPage` 컴포넌트
@@ -16,6 +64,16 @@
 - `{children}`과 `Outlet`을 사용하여 세부 경로인 `boardRouter`, `matchingRouter`, `csRouter`, `myPageRouter`, `adminPageRouter`를 설정하였습니다.
 
 # 레이아웃
+```
+ ┣ 📂pages
+ ┃ ┣ 📂board
+ ┃ ┃ ┣ 📜AddPage.jsx
+ ┃ ┃ ┣ 📜IndexPage.jsx
+ ┃ ┃ ┣ 📜ListPage.jsx
+ ┃ ┃ ┣ 📜ModifyPage.jsx
+ ┃ ┃ ┣ 📜ReadPage.jsx
+ ┃ ┃ ┗ 📜SearchListPage.jsx
+```
 라우터의 세부 경로들은 **주요 경로의 레이아웃을 공유**하도록 구성하여, **페이지 간 일관된 사용자 경험**을 제공합니다.<br>
 ### 기본 레이아웃 설계
 <img src="https://github.com/user-attachments/assets/6ae98df6-9143-4951-a1b1-3bf90aa1ecec" width=550px height-300px/><br>
