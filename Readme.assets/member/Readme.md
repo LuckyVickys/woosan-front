@@ -3,6 +3,12 @@
 ## Overview
 회원가입, 로그인, 비밀번호 찾기, 이메일 및 닉네임 중복 체크, 비밀번호 변경, 쪽지 전송, 마이페이지, 회원 탈퇴 등의 기능을 포함합니다.
 
+## APIs
+- memberApi
+- kakaoApi
+- memberProfileApi
+- messageApi
+
 ## Components
 - SignUpModal: 이메일, 닉네임, 비밀번호, 회원가입 확인 코드 검증 및 회원가입
 - LoginModal: 일반 로그인과 소셜 로그인 제공
@@ -40,6 +46,9 @@
 
 ## Overview
 회원 정보 수정, 작성한 게시글/댓글 조회, 추천한 게시글 조회, 모임 조회, 쪽지 조회 및 삭제 기능을 포함합니다.
+
+## APIs
+- myPageApi
 
 ## Components
 - UpdateInfo: 회원 프로필 사진, 닉네임, 기타 정보 조회 및 변경
