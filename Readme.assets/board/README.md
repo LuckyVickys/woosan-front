@@ -36,4 +36,8 @@
 8. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md">**게시글 목록**</a>: 모든 게시글을 한눈에 볼 수 있습니다.
 9. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md">**게시글 단건 조회**</a>: 특정 게시글의 상세 내용을 조회합니다. 
 10. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md">**게시글 수정, 삭제**</a>: 게시글의 제목, 내용, 이미지 등을 수정할 수 있으며, 삭제 가능합니다.
-<br>
+11. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/Reply%20%26%20Likes.md">**댓글 작성**</a>: 게시글에 대한 댓글을 남길 수 있습니다.
+12. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/Reply%20%26%20Likes.md">**댓글 조회**</a>: 최신순으로 정렬된 댓글 목록이 조회됩니다.
+13. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/Reply%20%26%20Likes.md">**댓글 삭제**</a>: 사용자가 댓글과 대댓글을 삭제할 수 있습니다.
+14. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/Reply%20%26%20Likes.md">**게시글/댓글 추천**</a>: 게시글이나 댓글에 추천(좋아요)를 추가 및 취소할 수 있습니다.
+15. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/report.md">**신고 접수**</a>: 게시글, 댓글, 쪽지에 대해 신고를 할 수 있습니다.
