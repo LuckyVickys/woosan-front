@@ -154,3 +154,15 @@ MainPage와 모든 IndexPage에서 `Desktop`, `Tablet`, `Mobile` 컴포넌트를
 - `TopButton 컴포넌트`에서 `useState`와 `useEffect 훅`을 사용하여 스크롤 위치에 따른 버튼의 가시성을 제어합니다.
 - `window.addEventListener`를 통해 스크롤 이벤트를 감지하고,  `window.scrollTo`를 사용하여 페이지 최상단으로 스크롤합니다.
 - 항상 화면 오른쪽 하단에 고정되도록 기본 레이아웃에 배치했습니다.
+
+# VIII. <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/Deploy/deploy.md">배포</a>
+- Front Ci/CD Pipeline 과정
+- React 및 Jenkins 설정
+- GitHub 설정
+- NCP 설정
+
+# IX. 기능별 화면
+1. <a href="https://github.com/LuckyVickys/woosan-front/tree/main/Readme.assets/member">회원 기능
+2. <a href="https://github.com/LuckyVickys/woosan-front/tree/main/Readme.assets/board">게시글 기능</a>
+3. <a href="https://github.com/LuckyVickys/woosan-front/tree/main/Readme.assets/matching">모임 기능</a>
+4. <a href="https://github.com/LuckyVickys/woosan-front/tree/main/Readme.assets/admin">관리자 기능</a>
