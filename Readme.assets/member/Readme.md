@@ -17,7 +17,7 @@
 - TogglePassword: 사용자 편의를 위해 비밀번호 보이기/숨기기 기능 제공
 - CodeTimer: 회원가입 확인 코드의 남은 유효 시간 안내
 
-## HookS
+## Hooks
 - useCustomLogin: 로그인 상태 관리, 로그인 및 로그아웃 처리, 페이지 이동, 로그인 모달 열기/닫기 기능 제공
 
 ## Slices
