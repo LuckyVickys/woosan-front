@@ -1,6 +1,21 @@
+# Board 기능
+
 ## Overview
 Board 기능은 사용자가 게시글을 작성, 조회, 수정, 삭제(CRUD)하고,
 번역, 요약, 검색, 검색어 자동 완성, 인기 게시글 조회 등의 다양한 부가 기능을 통해 사용자 경험을 증진시켰습니다. 
+
+## Components
+- ListComponent / AddComponent / ModifyComponent: 게시글 목록 조회, 작성, 수정
+- ReadComponent / ReplyComponent: 게시글 상세 조회 및 댓글 조회
+- SearchListComponent: 기본 검색 결과 및 연관 검색 결과 제공
+
+## HookS
+- useCustomMove: 게시글 관련 페이지간 이동, 페이지네이션, 카테고리 필터링 제공
+
+## Utils
+- DateUtil: 날짜 문자열을 다양한 형식으로 변환하고, 현재 시간과의 상대적인 시간을 계산
+- convertUtil: 텍스트에서 줄바꿈 문자를 < br > HTML 태그로 변환하여 반환
+- validationUtil: 게시글 작성 시 발생하는 예외 처리
 
 ## Features
 
