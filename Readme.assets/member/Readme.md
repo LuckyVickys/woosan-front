@@ -11,13 +11,13 @@
 - TogglePassword: 사용자 편의를 위해 비밀번호 보이기/숨기기 기능 제공
 - CodeTimer: 회원가입 확인 코드의 남은 유효 시간 안내
 
-## hook
+## HookS
 - useCustomLogin: 로그인 상태 관리, 로그인 및 로그아웃 처리, 페이지 이동, 로그인 모달 열기/닫기 기능 제공
 
-## slice
+## Slices
 - loginSlice: Redux를 사용하여 로그인 상태 관리, 로그인 및 로그아웃 기능을 제공하며, 로그인 성공 시 쿠키에 사용자 정보를 저장하고, 실패 시 에러 메시지 처리
 
-## utils
+## Utils
 - cookieUtil: cookie를 설정, 가져오고, 삭제하는 기능 제공
 - jwtUtil: Axios 객체를 생성하고, 요청 및 응답 인터셉터를 설정하여 JWT 토큰 갱신과 인증 처리를 자동으로 관리
 
