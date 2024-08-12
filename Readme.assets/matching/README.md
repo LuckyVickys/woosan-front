@@ -25,7 +25,17 @@
 - 모임 탈퇴
 - 모임원 강퇴
 - 모임원 리스트 조회
-- 모임 가입 요청 리스트 조회 
+- 모임 가입 요청 리스트 조회
+
+## Key Components
+- KakaoMapModal / LocationField : 카카오맵 API를 활용 지도검색과 키워드검색을 결합하여 모임 장소 등록
+- FilterBar / SelfFilterBar : 모임 분류를 위한 태그 필터와 셀프 소개팅 필터
+- MemberManagement : 모임 가입신청관리와 모임원 관리 
+  
+## Hooks
+- useRegularly : 정기 모임 불러오기
+- useTemporary : 번개 불러오기
+- useSelf : 셀프 소개팅 불러오기
 
 ## Features
 
