@@ -30,17 +30,17 @@
 ## Features
 
 - 공통
-  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">모임 조회
-  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">댓글&답글 등록, 삭제
+  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">**모임 조회**</a>
+  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">**댓글&답글 등록, 삭제**</a>
   
 - 모임장
-  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">모임 생성, 수정, 삭제
-  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">가입 신청 승인, 거절
-  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">모임원 강퇴
+  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">**모임 생성, 수정, 삭제**</a>
+  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">**가입 신청 승인, 거절**</a>
+  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">**모임원 강퇴**</a>
 
 - 모임원
-  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">가입 신청, 취소
-  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">모임 탈퇴
+  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">**가입 신청, 취소**</a>
+  - <a href="[https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/board/board.md])">**모임 탈퇴**</a>
 
 
 ## Key Features
