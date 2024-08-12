@@ -30,17 +30,17 @@
 ## Features
 
 - 공통
-  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**모임 조회**</a>
-  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**댓글&답글 등록, 삭제**</a>
+  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**모임 조회**</a> : 로그인한 회원만 정기모임, 번개, 셀프 소개팅 조회
+  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**댓글&답글 등록, 삭제**</a> : 모임 댓글&답글 등록과 작성자만 삭제 가능
   
 - 모임장
-  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**모임 생성, 수정, 삭제**</a>
-  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**가입 신청 승인, 거절**</a>
-  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**모임원 강퇴**</a>
+  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**모임 생성, 수정, 삭제**</a> : 회원 레벨에 따른 모임 생성, 수정, 삭제 
+  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**가입 신청 승인, 거절**</a> : 모임 가입 신청과 승인, 거절 관리
+  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**모임원 강퇴**</a> : 해당 모임의 모임장만 모임원 강퇴 가능
 
 - 모임원
-  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**가입 신청, 취소**</a>
-  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**모임 탈퇴**</a>
+  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**가입 신청, 취소**</a> : 로그인한 회원만 가입신청과 취소가 가능
+  - <a href="https://github.com/LuckyVickys/woosan-front/blob/main/Readme.assets/matching/matching.md">**모임 탈퇴**</a> : 모임에 가입한 회원만 모임 탈퇴 가능
 
 
 ## Key Features
